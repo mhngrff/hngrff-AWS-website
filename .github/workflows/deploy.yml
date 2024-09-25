@@ -21,15 +21,19 @@ jobs:
     - name: Install dependencies 
       run: npm install
 
+    - name: Install Angular CLI 
+      run: npm install -g @angular/cli
+
     - name: Build 
       run: ng build --configuration production
 
     - name: Sync files to S3
       uses: jakejarvis/s3-sync-action@master
       with:
-        args: --acl public-read --follow-symlinks --delete
+        args: --delete
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: 'us-east-2'
-        BUCKET_NAME: hngrff.com
+        AWS_REGION: us-east-2
+        AWS_S3_BUCKET: hngrff.com
+        SOURCE_DIR: ./dist/hngrff-angular-app
