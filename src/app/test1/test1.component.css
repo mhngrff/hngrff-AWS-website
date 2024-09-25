@@ -38,7 +38,7 @@
   .parallax {
     background-image: url('/assets/images/elbert-summit.jpg');
     height: 30vh; /* Adjusting this will make the content higher up on the page */
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-repeat: no-repeat;
     background-size: contain;
     position: relative;
