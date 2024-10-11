@@ -28,7 +28,10 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "dist/css/styles.css",
+              "dist/css/home.css",
+              "dist/css/navbar.css"
             ],
             "scripts": []
           },

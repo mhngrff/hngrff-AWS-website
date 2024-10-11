@@ -1,0 +1,110 @@
+/* Basic styling for the navbar */
+@media only screen and (min-width: 786px) {
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+   background-color: #0b0b09; /* Dark background */
+//   padding: 1em 2em;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 6vh;
+  z-index: 1000;
+  padding: 1em;
+  margin: 0;
+}
+
+.logo {
+  color: gray;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin: 0 1.5em;
+}
+
+.nav-links a {
+  color: gray;
+  text-decoration: none;
+  font-size: 1vw;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #f2f2f2;
+}
+
+// nav ul li {
+//   margin: 0;
+//   padding: 0;
+//   }
+
+/* Add some padding for the content so it doesn't overlap with the fixed navbar */
+body {
+//   padding-top: 80px;
+  margin: 0;
+}
+}
+
+@media only screen and (max-width: 786px) {
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+     background-color: #0b0b09; /* Dark background */
+  //   padding: 1em 2em;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 6vh;
+    z-index: 1000;
+    padding: 1em;
+    margin: 0;
+  }
+
+  .logo {
+    color: gray;
+    font-size: 5vw;
+    font-weight: bold;
+  }
+
+  .nav-links {
+    list-style-type: none;
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 0 1.5em;
+  }
+
+  .nav-links a {
+    color: gray;
+    text-decoration: none;
+    font-size: 3vw;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #f2f2f2;
+  }
+
+  // nav ul li {
+  //   margin: 0;
+  //   padding: 0;
+  //   }
+
+  /* Add some padding for the content so it doesn't overlap with the fixed navbar */
+  body {
+  //   padding-top: 80px;
+    margin: 0;
+  }
+  }
+
