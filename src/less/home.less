@@ -50,15 +50,41 @@ html, body{
 
 /* Media query for smaller screens (mobile) */
 @media only screen and (max-width: 786px) {
-  .parallax {
-    background-image: url('/assets/images/costa-rica.jpg');
-    background-attachment: fixed;
-    background-size: 100vw auto;
-    background-position: 0 8vh;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 24vh; /* Adjusting this will make the content higher up on the page */
-  }
+//   .parallax {
+//     background-image: url('/assets/images/costa-rica.jpg');
+//     background-attachment: fixed;
+//     background-size: 100vw auto;
+//     background-position: 0 8vh;
+//     background-repeat: no-repeat;
+//     width: 100vw;
+//     height: 24vh; /* Adjusting this will make the content higher up on the page */
+//   }
+
+.parallax {
+  position: relative;
+  overflow: hidden;
+  background-position: 0 8vh;
+  height: 24vh;
+}
+
+.parallax::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/assets/images/costa-rica.jpg');
+  background-position: center;
+  background-size: cover;
+  transform: translateZ(0);
+  will-change: transform;
+  z-index: -1; /* Make sure it stays behind */
+}
+
+.parallax.scrolled::before {
+  transform: translateY(-20%); /* Adjust based on scroll position */
+}
 
   .content {
     height: 100vh; /*changes the length of the page */
