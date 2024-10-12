@@ -12,4 +12,9 @@ import { NavbarComponent} from './navbar/navbar.component'
 })
 export class AppComponent {
   title = 'hngrff-angular-app';
+   isMenuOpen = false;
+
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    }
 }
