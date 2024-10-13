@@ -5,19 +5,12 @@ html, body{
 
 @media only screen and (min-width: 786px) {
   .parallax {
-    background-image: url('/assets/images/costa-rica.jpg');
     background-attachment: fixed;
     background-size: 100vw auto;
     background-position: top left;
     background-repeat: no-repeat;
     width: 100vw;
     height: 50vh; /* Adjusting this will make the content higher up on the page */
-  }
-
-  .content {
-    height: 200vh; /*changes the length of the page */
-    color: white;
-    background-color: #0b0b09;
   }
 
 .images-section {
@@ -31,14 +24,8 @@ html, body{
 /* General Image Styling */
 .image {
   width: 60vw;
-  margin-bottom: 40px; /* Space between images */
+//   margin-bottom: 40px; /* Space between images */
   transition: transform 0.3s ease; /* Hover effect if needed */
-  }
-
-/* First Image Overlapping Effect */
-.first-image {
-  position: relative;
-  top: -50px; /* Adjust this to control the bleed-over effect */
   }
 
 /* Image Hover Effect */
@@ -54,84 +41,38 @@ html, body{
       margin: 0;
       height: 100vh; /* Ensure the body takes full height */
       overflow-x: hidden; /* Prevent horizontal overflow */
-        border: 3px solid #0b0b09;
+//         border: 1vh solid #0b0b09;
 
   }
-
   .parallax {
     background-image: url('/assets/images/costa-rica2.jpg');
-    background-attachment: fixed;
+    background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
     background-size: 100vw auto;
-    background-position: 0 8vh;
+    background-position: 0 7vh;
     background-repeat: no-repeat;
     width: 100vw;
-    height: 130vh; /* Adjusting this will make the content higher up on the page */
+    height: 100vh; /* Adjusting this will make the content higher up on the page */
+    position: absolute;
   }
 
-.parallax-container {
-    position: relative; /* Set a relative positioning context */
-}
-
-// .parallax {
-//   background-image: url('/assets/images/costa-rica.jpg');
-//   position: relative;
-//   overflow: hidden;
-//   background-position: 0 8vh;
-//   height: 24vh;
-// }
-//
-// .parallax::before {
-//   content: '';
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background-image: url('/assets/images/costa-rica.jpg');
-//   background-position: center;
-//   background-size: cover;
-//   transform: translateZ(0);
-//   will-change: transform;
-//   z-index: -1; /* Make sure it stays behind */
-// }
-//
-// .parallax.scrolled::before {
-//   transform: translateY(-20%); /* Adjust based on scroll position */
-// }
-
-//   .content {
-//     height: 100vh; /*changes the length of the page */
-//     color: white;
-//     background-color: #0b0b09;
-//   }
-
 .images-section {
-//   position: absolute;
-// //   left: 50%;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-    position: absolute; /* Position the images absolutely within the container */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Offset by half its width and height */
-    display: flex;
-    flex-direction: column; /* Stack images vertically */
-    align-items: center; /* Center images horizontally */
+  position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+  z-index: 2; /* Ensure images are above the background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center vertically */
+  margin-top: 0; /* Reset any margin */
+  width: 100vw;
+  min-height: 100vh; /* Ensure it takes at least the full viewport height */
+  padding-top: 20vh; /* Adjust to position images where desired */
 }
 
 /* General Image Styling */
 .image {
   width: 80vw;
-//   margin-top: -7vh;
-  margin-bottom: 9vh; /* Space between images */
+//   margin: 0;
   transition: transform 0.3s ease; /* Hover effect if needed */
-//   border: 2px solid #0b0b09;
-  }
-
-/* First Image Overlapping Effect */
-.first-image {
-//   position: relative;
   }
 
 /* Image Hover Effect (Optional) */
@@ -139,3 +80,10 @@ html, body{
   transform: scale(1.05);
   }
 }
+
+
+
+
+
+
+
