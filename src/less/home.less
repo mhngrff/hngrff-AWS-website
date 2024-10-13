@@ -41,8 +41,6 @@ html, body{
       margin: 0;
       height: 100vh; /* Ensure the body takes full height */
       overflow-x: hidden; /* Prevent horizontal overflow */
-//         border: 1vh solid #0b0b09;
-
   }
   .parallax {
     background-image: url('/assets/images/costa-rica2.jpg');
@@ -55,17 +53,38 @@ html, body{
     position: absolute;
   }
 
+.container{
+    width: 80vw;
+    margin: 0 auto;
+  }
+
+.image-label {
+  position: relative;  /* Makes the text section overlap the background */
+  z-index: 2;  /* Ensure it's above the background but in line with the images */
+  top: 7vh;  /* Adjust this to control how high or low the text appears on the background */
+  width: 100%;
+  text-align: left;
+  color: white; /* Text color that contrasts the background */
+}
+
+.image-label h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 4vw; /* Adjust font size for headings */
+//   margin-bottom: 10px; /* Space between heading and paragraph */
+}
+
 .images-section {
   position: relative; /* Ensure it stays within the document flow but on top of the parallax */
   z-index: 2; /* Ensure images are above the background */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center; /* Center vertically */
   margin-top: 0; /* Reset any margin */
-  width: 100vw;
+  width: 80vw;
   min-height: 100vh; /* Ensure it takes at least the full viewport height */
-  padding-top: 20vh; /* Adjust to position images where desired */
+  padding: 13vh 0; /* Adjust to position images where desired */
 }
 
 /* General Image Styling */
