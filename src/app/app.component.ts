@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from './home/home.component'; //THIS IS NEEDED
+import { RouterOutlet, NavigationEnd, Router } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { NavbarComponent} from './navbar/navbar.component'
 
 @Component({
@@ -12,9 +12,11 @@ import { NavbarComponent} from './navbar/navbar.component'
 })
 export class AppComponent {
   title = 'hngrff-angular-app';
-   isMenuOpen = false;
-
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
+    constructor(private router: Router) {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          console.log('Navigated to:', event.url);
+        }
+      });
     }
 }
