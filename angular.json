@@ -32,7 +32,8 @@
               "dist/css/styles.css",
               "dist/css/home.css",
               "dist/css/navbar.css",
-              "dist/css/footer.css"
+              "dist/css/footer.css",
+              "dist/css/details.css"
             ],
             "scripts": []
           },
