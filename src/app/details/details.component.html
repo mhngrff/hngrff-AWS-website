@@ -1,11 +1,34 @@
+<!--<div class="details-container" *ngIf="imageUrl" @slideIn>-->
 <div class="details-container">
+  <div class="image-label">
+    <h2>{{imageId | uppercase }} - INDIVIDUAL PRINT</h2>
+  </div>
   <div class="main-viewport" #mainViewport [ngClass]="{'zoomed': isZoomed}">
     <img [src]="imageUrl" alt="{{ imageId }} image"/>
   </div>
 </div>
 
 <div class="thumbnail-row">
-  <img [src]="images.default" (click)="switchImage('default')" alt="Default Artwork" class="thumbnail">
-  <img [src]="images.framed" (click)="switchImage('framed')" alt="Framed Artwork" class="thumbnail">
-  <img [src]="images.zoomed" (click)="switchImage('zoomed')" alt="Zoomed Artwork" class="thumbnail">
+
+  <img [src]="images.default"
+       [ngClass]="{'selected': isSelected('default'), 'lightened': !isSelected('default')}"
+       (click)="switchImage('default')"
+       alt="Default Artwork"
+       class="thumbnail">
+
+  <img [src]="images.framed"
+       [ngClass]="{'selected': isSelected('framed'), 'lightened': !isSelected('framed')}"
+       (click)="switchImage('framed')"
+       alt="Framed Artwork"
+       class="thumbnail">
+
+  <div class="thumbnail zoomed-thumbnail">
+
+    <img [src]="images.zoomed"
+         [ngClass]="{'selected': isSelected('zoomed'), 'lightened': !isSelected('zoomed')}"
+         (click)="switchImage('zoomed')"
+         alt="Zoomed Artwork"
+         class="thumbnail zoomed-thumbnail">
+  </div>
+
 </div>

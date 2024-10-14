@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-details',
@@ -8,6 +9,17 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './details.component.html',
 //   styleUrl: './details.component.css'
+  animations: [
+      trigger('slideIn', [
+        transition(':enter', [
+          style({ transform: 'translateX(-100%)', opacity: 0 }),
+          animate('300ms ease-in', style({ transform: 'translateX(0)', opacity: 1 }))
+        ]),
+        transition(':leave', [
+          animate('300ms ease-out', style({ transform: 'translateX(100%)', opacity: 0 }))
+        ])
+      ])
+    ]
 })
 
 export class DetailsComponent implements OnInit{
@@ -15,6 +27,7 @@ export class DetailsComponent implements OnInit{
   imageId!: string;
   imageUrl!: string;
   isZoomed = false;
+  selectedImage!: string;
 
   images: { default: string, framed: string, zoomed: string } = {
     default: '',
@@ -34,11 +47,8 @@ export class DetailsComponent implements OnInit{
     ngOnInit(): void {
       this.route.params.subscribe((params) => {
         this.imageId = params['imageId'];
-
-        this.imageUrl = this.imageMap[this.imageId];
-        console.log('Image ID:', this.imageId); // Check the value of imageId
-        console.log('Image URL:', this.imageUrl); // Check the value of imageUrl
-
+        this.selectedImage = 'default'; //Default selection on page load
+        this.imageUrl = this.imageMap[this.imageId]; //Maybe can remove this
 
         if (this.imageId === 'redfish') {
           this.images = {
@@ -61,15 +71,14 @@ export class DetailsComponent implements OnInit{
             zoomed: 'assets/images/flounder-high-def.jpg'
             }
           }
-
         this.imageUrl = this.images.default;
-
      });
   }
 
- switchImage(type: 'default' | 'framed' | 'zoomed'): void {
+  switchImage(type: 'default' | 'framed' | 'zoomed'): void {
     this.imageUrl = this.images[type];
     this.isZoomed = (type === 'zoomed');
+    this.selectedImage = type;
 
     // Set the scroll position for zoomed images
     if (this.isZoomed && this.mainViewport) {
@@ -88,11 +97,14 @@ export class DetailsComponent implements OnInit{
 
           viewport.scrollTo({
             top: centerY,
-//             left: centerX,
+             //left: centerX,
             behavior: 'smooth' // Optional: smooth scrolling
           });
         };
       }
     }
+  }
+  isSelected(imageType: 'default' | 'framed' | 'zoomed'): boolean {
+    return this.selectedImage === imageType;
   }
 }
