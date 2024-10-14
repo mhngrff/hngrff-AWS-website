@@ -1,3 +1,11 @@
 <div class="details-container">
-  <img [src]="imageUrl" alt="{{ imageId }} image" class="details-image" />
+  <div class="main-viewport" #mainViewport [ngClass]="{'zoomed': isZoomed}">
+    <img [src]="imageUrl" alt="{{ imageId }} image"/>
+  </div>
+</div>
+
+<div class="thumbnail-row">
+  <img [src]="images.default" (click)="switchImage('default')" alt="Default Artwork" class="thumbnail">
+  <img [src]="images.framed" (click)="switchImage('framed')" alt="Framed Artwork" class="thumbnail">
+  <img [src]="images.zoomed" (click)="switchImage('zoomed')" alt="Zoomed Artwork" class="thumbnail">
 </div>
