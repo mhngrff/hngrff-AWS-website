@@ -29,6 +29,7 @@ export class NavbarComponent {
   }
 
   navigateToHome() {
+//     console.log('navigateToHome triggered');
     this.router.navigate(['/']);
     this.closeMenu();  // Close the menu when navigating to home
   }

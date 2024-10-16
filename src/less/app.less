@@ -1,0 +1,109 @@
+// .slide-container {
+//   position: relative;
+//   overflow: hidden;
+//   height: 300vh;
+// }
+//
+// .home-container,
+// .details-container {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   transition: transform 0.5s ease-in-out;
+// }
+//
+// // .slide-out {
+// //   transform: translateX(-100%);
+// // }
+//
+// .slide-out {
+//   transform: translateX(-100%);
+//  }
+//
+//
+// .slide-in {
+//   transform: translateX(0);
+// }
+
+/* app.less */
+
+// .slide-container {
+//   position: relative;
+//   overflow: hidden; /* Keep this to prevent overflow during transitions */
+//     height: 300vh;
+//
+// }
+//
+// .home-container,
+// .details-container {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   transition: transform 0.5s ease-in-out;
+// }
+//
+// /* Slide-out to the left for the home component */
+// .home-slide-out {
+//   transform: translateX(-100%);
+// }
+//
+// /* Slide-in from the left for the home component */
+// .home-slide-in {
+//   transform: translateX(100%);
+// }
+//
+// /* Slide-out to the right for the details component */
+// .details-slide-out {
+//   transform: translateX(100%);
+// }
+//
+// /* Slide-in from the right for the details component */
+// .details-slide-in {
+//   transform: translateX(-100%);
+// }
+//
+// /* When the component is visible, reset its transform */
+// .visible {
+//   transform: translateX(0);
+// }
+
+/* app.less */
+
+.slide-container {
+  position: relative;
+  overflow: hidden; /* Prevent overflow during transitions */
+  height: 250vh;
+}
+
+.home-container,
+.details-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s linear;
+}
+
+/* Home component starts in the viewport */
+.home-slide-in {
+  transform: translateX(100%);
+}
+
+/* Home component slides out to the left */
+.home-slide-out {
+  transform: translateX(-100%);
+}
+
+/* Details component starts off-screen to the right */
+.details-slide-in {
+  transform: translateX(-100%);
+}
+
+/* Details component slides out to the right */
+.details-slide-out {
+  transform: translateX(100%);
+}
+
+/* When a component is visible */
+.visible {
+  transform: translateX(0);
+}

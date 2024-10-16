@@ -1,28 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-details',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './details.component.html',
-//   styleUrl: './details.component.css'
-  animations: [
-      trigger('slideIn', [
-        transition(':enter', [
-          style({ transform: 'translateX(-100%)', opacity: 0 }),
-          animate('300ms ease-in', style({ transform: 'translateX(0)', opacity: 1 }))
-        ]),
-        transition(':leave', [
-          animate('300ms ease-out', style({ transform: 'translateX(100%)', opacity: 0 }))
-        ])
-      ])
-    ]
 })
 
-export class DetailsComponent implements OnInit{
+export class DetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('mainViewport') mainViewport!: ElementRef;
   imageId!: string;
   imageUrl!: string;
@@ -42,37 +29,61 @@ export class DetailsComponent implements OnInit{
     flounder: 'assets/images/flounder-1.jpg'
   };
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,
+              private renderer: Renderer2,
+              private el: ElementRef) {
+  }
 
-    ngOnInit(): void {
-      this.route.params.subscribe((params) => {
-        this.imageId = params['imageId'];
-        this.selectedImage = 'default'; //Default selection on page load
-        this.imageUrl = this.imageMap[this.imageId]; //Maybe can remove this
+  ngOnInit(): void {
 
-        if (this.imageId === 'redfish') {
-          this.images = {
-            default: 'assets/images/redfish-1.jpg',
-            framed: 'assets/images/redfish-framed.jpg',
-            zoomed: 'assets/images/redfish-high-def.jpg'
-            }
-          }
-        else if (this.imageId === 'trout') {
-          this.images = {
-            default: 'assets/images/trout-1.jpg',
-            framed: 'assets/images/trout-framed.jpg',
-            zoomed: 'assets/images/trout-high-def.jpg'
-            }
-          }
-        else if (this.imageId === 'flounder') {
-          this.images = {
-            default: 'assets/images/flounder-1.jpg',
-            framed: 'assets/images/flounder-framed.jpg',
-            zoomed: 'assets/images/flounder-high-def.jpg'
-            }
-          }
-        this.imageUrl = this.images.default;
-     });
+    this.route.params.subscribe((params) => {
+      console.log('Route parameters:', params); // Log all route parameters
+
+
+//       this.imageId = params['imageId'];
+      this.imageId = 'redfish';
+      console.log('details.component.ts - reached details component with imageId', this.imageId);
+
+
+      this.selectedImage = 'default'; //Default selection on page load
+
+      this.imageUrl = this.imageMap[this.imageId]; //Maybe can remove this
+
+      this.setImages(this.imageId); // No idea what this will do
+
+      this.imageUrl = this.images.default;
+
+    });
+
+  }
+
+  ngAfterViewInit(): void {}
+
+  setImages(imageId: string): void {
+
+    if (this.imageId === 'redfish') {
+      this.images = {
+        default: 'assets/images/redfish-1.jpg',
+        framed: 'assets/images/redfish-framed.jpg',
+        zoomed: 'assets/images/redfish-high-def.jpg'
+      };
+    } else if (this.imageId === 'trout') {
+      this.images = {
+        default: 'assets/images/trout-1.jpg',
+        framed: 'assets/images/trout-framed.jpg',
+        zoomed: 'assets/images/trout-high-def.jpg'
+      };
+    } else if (this.imageId === 'flounder') {
+      this.images = {
+        default: 'assets/images/flounder-1.jpg',
+        framed: 'assets/images/flounder-framed.jpg',
+        zoomed: 'assets/images/flounder-high-def.jpg'
+      };
+    } else {
+      console.warn('Unknown image ID:', imageId)
+      }
+//         this.imageUrl = this.images.default;
+//      });
   }
 
   switchImage(type: 'default' | 'framed' | 'zoomed'): void {

@@ -1,12 +1,11 @@
-<!--<div class="details-container" *ngIf="imageUrl" @slideIn>-->
-<div class="details-container">
+<div class="details-slide-animation">
+    <div class="details-container">
   <div class="image-label">
     <h2>{{imageId | uppercase }} - INDIVIDUAL PRINT</h2>
   </div>
   <div class="main-viewport" #mainViewport [ngClass]="{'zoomed': isZoomed}">
     <img [src]="imageUrl" alt="{{ imageId }} image"/>
   </div>
-</div>
 
 <div class="thumbnail-row">
 
@@ -30,5 +29,7 @@
          alt="Zoomed Artwork"
          class="thumbnail zoomed-thumbnail">
   </div>
+</div>
 
+</div>
 </div>

@@ -1,3 +1,4 @@
+<div class="home-slide-animation">
 <body>
 <!-- Parallax Secction -->
   <section class="parallax-container">
@@ -12,7 +13,11 @@
             <h2>INSHORE COLLECTION - INDIVIDUAL PRINTS</h2>
           </div>
           <p>REDFISH</p>
-          <a [routerLink]="['/details/redfish']"><img class="image" src="../../assets/images/redfish-1.jpg" alt="Redfish drawing"></a>
+<!--          <a [routerLink]="['/details/redfish']">-->
+          <a (click)="goToDetails('redfish')">
+            <img class="image" src="../../assets/images/redfish-1.jpg" alt="Redfish drawing">
+          </a>
+<!--          </a>-->
           <p>TROUT</p>
           <a [routerLink]="['/details/trout']"><img class="image" src="../../assets/images/trout-1.jpg" alt="Trout drawing"></a>
           <p>FLOUNDER</p>
@@ -27,3 +32,4 @@
 <!--      </div>-->
     </div>
 </body>
+</div>
