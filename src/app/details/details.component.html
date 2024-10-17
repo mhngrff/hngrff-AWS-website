@@ -4,6 +4,8 @@
     <h2>{{imageId | uppercase }} - INDIVIDUAL PRINT</h2>
   </div>
   <div class="main-viewport" #mainViewport [ngClass]="{'zoomed': isZoomed}">
+<!--    <img #currentImg [src]="imageUrl" alt="{{ imageId }} image" class="image current">-->
+<!--    <img #nextImg [src]="imageUrl" alt="{{ imageId }} next image" class="image next hidden">-->
     <img [src]="imageUrl" alt="{{ imageId }} image"/>
   </div>
 

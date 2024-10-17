@@ -19,7 +19,6 @@ body{
   }
 
 .details-container {
-
   text-align: center;
   margin-top: 8vh;
   background-color: #060604;
@@ -42,14 +41,35 @@ body{
   margin: 0 auto;        /* Center the viewport */
   overflow: hidden;      /* Hide any overflow */
   position: relative;    /* Ensure children are positioned relative to this */
+  transition: height 0.2s linear, width 0.5s ease-in-out;
 }
 
 .main-viewport img {
   max-width: 100%;       /* Remove max-width to allow zoomed images to exceed the container */
   height: auto;          /* Maintain aspect ratio */
   display: block;
-  transition: transform 0.3s ease; /* Smooth transition for zoom effect */
+  transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition for zoom effect */
+//   opacity: 1;
 }
+
+// .image {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   max-width: 100%;
+//   height: auto;
+//   opacity: 1;
+//   transition: opacity 0.5s ease-in-out;
+// }
+//
+// .image.hidden {
+//   opacity: 0;
+//   z-index: -1;
+// }
+//
+// .image.next {
+//   z-index: 1;
+// }
 
 .thumbnail-row {
   display: flex;
@@ -90,7 +110,7 @@ body{
 }
 
 .main-viewport.zoomed img {
-  transform: scale(1);           /* Only zoom the image, not the container */
+//   transform: scale(1);           /* Only zoom the image, not the container */
   cursor: grab;
   /* Set a large minimum width and height for scrolling purposes */
   min-width: 100%;                /* Ensures zoomed image can extend outside the viewport */

@@ -68,35 +68,84 @@ export class DetailsComponent implements OnInit{
     }
   }
 
-  switchImage(type: 'default' | 'framed' | 'zoomed'): void {
-    this.imageUrl = this.images[type];
-    this.isZoomed = (type === 'zoomed');
-    this.selectedImage = type;
+switchImage(type: 'default' | 'framed' | 'zoomed'): void {
+  if (this.mainViewport) {
+    const viewport = this.mainViewport.nativeElement;
+    const currentImage = viewport.querySelector('img');
 
-    // Set the scroll position for zoomed images
-    if (this.isZoomed && this.mainViewport) {
-      const viewport = this.mainViewport.nativeElement;
-      const image = viewport.querySelector('img');
+    if (currentImage) {
+      // Temporarily load the new image to measure its height
+      const tempImage = new Image();
+      tempImage.src = this.images[type];
 
-      // Wait for the image to load before setting scroll position
-      if (image) {
-        image.onload = () => {
-          const imageWidth = image.naturalWidth;
-          const imageHeight = image.naturalHeight;
+      tempImage.onload = () => {
+        // Calculate the new image height based on its aspect ratio
+        const newImageHeight = tempImage.naturalHeight * (viewport.clientWidth / tempImage.naturalWidth);
 
-          // Adjust the scroll values as needed
-          const centerX = (imageWidth / 2) - (viewport.clientWidth / 2);
-          const centerY = (imageHeight / 2) - (viewport.clientHeight / 2);
+        // Determine the height of the current image
+        const currentImageHeight = currentImage.clientHeight;
 
-          viewport.scrollTo({
-            top: centerY,
-             //left: centerX,
-            behavior: 'smooth' // Optional: smooth scrolling
-          });
-        };
-      }
+        if (type === 'zoomed') {
+          // Set the zoomed image immediately
+          this.imageUrl = this.images[type];
+          this.selectedImage = type;
+          this.isZoomed = true;
+
+          // After a short delay, adjust the viewport height smoothly
+          setTimeout(() => {
+            viewport.style.height = `${2 * newImageHeight}px`; // Set height to twice the size for zoomed image
+            viewport.style.overflow = 'auto';
+
+            // Scroll to the center if zoomed
+            const centerX = (tempImage.naturalWidth / 2) - (viewport.clientWidth / 2);
+            const centerY = (tempImage.naturalHeight / 2) - (viewport.clientHeight / 2);
+
+            viewport.scrollTo({
+              top: centerY,
+              behavior: 'auto', // Jump directly to the zoomed-in position
+            });
+          }, 50); // Adjust the timing as needed to make sure the image is visible first
+
+        } else {
+          if (newImageHeight > currentImageHeight) {
+            // Transitioning from smaller to larger image
+            // Step 1: Change the image first
+            this.imageUrl = this.images[type];
+            this.selectedImage = type;
+
+            // Step 2: Adjust the viewport height smoothly after a short delay
+            setTimeout(() => {
+              viewport.style.height = `${newImageHeight}px`;
+              this.isZoomed = false;
+            }, 100); // Adjust timing as needed
+
+          } else {
+            // Transitioning from larger to smaller image
+            // Step 1: Adjust the viewport height down first
+            viewport.style.height = `${newImageHeight}px`;
+
+            // Step 2: Change the image after height adjustment
+            setTimeout(() => {
+              this.imageUrl = this.images[type];
+              this.selectedImage = type;
+              this.isZoomed = false;
+
+              viewport.style.overflow = 'hidden'; // Hide overflow after transition out of zoom
+            }, 300); // Adjust this timing as needed for smoother transitions
+          }
+        }
+      };
     }
   }
+
+
+
+}
+
+
+
+
+
   isSelected(imageType: 'default' | 'framed' | 'zoomed'): boolean {
     return this.selectedImage === imageType;
   }
