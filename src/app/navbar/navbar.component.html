@@ -11,7 +11,7 @@
 
   <ul class="nav-links">
     <li><a (click)="navigateToHome()">HOME</a></li>
-    <li><a href="#about">ABOUT</a></li>
+    <li><a (click)="goToDetails()">ABOUT</a></li>
     <li><a [routerLink]="['/contact']" routerLinkActive="active" (click)="onLinkClick('contact')">CONTACT</a></li>
   </ul>
 </nav>

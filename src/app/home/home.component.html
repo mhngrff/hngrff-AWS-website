@@ -19,9 +19,15 @@
           </a>
 <!--          </a>-->
           <p>TROUT</p>
-          <a [routerLink]="['/details/trout']"><img class="image" src="../../assets/images/trout-1.jpg" alt="Trout drawing"></a>
+          <a (click)="goToDetails('trout')">
+            <img class="image" src="../../assets/images/trout-1.jpg" alt="Trout drawing">
+          </a>
+<!--          <a [routerLink]="['/details/trout']"><img class="image" src="../../assets/images/trout-1.jpg" alt="Trout drawing"></a>-->
           <p>FLOUNDER</p>
-          <a [routerLink]="['/details/flounder']"><img class="image" src="../../assets/images/flounder-1.jpg" alt="Flounder drawing"></a>
+          <a (click)="goToDetails('flounder')">
+            <img class="image" src="../../assets/images/flounder-1.jpg" alt="Flounder drawing">
+          </a>
+<!--          <a [routerLink]="['/details/flounder']"><img class="image" src="../../assets/images/flounder-1.jpg" alt="Flounder drawing"></a>-->
 
           <div class="image-label">
             <h2>INSHORE COLLECTION - INSHORE SLAM</h2>

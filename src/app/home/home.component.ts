@@ -19,36 +19,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-//    goToDetails(imageId: string) {
-//      const currentPage = this.el.nativeElement.querySelector('.home-slide-animation');
-//      if(currentPage) {
-//        this.renderer.addClass(currentPage, '.slide-out');
-//      }
-//
-//     setTimeout(() => {
-//       this.router.navigate(['/details', imageId]);
-//     }, 500);
-//    }
-
-  /* THIS PARTIALLY WORKS, BUT WE ARE MOVING NAV METHODS TO APP.COMPONENT.TS
-    goToDetails(imageId: string) {
-
-      const currentPage = document.querySelector('.home-slide-animation');
-      if (currentPage) {
-      this.renderer.addClass(currentPage, 'slide-out');
-      }
-
-      setTimeout(() => {
-        console.log('home.component.ts - navigation triggered' );
-      this.router.navigate(['/details', imageId]);
-      }, 500);
-
-    }
-  */
-
   goToDetails(imageId: string){
-//     console.log('home.component.ts - HIT goToDetails()', imageId);
-
+    console.log('home.component.ts - HIT goToDetails()', imageId);
     this.navigationService.goToDetails(imageId);
 
   }

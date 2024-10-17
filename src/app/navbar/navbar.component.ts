@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, NavigationEnd, Router } from '@angular/router'
+import { NavigationService } from '../services/navigation.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -12,8 +14,8 @@ export class NavbarComponent {
   onLinkClick(link: string): void {
     console.log(`Link clicked: ${link}`);
   }
- constructor(private router: Router) {
-    // Listen to router events and close the menu on navigation
+ constructor(private router: Router,
+             private navigationService: NavigationService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.closeMenu();
@@ -29,8 +31,11 @@ export class NavbarComponent {
   }
 
   navigateToHome() {
-//     console.log('navigateToHome triggered');
-    this.router.navigate(['/']);
-    this.closeMenu();  // Close the menu when navigating to home
+      this.navigationService.goToHome();
+      this.closeMenu();
   }
+
+  goToDetails() {
+    this.navigationService.goToDetails('redfish');
+    }
 }

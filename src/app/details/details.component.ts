@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { ImageStateService } from '../services/imageState.service';
 
 @Component({
   selector: 'app-details',
@@ -9,12 +11,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './details.component.html',
 })
 
-export class DetailsComponent implements OnInit, AfterViewInit {
+export class DetailsComponent implements OnInit{
   @ViewChild('mainViewport') mainViewport!: ElementRef;
   imageId!: string;
   imageUrl!: string;
   isZoomed = false;
   selectedImage!: string;
+  private routeSub!: Subscription;
 
   images: { default: string, framed: string, zoomed: string } = {
     default: '',
@@ -22,7 +25,6 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     zoomed: ''
     };
 
-  // Mapping imageIds to image file paths
   imageMap: { [key: string]: string } = {
     redfish: 'assets/images/redfish-1.jpg',
     trout: 'assets/images/trout-1.jpg',
@@ -31,59 +33,39 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute,
               private renderer: Renderer2,
-              private el: ElementRef) {
+              private el: ElementRef,
+              private imageStateService: ImageStateService
+  ) {}
+
+  ngOnInit() {
+
+    this.imageStateService.getImageIdObservable().subscribe((newImageId) => {
+      if (newImageId) {
+        this.updateImageDetails(newImageId);
+        }
+      });
   }
 
-  ngOnInit(): void {
+  private updateImageDetails(imageId: string): void {
+    this.imageId = imageId;
+    console.log('details component received imageId: ', this.imageId);
 
-    this.route.params.subscribe((params) => {
-      console.log('Route parameters:', params); // Log all route parameters
+    this.selectedImage = 'default';
+    this.setImages(this.imageId);
 
-
-//       this.imageId = params['imageId'];
-      this.imageId = 'redfish';
-      console.log('details.component.ts - reached details component with imageId', this.imageId);
-
-
-      this.selectedImage = 'default'; //Default selection on page load
-
-      this.imageUrl = this.imageMap[this.imageId]; //Maybe can remove this
-
-      this.setImages(this.imageId); // No idea what this will do
-
-      this.imageUrl = this.images.default;
-
-    });
-
-  }
-
-  ngAfterViewInit(): void {}
+    }
 
   setImages(imageId: string): void {
-
-    if (this.imageId === 'redfish') {
+    if (this.imageMap[imageId]) {
       this.images = {
-        default: 'assets/images/redfish-1.jpg',
-        framed: 'assets/images/redfish-framed.jpg',
-        zoomed: 'assets/images/redfish-high-def.jpg'
-      };
-    } else if (this.imageId === 'trout') {
-      this.images = {
-        default: 'assets/images/trout-1.jpg',
-        framed: 'assets/images/trout-framed.jpg',
-        zoomed: 'assets/images/trout-high-def.jpg'
-      };
-    } else if (this.imageId === 'flounder') {
-      this.images = {
-        default: 'assets/images/flounder-1.jpg',
-        framed: 'assets/images/flounder-framed.jpg',
-        zoomed: 'assets/images/flounder-high-def.jpg'
-      };
+        default: this.imageMap[imageId],
+        framed: `assets/images/${imageId}-framed.jpg`,
+        zoomed: `assets/images/${imageId}-high-def.jpg`
+        };
+      this.imageUrl = this.images.default;
     } else {
-      console.warn('Unknown image ID:', imageId)
-      }
-//         this.imageUrl = this.images.default;
-//      });
+      console.warn('Unknown image ID: ', imageId);
+    }
   }
 
   switchImage(type: 'default' | 'framed' | 'zoomed'): void {
