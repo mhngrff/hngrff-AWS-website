@@ -97,14 +97,14 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
             viewport.style.overflow = 'auto';
 
             // Scroll to the center if zoomed
-            const centerX = (tempImage.naturalWidth / 2) - (viewport.clientWidth / 2);
+//             const centerX = (tempImage.naturalWidth / 2) - (viewport.clientWidth / 2);
             const centerY = (tempImage.naturalHeight / 2) - (viewport.clientHeight / 2);
 
             viewport.scrollTo({
               top: centerY,
               behavior: 'auto', // Jump directly to the zoomed-in position
             });
-          }, 50); // Adjust the timing as needed to make sure the image is visible first
+          }, 0); // If this is above 0, creates zoomed glitch
 
         } else {
           if (newImageHeight > currentImageHeight) {
@@ -117,7 +117,7 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
             setTimeout(() => {
               viewport.style.height = `${newImageHeight}px`;
               this.isZoomed = false;
-            }, 100); // Adjust timing as needed
+            }, 0); // Adjust timing as needed
 
           } else {
             // Transitioning from larger to smaller image
@@ -131,7 +131,7 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
               this.isZoomed = false;
 
               viewport.style.overflow = 'hidden'; // Hide overflow after transition out of zoom
-            }, 300); // Adjust this timing as needed for smoother transitions
+            }, 150); // Adjust this timing as needed for smoother transitions
           }
         }
       };
