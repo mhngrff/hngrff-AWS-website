@@ -1,23 +1,3 @@
-// .details-slide-animation {
-//   /* Initial state of the details page */
-//   transform: translateX(100%); /* Positioned off-screen to the right */
-//   transition: transform 0.5s ease-in-out; /* Smooth transition for sliding */
-// }
-//
-// /* Slide-in when the details page becomes visible */
-// .details-slide-animation.slide-in {
-//   transform: translateX(0); /* Move the details page into view */
-// }
-//
-// /* Slide-out when navigating away from the details page */
-// .details-slide-animation.slide-out {
-//   transform: translateX(-50%); /* Slide the details page off-screen to the left */
-// }
-
-body{
-  background-color: #060604;
-  }
-
 .details-container {
   text-align: center;
   margin-top: 8vh;
@@ -35,85 +15,110 @@ body{
   font-size: 4vw;
 }
 
+/* Main viewport common styles */
 .main-viewport {
-  max-width: 100%;       /* Ensure the viewport fits within the screen width */
-  max-height: 60vh;      /* Set a maximum height for the container */
-  margin: 0 auto;        /* Center the viewport */
-  overflow: hidden;      /* Hide any overflow */
-  position: relative;    /* Ensure children are positioned relative to this */
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
   transition: height 0.15s ease-in-out, width 0.5s ease-in-out;
 }
 
-.main-viewport img {
-  max-width: 100%;       /* Remove max-width to allow zoomed images to exceed the container */
-  height: auto;          /* Maintain aspect ratio */
-  display: block;
-  transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition for zoom effect */
-//   opacity: 1;
+/* Horizontal image settings */
+.main-viewport.horizontal {
+  width: 100vw;          /* Full width for horizontal images */
+  height: auto;          /* Height adjusts smoothly */
 }
 
-// .image {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   max-width: 100%;
-//   height: auto;
-//   opacity: 1;
-//   transition: opacity 0.5s ease-in-out;
-// }
-//
-// .image.hidden {
-//   opacity: 0;
-//   z-index: -1;
-// }
-//
-// .image.next {
-//   z-index: 1;
-// }
+/* Vertical image settings */
+.main-viewport.vertical {
+//   margin-top: 8vh;
+  margin-left: 4vw;
+  width: 70vw;           /* Reduce width for vertical images */
+  height: auto;          /* Fixed height for vertical images to ensure thumbnails fit to the right */
+  float: left;
+}
 
-.thumbnail-row {
+/* Zoomed image settings (bleed off-page and scroll) */
+.main-viewport.zoomed {
+  overflow: auto;       /* Allow scrolling */
+  height: 160vh;        /* Set height to twice the size for zoomed image */
+}
+
+/* Image styles */
+.main-viewport img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition */
+}
+
+/* Thumbnails for horizontal images */
+.thumbnail-row.horizontal {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-top: 20px;
 }
 
-.thumbnail {
-  width: 32vw;
+/* Thumbnails for vertical images */
+.thumbnail-row.vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 3vw;
+  float: left;
+//   margin-top: 0;
+}
+
+.thumbnail.horizontal {
   cursor: pointer;
   border: 2px solid transparent;
-  transition: opacity 0.3s ease, border 0.3s ease;  /* Smooth transition for visual effects */
+  transition: opacity 0.3s ease, border 0.3s ease;
   overflow: hidden;
+  width: 30vw;
+  height: auto;
 }
 
-.thumbnail.lightened {
-  opacity: 0.3;  /* Lighten the unselected thumbnails */
-}
+.thumbnail.zoomed-thumbnail.horizontal {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: opacity 0.3s ease, border 0.3s ease;
+    overflow: hidden;
+    width: 30vw;
+    height: auto;
+  }
 
-.thumbnail.selected {
-  opacity: 1;    /* Ensure the selected thumbnail remains at full opacity */
-  border: 2px solid white;  /* Highlight the selected thumbnail */
-}
-
-.thumbnail.zoomed-thumbnail img{
+.thumbnail.zoomed-thumbnail.horizontal img{
   overflow: hidden;
   transform: scale(2.5);
   transition: transform 0.8s ease;
 }
 
-.thumbnail:hover {
-  border: 2px solid white;          /* Highlight on hover */
+/* Thumbnail styles for vertical images */
+.thumbnail.vertical {
+//   width: auto;
+//   height: 10vh; /* Ensure consistent thumbnail size */
+  width: 20vw;
+  height: auto;
+
 }
 
-.main-viewport.zoomed {
-  overflow: auto;                 /* Allow both horizontal and vertical scrolling */
+/* Lighten unselected thumbnails */
+.thumbnail.lightened {
+  opacity: 0.6;
 }
 
+/* Highlight selected thumbnails */
+.thumbnail.selected {
+  opacity: 1;
+  border: 2px solid white;
+}
+
+/* Zoomed image behavior */
 .main-viewport.zoomed img {
-//   transform: scale(1);           /* Only zoom the image, not the container */
   cursor: grab;
-  /* Set a large minimum width and height for scrolling purposes */
-  min-width: 100%;                /* Ensures zoomed image can extend outside the viewport */
-  min-height: 100%;               /* Ensures zoomed image can extend outside the viewport */
+  min-width: 100%;
+  min-height: 100%;
   max-width: none;
 }

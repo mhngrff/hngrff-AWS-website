@@ -17,6 +17,7 @@ export class DetailsComponent implements OnInit{
   imageUrl!: string;
   isZoomed = false;
   selectedImage!: string;
+  isTallImage = false;
   private routeSub!: Subscription;
 
   images: { default: string, framed: string, zoomed: string } = {
@@ -28,7 +29,8 @@ export class DetailsComponent implements OnInit{
   imageMap: { [key: string]: string } = {
     redfish: 'assets/images/redfish-1.jpg',
     trout: 'assets/images/trout-1.jpg',
-    flounder: 'assets/images/flounder-1.jpg'
+    flounder: 'assets/images/flounder-1.jpg',
+    fishSlam: 'assets/images/fish-slam-1.jpg'
   };
 
   constructor(private route: ActivatedRoute,
@@ -52,20 +54,41 @@ export class DetailsComponent implements OnInit{
 
     this.selectedImage = 'default';
     this.setImages(this.imageId);
+    this.calculateAspectRatio();
 
     }
 
   setImages(imageId: string): void {
     if (this.imageMap[imageId]) {
+      if(imageId === 'fishSlam') {
+        this.images= {
+          default: this.imageMap[imageId],
+          framed: `assets/images/fish-slam-framed.jpg`,
+          zoomed: `assets/images/fish-slam-individual-framed.jpg`
+          };
+        } else {
       this.images = {
         default: this.imageMap[imageId],
         framed: `assets/images/${imageId}-framed.jpg`,
         zoomed: `assets/images/${imageId}-high-def.jpg`
         };
+      }
       this.imageUrl = this.images.default;
     } else {
       console.warn('Unknown image ID: ', imageId);
     }
+  }
+
+private calculateAspectRatio(): void {
+  // Create a temporary image to load and determine its dimensions
+  const tempImage = new Image();
+  tempImage.src = this.imageUrl;
+
+  tempImage.onload = () => {
+    const aspectRatio = tempImage.naturalWidth / tempImage.naturalHeight;
+    this.isTallImage = aspectRatio < 1; //If width < height, it's a tall image and we set isTallImage
+    console.log('Aspect Ration Calculated:', aspectRatio, 'Is Tall Image: ', this.isTallImage);
+    };
   }
 
 switchImage(type: 'default' | 'framed' | 'zoomed'): void {
@@ -74,37 +97,32 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
     const currentImage = viewport.querySelector('img');
 
     if (currentImage) {
-      // Temporarily load the new image to measure its height
+      // Temporarily load the new image to measure its height and dimensions
       const tempImage = new Image();
       tempImage.src = this.images[type];
 
       tempImage.onload = () => {
         // Calculate the new image height based on its aspect ratio
         const newImageHeight = tempImage.naturalHeight * (viewport.clientWidth / tempImage.naturalWidth);
-
-        // Determine the height of the current image
         const currentImageHeight = currentImage.clientHeight;
 
         if (type === 'zoomed') {
-          // Set the zoomed image immediately
+          // Set the zoomed image immediately and make adjustments to viewport height/scroll
           this.imageUrl = this.images[type];
           this.selectedImage = type;
           this.isZoomed = true;
 
-          // After a short delay, adjust the viewport height smoothly
           setTimeout(() => {
-            viewport.style.height = `${2 * newImageHeight}px`; // Set height to twice the size for zoomed image
+            viewport.style.height = `${2 * newImageHeight}px`;
             viewport.style.overflow = 'auto';
 
-            // Scroll to the center if zoomed
-//             const centerX = (tempImage.naturalWidth / 2) - (viewport.clientWidth / 2);
             const centerY = (tempImage.naturalHeight / 2) - (viewport.clientHeight / 2);
 
             viewport.scrollTo({
-              top: centerY,
-              behavior: 'auto', // Jump directly to the zoomed-in position
+              top: (centerY / 1.2),
+              behavior: 'auto',
             });
-          }, 0); // If this is above 0, creates zoomed glitch
+          }, 0);
 
         } else {
           if (newImageHeight > currentImageHeight) {
@@ -117,7 +135,8 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
             setTimeout(() => {
               viewport.style.height = `${newImageHeight}px`;
               this.isZoomed = false;
-            }, 0); // Adjust timing as needed
+              viewport.style.overflow = 'hidden';
+            }, 0);
 
           } else {
             // Transitioning from larger to smaller image
@@ -130,17 +149,15 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
               this.selectedImage = type;
               this.isZoomed = false;
 
-              viewport.style.overflow = 'hidden'; // Hide overflow after transition out of zoom
-            }, 150); // Adjust this timing as needed for smoother transitions
+              viewport.style.overflow = 'hidden';
+            }, 150);
           }
         }
       };
     }
   }
-
-
-
 }
+
 
 
 
