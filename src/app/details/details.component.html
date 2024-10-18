@@ -27,6 +27,15 @@
            [class.vertical]="isTallImage"
            [class.horizontal]="!isTallImage">
 
+
+
+      <img *ngIf="isTallImage" [src]="images.individualFramed"
+           [ngClass]="{'selected': isSelected('individualFramed'), 'lightened': !isSelected('individualFramed')}"
+           (click)="switchImage('individualFramed')"
+           alt="Framed Artwork"
+           class="thumbnail"
+           [class.vertical] ="isTallImage">
+
       <div class="thumbnail zoomed-thumbnail" [class.horizontal]="!isTallImage">
 
       <!-- Only show the zoomed thumbnail for horizontal images -->

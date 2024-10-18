@@ -21,10 +21,11 @@ export class DetailsComponent implements OnInit, OnDestroy{
   private routeSub!: Subscription;
   private routerSub!: Subscription;
 
-  images: { default: string, framed: string, zoomed: string } = {
+  images: { default: string, framed: string, zoomed: string, individualFramed: string } = {
     default: '',
     framed: '',
-    zoomed: ''
+    zoomed: '',
+    individualFramed: ''
     };
 
   imageMap: { [key: string]: string } = {
@@ -96,13 +97,15 @@ this.routerSub = this.router.events.subscribe((event) => {
         this.images= {
           default: this.imageMap[imageId],
           framed: `assets/images/fish-slam-framed.jpg`,
-          zoomed: `assets/images/fish-slam-individual-framed.jpg`
+          zoomed: `fuckOff`,
+          individualFramed: `assets/images/fish-slam-individual-framed.jpg`
           };
         } else {
       this.images = {
         default: this.imageMap[imageId],
         framed: `assets/images/${imageId}-framed.jpg`,
-        zoomed: `assets/images/${imageId}-high-def.jpg`
+        zoomed: `assets/images/${imageId}-high-def.jpg`,
+        individualFramed: `fuckOff`
         };
       }
       this.imageUrl = this.images.default;
@@ -123,7 +126,7 @@ private calculateAspectRatio(): void {
     };
   }
 
-switchImage(type: 'default' | 'framed' | 'zoomed'): void {
+switchImage(type: 'default' | 'framed' | 'zoomed' | 'individualFramed'): void {
   if (this.mainViewport) {
     const viewport = this.mainViewport.nativeElement;
     const currentImage = viewport.querySelector('img');
@@ -191,7 +194,7 @@ switchImage(type: 'default' | 'framed' | 'zoomed'): void {
 
 
 
-  isSelected(imageType: 'default' | 'framed' | 'zoomed'): boolean {
+  isSelected(imageType: 'default' | 'framed' | 'zoomed' | 'individualFramed'): boolean {
     return this.selectedImage === imageType;
   }
 }
