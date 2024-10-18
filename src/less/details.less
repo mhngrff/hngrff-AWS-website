@@ -17,21 +17,21 @@
 
 /* Main viewport common styles */
 .main-viewport {
+  transition: height 0.15s ease-in-out;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  transition: height 0.15s ease-in-out, width 0.5s ease-in-out;
 }
 
 /* Horizontal image settings */
 .main-viewport.horizontal {
   width: 100vw;          /* Full width for horizontal images */
   height: auto;          /* Height adjusts smoothly */
+//   transition: height 0.15s ease-in-out;
 }
 
 /* Vertical image settings */
 .main-viewport.vertical {
-//   margin-top: 8vh;
   margin-left: 4vw;
   width: 70vw;           /* Reduce width for vertical images */
   height: auto;          /* Fixed height for vertical images to ensure thumbnails fit to the right */
@@ -41,7 +41,7 @@
 /* Zoomed image settings (bleed off-page and scroll) */
 .main-viewport.zoomed {
   overflow: auto;       /* Allow scrolling */
-  height: 160vh;        /* Set height to twice the size for zoomed image */
+  height: 60vh;        /* Set height to twice the size for zoomed image */
 }
 
 /* Image styles */
@@ -49,7 +49,7 @@
   max-width: 100%;
   height: auto;
   display: block;
-  transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition */
+//   transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition */
 }
 
 /* Thumbnails for horizontal images */
