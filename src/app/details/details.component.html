@@ -1,52 +1,70 @@
+<!--<div class="details-slide-animation">-->
+<!--  <div class="details-container">-->
+<!--    <div class="image-label">-->
+<!--      <h2>{{ imageId | uppercase }} - INDIVIDUAL PRINT</h2>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main viewport with dynamic class &ndash;&gt;-->
+<!--    <div [ngClass]="{'main-viewport': true, 'horizontal': !isTallImage, 'vertical': isTallImage, 'zoomed': isZoomed}" #mainViewport>-->
+<!--      <img [src]="imageUrl" alt="{{ imageId }} image" [ngClass]="{'zoomed-image': isZoomed, 'default-image': !isZoomed}">-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Thumbnail container with dynamic class &ndash;&gt;-->
+<!--    <div [ngClass]="{'thumbnail-row': true, 'horizontal': !isTallImage, 'vertical': isTallImage}">-->
+<!--      <img *ngFor="let thumbnail of images.thumbnails; let i = index"-->
+<!--           [src]="thumbnail"-->
+<!--           [ngClass]="{'selected': selectedImage === ('thumbnail' + i), 'lightened': selectedImage !== ('thumbnail' + i)}"-->
+<!--           (click)="switchImage('thumbnail' + i)"-->
+<!--           alt="Thumbnail {{i + 1}}"-->
+<!--           class="thumbnail"-->
+<!--           [class.vertical]="isTallImage"-->
+<!--           [class.horizontal]="!isTallImage">-->
+
+<!--    &lt;!&ndash; Zoomed thumbnail (only for horizontal images if available) &ndash;&gt;-->
+<!--    <div *ngIf="hasZoomedOption && !isTallImage" class="thumbnail zoomed-thumbnail">-->
+<!--      <img [src]="images.zoomed"-->
+<!--           [ngClass]="{'selected': isSelected('zoomed'), 'lightened': !isSelected('zoomed')}"-->
+<!--           (click)="switchImage('zoomed')"-->
+<!--           alt="Zoomed Artwork"-->
+<!--           class="thumbnail zoomed-thumbnail"-->
+<!--           [class.horizontal]="!isTallImage">-->
+<!--    </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</div>-->
+
 <div class="details-slide-animation">
   <div class="details-container">
     <div class="image-label">
       <h2>{{ imageId | uppercase }} - INDIVIDUAL PRINT</h2>
     </div>
 
-    <!-- Main viewport with dynamic class -->
-    <div [ngClass]="{'main-viewport': true, 'horizontal': !isTallImage, 'vertical': isTallImage, 'zoomed': isZoomed}" #mainViewport>
-      <img [src]="imageUrl" alt="{{ imageId }} image" [ngClass]="{'zoomed-image': isZoomed, 'default-image': !isZoomed}">
+    <!-- Main viewport with streamlined dynamic classes -->
+    <div [ngClass]="{'main-viewport': true, 'horizontal': !isTallImage, 'vertical': isTallImage, 'expanded': isZoomed}" #mainViewport>
+      <img [src]="imageUrl" alt="{{ imageId }} image">
     </div>
 
     <!-- Thumbnail container with dynamic class -->
     <div [ngClass]="{'thumbnail-row': true, 'horizontal': !isTallImage, 'vertical': isTallImage}">
-      <img [src]="images.default"
-           [ngClass]="{'selected': isSelected('default'), 'lightened': !isSelected('default')}"
-           (click)="switchImage('default')"
-           alt="Default Artwork"
+      <img *ngFor="let thumbnail of images.thumbnails; let i = index"
+           [src]="thumbnail"
+           [ngClass]="{'selected': selectedImage === ('thumbnail' + i), 'lightened': selectedImage !== ('thumbnail' + i)}"
+           (click)="switchImage('thumbnail' + i)"
+           alt="Thumbnail {{i + 1}}"
            class="thumbnail"
            [class.vertical]="isTallImage"
            [class.horizontal]="!isTallImage">
 
-      <img [src]="images.framed"
-           [ngClass]="{'selected': isSelected('framed'), 'lightened': !isSelected('framed')}"
-           (click)="switchImage('framed')"
-           alt="Framed Artwork"
-           class="thumbnail"
-           [class.vertical]="isTallImage"
-           [class.horizontal]="!isTallImage">
-
-
-
-      <img *ngIf="isTallImage" [src]="images.individualFramed"
-           [ngClass]="{'selected': isSelected('individualFramed'), 'lightened': !isSelected('individualFramed')}"
-           (click)="switchImage('individualFramed')"
-           alt="Framed Artwork"
-           class="thumbnail"
-           [class.vertical] ="isTallImage">
-
-      <div class="thumbnail zoomed-thumbnail" [class.horizontal]="!isTallImage">
-
-      <!-- Only show the zoomed thumbnail for horizontal images -->
-      <img *ngIf="!isTallImage" [src]="images.zoomed"
-           [ngClass]="{'selected': isSelected('zoomed'), 'lightened': !isSelected('zoomed')}"
-           (click)="switchImage('zoomed')"
-           alt="Zoomed Artwork"
-           class="thumbnail zoomed-thumbnail"
-           [class.horizontal]="!isTallImage">
-<!--        class="thumbnail zoomed-thumbnail"-->
-    </div>
+      <!-- Zoomed thumbnail (only for horizontal images if available) -->
+      <div *ngIf="hasZoomedOption && !isTallImage" class="thumbnail zoomed-thumbnail">
+        <img [src]="images.zoomed"
+             [ngClass]="{'selected': isSelected('zoomed'), 'lightened': !isSelected('zoomed')}"
+             (click)="switchImage('zoomed')"
+             alt="Zoomed Artwork"
+             class="thumbnail zoomed-thumbnail"
+             [class.horizontal]="!isTallImage">
+      </div>
     </div>
   </div>
 </div>

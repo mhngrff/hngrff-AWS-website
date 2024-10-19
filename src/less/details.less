@@ -1,3 +1,128 @@
+// .details-container {
+//   text-align: center;
+//   margin-top: 8vh;
+//   background-color: #060604;
+// }
+//
+// .image-label {
+//   width: 80vw;
+//   margin: 0 auto; /* CENTERS THE CONTAINER HORIZONTALLY */
+//   }
+//
+// .image-label h2 {
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 300;
+//   font-size: 4vw;
+// }
+//
+// /* Main viewport common styles */
+// .main-viewport {
+//   transition: height 0.15s ease-in-out;
+//   margin: 0 auto;
+//   overflow: hidden;
+//   position: relative;
+// }
+//
+// /* Horizontal image settings */
+// .main-viewport.horizontal {
+//   width: 100vw;          /* Full width for horizontal images */
+//   height: auto;          /* Height adjusts smoothly */
+// //   transition: height 0.15s ease-in-out;
+// }
+//
+// /* Vertical image settings */
+// .main-viewport.vertical {
+//   margin-left: 4vw;
+//   width: 70vw;           /* Reduce width for vertical images */
+//   height: auto;          /* Fixed height for vertical images to ensure thumbnails fit to the right */
+//   float: left;
+// }
+//
+// /* Zoomed image settings (bleed off-page and scroll) */
+// .main-viewport.zoomed {
+//   overflow: auto;       /* Allow scrolling */
+//   height: 60vh;        /* Set height to twice the size for zoomed image */
+// }
+//
+// /* Image styles */
+// .main-viewport img {
+//   max-width: 100%;
+//   height: auto;
+//   display: block;
+// //   transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition */
+// }
+//
+// /* Thumbnails for horizontal images */
+// .thumbnail-row.horizontal {
+//   display: flex;
+//   justify-content: center;
+//   gap: 10px;
+//   margin-top: 20px;
+// }
+//
+// /* Thumbnails for vertical images */
+// .thumbnail-row.vertical {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   gap: 10px;
+//   margin-left: 3vw;
+//   float: left;
+// //   margin-top: 0;
+// }
+//
+// .thumbnail.horizontal {
+//   cursor: pointer;
+//   border: 2px solid transparent;
+//   transition: opacity 0.3s ease, border 0.3s ease;
+//   overflow: hidden;
+//   width: 30vw;
+//   height: auto;
+// }
+//
+// .thumbnail.zoomed-thumbnail.horizontal {
+//     cursor: pointer;
+//     border: 2px solid transparent;
+//     transition: opacity 0.3s ease, border 0.3s ease;
+//     overflow: hidden;
+//     width: 30vw;
+//     height: auto;
+//   }
+//
+// .thumbnail.zoomed-thumbnail.horizontal img{
+//   overflow: hidden;
+//   transform: scale(2.5);
+//   transition: transform 0.8s ease;
+// }
+//
+// /* Thumbnail styles for vertical images */
+// .thumbnail.vertical {
+// //   width: auto;
+// //   height: 10vh; /* Ensure consistent thumbnail size */
+//   width: 20vw;
+//   height: auto;
+//
+// }
+//
+// /* Lighten unselected thumbnails */
+// .thumbnail.lightened {
+//   opacity: 0.6;
+// }
+//
+// /* Highlight selected thumbnails */
+// .thumbnail.selected {
+//   opacity: 1;
+// //   border: 2px solid white;
+// }
+//
+// /* Zoomed image behavior */
+// .main-viewport.zoomed img {
+//   cursor: grab;
+//   min-width: 100%;
+//   min-height: 100%;
+//   max-width: none;
+// }
+
 .details-container {
   text-align: center;
   margin-top: 8vh;
@@ -7,7 +132,7 @@
 .image-label {
   width: 80vw;
   margin: 0 auto; /* CENTERS THE CONTAINER HORIZONTALLY */
-  }
+}
 
 .image-label h2 {
   font-family: 'Roboto', sans-serif;
@@ -17,31 +142,39 @@
 
 /* Main viewport common styles */
 .main-viewport {
-  transition: height 0.15s ease-in-out;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  transition: height 0.15s ease-in-out; /* Smooth transition for viewport height */
 }
 
 /* Horizontal image settings */
 .main-viewport.horizontal {
   width: 100vw;          /* Full width for horizontal images */
-  height: auto;          /* Height adjusts smoothly */
-//   transition: height 0.15s ease-in-out;
+  height: 60vh;          /* Fixed height for horizontal images */
 }
 
 /* Vertical image settings */
 .main-viewport.vertical {
   margin-left: 4vw;
   width: 70vw;           /* Reduce width for vertical images */
-  height: auto;          /* Fixed height for vertical images to ensure thumbnails fit to the right */
+  height: 100vh;         /* Fixed height for vertical images to ensure thumbnails fit to the right */
   float: left;
 }
 
-/* Zoomed image settings (bleed off-page and scroll) */
-.main-viewport.zoomed {
-  overflow: auto;       /* Allow scrolling */
-  height: 60vh;        /* Set height to twice the size for zoomed image */
+/* Expanded view for zoomed horizontal images */
+.main-viewport.horizontal.expanded {
+  height: 65vh !important;     /* Adjust as needed for zoomed height */
+  overflow: auto !important;
+  overflow: auto;        /* Allow scrolling */
+  transition: height 0.3s ease-in-out; /* Smooth transition for zoomed view */
+}
+
+/* Zoomed image behavior for main viewport */
+.main-viewport.horizontal.expanded img {
+  cursor: grab;
+  max-width: none;
+  width: auto;   /* Allow the image to maintain aspect ratio */
 }
 
 /* Image styles */
@@ -49,7 +182,6 @@
   max-width: 100%;
   height: auto;
   display: block;
-//   transition: opacity 0.3s ease, transform 0.5s ease-in-out; /* Smooth transition */
 }
 
 /* Thumbnails for horizontal images */
@@ -68,57 +200,49 @@
   gap: 10px;
   margin-left: 3vw;
   float: left;
-//   margin-top: 0;
 }
 
-.thumbnail.horizontal {
+/* Thumbnail common styles */
+.thumbnail {
   cursor: pointer;
   border: 2px solid transparent;
   transition: opacity 0.3s ease, border 0.3s ease;
   overflow: hidden;
+}
+
+/* Horizontal thumbnail styles */
+.thumbnail.horizontal {
   width: 30vw;
   height: auto;
 }
 
-.thumbnail.zoomed-thumbnail.horizontal {
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: opacity 0.3s ease, border 0.3s ease;
-    overflow: hidden;
-    width: 30vw;
-    height: auto;
-  }
-
-.thumbnail.zoomed-thumbnail.horizontal img{
-  overflow: hidden;
-  transform: scale(2.5);
-  transition: transform 0.8s ease;
-}
-
-/* Thumbnail styles for vertical images */
+/* Vertical thumbnail styles */
 .thumbnail.vertical {
-//   width: auto;
-//   height: 10vh; /* Ensure consistent thumbnail size */
   width: 20vw;
   height: auto;
-
 }
 
 /* Lighten unselected thumbnails */
 .thumbnail.lightened {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 /* Highlight selected thumbnails */
 .thumbnail.selected {
   opacity: 1;
-//   border: 2px solid white;
 }
 
-/* Zoomed image behavior */
-.main-viewport.zoomed img {
-  cursor: grab;
-  min-width: 100%;
-  min-height: 100%;
-  max-width: none;
+/* Zoomed thumbnail specific styles */
+.thumbnail.zoomed-thumbnail.horizontal {
+  overflow: hidden;
+  transform: scale(2.5);
+  width: 30vw;
+  height: auto;
 }
+
+.thumbnail.zoomed-thumbnail.horizontal img {
+  overflow: hidden;
+  transform: scale(2.5); /* Cropped zoom-in effect */
+  transition: transform 0.8s ease;
+}
+
