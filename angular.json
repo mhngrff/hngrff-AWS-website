@@ -28,7 +28,7 @@
               }
             ],
             "styles": [
-              "src/styles.css",
+              "dist/css/app.css",
               "dist/css/styles.css",
               "dist/css/home.css",
               "dist/css/navbar.css",

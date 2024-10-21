@@ -1,17 +1,35 @@
-import { Component } from '@angular/core';
-import { RouterModule, NavigationEnd, Router } from '@angular/router'
+import { Component, OnInit } from '@angular/core';
+import { ImageService } from '../services/image.service';
+import { NavigationService } from '../services/navigation.service';
+import { CommonModule } from '@angular/common';
+
+
+interface ImageData {
+  id: string;
+  title: string;
+  url: string;
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule],
   templateUrl: './home.component.html',
-//   styleUrl: './home.component.css'
+  imports: [CommonModule],
+  styleUrls: ['../../less/home.less']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  images: ImageData[] = [];
 
-  constructor(private router: Router) {}
-  goToDetails(imageId: number) {
-    this.router.navigate(['/details', imageId]);
-}
+  constructor(private imageService: ImageService,
+              private navigationService: NavigationService) {}
+
+  ngOnInit(): void {
+    this.imageService.getImages().subscribe(data => {
+      this.images = data;
+    });
+  }
+
+  goToDetails(imageId: string){
+    this.navigationService.goToDetails(imageId);
+    }
 }

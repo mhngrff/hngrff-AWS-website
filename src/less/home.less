@@ -1,6 +1,7 @@
 /* Content styling for desktop */
 html, body{
-  background-color: #000;
+//   background-color: #000;
+  background-color: #050503;
   }
 
 @media only screen and (min-width: 786px) {
@@ -11,6 +12,7 @@ html, body{
     background-repeat: no-repeat;
     width: 100vw;
     height: 50vh; /* Adjusting this will make the content higher up on the page */
+    background-color: #050503;
   }
 
 .images-section {
@@ -19,6 +21,7 @@ html, body{
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 0;
 }
 
 /* General Image Styling */
@@ -32,6 +35,7 @@ html, body{
 @media only screen and (max-width: 786px) {
   body {
       margin: 0;
+//       height: 95vh; /* Ensure the body takes full height */
       height: 100vh; /* Ensure the body takes full height */
       overflow-x: hidden; /* Prevent horizontal overflow */
   }
@@ -39,16 +43,19 @@ html, body{
     background-image: url('/assets/images/costa-rica2.jpg');
     background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
     background-size: 100vw auto;
-    background-position: 0 7vh;
+    background-position: top left;
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh; /* Adjusting this will make the content higher up on the page */
     position: absolute;
+    z-index: 1;
   }
 
 .container{
     width: 80vw;
-    margin: 0 auto;
+    margin: 8vh auto 0;
+    height: 150vh;
+    display: block;
   }
 
 .image-label {
@@ -61,24 +68,29 @@ html, body{
 }
 
 .image-label h2 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  font-size: 5vw; /* Adjust font size for headings */
-//   margin-bottom: 10px; /* Space between heading and paragraph */
-}
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 4vw; /* Adjust font size for headings */
+  }
 
 .images-section {
+    position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center;
+    height: auto;
+    gap: 2vh; //CONTROL SPACING BETWEEN IMAGES
+    padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
+  }
+
+.individual-image-container {
   position: relative; /* Ensure it stays within the document flow but on top of the parallax */
   z-index: 2; /* Ensure images are above the background */
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: flex-start; /* Center vertically */
-//   margin-top: 0; /* Reset any margin */
+  display: block;
   width: 80vw;
-//   min-height: 100vh; /* Ensure it takes at least the full viewport height */
-  padding: 6vh 0; /* Adjust to position images where desired */
-  height: 200vh;
+//   height: 50vh;
+//   height: auto; //Let the height be determined by the height of the image
 }
 
 .images-section a {
@@ -88,6 +100,7 @@ html, body{
 /* General Image Styling */
 .image {
   width: 80vw;
+  padding: 0;
   }
 
 p {
