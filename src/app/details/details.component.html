@@ -1,77 +1,150 @@
-<div *ngIf="image$ | async as image">
-<!-- VIEWPORT WITH EXPAND ICON -->
-<div class="viewport">
-  <!-- EXPAND ICON -->
-<!--  <div class="expand-icon" *ngIf="image.zoomImage && isDefaultView" (click)="openZoomView()">-->
-<!--    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">-->
-<!--      <path fill="none" stroke="white" stroke-width="4" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>-->
-<!--    </svg>-->
+<!--<div *ngIf="imageMetadata$ | async as metadata">-->
+<!--  <div class="details-container">-->
+<!--    &lt;!&ndash; Metadata and Arrow Container &ndash;&gt;-->
+<!--    <div class="details-content">-->
+<!--      <h2>{{ metadata.title }}</h2>-->
+<!--      <p>{{ metadata.description }}</p>-->
+<!--      <div class="price">-->
+<!--        <p>Price: {{ metadata.price | currency: metadata.currency }}</p>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Arrow Navigation &ndash;&gt;-->
+<!--    <div class="arrow-navigation">-->
+<!--      <div class="left-arrow" [ngClass]="{'disabled-arrow': isAtFirstImage}" (click)="!isAtFirstImage && navigateLeft()">-->
+<!--        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--          <path d="M15 7L10 12L15 17" stroke-linecap="round" stroke-linejoin="round" />-->
+<!--        </svg>-->
+<!--      </div>-->
+
+<!--      <div class="progress-indicator">{{ currentIndex + 1 }} / {{ totalImages }}</div>-->
+
+<!--      <div class="right-arrow" [ngClass]="{'disabled-arrow': isAtLastImage}" (click)="!isAtLastImage && navigateRight()">-->
+<!--        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round" />-->
+<!--        </svg>-->
+<!--      </div>-->
+<!--    </div>-->
 <!--  </div>-->
 
-  <!-- SCROLLABLE CONTAINER -->
+<!--  &lt;!&ndash; Viewport for Images &ndash;&gt;-->
+<!--  <div class="viewport">-->
+<!--    &lt;!&ndash; SCROLLABLE CONTAINER &ndash;&gt;-->
+<!--    <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">-->
+<!--      &lt;!&ndash; MAIN IMAGE &ndash;&gt;-->
+<!--      <div class="image-slide" *ngIf="image$ | async as image">-->
+<!--        &lt;!&ndash; Expand Icon &ndash;&gt;-->
+<!--        <div class="expand-icon" [ngClass]="{'visible': isDefaultView && image.zoomImage}" (click)="openZoomView()">-->
+<!--          <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">-->
+<!--            <path fill="none" stroke="white" stroke-width="1.5" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9" />-->
+<!--          </svg>-->
+<!--        </div>-->
 
-  <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
+<!--        <img [src]="image.mainImage"-->
+<!--             [alt]="image.title"-->
+<!--             class="details-image"-->
+<!--             (load)="onImageLoad($event)">-->
+<!--      </div>-->
 
-    <!-- MAIN IMAGE -->
-    <div class="image-slide">
+<!--      &lt;!&ndash; ALTERNATE VIEWS &ndash;&gt;-->
+<!--      <div class="image-slide" *ngFor="let img of (image$ | async)?.alternateViews">-->
+<!--        <img [src]="img.url" [alt]="metadata.title + ' alternate view'" class="details-image" (load)="onImageLoad($event)">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
-      <div class="expand-icon" [ngClass]="{'visible': image.zoomImage && isDefaultView}" (click)="openZoomView()">
-        <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
-          <path fill="none" stroke="white" stroke-width="1.5" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>
-        </svg>
+<!--  &lt;!&ndash; Zoom View Overlay &ndash;&gt;-->
+<!--  <div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">-->
+<!--    <div class="exit-icon" (click)="closeZoomView()">-->
+<!--      <svg fill="white" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">-->
+<!--        <path d="M876.612 1043.388v710.171H761.27v-513.28L81.663 1920 0 1838.337l679.72-679.606H166.442v-115.343h710.171ZM1838.394 0l81.548 81.548-679.605 679.72h513.28v115.344h-710.172V166.441h115.344v513.164L1838.394 0Z" fill-rule="evenodd" />-->
+<!--      </svg>-->
+<!--    </div>-->
+<!--    <div class="zoom-content">-->
+<!--      <img *ngIf="image$ | async as image"-->
+<!--           [src]="image.zoomImage"-->
+<!--           [alt]="image.title + ' zoomed-in view'"-->
+<!--           class="zoomed-image">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Placeholder when image is loading &ndash;&gt;-->
+<!--<ng-template #imagePlaceholder>-->
+<!--  <div class="image-placeholder"></div>-->
+<!--</ng-template>-->
+
+<div *ngIf="imageMetadata$ | async as metadata">
+
+    <!-- Viewport for Images: Place it above the metadata -->
+    <div class="viewport">
+      <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
+        <!-- MAIN IMAGE -->
+        <div class="image-slide" *ngIf="image$ | async as image; else imagePlaceholder">
+          <!-- Expand Icon -->
+          <div class="expand-icon" [ngClass]="{'visible': isDefaultView && image.zoomImage}" (click)="openZoomView()">
+            <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
+              <path fill="none" stroke="white" stroke-width="1.5" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9" />
+            </svg>
+          </div>
+          <img [src]="image.mainImage"
+               [alt]="image.title"
+               class="details-image"
+               (load)="onImageLoad($event)">
+        </div>
+
+        <ng-template #imagePlaceholder>
+          <div class="image-placeholder"></div>
+        </ng-template>
+
+        <!-- ALTERNATE VIEWS -->
+        <div class="image-slide" *ngFor="let img of (image$ | async)?.alternateViews">
+          <img [src]="img.url" [alt]="metadata.title + ' alternate view'" class="details-image" (load)="onImageLoad($event)">
+        </div>
       </div>
-
-
-      <img [src]="image.mainImage" [alt]="image.title" class="details-image" (load)="onImageLoad($event)">
     </div>
+  <div class="details-container">
 
-    <!-- ALTERNATE VIEWS -->
-    <div class="image-slide" *ngFor="let img of image.alternateViews">
-      <img [src]="img.url" [alt]="image.title + 'alternate view'" class="details-image" (load)="onImageLoad($event)">
-    </div>
-  </div>
-</div>
-
-
-<div class="container">
-
-
+    <!-- Arrow Navigation: Should be below viewport -->
     <div class="arrow-navigation">
-
       <div class="left-arrow" [ngClass]="{'disabled-arrow': isAtFirstImage}" (click)="!isAtFirstImage && navigateLeft()">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 7L10 12L15 17" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 7L10 12L15 17" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
 
-      <div class="progress-indicator">{{ currentIndex + 1 }} / {{ totalImages }} </div>
+      <div class="progress-indicator">{{ currentIndex + 1 }} / {{ totalImages }}</div>
 
       <div class="right-arrow" [ngClass]="{'disabled-arrow': isAtLastImage}" (click)="!isAtLastImage && navigateRight()">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
-
     </div>
 
-      <!-- Zoom View Overlay -->
-      <div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">
-          <div class="exit-icon" *ngIf="image.zoomImage" (click)="closeZoomView()">
-            <svg fill="white" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
-              <path d="M876.612 1043.388v710.171H761.27v-513.28L81.663 1920 0 1838.337l679.72-679.606H166.442v-115.343h710.171ZM1838.394 0l81.548 81.548-679.605 679.72h513.28v115.344h-710.172V166.441h115.344v513.164L1838.394 0Z" fill-rule="evenodd"/>
-            </svg>
-          </div>
-        <div class="zoom-content">
-          <img [src]="image.zoomImage" [alt]="image.title + ' zoomed-in view'" class="zoomed-image">
-        </div>
+    <!-- Metadata: Title, Description, Price -->
+    <div class="details-content">
+      <h2>{{ metadata.title }}</h2>
+      <p>{{ metadata.description }}</p>
+      <div class="price">
+        <p>Price: {{ metadata.price | currency: metadata.currency }}</p>
       </div>
+    </div>
 
+  </div>
 
-    <!-- IMAGE DETAILS -->
-    <h2>{{ image.title }}</h2>
-    <p>{{ image.description }}</p>
-    <div class="price">
-      <p>Price: {{ image.price | currency:image.currency }}</p>
+  <!-- Zoom View Overlay -->
+  <div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">
+    <div class="exit-icon" (click)="closeZoomView()">
+      <svg fill="white" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
+        <path d="M876.612 1043.388v710.171H761.27v-513.28L81.663 1920 0 1838.337l679.72-679.606H166.442v-115.343h710.171ZM1838.394 0l81.548 81.548-679.605 679.72h513.28v115.344h-710.172V166.441h115.344v513.164L1838.394 0Z" fill-rule="evenodd" />
+      </svg>
+    </div>
+    <div class="zoom-content">
+      <img *ngIf="image$ | async as image"
+           [src]="image.zoomImage"
+           [alt]="image.title + ' zoomed-in view'"
+           class="zoomed-image">
     </div>
   </div>
 </div>

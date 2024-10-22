@@ -1,19 +1,39 @@
-.container{
-    width: 80vw;
-    margin: 0 auto 0;
-    height: 150vh;
-    display: block;
+.details-container {
+  width: 80vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details-content {
+  display: flex;
+  flex-direction: column; /* Metadata visually below viewport */
+  align-items: flex-start;
+  width: 100%;
+}
+
+h2 {
+  color: white;
+}
+
+.price p {
+  color: white;
+}
+
+p {
+  z-index: 20;
   }
 
 .viewport {
-  margin: 8vh auto 0;
+  margin-top: 8vh; /* Spacing above viewport */
   position: relative;
   width: 100%; /* Take full container width */
   height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  }
+}
 
 .scrollable-container {
   background-color: black;
@@ -56,32 +76,38 @@
   margin-top: 1rem;
 }
 
-  .left-arrow, .right-arrow {
-    width: 6vw;
-    cursor: pointer;
-    transition: opacity 0.4s ease;
+.progress-indicator {
+  margin-left: 30vw;
+  margin-right: 30vw;
   }
 
-  .left-arrow.disabled-arrow svg path, .right-arrow.disabled-arrow svg path {
-    opacity: 0.3;
-    cursor: not-allowed;
-    transition: opacity 0.2s ease;
-  }
+.left-arrow,
+.right-arrow {
+  width: 6vw;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+}
 
+.left-arrow.disabled-arrow svg path,
+.right-arrow.disabled-arrow svg path {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transition: opacity 0.2s ease;
+}
 
-.left-arrow svg path, .right-arrow svg path {
+.left-arrow svg path,
+.right-arrow svg path {
   stroke: white;
   stroke-width: 1;
   transition: opacity 0.2s ease;
-  }
+}
 
-  .progress-indicator {
-    font-family: 'Roboto', sans-serif;
-    color: white;
-    font-size: 3vw;
-    font-weight: 300;
-  }
-
+.progress-indicator {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  font-size: 3vw;
+  font-weight: 300;
+}
 
 .expand-icon {
   position: absolute; /* Position relative to the viewport container */
@@ -97,16 +123,16 @@
   transition: opacity 0.8s ease-out;
   opacity: 0;
   will-change: opacity;
-  }
+}
 
-.expand-icon.visible{
+.expand-icon.visible {
   opacity: 1;
   will-change: opacity;
-  }
+}
 
 .expand-icon svg path {
   fill: none;
-  stroke: white;  /* Set the stroke color if needed */
+  stroke: white; /* Set the stroke color if needed */
   transition: opacity 0.1s ease;
   will-change: opacity;
 }
@@ -122,7 +148,7 @@
   justify-content: center;
   cursor: pointer;
   z-index: 3000; /* Higher than zoom content to keep it visible */
-  }
+}
 
 .exit-icon svg path {
   fill: white;
@@ -139,6 +165,9 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7); /* Slightly gray out the background */
   z-index: 2000; /* Make sure it's above everything else */
+  display: flex; /* Center the zoom-content */
+  align-items: center; /* Vertically center */
+  justify-content: center; /* Horizontally center */
   overflow: auto; /* Prevent scrolling beyond zoomed content */
   margin: 0;
   padding: 0;
@@ -148,7 +177,6 @@
   justify-content: flex-start; /* Horizontally center */
 }
 
-/* Nothing in here has any effect */
 .zoom-content {
   width: 95vw;
   height: 95vh;
@@ -160,8 +188,10 @@
 }
 
 .zoomed-image {
-  width: auto;   /* Keep natural width, allowing horizontal scroll if necessary */
-  height: auto;  /* Keep natural height */
+  width: auto; /* Keep natural width, allowing horizontal scroll if necessary */
+  height: auto; /* Keep natural height */
+//   max-height: 100%; /* Ensure the image fits inside zoom-content */
+//   max-width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -179,18 +209,26 @@
   z-index: 21;
 }
 
-h2 {
-  color: white;
-  }
-
-.details-container {
+.image-placeholder {
+  width: 100vw;
+  height: 29vh; /* This appears to be exact, will need to change based on default image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 1.2rem;
   text-align: center;
-//   padding: 6vw;
-  margin-top: 8vh;
-  background-color: lightgray;
+  background-color: black;
+//   background-color: #ccc;
+//   opacity: .1;
 }
 
 .details-image {
-  max-width: 100%;
-  height: auto;
+  opacity: 0; /* Start with hidden image */
+  transition: opacity 0.2s ease-in-out; /* Quick transition to make fade-in smooth */
+}
+
+.details-image.loaded {
+  opacity: 1; /* Make it visible once loaded */
+  transition: opacity 0.2s ease-in-out;
 }

@@ -33,6 +33,20 @@ export class ImageService {
     );
   }
 
+  getImageMetadataById(id: string): Observable<Partial<Image> | undefined> {
+    return this.getImages().pipe(
+      map(images => {
+        const image = images.find(img => img.id === id);
+        if (image) {
+          // Return everything except the URLs for images
+          const { title, description, price, currency, id } = image;
+          return { title, description, price, currency, id };
+        }
+        return undefined;
+      })
+    );
+  }
+
   getImageById(id: string): Observable<Image | undefined> {
     return this.getImages().pipe(
       map(images => images.find(image => image.id === id))

@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 
 export class DetailsComponent implements OnInit, AfterViewInit {
   image$: Observable<Image | undefined> = of(undefined);
+  imageMetadata$: Observable<Partial<Image> | undefined> = of(undefined);
+  mainImageUrl: string | null = null;
   isZoomView: boolean = false; // To control modal visibility
   currentIndex = 0;
   totalImages: number = 0;
@@ -31,20 +33,42 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     private imageService: ImageService
   ) {}
 
+//   ngOnInit(): void {
+//     const id = this.route.snapshot.paramMap.get('imageId');
+//     if (id) {
+//       this.image$ = this.imageService.getImageById(id!);
+//       this.image$.subscribe((image: Image | undefined) => {
+//         if (image) {
+//           this.totalImages = (image.alternateViews?.length || 0) + 1; // Add +1 for the default image
+//           this.currentIndex = 0;
+//           this.updateArrowStates();
+//         } else {
+//           console.error(`Image with id ${id} not found`);
+//           // Handle the error appropriately (e.g., redirect to home page or show a message)
+//         }
+//       });
+//     }
+//   }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('imageId');
     if (id) {
+      // Fetch the metadata first (title, description, price)
+      this.imageMetadata$ = this.imageService.getImageMetadataById(id!);
+
+      setTimeout(() => {
+      // Fetch the full image data separately
       this.image$ = this.imageService.getImageById(id!);
       this.image$.subscribe((image: Image | undefined) => {
         if (image) {
-          this.totalImages = (image.alternateViews?.length || 0) + 1; // Add +1 for the default image
-          this.currentIndex = 0;
+          this.mainImageUrl = image.mainImage;
+          this.totalImages = (image.alternateViews?.length || 0) + 1;
           this.updateArrowStates();
         } else {
           console.error(`Image with id ${id} not found`);
-          // Handle the error appropriately (e.g., redirect to home page or show a message)
         }
       });
+    }, 0);
     }
   }
 
