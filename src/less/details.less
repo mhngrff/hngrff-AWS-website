@@ -54,27 +54,25 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
+}
 
-//   .left-arrow, .right-arrow {
-//     background-color: transparent;
-//     border: none;
-//     color: white;
-//     font-size: 2rem;
-//     cursor: pointer;
-//     &:disabled {
-//       opacity: 0.5;
-//       cursor: not-allowed;
-//     }
-//   }
-
-.left-arrow, .right-arrow {
-  width: 6vw;
-
+  .left-arrow, .right-arrow {
+    width: 6vw;
+    cursor: pointer;
+    transition: opacity 0.4s ease;
   }
+
+  .left-arrow.disabled-arrow svg path, .right-arrow.disabled-arrow svg path {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transition: opacity 0.2s ease;
+  }
+
 
 .left-arrow svg path, .right-arrow svg path {
   stroke: white;
   stroke-width: 1;
+  transition: opacity 0.2s ease;
   }
 
   .progress-indicator {
@@ -83,12 +81,11 @@
     font-size: 3vw;
     font-weight: 300;
   }
-}
 
 
 .expand-icon {
   position: absolute; /* Position relative to the viewport container */
-  top: 2vh; /* Adjust this to move vertically */
+  top: 1vh; /* Adjust this to move vertically */
   right: 2vw; /* Adjust this to move horizontally */
   width: 5vw; /* Set appropriate size */
   height: auto;
@@ -97,12 +94,19 @@
   justify-content: center;
   cursor: pointer;
   z-index: 10; /* Ensures the icon is on top of the image */
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  }
+
+.expand-icon.visible{
+  opacity: 1;
   }
 
 .expand-icon svg path {
   fill: none;
   stroke: white;  /* Set the stroke color if needed */
   stroke-width: 2; /* Adjust the stroke width to make it appear bolder */
+  transition: opacity 0.2s ease;
 }
 
 /* Exit Icon Styling */
@@ -127,29 +131,37 @@
 /* Full-Screen Zoom View Overlay */
 .zoom-overlay {
   position: fixed;
-  top: 2.5vh;
-  left: 2.5vw;
-  width: 95vw;
-  height: 95vh;
-  background-color: rgba(0, 0, 0, 0.9); /* Dark overlay with transparency */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Slightly gray out the background */
   z-index: 2000; /* Make sure it's above everything else */
-  overflow: auto; /* Allow horizontal and vertical scrolling */
-  margin: 0; /* Ensure no unwanted margins */
-  padding: 0; /* Ensure no unwanted paddings */
+  overflow: auto; /* Prevent scrolling beyond zoomed content */
+  margin: 0;
+  padding: 0;
+
+  display: flex; /* Center the zoom-content */
+  align-items: center; /* Vertically center */
+  justify-content: flex-start; /* Horizontally center */
 }
 
 /* Nothing in here has any effect */
 .zoom-content {
-//     display: block; /* Default display to avoid flex properties affecting scroll */
-//     margin: 0; /* Remove any margins */
-//     padding: 0; /* Remove any paddings */
+  width: 95vw;
+  height: 95vh;
+  position: relative; /* Keep the exit icon and other content positioned within bounds */
+  overflow: visible; /* Ensure the image does not overflow */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .zoomed-image {
-  height: 100vh; /* Image takes the full viewport height */
-  width: auto;   /* Width is auto, allowing it to be wider than the screen */
-  margin: 0; /* Ensure no unwanted margins */
-  padding: 0; /* Ensure no unwanted paddings */
+  width: auto;   /* Keep natural width, allowing horizontal scroll if necessary */
+  height: auto;  /* Keep natural height */
+  margin: 0;
+  padding: 0;
 }
 
 /* Close Button for Zoom View */

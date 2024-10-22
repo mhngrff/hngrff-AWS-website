@@ -21,6 +21,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   isAtLastImage = false;
   isDefaultView = true;
 
+  private debounceTimer: any;
+
   @ViewChild('zoomOverlay') zoomOverlay!: ElementRef;
   @ViewChild('scrollableContainer') scrollableContainer!: ElementRef<HTMLElement>;
 
@@ -36,7 +38,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.image$.subscribe((image: Image | undefined) => {
         if (image) {
           this.totalImages = (image.alternateViews?.length || 0) + 1; // Add +1 for the default image
-          this.updateArrowStates();
+//           this.updateArrowStates(); THIS APPEARS TO DO NOTHING
         } else {
           console.error(`Image with id ${id} not found`);
           // Handle the error appropriately (e.g., redirect to home page or show a message)
@@ -52,17 +54,23 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   }
 
   onScroll(): void {
-
-    if (this.scrollableContainer) {
-      const container = this.scrollableContainer.nativeElement;
-      const scrollPosition = container.scrollLeft;
-      const newIndex = Math.round(scrollPosition / window.innerWidth);
-
-      if (newIndex !== this.currentIndex) {
-        this.currentIndex = newIndex;
-        this.updateArrowStates();
-      }
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
     }
+
+    // Set a debounce delay (e.g., 100ms) to limit how frequently we update the index
+    this.debounceTimer = setTimeout(() => {
+      if (this.scrollableContainer) {
+        const container = this.scrollableContainer.nativeElement;
+        const scrollPosition = container.scrollLeft;
+        const newIndex = Math.round(scrollPosition / window.innerWidth);
+
+        if (newIndex !== this.currentIndex) {
+          this.currentIndex = newIndex;
+          this.updateArrowStates();
+        }
+      }
+    }, 30); // Adjust debounce delay as needed
   }
 
   updateArrowStates(): void {
@@ -77,9 +85,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.scrollToCurrentIndex();
 
     }
-//     setTimeout(() => {
-    this.updateArrowStates();
-//     }, 100);
+//     this.updateArrowStates(); THIS APPEARS TO DO NOTHING
   }
 
   navigateRight(): void {
@@ -88,19 +94,51 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.scrollToCurrentIndex();
 
     }
-//     setTimeout(() => {
-    this.updateArrowStates();
-//     }, 100);
+//     this.updateArrowStates(); THIS APPEARS TO DO NOTHING
   }
 
+//   scrollToCurrentIndex(): void {
+//     const scrollableContainer = document.querySelector('.scrollable-container') as HTMLElement;
+//     const offset = this.currentIndex * window.innerWidth;
+//     scrollableContainer.scrollTo({
+//       left: offset,
+//       behavior: 'smooth'
+//     });
+//   }
   scrollToCurrentIndex(): void {
-    const scrollableContainer = document.querySelector('.scrollable-container') as HTMLElement;
-    const offset = this.currentIndex * window.innerWidth;
+    const scrollableContainer = this.scrollableContainer.nativeElement;
+    const targetOffset = this.currentIndex * window.innerWidth;
+
+    // Temporarily disable scroll updates to prevent mid-animation progress indicator changes
+    this.scrollableContainer.nativeElement.removeEventListener('scroll', this.onScroll.bind(this));
+
+    // Scroll smoothly to the target position
     scrollableContainer.scrollTo({
-      left: offset,
+      left: targetOffset,
       behavior: 'smooth'
     });
+
+    // Monitor the scroll position until it matches the targetOffset
+    const handleScroll = () => {
+      const currentScrollPosition = scrollableContainer.scrollLeft;
+
+      if (Math.abs(currentScrollPosition - targetOffset) <= 1) {
+        // Re-enable the scroll event listener when the rest state is reached
+        scrollableContainer.removeEventListener('scroll', handleScroll);
+        this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+
+        // Update arrow states and progress indicator at the rest state
+        setTimeout(() => {
+        this.updateArrowStates();
+        }, 100);
+      }
+    };
+
+    // Attach the listener to monitor the scroll progress
+    scrollableContainer.addEventListener('scroll', handleScroll);
   }
+
+
 
 
   openZoomView(): void {

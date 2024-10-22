@@ -2,11 +2,11 @@
 <!-- VIEWPORT WITH EXPAND ICON -->
 <div class="viewport">
   <!-- EXPAND ICON -->
-  <div class="expand-icon" *ngIf="image.zoomImage && isDefaultView" (click)="openZoomView()">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
-      <path fill="none" stroke="white" stroke-width="4" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>
-    </svg>
-  </div>
+<!--  <div class="expand-icon" *ngIf="image.zoomImage && isDefaultView" (click)="openZoomView()">-->
+<!--    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">-->
+<!--      <path fill="none" stroke="white" stroke-width="4" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>-->
+<!--    </svg>-->
+<!--  </div>-->
 
   <!-- SCROLLABLE CONTAINER -->
 
@@ -14,6 +14,14 @@
 
     <!-- MAIN IMAGE -->
     <div class="image-slide">
+
+      <div class="expand-icon" [ngClass]="{'visible': image.zoomImage && isDefaultView}" (click)="openZoomView()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
+          <path fill="none" stroke="white" stroke-width="4" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>
+        </svg>
+      </div>
+
+
       <img [src]="image.mainImage" [alt]="image.title" class="details-image" (load)="onImageLoad($event)">
     </div>
 
