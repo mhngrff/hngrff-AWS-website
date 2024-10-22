@@ -1,33 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ImageService, Image } from '../services/image.service';
+import { Observable, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './details.component.html',
-  styleUrl: './details.component.css'
+//   styleUrl: './details.component.css'
 })
 
-export class DetailsComponent {
-  imageId!: string;
-  imageUrl!: string;
+export class DetailsComponent implements OnInit {
+  image$: Observable<Image | undefined> = of(undefined);
+  isZoomView: boolean = false; // To control modal visibility
 
-  // Mapping imageIds to image file paths
-  imageMap: { [key: string]: string } = {
-    redfish: 'assets/images/redfish-1.jpg',
-    trout: 'assets/images/trout-1.jpg',
-    flounder: 'assets/images/flounder-1.jpg'
-  };
+  @ViewChild('zoomOverlay') zoomOverlay!: ElementRef;
 
-  constructor(private route: ActivatedRoute) {}
-    ngOnInit(): void {
-      this.route.params.subscribe((params) => {
-        this.imageId = params['imageId'];
-        this.imageUrl = this.imageMap[this.imageId];
-            console.log('Image ID:', this.imageId); // Check the value of imageId
-            console.log('Image URL:', this.imageUrl); // Check the value of imageUrl
+  constructor(
+    private route: ActivatedRoute,
+    private imageService: ImageService
+  ) {}
 
-     });
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('imageId');
+    if (id) {
+     this.image$ = this.imageService.getImageById(id!);
+    }
   }
+
+  openZoomView(): void {
+    this.isZoomView = true;
+
+      setTimeout(() => {
+        if (this.zoomOverlay) {
+          this.setInitialScrollPosition();
+        }
+      }, 0);
+
+  }
+
+  closeZoomView(): void {
+    this.isZoomView = false;
+  }
+
+  private setInitialScrollPosition(): void {
+      if (this.zoomOverlay && this.zoomOverlay.nativeElement) {
+        console.log('Zoom overlay element:', this.zoomOverlay.nativeElement);
+        // Scroll to the leftmost part of the zoomed image
+        this.zoomOverlay.nativeElement.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'auto' // No animation, scroll instantly
+        });
+// this.zoomOverlay.nativeElement.scrollIntoView({ block: 'start', inline: 'start', behavior: 'auto' });
+      } else {
+
+        console.error('Zoom overlay element is not defined');
+        }
+    }
 }

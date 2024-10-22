@@ -1,3 +1,103 @@
+.container{
+    width: 80vw;
+    margin: 8vh auto 0;
+    height: 150vh;
+    display: block;
+  }
+
+.viewport {
+  position: relative;
+  width: 100%; /* Take full container width */
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+.expand-icon {
+  position: absolute; /* Position relative to the viewport container */
+  top: 2vh; /* Adjust this to move vertically */
+  right: 2vw; /* Adjust this to move horizontally */
+  width: 5vw; /* Set appropriate size */
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10; /* Ensures the icon is on top of the image */
+  }
+
+.expand-icon svg path {
+  fill: none;
+  stroke: white;  /* Set the stroke color if needed */
+  stroke-width: 2; /* Adjust the stroke width to make it appear bolder */
+}
+
+/* Exit Icon Styling */
+.exit-icon {
+  position: fixed; /* Fixes the icon position to the viewport, unaffected by scrolling */
+  top: 3vh;
+  right: 1rem;
+  width: 9vw;
+//   height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3000; /* Higher than zoom content to keep it visible */
+  }
+
+.exit-icon svg path {
+  fill: white;
+  stroke: white;
+  stroke-width: 10;
+}
+
+/* Full-Screen Zoom View Overlay */
+.zoom-overlay {
+  position: fixed;
+  top: 2.5vh;
+  left: 2.5vw;
+  width: 95vw;
+  height: 95vh;
+  background-color: rgba(0, 0, 0, 0.9); /* Dark overlay with transparency */
+  z-index: 2000; /* Make sure it's above everything else */
+  overflow: auto; /* Allow horizontal and vertical scrolling */
+  margin: 0; /* Ensure no unwanted margins */
+  padding: 0; /* Ensure no unwanted paddings */
+}
+
+/* Nothing in here has any effect */
+.zoom-content {
+//     display: block; /* Default display to avoid flex properties affecting scroll */
+//     margin: 0; /* Remove any margins */
+//     padding: 0; /* Remove any paddings */
+}
+
+.zoomed-image {
+  height: 100vh; /* Image takes the full viewport height */
+  width: auto;   /* Width is auto, allowing it to be wider than the screen */
+  margin: 0; /* Ensure no unwanted margins */
+  padding: 0; /* Ensure no unwanted paddings */
+}
+
+/* Close Button for Zoom View */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.5); /* Semi-transparent background for visibility */
+  border: none;
+  color: black;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 21;
+}
+
+h2 {
+  color: white;
+  }
+
 .details-container {
   text-align: center;
 //   padding: 6vw;

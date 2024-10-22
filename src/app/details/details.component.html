@@ -1,3 +1,36 @@
-<div class="details-container">
-  <img [src]="imageUrl" alt="{{ imageId }} image" class="details-image" />
+<div class="container">
+  <div *ngIf="image$ | async as image">
+
+    <!-- VIEWPORT WITH EXPAND ICON -->
+    <div class="viewport">
+      <!-- EXPAND ICON -->
+      <div class="expand-icon" *ngIf="image.zoomImage" (click)="openZoomView()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="none" stroke="#000000" stroke-width="2" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>
+        </svg>
+      </div>
+
+      <img [src]="image.mainImage" [alt]="image.title" class="details-image">
+    </div>
+      <!-- Zoom View Overlay -->
+      <div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">
+          <div class="exit-icon" *ngIf="image.zoomImage" (click)="closeZoomView()">
+            <svg fill="#000000" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+              <path d="M876.612 1043.388v710.171H761.27v-513.28L81.663 1920 0 1838.337l679.72-679.606H166.442v-115.343h710.171ZM1838.394 0l81.548 81.548-679.605 679.72h513.28v115.344h-710.172V166.441h115.344v513.164L1838.394 0Z" fill-rule="evenodd"/>
+            </svg>
+          </div>
+        <div class="zoom-content">
+          <img [src]="image.zoomImage" [alt]="image.title + ' zoomed-in view'" class="zoomed-image">
+        </div>
+      </div>
+
+
+    <!-- IMAGE DETAILS -->
+    <h2>{{ image.title }}</h2>
+    <p>{{ image.description }}</p>
+    <div class="price">
+      <p>Price: {{ image.price | currency:image.currency }}</p>
+    </div>
+  </div>
 </div>
+

@@ -3,7 +3,7 @@ name: Deploy to S3
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   deploy:
@@ -18,10 +18,10 @@ jobs:
       with:
         node-version: '20.17.0'
 
-    - name: Install dependencies 
+    - name: Install dependencies
       run: npm install
 
-    - name: Install Angular CLI 
+    - name: Install Angular CLI
       run: npm install -g @angular/cli
 
     - name: Install Gulp
@@ -30,7 +30,7 @@ jobs:
     - name: Run Gulp
       run: gulp less
 
-    - name: Build 
+    - name: Build
       run: ng build --configuration production
 
     - name: Configure AWS credentials
