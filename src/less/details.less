@@ -86,7 +86,7 @@
 .expand-icon {
   position: absolute; /* Position relative to the viewport container */
   top: 1vh; /* Adjust this to move vertically */
-  right: 2vw; /* Adjust this to move horizontally */
+  right: 2.5vw; /* Adjust this to move horizontally */
   width: 5vw; /* Set appropriate size */
   height: auto;
   display: flex;
@@ -94,19 +94,21 @@
   justify-content: center;
   cursor: pointer;
   z-index: 10; /* Ensures the icon is on top of the image */
-  transition: opacity 0.2s ease;
+  transition: opacity 0.8s ease-out;
   opacity: 0;
+  will-change: opacity;
   }
 
 .expand-icon.visible{
   opacity: 1;
+  will-change: opacity;
   }
 
 .expand-icon svg path {
   fill: none;
   stroke: white;  /* Set the stroke color if needed */
-  stroke-width: 2; /* Adjust the stroke width to make it appear bolder */
-  transition: opacity 0.2s ease;
+  transition: opacity 0.1s ease;
+  will-change: opacity;
 }
 
 /* Exit Icon Styling */

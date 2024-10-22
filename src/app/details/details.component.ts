@@ -38,7 +38,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.image$.subscribe((image: Image | undefined) => {
         if (image) {
           this.totalImages = (image.alternateViews?.length || 0) + 1; // Add +1 for the default image
-//           this.updateArrowStates(); THIS APPEARS TO DO NOTHING
+          this.currentIndex = 0;
+          this.updateArrowStates();
         } else {
           console.error(`Image with id ${id} not found`);
           // Handle the error appropriately (e.g., redirect to home page or show a message)
@@ -70,7 +71,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.updateArrowStates();
         }
       }
-    }, 30); // Adjust debounce delay as needed
+    }, 200); // Adjust debounce delay as needed
   }
 
   updateArrowStates(): void {
@@ -105,6 +106,40 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 //       behavior: 'smooth'
 //     });
 //   }
+
+//   scrollToCurrentIndex(): void {
+//     const scrollableContainer = this.scrollableContainer.nativeElement;
+//     const targetOffset = this.currentIndex * window.innerWidth;
+//
+//     // Temporarily disable scroll updates to prevent mid-animation progress indicator changes
+//     this.scrollableContainer.nativeElement.removeEventListener('scroll', this.onScroll.bind(this));
+//
+//     // Scroll smoothly to the target position
+//     scrollableContainer.scrollTo({
+//       left: targetOffset,
+//       behavior: 'smooth'
+//     });
+//
+//     // Monitor the scroll position until it matches the targetOffset
+//     const handleScroll = () => {
+//       const currentScrollPosition = scrollableContainer.scrollLeft;
+//
+//       if (Math.abs(currentScrollPosition - targetOffset) <= 1) {
+//         // Re-enable the scroll event listener when the rest state is reached
+//         scrollableContainer.removeEventListener('scroll', handleScroll);
+//         this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+//
+//         // Update arrow states and progress indicator at the rest state
+//         setTimeout(() => {
+//         this.updateArrowStates();
+//         }, 100);
+//       }
+//     };
+//
+//     // Attach the listener to monitor the scroll progress
+//     scrollableContainer.addEventListener('scroll', handleScroll);
+//   }
+
   scrollToCurrentIndex(): void {
     const scrollableContainer = this.scrollableContainer.nativeElement;
     const targetOffset = this.currentIndex * window.innerWidth;
@@ -118,26 +153,26 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       behavior: 'smooth'
     });
 
-    // Monitor the scroll position until it matches the targetOffset
-    const handleScroll = () => {
-      const currentScrollPosition = scrollableContainer.scrollLeft;
+    // Create an IntersectionObserver to monitor when the current image is centered
+    const targetSlide = scrollableContainer.children[this.currentIndex] as HTMLElement;
 
-      if (Math.abs(currentScrollPosition - targetOffset) <= 1) {
-        // Re-enable the scroll event listener when the rest state is reached
-        scrollableContainer.removeEventListener('scroll', handleScroll);
-        this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // When the slide is fully in view, update arrow states and re-enable listeners
+          observer.disconnect(); // Disconnect observer once target is in view
+          this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+          this.updateArrowStates();
+        }
+      });
+    }, {
+      root: scrollableContainer,
+      threshold: 0.5 // Adjust the threshold as needed; 0.5 means it considers the target "in view" when 50% visible
+    });
 
-        // Update arrow states and progress indicator at the rest state
-        setTimeout(() => {
-        this.updateArrowStates();
-        }, 100);
-      }
-    };
-
-    // Attach the listener to monitor the scroll progress
-    scrollableContainer.addEventListener('scroll', handleScroll);
+    // Start observing the current slide element
+    observer.observe(targetSlide);
   }
-
 
 
 
