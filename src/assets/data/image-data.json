@@ -14,6 +14,36 @@
           "url": "/assets/images/redfish-framed.jpg"
         }
       ]
+    },
+    {
+      "id": "trout",
+      "title": "TROUT",
+      "description": "TROUT DESCRIPTION.",
+      "price": 500.00,
+      "currency": "USD",
+      "mainImage": "/assets/images/trout-1.jpg",
+      "zoomImage": "/assets/images/trout-high-def.jpg",
+      "alternateViews": [
+        {
+          "type": "framed",
+          "url": "/assets/images/trout-framed.jpg"
+        }
+      ]
+    },
+    {
+      "id": "flounder",
+      "title": "FLOUNDER",
+      "description": "FLOUNDER DESCRIPTION.",
+      "price": 500.00,
+      "currency": "USD",
+      "mainImage": "/assets/images/flounder-1.jpg",
+      "zoomImage": "/assets/images/flounder-high-def.jpg",
+      "alternateViews": [
+        {
+          "type": "framed",
+          "url": "/assets/images/flounder-framed.jpg"
+        }
+      ]
     }
   ]
 }

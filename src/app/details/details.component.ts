@@ -71,7 +71,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.updateArrowStates();
         }
       }
-    }, 200); // Adjust debounce delay as needed
+    }, 100); // Adjust debounce delay to change how quickly the progress indicator updates after scrolling
   }
 
   updateArrowStates(): void {
