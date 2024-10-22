@@ -1,17 +1,51 @@
-<div class="container">
-  <div *ngIf="image$ | async as image">
+<div *ngIf="image$ | async as image">
+<!-- VIEWPORT WITH EXPAND ICON -->
+<div class="viewport">
+  <!-- EXPAND ICON -->
+  <div class="expand-icon" *ngIf="image.zoomImage && isDefaultView" (click)="openZoomView()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
+      <path fill="none" stroke="white" stroke-width="4" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>
+    </svg>
+  </div>
 
-    <!-- VIEWPORT WITH EXPAND ICON -->
-    <div class="viewport">
-      <!-- EXPAND ICON -->
-      <div class="expand-icon" *ngIf="image.zoomImage" (click)="openZoomView()">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
-          <path fill="none" stroke="white" stroke-width="4" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9"/>
+  <!-- SCROLLABLE CONTAINER -->
+
+  <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
+
+    <!-- MAIN IMAGE -->
+    <div class="image-slide">
+      <img [src]="image.mainImage" [alt]="image.title" class="details-image" (load)="onImageLoad($event)">
+    </div>
+
+    <!-- ALTERNATE VIEWS -->
+    <div class="image-slide" *ngFor="let img of image.alternateViews">
+      <img [src]="img.url" [alt]="image.title + 'alternate view'" class="details-image" (load)="onImageLoad($event)">
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+
+
+    <div class="arrow-navigation">
+
+      <div class="left-arrow" [ngClass]="{'disabled-arrow': isAtFirstImage}" (click)="!isAtFirstImage && navigateLeft()">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 7L10 12L15 17" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
 
-      <img [src]="image.mainImage" [alt]="image.title" class="details-image">
+      <div class="progress-indicator">{{ currentIndex + 1 }} / {{ totalImages }} </div>
+
+      <div class="right-arrow" [ngClass]="{'disabled-arrow': isAtLastImage}" (click)="!isAtLastImage && navigateRight()">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
     </div>
+
       <!-- Zoom View Overlay -->
       <div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">
           <div class="exit-icon" *ngIf="image.zoomImage" (click)="closeZoomView()">

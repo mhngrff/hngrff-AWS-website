@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export interface SubsetImage {
+export interface alternateViews {
   type: string;
   url: string;
 }
@@ -14,9 +14,9 @@ export interface Image {
   description: string;
   price: number;
   currency: string;
-  subsetImages?: SubsetImage[];
   mainImage: string;
   zoomImage?: string;
+  alternateViews?: alternateViews[];
 }
 
 @Injectable({
