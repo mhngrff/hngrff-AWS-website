@@ -44,6 +44,25 @@
           "url": "/assets/images/flounder-framed.jpg"
         }
       ]
+    },
+    {
+      "id": "slam",
+      "title": "INSHORE SLAM",
+      "description": "INSHORE SLAM DESCRIPTION.",
+      "price": 500.00,
+      "currency": "USD",
+      "mainImage": "/assets/images/fish-slam-1.jpg",
+      "zoomImage": "",
+      "alternateViews": [
+        {
+          "type": "framed",
+          "url": "/assets/images/fish-slam-framed.jpg"
+        },
+        {
+          "type": "framed",
+          "url": "/assets/images/fish-slam-individual-framed.jpg"
+        }
+      ]
     }
   ]
 }

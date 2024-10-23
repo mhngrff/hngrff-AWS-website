@@ -11,6 +11,7 @@
   flex-direction: column; /* Metadata visually below viewport */
   align-items: flex-start;
   width: 100%;
+  min-height: 40vh;
 }
 
 h2 {
@@ -225,10 +226,10 @@ p {
 
 .details-image {
   opacity: 0; /* Start with hidden image */
-  transition: opacity 0.2s ease-in-out; /* Quick transition to make fade-in smooth */
+  transition: opacity 0.4s ease-in-out; /* Quick transition to make fade-in smooth */
 }
 
 .details-image.loaded {
   opacity: 1; /* Make it visible once loaded */
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
