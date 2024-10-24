@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ImageService, Image } from '../services/image.service';
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-details',
@@ -30,7 +31,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private navigationService: NavigationService
   ) {}
 
 //   ngOnInit(): void {
@@ -233,4 +235,11 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     const imgElement = event.target as HTMLElement;
     imgElement.classList.add('loaded');
   }
+
+  goToPayment(): void {
+    this.navigationService.goToPayment();
+    }
+
+  addToCart(): void {
+    }
 }

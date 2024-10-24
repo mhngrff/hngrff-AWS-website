@@ -1,0 +1,13 @@
+
+<div class="payment-container">
+
+  <form id="payment-form" (submit)="handlePayment($event)">
+
+    <div id="card-number-element"><!-- Card number will insert here --></div>
+    <div id="card-expiry-element"><!-- Expiry date will insert here --></div>
+    <div id="card-cvc-element"><!-- CVC will insert here --></div>
+
+    <button type="submit" id="submit-button" [disabled]="!stripe || !cardNumberElement || !cardExpiryElement || !cardCvcElement">Pay Now</button>
+  </form>
+</div>
+

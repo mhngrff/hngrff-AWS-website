@@ -124,29 +124,38 @@
 
     <!-- Metadata: Title, Description, Price -->
     <div class="details-content">
-      <h2>{{ metadata.title }}</h2>
+      <h2>{{ metadata.subtitles ? metadata.subtitles[currentIndex] : metadata.title }}</h2>
       <p>{{ metadata.description }}</p>
       <div class="price">
         <p>Price: {{ metadata.price | currency: metadata.currency }}</p>
       </div>
+
+      <a (click)="addToCart()">
+        <button class="add-to-cart-button">Add to cart</button>
+      </a>
+
+      <a (click)="goToPayment()">
+        <button class="buy-now-button">Buy Now</button>
+      </a>
     </div>
 
   </div>
+</div>
 
-  <!-- Zoom View Overlay -->
-  <div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">
-    <div class="exit-icon" (click)="closeZoomView()">
-      <svg fill="white" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
-        <path d="M876.612 1043.388v710.171H761.27v-513.28L81.663 1920 0 1838.337l679.72-679.606H166.442v-115.343h710.171ZM1838.394 0l81.548 81.548-679.605 679.72h513.28v115.344h-710.172V166.441h115.344v513.164L1838.394 0Z" fill-rule="evenodd" />
-      </svg>
-    </div>
-    <div class="zoom-content">
-      <img *ngIf="image$ | async as image"
-           [src]="image.zoomImage"
-           [alt]="image.title + ' zoomed-in view'"
-           class="zoomed-image">
-    </div>
+<!-- Zoom View Overlay -->
+<div #zoomOverlay class="zoom-overlay" *ngIf="isZoomView">
+  <div class="exit-icon" (click)="closeZoomView()">
+    <svg fill="white" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
+      <path d="M876.612 1043.388v710.171H761.27v-513.28L81.663 1920 0 1838.337l679.72-679.606H166.442v-115.343h710.171ZM1838.394 0l81.548 81.548-679.605 679.72h513.28v115.344h-710.172V166.441h115.344v513.164L1838.394 0Z" fill-rule="evenodd" />
+    </svg>
   </div>
+  <div class="zoom-content">
+    <img *ngIf="image$ | async as image"
+         [src]="image.zoomImage"
+         [alt]="image.title + ' zoomed-in view'"
+         class="zoomed-image">
+  </div>
+</div>
 
 <footer>
   <div class="footer-content">
@@ -177,5 +186,5 @@
     </div>
   </div>
 </footer>
-</div>
 </body>
+

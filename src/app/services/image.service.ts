@@ -17,6 +17,7 @@ export interface Image {
   mainImage: string;
   zoomImage?: string;
   alternateViews?: alternateViews[];
+  subtitles?: string[];
 }
 
 @Injectable({
@@ -39,8 +40,8 @@ export class ImageService {
         const image = images.find(img => img.id === id);
         if (image) {
           // Return everything except the URLs for images
-          const { title, description, price, currency, id } = image;
-          return { title, description, price, currency, id };
+          const { title, description, price, currency, subtitles, id } = image;
+          return { title, description, price, currency, subtitles, id };
         }
         return undefined;
       })

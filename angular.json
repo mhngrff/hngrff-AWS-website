@@ -33,7 +33,8 @@
               "dist/css/home.css",
               "dist/css/navbar.css",
               "dist/css/footer.css",
-              "dist/css/details.css"
+              "dist/css/details.css",
+              "dist/css/payment.css"
             ],
             "scripts": []
           },

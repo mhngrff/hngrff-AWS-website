@@ -13,6 +13,10 @@
           "type": "framed",
           "url": "/assets/images/redfish-framed.jpg"
         }
+      ],
+      "subtitles": [
+        "REDFISH - PRINT",
+        "REDFISH - FRAMED"
       ]
     },
     {
@@ -28,6 +32,10 @@
           "type": "framed",
           "url": "/assets/images/trout-framed.jpg"
         }
+      ],
+      "subtitles": [
+        "TROUT - PRINT",
+        "TROUT - FRAMED"
       ]
     },
     {
@@ -43,6 +51,10 @@
           "type": "framed",
           "url": "/assets/images/flounder-framed.jpg"
         }
+      ],
+      "subtitles": [
+        "FLOUNDER - PRINT",
+        "FLOUNDER - FRAMED"
       ]
     },
     {
@@ -62,6 +74,11 @@
           "type": "framed",
           "url": "/assets/images/fish-slam-individual-framed.jpg"
         }
+      ],
+      "subtitles": [
+        "INSHORE SLAM - PRINT",
+        "INSHORE SLAM - 1 FRAME",
+        "INSHORE SLAM - 3 FRAMES"
       ]
     }
   ]

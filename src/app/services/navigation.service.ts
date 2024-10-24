@@ -18,4 +18,8 @@ export class NavigationService {
   goToContact(): void {
     this.router.navigate(['/contact']);
   }
+
+  goToPayment(): void {
+    this.router.navigate(['/payment']);
+    }
 }
