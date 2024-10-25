@@ -41,6 +41,7 @@ p {
 }
 
 .scrollable-container {
+  min-height: 35vh;
   background-color: black;
   display: flex;
   scroll-snap-type: x mandatory;
@@ -249,6 +250,52 @@ p {
   height: 5vh;
 }
 
+
+.dropdown-increment-row {
+  display: flex;
+  flex-direction: row; /* Makes the children align horizontally */
+  align-items: center; /* Vertically centers all children */
+  justify-content: space-between; /* Distributes space between the dropdown and quantity selector */
+  width: 100%; /* Takes the full width of the container */
+}
+
 .option-selector {
-  width: 60vw;
-  }
+//   flex: 1; /* Takes up equal space within the row */
+  margin-right: 2vw; /* Adds space between the dropdown and the quantity selector */
+  align-self: center; /* Explicitly aligns this element within its flex container */
+  align-items: center;
+//   width: 100%;
+}
+
+.option-selector select {
+//   margin: 0; /* Removes default margins */
+//   padding: 0.5rem; /* Adds padding to give some spacing within the dropdown */
+//   height: 2.5rem; /* Set height to match other elements in the row */
+//   box-sizing: border-box; /* Includes padding and border in the total height */
+//   align-items: center;
+}
+
+.quantity-selector {
+//   flex: 1; /* Takes up equal space within the row */
+  display: flex;
+//   align-items: center; /* Aligns buttons and input vertically */
+//   justify-content: space-between;
+//   height: 2.5rem; /* Match height of dropdown to maintain consistency */
+}
+
+.quantity-selector input {
+  width: 20%; /* Adjust this to control the size of the input box */
+  text-align: center; /* Centers the quantity value in the input */
+//   height: 80%; /* Matches the height of other elements */
+}
+
+.quantity-selector button {
+  width: 15%; /* Adjust this to control the button size */
+//   height: 80%; /* Matches the height of other elements */
+}
+
+.dropdown-increment-row > * {
+//   height: 7vh; /* Set a consistent height for all children elements in the row */
+}
+
+
