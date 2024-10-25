@@ -1,0 +1,10 @@
+<div class="cart-container">
+
+  <div *ngFor="let item of cartItems">
+    <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle">
+    <p>{{ item.optionSubtitle }}</p>
+    <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" min="1">
+    <button (click)="removeItem(item)">Remove</button>
+  </div>
+
+</div>

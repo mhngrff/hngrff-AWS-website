@@ -1,14 +1,19 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ImageService, Image } from '../services/image.service';
+// import { ImageService, Image } from '../services/image.service';
+import { ImageService} from '../services/image.service';
+import { Image } from '../models/image.interface';
+import { Option } from '../models/option.interface';
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '../services/navigation.service';
+import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './details.component.html',
 //   styleUrl: './details.component.css'
 })
@@ -17,12 +22,20 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   image$: Observable<Image | undefined> = of(undefined);
   imageMetadata$: Observable<Partial<Image> | undefined> = of(undefined);
   mainImageUrl: string | null = null;
+  zoomImageUrl: string | null = null;
   isZoomView: boolean = false; // To control modal visibility
   currentIndex = 0;
   totalImages: number = 0;
   isAtFirstImage = true;
   isAtLastImage = false;
   isDefaultView = true;
+
+  selectedOption: string | null = null; // New variable for selected option
+  selectedPrice: number | null = null; // New variable for selected price
+
+  quantity: number = 1;
+  imageId: string = ''; // Store image ID locally
+  thumbnailUrl: string | null = null;
 
   private debounceTimer: any;
 
@@ -32,25 +45,9 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private cartService: CartService
   ) {}
-
-//   ngOnInit(): void {
-//     const id = this.route.snapshot.paramMap.get('imageId');
-//     if (id) {
-//       this.image$ = this.imageService.getImageById(id!);
-//       this.image$.subscribe((image: Image | undefined) => {
-//         if (image) {
-//           this.totalImages = (image.alternateViews?.length || 0) + 1; // Add +1 for the default image
-//           this.currentIndex = 0;
-//           this.updateArrowStates();
-//         } else {
-//           console.error(`Image with id ${id} not found`);
-//           // Handle the error appropriately (e.g., redirect to home page or show a message)
-//         }
-//       });
-//     }
-//   }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('imageId');
@@ -62,16 +59,36 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       // Fetch the full image data separately
       this.image$ = this.imageService.getImageById(id!);
       this.image$.subscribe((image: Image | undefined) => {
-        if (image) {
-          this.mainImageUrl = image.mainImage;
-          this.totalImages = (image.alternateViews?.length || 0) + 1;
+        if (image && image.options && image.options.length > 0) {
+          this.zoomImageUrl = image.zoomImage || null;
+          this.mainImageUrl = image.options[0].imageUrl;
+          this.totalImages = image.options.length;
+          this.thumbnailUrl = image.thumbnail || null;
           this.updateArrowStates();
         } else {
           console.error(`Image with id ${id} not found`);
         }
       });
     }, 0);
+
+      // Set default option and price
+      this.imageMetadata$.subscribe((metadata) => {
+        if (metadata?.options && metadata.options.length > 0) {
+          this.selectedOption = metadata.options[0].subtitle;
+          this.selectedPrice = metadata.options[0].price;
+        }
+      });
     }
+  }
+
+  // New method for handling dropdown option change
+  onOptionChange(): void {
+    this.imageMetadata$.subscribe(metadata => {
+      if (metadata?.options) {
+        const selected = metadata.options.find(option => option.subtitle === this.selectedOption);
+        this.selectedPrice = selected ? selected.price : null;
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -241,5 +258,28 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     }
 
   addToCart(): void {
+    if (this.selectedOption && this.selectedPrice !== null) {
+      this.cartService.addItem({
+        imageId: this.imageId,
+        optionSubtitle: this.selectedOption,
+        price: this.selectedPrice,
+        quantity: this.quantity,
+        thumbnailUrl: this.thumbnailUrl // Assuming the first option is used as a thumbnail
+      });
+    } else {
+      console.error('Unable to add to cart: Invalid option or price.');
     }
+  console.log('thumbnailUrl= ', this.mainImageUrl)
+  }
+
+  incrementQuantity(): void {
+    this.quantity++;
+  }
+
+  decrementQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
 }

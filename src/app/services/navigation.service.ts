@@ -22,4 +22,8 @@ export class NavigationService {
   goToPayment(): void {
     this.router.navigate(['/payment']);
     }
+
+  goToCart(): void {
+    this.router.navigate(['/cart']);
+    }
 }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageService, Image } from '../services/image.service';
+// import { ImageService, Image } from '../services/image.service';
+import { ImageService } from '../services/image.service';
+import { Image } from '../models/image.interface';
+import { Option } from '../models/option.interface';
 import { NavigationService } from '../services/navigation.service';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',

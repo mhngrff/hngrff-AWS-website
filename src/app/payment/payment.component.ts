@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-payment',
@@ -15,7 +16,10 @@ export class PaymentComponent implements OnInit {
   cardCvcElement: StripeCardCvcElement | null = null;
   clientSecret: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private navigationService: NavigationService
+    ) {}
 
   ngOnInit() {
     // Load Stripe when the component initializes
@@ -177,4 +181,9 @@ export class PaymentComponent implements OnInit {
       console.log('Payment successful:', paymentIntent);
     }
   }
+
+  editCart(){
+    this.navigationService.goToCart();
+    }
+
 }

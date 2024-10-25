@@ -34,7 +34,8 @@
               "dist/css/navbar.css",
               "dist/css/footer.css",
               "dist/css/details.css",
-              "dist/css/payment.css"
+              "dist/css/payment.css",
+              "dist/css/cart.css"
             ],
             "scripts": []
           },

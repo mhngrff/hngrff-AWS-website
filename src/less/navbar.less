@@ -5,7 +5,6 @@ body {
  }
 
 .logo-container {
-   padding-left: 6vw; /* Align with the left edge of the images */
 }
 
 .navbar {
@@ -47,6 +46,7 @@ body {
   transition: color 0.3s ease;
 }
 
+
 /*THESE APPLY ONLY FOR DESKTOP*/
 @media only screen and (min-width: 786px) {
   .hamburger {
@@ -80,15 +80,63 @@ body {
 /* MOBILE DISPLAY */
 @media only screen and (max-width: 786px) {
 
+  @keyframes flash {
+    0% {
+      color: white; /* Flash color */
+      fill: white;
+      stroke: white;
+    }
+    100% {
+      color: gray; /* Original color */
+      fill: gray;
+      stroke: gray;
+    }
+  }
+
+  .flash-effect {
+    animation: flash 0.5s ease-in-out;
+  }
+
+  .cart-icon-container{
+    width: 16vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    }
+
+  .cart-icon {
+    width: 6.5vw;
+    position: relative;
+//     display: inline-block;
+    }
+
+  .cart-badge {
+    position: absolute;
+    top: 28%; /* Adjust this to align correctly over the cart icon */
+    right: 40%; /* Adjust as needed */
+    background: transparent;
+    color: gray;
+    font-size: 3.5vw;
+//     font-weight: bold;
+    transform: translate(20%, -20%);
+  }
+
+  .cart-icon svg path {
+      fill: gray;
+    }
+
+
   .logo-container {
-    padding-left: 6vw; /* Align with the left edge of the images */
+    padding: 0;
+    text-align: center;
   }
 
   .logo {
     color: white;
     font-size: 6vw;
     font-weight: 400;
-    margin-left: 4vw;
+    margin-left: 0;
   }
 
   .hamburger {
@@ -96,14 +144,15 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 16vw;
+    width: 14vw;
     height: 2vh;
     cursor: pointer;
-    padding-right: 7vw;
+    margin-left: 7vw;
+    padding: 0;
   }
 
   .line {
-    width: 100%;
+    width: 50%;
     height: 2px;
     background-color: gray;
     border-radius: 5px;
@@ -126,7 +175,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #0b0b09; /* Dark background for mobile menu */
-    text-align: right;
+    text-align: left;
 
     opacity: 0; /* Start invisible */
     pointer-events: none; /* Disable interaction when hidden */
@@ -162,7 +211,7 @@ body {
     line-height: 8vh;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    margin-right: 4vw;
+    margin-left: 4vw;
   }
 
 .menu-toggle:checked + .hamburger + .nav-links li {
@@ -171,11 +220,11 @@ body {
 }
 
 .menu-toggle:checked + .hamburger .line:nth-child(1) {
-  transform: rotate(45deg) translate(0,1.15vh);
+  transform: rotate(45deg) translate(0,1.2vh);
 }
 
 .menu-toggle:checked + .hamburger .line:nth-child(2) {
-  transform: rotate(-45deg) translate(0,-1.15vh);
+  transform: rotate(-45deg) translate(0,-1.2vh);
 }
 
 }

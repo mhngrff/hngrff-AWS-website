@@ -77,32 +77,49 @@
 <div *ngIf="imageMetadata$ | async as metadata">
 
     <!-- Viewport for Images: Place it above the metadata -->
-    <div class="viewport">
-      <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
-        <!-- MAIN IMAGE -->
-        <div class="image-slide" *ngIf="image$ | async as image; else imagePlaceholder">
-          <!-- Expand Icon -->
-          <div class="expand-icon" [ngClass]="{'visible': isDefaultView && image.zoomImage}" (click)="openZoomView()">
-            <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
-              <path fill="none" stroke="white" stroke-width="1.5" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9" />
-            </svg>
-          </div>
-          <img [src]="image.mainImage"
-               [alt]="image.title"
-               class="details-image"
-               (load)="onImageLoad($event)">
+<!--    <div class="viewport">-->
+<!--      <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">-->
+<!--        &lt;!&ndash; MAIN IMAGE &ndash;&gt;-->
+<!--        <div class="image-slide" *ngIf="image$ | async as image; else imagePlaceholder">-->
+<!--          &lt;!&ndash; Expand Icon &ndash;&gt;-->
+<!--          <div class="expand-icon" [ngClass]="{'visible': isDefaultView && image.zoomImage}" (click)="openZoomView()">-->
+<!--            <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">-->
+<!--              <path fill="none" stroke="white" stroke-width="1.5" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9" />-->
+<!--            </svg>-->
+<!--          </div>-->
+<!--          <img [src]="image.mainImage"-->
+<!--               [alt]="image.title"-->
+<!--               class="details-image"-->
+<!--               (load)="onImageLoad($event)">-->
+<!--        </div>-->
+
+<!--        <ng-template #imagePlaceholder>-->
+<!--          <div class="image-placeholder"></div>-->
+<!--        </ng-template>-->
+
+<!--        &lt;!&ndash; ALTERNATE VIEWS &ndash;&gt;-->
+<!--        <div class="image-slide" *ngFor="let option of (image$ | async)?.options">-->
+<!--          <img [src]="option.imageUrl" [alt]="metadata.title + ' - ' + option.subtitle" class="details-image" (load)="onImageLoad($event)">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  <!-- Viewport for Images -->
+  <div class="viewport">
+    <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
+      <!-- ITERATE OVER ALL OPTIONS (INCLUDING MAIN IMAGE) -->
+      <div class="image-slide" *ngFor="let option of (image$ | async)?.options; let i = index">
+        <!-- Expand Icon for the First Image Only -->
+        <div *ngIf="i === 0" class="expand-icon" [ngClass]="{'visible': isDefaultView && zoomImageUrl}" (click)="openZoomView()">
+          <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
+            <path fill="none" stroke="white" stroke-width="2" d="M10,14 L2,22 M1,15 L1,23 L9,23 M22,2 L14,10 M15,1 L23,1 L23,9" />
+          </svg>
         </div>
 
-        <ng-template #imagePlaceholder>
-          <div class="image-placeholder"></div>
-        </ng-template>
-
-        <!-- ALTERNATE VIEWS -->
-        <div class="image-slide" *ngFor="let img of (image$ | async)?.alternateViews">
-          <img [src]="img.url" [alt]="metadata.title + ' alternate view'" class="details-image" (load)="onImageLoad($event)">
-        </div>
+        <img [src]="option.imageUrl" [alt]="metadata.title + ' - ' + option.subtitle" class="details-image" (load)="onImageLoad($event)">
       </div>
     </div>
+  </div>
+
   <div class="details-container">
 
     <!-- Arrow Navigation: Should be below viewport -->
@@ -124,10 +141,25 @@
 
     <!-- Metadata: Title, Description, Price -->
     <div class="details-content">
-      <h2>{{ metadata.subtitles ? metadata.subtitles[currentIndex] : metadata.title }}</h2>
-      <p>{{ metadata.description }}</p>
+      <h2>{{ metadata.title }}</h2>
       <div class="price">
-        <p>Price: {{ metadata.price | currency: metadata.currency }}</p>
+        <p>{{ selectedPrice | currency: metadata.currency }}</p>
+      </div>
+
+      <!-- Dropdown to select version (unframed, framed, etc.) -->
+      <div class="option-selector" *ngIf="metadata.options && metadata.options.length > 0">
+        <label for="options-dropdown">Select an option:</label>
+        <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
+          <option *ngFor="let option of metadata.options" [value]="option.subtitle">
+            {{ option.subtitle }}
+          </option>
+        </select>
+      </div>
+
+      <div class="quantity-selector">
+        <button (click)="decrementQuantity()">-</button>
+        <input type="number" [(ngModel)]="quantity" min="1">
+        <button (click)="incrementQuantity()">+</button>
       </div>
 
       <a (click)="addToCart()">
@@ -137,6 +169,9 @@
       <a (click)="goToPayment()">
         <button class="buy-now-button">Buy Now</button>
       </a>
+
+      <p>{{ metadata.description }}</p>
+
     </div>
 
   </div>

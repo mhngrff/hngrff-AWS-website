@@ -4,81 +4,94 @@
       "id": "redfish",
       "title": "REDFISH",
       "description": "REDFISH DESCRIPTION.",
-      "price": 50.00,
       "currency": "USD",
-      "mainImage": "/assets/images/redfish-1.jpg",
       "zoomImage": "/assets/images/redfish-high-def.jpg",
-      "alternateViews": [
+      "thumbnail": "/assets/images/redfish-1-200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "REDFISH - PRINT",
+          "price": 50.00,
+          "imageUrl": "/assets/images/redfish-1-600w.jpg"
+        },
         {
           "type": "framed",
-          "url": "/assets/images/redfish-framed.jpg"
+          "subtitle": "REDFISH - FRAMED",
+          "price": 100.00,
+          "imageUrl": "/assets/images/redfish-framed.jpg"
         }
-      ],
-      "subtitles": [
-        "REDFISH - PRINT",
-        "REDFISH - FRAMED"
       ]
     },
     {
       "id": "trout",
       "title": "TROUT",
       "description": "TROUT DESCRIPTION.",
-      "price": 500.00,
       "currency": "USD",
-      "mainImage": "/assets/images/trout-1.jpg",
       "zoomImage": "/assets/images/trout-high-def.jpg",
-      "alternateViews": [
+      "thumbnail": "/assets/images/trout-1-200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "TROUT - PRINT",
+          "price": 500.00,
+          "imageUrl": "/assets/images/trout-1-600w.jpg"
+        },
         {
           "type": "framed",
-          "url": "/assets/images/trout-framed.jpg"
+          "subtitle": "TROUT - FRAMED",
+          "price": 800.00,
+          "imageUrl": "/assets/images/trout-framed.jpg"
         }
-      ],
-      "subtitles": [
-        "TROUT - PRINT",
-        "TROUT - FRAMED"
       ]
     },
     {
       "id": "flounder",
       "title": "FLOUNDER",
       "description": "FLOUNDER DESCRIPTION.",
-      "price": 500.00,
       "currency": "USD",
-      "mainImage": "/assets/images/flounder-1.jpg",
       "zoomImage": "/assets/images/flounder-high-def.jpg",
-      "alternateViews": [
+      "thumbnail": "/assets/images/flounder-1-200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "FLOUNDER - PRINT",
+          "price": 500.00,
+          "imageUrl": "/assets/images/flounder-1-600w.jpg"
+        },
         {
           "type": "framed",
-          "url": "/assets/images/flounder-framed.jpg"
+          "subtitle": "FLOUNDER - FRAMED",
+          "price": 700.00,
+          "imageUrl": "/assets/images/flounder-framed.jpg"
         }
-      ],
-      "subtitles": [
-        "FLOUNDER - PRINT",
-        "FLOUNDER - FRAMED"
       ]
     },
     {
       "id": "slam",
       "title": "INSHORE SLAM",
       "description": "INSHORE SLAM DESCRIPTION.",
-      "price": 500.00,
       "currency": "USD",
-      "mainImage": "/assets/images/fish-slam-1.jpg",
       "zoomImage": "",
-      "alternateViews": [
+      "thumbnail": "/assets/images/fishslam-1-200w.jpg",
+      "options": [
         {
-          "type": "framed",
-          "url": "/assets/images/fish-slam-framed.jpg"
+          "type": "print",
+          "subtitle": "INSHORE SLAM - PRINT",
+          "price": 500.00,
+          "imageUrl": "/assets/images/fishslam-1-600w.jpg"
         },
         {
-          "type": "framed",
-          "url": "/assets/images/fish-slam-individual-framed.jpg"
+          "type": "one_frame",
+          "subtitle": "INSHORE SLAM - 1 FRAME",
+          "price": 800.00,
+          "imageUrl": "/assets/images/fish-slam-framed.jpg"
+        },
+        {
+          "type": "three_frames",
+          "subtitle": "INSHORE SLAM - 3 FRAMES",
+          "price": 1200.00,
+          "imageUrl": "/assets/images/fish-slam-individual-framed.jpg"
         }
-      ],
-      "subtitles": [
-        "INSHORE SLAM - PRINT",
-        "INSHORE SLAM - 1 FRAME",
-        "INSHORE SLAM - 3 FRAMES"
       ]
     }
   ]

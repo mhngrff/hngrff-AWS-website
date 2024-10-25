@@ -1,6 +1,10 @@
 
 <div class="payment-container">
 
+  <a (click)="editCart()">
+    <button class="edit-cart-button">Edit cart</button>
+  </a>
+
   <form id="payment-form" (submit)="handlePayment($event)">
 
     <div id="card-number-element"><!-- Card number will insert here --></div>
