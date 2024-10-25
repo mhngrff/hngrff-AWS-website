@@ -19,16 +19,17 @@ h2 {
     color: white;
     font-size: 6vw;
     font-weight: 400;
+    margin: 0;
 }
 
-.price p {
-  color: white;
-  font-size: 5vw;
-}
-
-p {
-  z-index: 20;
-  }
+// .price p {
+//   color: white;
+//   font-size: 5vw;
+// }
+//
+// p {
+//   z-index: 20;
+//   }
 
 .viewport {
   margin-top: 8vh; /* Spacing above viewport */
@@ -243,28 +244,43 @@ p {
 .add-to-cart-button {
   width: 80vw;
   height: 5vh;
+  margin-top: 2vh;
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 3vw;
 }
 
 .buy-now-button {
   width: 80vw;
   height: 5vh;
+  margin-top: 2vh;
+  color: white;
+  background-color: blue;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 3vw;
 }
 
 
 .dropdown-increment-row {
+  margin-top: 4vh;
   display: flex;
   flex-direction: row; /* Makes the children align horizontally */
   align-items: center; /* Vertically centers all children */
-  justify-content: space-between; /* Distributes space between the dropdown and quantity selector */
+  justify-content: center; /* Distributes space between the dropdown and quantity selector */
   width: 100%; /* Takes the full width of the container */
+  height: 5vh;
 }
 
 .option-selector {
-//   flex: 1; /* Takes up equal space within the row */
-  margin-right: 2vw; /* Adds space between the dropdown and the quantity selector */
-  align-self: center; /* Explicitly aligns this element within its flex container */
-  align-items: center;
-//   width: 100%;
+  flex: 1; /* Takes up equal space within the row */
+//   display: flex;
+//   justify-content: center; these 2 combined will center horizontally, though this doesnt look good
 }
 
 .option-selector select {
@@ -273,29 +289,72 @@ p {
 //   height: 2.5rem; /* Set height to match other elements in the row */
 //   box-sizing: border-box; /* Includes padding and border in the total height */
 //   align-items: center;
+  font-size: 3vw;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: white;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 4vh;
 }
 
 .quantity-selector {
-//   flex: 1; /* Takes up equal space within the row */
-  display: flex;
-//   align-items: center; /* Aligns buttons and input vertically */
-//   justify-content: space-between;
-//   height: 2.5rem; /* Match height of dropdown to maintain consistency */
+  flex: 1; /* Takes up equal space within the row */
+  display: flex; //this works with justify-content to center HORIZONTALLY, do not remove
+  justify-content: center; //center the item HORIZONTALLY
 }
 
 .quantity-selector input {
   width: 20%; /* Adjust this to control the size of the input box */
   text-align: center; /* Centers the quantity value in the input */
-//   height: 80%; /* Matches the height of other elements */
+
+    font-size: 3vw;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: black;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 2px;
+    height: 4vh;
 }
 
 .quantity-selector button {
   width: 15%; /* Adjust this to control the button size */
-//   height: 80%; /* Matches the height of other elements */
+  font-size: 3vw;
+
+      font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: white;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 2px;
+    height: 4vh;
 }
 
 .dropdown-increment-row > * {
 //   height: 7vh; /* Set a consistent height for all children elements in the row */
+}
+
+.details-content p {
+  margin-top: 2vh;
+  margin-bottom: 10vh;
+  z-index: 20;
+  }
+
+// h2 {
+//     font-family: 'Roboto', sans-serif;
+//     color: white;
+//     font-size: 6vw;
+//     font-weight: 400;
+// }
+
+.price h3 {
+  margin: 0;
+  color: white;
+  font-size: 5vw;
+  font-weight: 300;
+  z-index: 20;
 }
 
 

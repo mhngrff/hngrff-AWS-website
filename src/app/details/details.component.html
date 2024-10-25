@@ -40,7 +40,7 @@
     <div class="details-content">
       <h2>{{ metadata.title }}</h2>
       <div class="price">
-        <p>{{ selectedPrice | currency: metadata.currency }}</p>
+        <h3>{{ selectedPrice | currency: metadata.currency }}</h3>
       </div>
 
       <div class="dropdown-increment-row">
@@ -62,11 +62,11 @@
       </div>
 
       <a (click)="addToCart()">
-        <button class="add-to-cart-button">Add to cart</button>
+        <button class="add-to-cart-button">ADD TO CART</button>
       </a>
 
       <a (click)="goToPayment()">
-        <button class="buy-now-button">Buy Now</button>
+        <button class="buy-now-button">BUY NOW</button>
       </a>
 
       <p>{{ metadata.description }}</p>
