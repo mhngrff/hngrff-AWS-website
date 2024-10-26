@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
 import { NavigationService } from '../services/navigation.service';
+import Payment from 'payment';
 
 @Component({
   selector: 'app-payment',
@@ -15,6 +16,7 @@ export class PaymentComponent implements OnInit {
   cardExpiryElement: StripeCardExpiryElement | null = null;
   cardCvcElement: StripeCardCvcElement | null = null;
   clientSecret: string | null = null;
+  currentCardType: string | null = null; // Tracks detected card type
 
   constructor(
     private http: HttpClient,
@@ -67,6 +69,20 @@ export class PaymentComponent implements OnInit {
           console.log("Card number element created successfully");
           this.cardNumberElement.mount('#card-number-element');
           console.log("Card number element mounted successfully");
+
+          this.cardNumberElement?.on('change', (event: any) => {
+            console.log('Card number input:', event);
+
+            // Check the event's brand field to identify card type
+            const cardType = event.brand !== 'unknown' ? event.brand : null;
+            console.log('Detected card type:', cardType);
+
+            if (cardType) {
+              this.updateCardIcons(cardType);
+            } else {
+              this.resetCardIcons();
+            }
+          });
         } else {
           console.error("Failed to create card number element");
         }
@@ -174,7 +190,6 @@ export class PaymentComponent implements OnInit {
       }
     });
 
-
     if (error) {
       console.error('Payment failed:', error.message);
     } else if (paymentIntent) {
@@ -184,6 +199,37 @@ export class PaymentComponent implements OnInit {
 
   editCart(){
     this.navigationService.goToCart();
-    }
+  }
 
+  onCardNumberInput(event: any): void {
+    this.cardNumberElement?.on('change', (event: any) => {
+      const cardType = event.brand !== 'unknown' ? event.brand : null;
+      console.log('Detected card type:', cardType);
+
+      if (cardType) {
+        this.updateCardIcons(cardType);
+      } else {
+        this.resetCardIcons();
+      }
+    });
+  }
+
+  updateCardIcons(cardType: string): void {
+    const icons = document.querySelectorAll('.card-icon');
+    icons.forEach((icon) => {
+      const iconType = icon.getAttribute('data-card-type');
+      if (iconType === cardType) {
+        (icon as HTMLElement).style.opacity = '1';
+      } else {
+        (icon as HTMLElement).style.opacity = '0.3';
+      }
+    });
+  }
+
+  resetCardIcons(): void {
+    const icons = document.querySelectorAll('.card-icon');
+    icons.forEach((icon) => {
+      (icon as HTMLElement).style.opacity = '1'; // Reset to full opacity
+    });
+  }
 }

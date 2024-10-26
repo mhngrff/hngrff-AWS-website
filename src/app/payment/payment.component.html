@@ -7,9 +7,55 @@
 
   <form id="payment-form" (submit)="handlePayment($event)">
 
-    <div id="card-number-element"><!-- Card number will insert here --></div>
-    <div id="card-expiry-element"><!-- Expiry date will insert here --></div>
-    <div id="card-cvc-element"><!-- CVC will insert here --></div>
+    <label for="email" class="email-label">Email</label>
+    <div class="email-field">
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+      />
+    </div>
+
+    <label for="card-info" class="card-info-label">Card information</label>
+    <div id="card-info">
+      <div class="card-information">
+          <div class="card-number-row">
+
+            <div class="card-number-input">
+              <div id="card-number-element"><!-- Card number will insert here --></div>
+            </div>
+
+            <div class="card-icons">
+              <img src="assets/images/discover.png" alt="discover" class="card-icon" data-card-type="discover">
+              <img src="assets/images/visa.png" alt="visa" class="card-icon" data-card-type="visa">
+              <img src="assets/images/master.png" alt="master" class="card-icon" data-card-type="master">
+              <img src="assets/images/amex.png" alt="amex" class="card-icon" data-card-type="amex">
+            </div>
+          </div>
+
+        <div class="expiration-cvc-row">
+
+          <div class="expiration-input">
+            <div id="card-expiry-element"><!-- Expiry date will insert here --></div>
+          </div>
+          <div class="divider"></div>
+            <div class="cvc-input">
+              <div id="card-cvc-element"><!-- CVC will insert here --></div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <label for="cardholder-name" class="cardholder-name-label">Cardholder name</label>
+    <div class="cardholder-name-field">
+      <input
+        id="cardholder-name"
+        placeholder="Full name on card"
+        required
+      />
+    </div>
+
 
     <button type="submit" id="submit-button" [disabled]="!stripe || !cardNumberElement || !cardExpiryElement || !cardCvcElement">Pay Now</button>
   </form>

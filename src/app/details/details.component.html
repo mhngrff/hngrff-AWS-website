@@ -43,6 +43,9 @@
         <h3>{{ selectedPrice | currency: metadata.currency }}</h3>
       </div>
 
+      <p>{{ metadata.description }}</p>
+
+      <div class = "input-section">
       <div class="dropdown-increment-row">
       <!-- Dropdown to select version (unframed, framed, etc.) -->
       <div class="option-selector" *ngIf="metadata.options && metadata.options.length > 0">
@@ -69,8 +72,7 @@
         <button class="buy-now-button">BUY NOW</button>
       </a>
 
-      <p>{{ metadata.description }}</p>
-
+    </div>
     </div>
 
   </div>

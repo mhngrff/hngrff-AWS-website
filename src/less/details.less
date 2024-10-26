@@ -119,8 +119,8 @@ h2 {
 
 .expand-icon {
   position: absolute; /* Position relative to the viewport container */
-  top: 1vh; /* Adjust this to move vertically */
-  right: 5vw; /* Adjust this to move horizontally */
+  top: 28vh; /* Adjust this to move vertically */
+  left: 2vw; /* Adjust this to move horizontally */
   width: 6vw; /* Set appropriate size */
   height: auto;
   display: flex;
@@ -243,27 +243,27 @@ h2 {
 
 .add-to-cart-button {
   width: 80vw;
-  height: 5vh;
+  height: 6vh;
   margin-top: 2vh;
   color: white;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
-  font-size: 3vw;
+  font-size: 4vw;
 }
 
 .buy-now-button {
   width: 80vw;
-  height: 5vh;
+  height: 6vh;
   margin-top: 2vh;
   color: white;
-  background-color: blue;
+  background-color: #007bff;
   border: none;
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
-  font-size: 3vw;
+  font-size: 5vw;
 }
 
 
@@ -289,6 +289,7 @@ h2 {
 //   height: 2.5rem; /* Set height to match other elements in the row */
 //   box-sizing: border-box; /* Includes padding and border in the total height */
 //   align-items: center;
+  width: 50vw;
   font-size: 3vw;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
@@ -302,11 +303,11 @@ h2 {
 .quantity-selector {
   flex: 1; /* Takes up equal space within the row */
   display: flex; //this works with justify-content to center HORIZONTALLY, do not remove
-  justify-content: center; //center the item HORIZONTALLY
+  justify-content: flex-end; //center the item HORIZONTALLY
 }
 
 .quantity-selector input {
-  width: 20%; /* Adjust this to control the size of the input box */
+  width: 10vw; /* Adjust this to control the size of the input box */
   text-align: center; /* Centers the quantity value in the input */
 
     font-size: 3vw;
@@ -320,11 +321,11 @@ h2 {
 }
 
 .quantity-selector button {
-  width: 15%; /* Adjust this to control the button size */
-  font-size: 3vw;
+  width: 7vw; /* Adjust this to control the button size */
+  font-size: 4vw;
 
       font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     color: white;
     background-color: transparent;
     border: 1px solid gray;
@@ -337,8 +338,10 @@ h2 {
 }
 
 .details-content p {
+        font-family: 'Roboto', sans-serif;
+      font-weight: 300;
   margin-top: 2vh;
-  margin-bottom: 10vh;
+//   margin-bottom: 10vh;
   z-index: 20;
   }
 
@@ -356,5 +359,10 @@ h2 {
   font-weight: 300;
   z-index: 20;
 }
+
+.input-section{
+//   background-color: gray;
+//   width: 110%;
+  }
 
 

@@ -4,7 +4,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "typeRoots": ["node_modules/@types", "types"],
+    "types": ["payment"]
   },
   "files": [
     "src/main.ts"
