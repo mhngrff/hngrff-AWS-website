@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '../models/cart-item.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  // Using BehaviorSubject to manage cart items
   public cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
+  private selectedItem: CartItem | null = null;
+
+  // Calculate total dynamically based on cart items
+  getTotal$(): Observable<number> {
+    return this.cartItems$.pipe(
+      map((items) =>
+        items.reduce((total, item) => total + item.price * item.quantity, 0)
+      )
+    );
+  }
 
   addItem(item: CartItem): void {
-    // Get the current cart items
     const currentItems = this.cartItemsSubject.value;
-
-    // Check if the item already exists in the cart
     const existingItemIndex = currentItems.findIndex(
       cartItem => cartItem.imageId === item.imageId && cartItem.optionSubtitle === item.optionSubtitle
     );
@@ -63,4 +70,17 @@ export class CartService {
     // Return the cart items as an observable
     return this.cartItems$;
   }
+
+  setSelectedItem(item: CartItem | null): void {
+    this.selectedItem = item;
+    console.log('setSelectedItem - this.selectedItem= ', this.selectedItem);
+    console.log('setSelectedItem - item= ', item);
+  }
+
+  getSelectedItem(): CartItem | null {
+    return this.selectedItem;
+  }
+
+
+
 }

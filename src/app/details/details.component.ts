@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { NavigationService } from '../services/navigation.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 import { CartService } from '../services/cart.service';
+import { CartItem } from '../models/cart-item.interface';
+
 
 @Component({
   selector: 'app-details',
@@ -253,9 +255,19 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     imgElement.classList.add('loaded');
   }
 
-  goToPayment(): void {
-    this.navigationService.goToPayment();
-    }
+  buyNow(): void {
+    const currentItem: CartItem = {
+      imageId: this.route.snapshot.paramMap.get('imageId') || '',
+      optionSubtitle: this.selectedOption || '',
+      price: this.selectedPrice || 0,
+      quantity: this.quantity,
+      thumbnailUrl: this.mainImageUrl || '',
+    };
+
+    console.log('currentItem=', currentItem);
+    this.cartService.setSelectedItem(currentItem); // Store the current item in the service
+    this.navigationService.goToPayment(); // Navigate to the payment component
+  }
 
   addToCart(): void {
     if (this.selectedOption && this.selectedPrice !== null) {

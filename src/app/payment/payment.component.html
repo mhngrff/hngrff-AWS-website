@@ -1,9 +1,31 @@
 
-<div class="payment-container">
 
-  <a (click)="editCart()">
-    <button class="edit-cart-button">Edit cart</button>
-  </a>
+  <div class="order-summary-container">
+
+    <div class="order-summary-items">
+      <div *ngIf="cartItems.length > 0" class="payment-items">
+        <div *ngFor="let item of cartItems" class="payment-item">
+          <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="payment-thumbnail">
+          <p>{{ item.optionSubtitle }} &nbsp;
+            <span class="price">{{ item.price | currency }}</span>
+            <span class="quantity"> x {{ item.quantity }}</span> &nbsp;
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-summary-total">
+      <h3>Total: {{ total | currency }}</h3>
+    </div>
+
+    <div class="edit-cart-row">
+      <a (click)="editCart()">
+        <button class="edit-cart-button">Edit cart</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="payment-container">
 
   <form id="payment-form" (submit)="handlePayment($event)">
 

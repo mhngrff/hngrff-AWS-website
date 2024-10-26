@@ -3,10 +3,15 @@ import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCard
 import { HttpClient } from '@angular/common/http';
 import { NavigationService } from '../services/navigation.service';
 import Payment from 'payment';
+import { CartService } from '../services/cart.service';
+import { CommonModule } from '@angular/common';
+import { CartItem } from '../models/cart-item.interface';
+
 
 @Component({
   selector: 'app-payment',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './payment.component.html',
 })
 export class PaymentComponent implements OnInit {
@@ -18,23 +23,78 @@ export class PaymentComponent implements OnInit {
   clientSecret: string | null = null;
   currentCardType: string | null = null; // Tracks detected card type
 
+  cartItems: CartItem[] = []; // Store cart items or the single item
+  total: number = 0;
+
   constructor(
     private http: HttpClient,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private cartService: CartService,
     ) {}
 
+//   ngOnInit() {
+//     const selectedItem = this.cartService.getSelectedItem();
+//
+//     if (selectedItem) {
+//       this.total = selectedItem.price * selectedItem.quantity;
+//       console.log('payment - if(selectedItem) this.total=', this.total);
+//     } else {
+//           this.cartService.getTotal$().subscribe((total) => {
+//             this.total = total;
+//              });
+//     }
+//
+//     this.cartService.getTotal$().subscribe((total) => {
+//       this.total = total;
+//        });
+//
+//     // Load Stripe when the component initializes
+//     loadStripe('pk_test_51QD4EFCkan3FkVYDXSZLVEO2msoiyEuOi7M6zZqcKS9HKHrGsk2Q2UhlmDU5lhhQjo6NxVyEXhFt2JqMAu2DBlEo00AzCcNRdA').then((stripe) => {
+//       if (stripe) {
+//         this.stripe = stripe;
+//         console.log("Stripe loaded successfully");
+//         this.setupStripeElements();
+//       } else {
+//         console.error("Stripe failed to load");
+//       }
+//     });
+//   }
   ngOnInit() {
+    const selectedItem = this.cartService.getSelectedItem();
+
+    if (selectedItem) {
+      // Use the selected item total if it exists
+      this.total = selectedItem.price * selectedItem.quantity;
+      console.log('Using selectedItem. Total:', this.total);
+
+      this.cartItems = [selectedItem];
+
+      this.cartService.setSelectedItem(null);
+    } else {
+      // Only subscribe to the cart total if no selected item exists
+      this.cartService.getTotal$().subscribe((total) => {
+        this.total = total;
+        console.log('Using cart total. Total:', this.total);
+
+        this.cartService.getCartItems().subscribe((items: CartItem[]) => {
+          this.cartItems = items;
+        });
+
+      });
+    }
+
     // Load Stripe when the component initializes
     loadStripe('pk_test_51QD4EFCkan3FkVYDXSZLVEO2msoiyEuOi7M6zZqcKS9HKHrGsk2Q2UhlmDU5lhhQjo6NxVyEXhFt2JqMAu2DBlEo00AzCcNRdA').then((stripe) => {
       if (stripe) {
         this.stripe = stripe;
-        console.log("Stripe loaded successfully");
+        console.log('Stripe loaded successfully');
         this.setupStripeElements();
       } else {
-        console.error("Stripe failed to load");
+        console.error('Stripe failed to load');
       }
     });
   }
+
 
   setupStripeElements() {
     if (this.stripe) {

@@ -1,10 +1,21 @@
 <div class="cart-container">
 
-  <div *ngFor="let item of cartItems">
-    <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle">
-    <p>{{ item.optionSubtitle }}</p>
-    <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" min="1">
-    <button (click)="removeItem(item)">Remove</button>
+  <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+    <p>Your cart is empty. <a (click)="goToHome()">Browse products</a>.</p>
   </div>
 
+  <div class="cart-has-items" *ngIf="cartItems.length > 0" >
+    <div *ngFor="let item of cartItems">
+      <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle">
+      <p>{{ item.optionSubtitle }}</p>
+      <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" min="1">
+      <button (click)="removeItem(item)">Remove</button>
+    </div>
+
+    <h3>Cart Total: {{ total | currency }}</h3>
+
+  <a (click)="goToPayment()">
+    <button class="checkout-button">CHECKOUT</button>
+  </a>
+  </div>
 </div>
