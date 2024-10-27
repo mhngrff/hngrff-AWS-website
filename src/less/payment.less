@@ -3,7 +3,8 @@
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 3vh;
 }
 
 .order-summary-container{
@@ -63,7 +64,7 @@
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  font-size: 5vw;
+  font-size: 4vw;
   color: white; /* Optional: Make it visually distinct */
   margin: 0;
   padding: 0;
@@ -117,7 +118,7 @@
 .card-information{
     border: 1px solid #ccc;
     border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
   }
 
 .card-number-row {
@@ -180,24 +181,13 @@
   margin-top: 2vh;
   margin-bottom: 0.5vh;
   display: block;
-  color: #333;
+  color: black;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 3.5vw;
 }
 
 .email-field input{
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      width: 100%;
-      height: 5vh;
-        padding-left: 2vw;
-//         font-size: 5vw;
-  }
-
-.cardholder-name-field input{
-      font-family: 'Roboto', sans-serif;
       border: 1px solid #ccc;
       border-radius: 6px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
@@ -207,9 +197,74 @@
 //         font-size: 5vw;
   }
 
+.cardholder-name-field input{
+//       color: gray;
+      font-family: 'Roboto', sans-serif;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+      width: 100%;
+      height: 5vh;
+      padding-left: 2vw;
+        font-size: 3.5vw;
+  }
+
+.cardholder-name-field input::placeholder{
+  color: #b0b0b5;
+  }
+
 .payment-thumbnail {
 
   width: 20vw;
   height: auto;
   }
+
+.section-heading {
+  font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+  font-size: 3.5vw;
+  color: black;
+  margin-top: 2vh;
+  margin-bottom: 0;
+}
+
+.address-row {
+  display: flex;
+  gap: 1vw;
+  margin-top: 1vh;
+}
+
+.address-row input, .address-row select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 3.5vw;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.address-row input::placeholder {
+  color: #acacac;
+//   font-weight: bold;
+}
+
+.address-row select {
+  background-color: white;
+}
+
+button#submit-button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem;
+  font-size: 4vw;
+  border: none;
+  border-radius: 4px;
+  margin-top: 2vh;
+  cursor: pointer;
+}
+
+button#submit-button:hover {
+  background-color: #0056b3;
+}
 

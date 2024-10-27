@@ -7,11 +7,25 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CartService {
-  public cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
+  private storageKey = 'cartItems'; // Key for localStorage
+
+  public cartItemsSubject = new BehaviorSubject<CartItem[]>(this.loadCartFromStorage());
   cartItems$ = this.cartItemsSubject.asObservable();
   private selectedItem: CartItem | null = null;
 
-  // Calculate total dynamically based on cart items
+  constructor() {
+    this.calculateTotal(); // Ensure total is set at startup
+  }
+
+  private loadCartFromStorage(): CartItem[] {
+    const storedCart = localStorage.getItem(this.storageKey);
+    return storedCart ? JSON.parse(storedCart) : [];
+  }
+
+  private saveCartToStorage(cart: CartItem[]): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(cart));
+  }
+
   getTotal$(): Observable<number> {
     return this.cartItems$.pipe(
       map((items) =>
@@ -27,7 +41,6 @@ export class CartService {
     );
 
     if (existingItemIndex !== -1) {
-      // If the item exists, update its quantity
       const updatedItem = {
         ...currentItems[existingItemIndex],
         quantity: currentItems[existingItemIndex].quantity + item.quantity
@@ -35,25 +48,21 @@ export class CartService {
       const updatedItems = [...currentItems];
       updatedItems[existingItemIndex] = updatedItem;
 
-      // Update the BehaviorSubject with the modified items
       this.cartItemsSubject.next(updatedItems);
     } else {
-      // If the item doesn't exist, add it to the cart
       this.cartItemsSubject.next([...currentItems, item]);
     }
+
+    this.saveCartToStorage(this.cartItemsSubject.value);
   }
 
   updateItemQuantity(imageId: string, optionSubtitle: string, quantity: number): void {
-    // Get the current cart items
     const currentItems = this.cartItemsSubject.value;
-
-    // Find the index of the item to update
     const itemIndex = currentItems.findIndex(
       cartItem => cartItem.imageId === imageId && cartItem.optionSubtitle === optionSubtitle
     );
 
     if (itemIndex !== -1) {
-      // Update the quantity of the item
       const updatedItem = {
         ...currentItems[itemIndex],
         quantity: quantity
@@ -61,26 +70,46 @@ export class CartService {
       const updatedItems = [...currentItems];
       updatedItems[itemIndex] = updatedItem;
 
-      // Update the BehaviorSubject with the modified items
       this.cartItemsSubject.next(updatedItems);
+      this.saveCartToStorage(updatedItems);
     }
   }
 
+// cart.service.ts
+
+removeItem(item: CartItem): void {
+
+  const updatedItems = this.cartItemsSubject.value.filter(
+    cartItem => cartItem.imageId !== item.imageId || cartItem.optionSubtitle !== item.optionSubtitle
+  );
+
+  // Emit the updated cart to subscribers
+  this.cartItemsSubject.next(updatedItems);
+
+  // Save the updated cart to localStorage
+  this.saveCartToStorage(updatedItems);
+}
+
+
+
+  clearCart(): void {
+    this.cartItemsSubject.next([]);
+    localStorage.removeItem(this.storageKey);
+  }
+
   getCartItems(): Observable<CartItem[]> {
-    // Return the cart items as an observable
     return this.cartItems$;
   }
 
   setSelectedItem(item: CartItem | null): void {
     this.selectedItem = item;
-    console.log('setSelectedItem - this.selectedItem= ', this.selectedItem);
-    console.log('setSelectedItem - item= ', item);
   }
 
   getSelectedItem(): CartItem | null {
     return this.selectedItem;
   }
 
-
-
+  private calculateTotal(): void {
+    this.getTotal$().subscribe();
+  }
 }
