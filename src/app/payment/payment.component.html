@@ -6,22 +6,26 @@
       <div *ngIf="cartItems.length > 0" class="payment-items">
         <div *ngFor="let item of cartItems" class="payment-item">
           <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="payment-thumbnail">
-          <p>{{ item.optionSubtitle }} &nbsp;
-            <span class="price">{{ item.price | currency }}</span>
+
+          <div class="subtitle-quantity-price">
+            <p>{{ item.optionSubtitle }}
             <span class="quantity"> x {{ item.quantity }}</span> &nbsp;
-          </p>
+            <span class="price">{{ item.price | currency }}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="order-summary-total">
-      <h3>Total: {{ total | currency }}</h3>
-    </div>
+    <div class="edit-cart-subtotal-row">
+      <div *ngIf="!isBuyNow">
+        <a  (click)="editCart()" class="edit-cart-text">Edit cart</a>
+      </div>
 
-    <div class="edit-cart-row">
-      <a (click)="editCart()">
-        <button class="edit-cart-button">Edit cart</button>
-      </a>
+      <div class="order-summary-total">
+        <h3>Subtotal: {{ total | currency }}</h3>
+      </div>
+
     </div>
   </div>
 

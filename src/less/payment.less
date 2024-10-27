@@ -1,30 +1,45 @@
 .payment-container {
-//   margin-top: 8vh;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
-//   margin: 0 auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .order-summary-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 8vh;
   height: auto;
-//   background-color: #666;
   }
 
 .order-summary-items{
+  margin-left:10vw;
+  width: 80vw;
   height: auto;
   }
 
-.order-summary-total{
-//   height: 30%;
-  margin-top: 5vh;
-      display: flex; //this works with justify-content to center HORIZONTALLY, do not remove
-      justify-content: center; //center HORIZONTALLY
-      position: relative;
-      align-items: center; //center VERTICALLY
+.payment-items{
+  display: flex;
+  flex-direction: column;
+  }
+
+.payment-item{
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vh;
+  }
+
+.subtitle-quantity-price{
+  flex: 1;
+  justify-content: flex-end;
+  font-family: 'Roboto', sans-serif;
+  }
+
+.subtitle-quantity-price p{
+    font-size: 3vw;
   }
 
 .order-summary-total h3{
@@ -32,18 +47,47 @@
   margin: 0;
   }
 
-.edit-cart-row{
-//   height: 10%;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
-  width: 100%;
-//   flex: 1; /* Takes up equal space within the row */
-  display: flex; //this works with justify-content to center HORIZONTALLY, do not remove
-  justify-content: center; //center the item HORIZONTALLY
-  position: relative;
-  bottom: 0;
-  }
+.edit-cart-subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vw;
+  margin-left: 10vw; /* Center within the 80vw container */
+  height: 5vh;
+  border-top: 1px solid gray;
+  margin-top: 1vh;
+}
 
+.edit-cart-text {
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 5vw;
+  color: white; /* Optional: Make it visually distinct */
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.order-summary-total {
+  display: flex;
+  justify-content: flex-end; /* Align the total to the right */
+  align-items: center;
+  width: auto;
+  flex: 1;
+}
+
+.order-summary-total h3 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 5vw;
+  color: white;
+  margin: 0;
+
+}
 
 
 #card-element {
