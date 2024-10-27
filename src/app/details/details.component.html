@@ -57,11 +57,12 @@
         </select>
       </div>
 
-      <div class="quantity-selector">
-        <button (click)="decrementQuantity()">-</button>
-        <input type="number" [(ngModel)]="quantity" min="1">
-        <button (click)="incrementQuantity()">+</button>
-      </div>
+        <div class="details-quantity-editor">
+          <span class="details-decrement" (click)="decrementQuantity()">-</span>
+          <span class="details-quantity-value">{{ quantity }}</span>
+          <span class="details-increment" (click)="incrementQuantity()">+</span>
+        </div>
+
       </div>
 
       <a (click)="addToCart()">

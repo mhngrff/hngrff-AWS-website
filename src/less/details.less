@@ -7,6 +7,9 @@
 }
 
 .details-content {
+  border-top: 1px solid gray;
+  padding-top: 1vh;
+  margin-top: 2vh;
   display: flex;
   flex-direction: column; /* Metadata visually below viewport */
   align-items: flex-start;
@@ -22,14 +25,6 @@ h2 {
     margin: 0;
 }
 
-// .price p {
-//   color: white;
-//   font-size: 5vw;
-// }
-//
-// p {
-//   z-index: 20;
-//   }
 
 .viewport {
   margin-top: 8vh; /* Spacing above viewport */
@@ -78,6 +73,7 @@ h2 {
 }
 
 .arrow-navigation {
+  width: 105%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -119,8 +115,8 @@ h2 {
 
 .expand-icon {
   position: absolute; /* Position relative to the viewport container */
-  top: 28vh; /* Adjust this to move vertically */
-  left: 2vw; /* Adjust this to move horizontally */
+  top: 29vh; /* Adjust this to move vertically */
+  left: 1.5vw; /* Adjust this to move horizontally */
   width: 6vw; /* Set appropriate size */
   height: auto;
   display: flex;
@@ -247,7 +243,7 @@ h2 {
   margin-top: 2vh;
   color: white;
   background-color: transparent;
-  border: 1px solid white;
+  border: 1px solid gray;
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
   font-size: 4vw;
@@ -263,7 +259,7 @@ h2 {
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 
 
@@ -279,16 +275,9 @@ h2 {
 
 .option-selector {
   flex: 1; /* Takes up equal space within the row */
-//   display: flex;
-//   justify-content: center; these 2 combined will center horizontally, though this doesnt look good
 }
 
 .option-selector select {
-//   margin: 0; /* Removes default margins */
-//   padding: 0.5rem; /* Adds padding to give some spacing within the dropdown */
-//   height: 2.5rem; /* Set height to match other elements in the row */
-//   box-sizing: border-box; /* Includes padding and border in the total height */
-//   align-items: center;
   width: 50vw;
   font-size: 3vw;
   font-family: 'Roboto', sans-serif;
@@ -300,57 +289,42 @@ h2 {
   height: 4vh;
 }
 
-.quantity-selector {
-  flex: 1; /* Takes up equal space within the row */
-  display: flex; //this works with justify-content to center HORIZONTALLY, do not remove
-  justify-content: flex-end; //center the item HORIZONTALLY
-}
-
-.quantity-selector input {
-  width: 10vw; /* Adjust this to control the size of the input box */
-  text-align: center; /* Centers the quantity value in the input */
-
-    font-size: 3vw;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    color: black;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 2px;
-    height: 4vh;
-}
-
-.quantity-selector button {
-  width: 7vw; /* Adjust this to control the button size */
+.details-quantity-editor {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px 10px;
   font-size: 4vw;
-
-      font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    color: white;
-    background-color: transparent;
-    border: 1px solid gray;
-    border-radius: 2px;
-    height: 4vh;
+  height: 4vh;
+  width: 20vw;
+  justify-content: space-between; /* Space between '-' and '+' */
 }
 
-.dropdown-increment-row > * {
-//   height: 7vh; /* Set a consistent height for all children elements in the row */
+.details-decrement, .details-increment {
+  cursor: pointer;
+  font-size: 5vw;
+  color: white;
 }
+
+.details-quantity-value {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: white;
+  width: 30px;
+}
+
+
 
 .details-content p {
-        font-family: 'Roboto', sans-serif;
-      font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   margin-top: 2vh;
-//   margin-bottom: 10vh;
   z-index: 20;
   }
 
-// h2 {
-//     font-family: 'Roboto', sans-serif;
-//     color: white;
-//     font-size: 6vw;
-//     font-weight: 400;
-// }
 
 .price h3 {
   margin: 0;
@@ -361,6 +335,7 @@ h2 {
 }
 
 .input-section{
+//   border-top: 1px solid gray;
 //   background-color: gray;
 //   width: 110%;
   }
