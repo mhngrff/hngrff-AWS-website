@@ -1,21 +1,33 @@
 <div class="cart-container">
-
   <div *ngIf="cartItems.length === 0" class="empty-cart-message">
     <p>Your cart is empty. <a (click)="goToHome()">Browse products</a>.</p>
   </div>
 
-  <div class="cart-has-items" *ngIf="cartItems.length > 0" >
-    <div *ngFor="let item of cartItems">
-      <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle">
-      <p>{{ item.optionSubtitle }}</p>
-      <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" min="1">
-      <button (click)="removeItem(item)">Remove</button>
+  <div *ngIf="cartItems.length > 0" class="cart-has-items">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="cart-thumbnail" />
+
+      <div class="cart-item-details">
+        <p class="cart-item-subtitle">{{ item.optionSubtitle }} - {{ item.price | currency }}</p>
+        <div class="quantity-editor">
+          <span class="quantity-decrement" (click)="decrementQuantity(item)">-</span>
+          <span class="quantity-value">{{ item.quantity }}</span>
+          <span class="quantity-increment" (click)="incrementQuantity(item)">+</span>
+        </div>
+        <p class="remove-item" (click)="removeItem(item)">Remove</p>
+      </div>
     </div>
 
-    <h3>Cart Total: {{ total | currency }}</h3>
+    <div class="cart-summary">
+      <div class="cart-total">
+        <h3>Subtotal: {{ total | currency }}</h3>
+      </div>
+      <p class="tax-shipping-text">Taxes and shipping calculated at checkout</p>
 
-  <a (click)="goToPayment()">
-    <button class="checkout-button">CHECKOUT</button>
-  </a>
+      <div class="checkout-button-container">
+        <button class="checkout-button" (click)="goToPayment()">Checkout</button>
+      </div>
+    </div>
+
   </div>
 </div>

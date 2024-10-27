@@ -1,7 +1,138 @@
-.cart-container{
+.cart-container {
   margin-top: 8vh;
-  }
-
-h3 {
-  color:white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.cart-has-items {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.cart-item {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   border-bottom: 1px solid gray;
+//   padding: 10px 0;
+  display: flex;
+  align-items: stretch; /* Ensure all child elements take full row height */
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  padding: 10px 0;
+}
+
+.cart-thumbnail {
+  width: 25vw;
+  height: auto;
+  object-fit: contain;
+}
+
+.cart-item-details {
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: flex-end;
+  display: flex;
+  align-items: stretch; /* Ensure all child elements take full row height */
+  flex-direction: column;
+  justify-content: space-between;
+//   border-bottom: 1px solid gray;
+  padding: 10px 0;
+  text-align: right;
+}
+
+.cart-item-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 3vw;
+  color: white;
+  margin-bottom: 1vh;
+}
+
+.quantity-editor {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 4vw;
+  height: 4vh;
+  width: 20vw;
+  align-self: flex-end;
+}
+
+.quantity-decrement, .quantity-increment {
+  cursor: pointer;
+  font-size: 5vw;
+  color: white;
+}
+
+.quantity-value {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: white;
+  width: 30px;
+}
+
+.remove-item {
+  text-decoration: underline;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 4vw;
+  cursor: pointer;
+  color: white;
+  margin-top: 1vh;
+}
+
+.cart-summary {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1vh;
+//   margin-top: 1vh;
+}
+
+.cart-total h3 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 5vw;
+  color: white;
+  margin: 0;
+}
+
+.tax-shipping-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 3vw;
+  color: gray;
+  margin-top: 0.5vh;
+}
+
+.checkout-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1vh;
+}
+
+.checkout-button {
+  background-color: #007bff; /* Adjust to match other buttons */
+  color: white;
+  padding: 10px 20px;
+  font-size: 4vw;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 67%; /* Adjust if you want the button smaller */
+  max-width: 300px;
+}
+
+.checkout-button:hover {
+  background-color: #0056b3;
+}
+
