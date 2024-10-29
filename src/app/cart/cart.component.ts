@@ -109,13 +109,4 @@ export class CartComponent implements OnInit {
     return this.cartService.getSelectedItem() !== null;
   }
 
-//   cancelBuyNowFlow(): void {
-//     this.cartService.setSelectedItem(null); // Reset the "Buy Now" item
-//     this.cartService.closeCart(); // Ensure cart is closed
-//     this.router.navigate(['/']); // Redirect to the homepage
-//   }
-//
-//   continueBuyNowFlow(): void {
-//     this.cartService.closeCart(); // Just close the cart overlay
-//   }
 }

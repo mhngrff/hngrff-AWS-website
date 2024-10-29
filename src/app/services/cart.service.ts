@@ -26,21 +26,43 @@ export class CartService {
     this.calculateTotal(); // Ensure total is set at startup
   }
 
-  setBuyNowFlow(isBuyNow: boolean): void {
-    this.isBuyNowFlowSubject.next(isBuyNow);
-  }
+//   setBuyNowFlow(isBuyNow: boolean): void {
+//     this.isBuyNowFlowSubject.next(isBuyNow);
+//   }
+
+//   toggleCartVisibility(): void {
+//     if (this.selectedItem !== null) {
+//       // User is in "Buy Now" flow, show a message instead of opening the cart
+//       console.log("You're currently in a 'Buy Now' flow. Please cancel to add items.");
+//       // Emit visibility as false to ensure cart does not open in this state
+//       this.cartVisibleSubject.next(true);
+//     } else {
+//       // Normal cart visibility toggle
+//       this.cartVisibleSubject.next(!this.cartVisibleSubject.value);
+//     }
+//   }
 
   toggleCartVisibility(): void {
+    // Get the current cart visibility state
+    const isCurrentlyVisible = this.cartVisibleSubject.value;
+
     if (this.selectedItem !== null) {
-      // User is in "Buy Now" flow, show a message instead of opening the cart
-      console.log("You're currently in a 'Buy Now' flow. Please cancel to add items.");
-      // Emit visibility as false to ensure cart does not open in this state
-      this.cartVisibleSubject.next(false);
+      // User is in "Buy Now" flow
+      if (isCurrentlyVisible) {
+        // If the cart is currently open, allow it to be closed
+        this.cartVisibleSubject.next(false);
+        console.log("Closing the cart while in 'Buy Now' flow.");
+      } else {
+        // If the cart is not currently visible, open it and show the warning
+        this.cartVisibleSubject.next(true);
+        console.log("You're currently in a 'Buy Now' flow. Please cancel to add items.");
+      }
     } else {
       // Normal cart visibility toggle
-      this.cartVisibleSubject.next(!this.cartVisibleSubject.value);
+      this.cartVisibleSubject.next(!isCurrentlyVisible);
     }
   }
+
 
   closeCart(): void {
     this.cartVisibleSubject.next(false);
@@ -123,13 +145,40 @@ export class CartService {
     return this.cartItems$;
   }
 
+//   setSelectedItem(item: CartItem | null): void {
+//     this.selectedItem = item;
+//   }
+//
+//   getSelectedItem(): CartItem | null {
+//     return this.selectedItem;
+//   }
+
+  setBuyNowFlow(isBuyNow: boolean): void {
+    this.isBuyNowFlowSubject.next(isBuyNow);
+    localStorage.setItem('isBuyNowFlow', JSON.stringify(isBuyNow)); // Persist the Buy Now flag
+    console.log(`Buy Now flow set to: ${isBuyNow}`);
+  }
+
+  getBuyNowFlow(): boolean {
+    const storedBuyNowFlow = localStorage.getItem('isBuyNowFlow');
+    return storedBuyNowFlow ? JSON.parse(storedBuyNowFlow) : false;
+  }
+
   setSelectedItem(item: CartItem | null): void {
     this.selectedItem = item;
+    if (item) {
+      localStorage.setItem('selectedBuyNowItem', JSON.stringify(item)); // Persist the Buy Now item
+    } else {
+      localStorage.removeItem('selectedBuyNowItem'); // Clear from local storage if null
+    }
   }
 
   getSelectedItem(): CartItem | null {
-    return this.selectedItem;
+    const storedItem = localStorage.getItem('selectedBuyNowItem');
+    return storedItem ? JSON.parse(storedItem) : null;
   }
+
+
 
   private calculateTotal(): void {
     this.getTotal$().subscribe();

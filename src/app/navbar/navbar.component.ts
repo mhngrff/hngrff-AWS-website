@@ -76,6 +76,7 @@ export class NavbarComponent implements OnInit {
   navigateToHome() {
     this.navigationService.goToHome();
     this.cartService.closeCart();
+    this.cartService.setBuyNowFlow(false);
     this.closeMenu(); // Close the menu when navigating to home
   }
 

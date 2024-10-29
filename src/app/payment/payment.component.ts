@@ -34,22 +34,56 @@ export class PaymentComponent implements OnInit {
     private cartService: CartService,
     ) {}
 
+//   ngOnInit() {
+//
+//     const selectedItem = this.cartService.getSelectedItem();
+//
+//     if (selectedItem) {
+//       // Buy Now path: Use selected item and set the flag
+//       this.cartItems = [selectedItem];
+//       this.total = selectedItem.price * selectedItem.quantity;
+//       this.isBuyNow = true; // Mark this as a buy now flow
+//       this.cartService.setSelectedItem(null); // Reset the selected item
+//       console.log('Buy Now path - Total:', this.total);
+//     } else {
+//       this.cartService.getTotal$().subscribe((total) => {
+//         this.total = total;
+//
+//         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
+//           this.cartItems = items;
+//         });
+//       });
+//     }
+//
+//     // Load Stripe Elements
+//     loadStripe('your-stripe-key').then((stripe) => {
+//       if (stripe) {
+//         this.stripe = stripe;
+//         console.log('Stripe loaded successfully');
+//         this.setupStripeElements();
+//       } else {
+//         console.error('Stripe failed to load');
+//       }
+//     });
+//   }
+
   ngOnInit() {
+    // Restore Buy Now flag and selected item from local storage
+    const isBuyNowFlow = this.cartService.getBuyNowFlow();
+    this.cartService.setBuyNowFlow(isBuyNowFlow);
+
     const selectedItem = this.cartService.getSelectedItem();
 
-    if (selectedItem) {
-      // Buy Now path: Use selected item and set the flag
+    if (selectedItem && isBuyNowFlow) {
+      // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
       this.total = selectedItem.price * selectedItem.quantity;
-      this.isBuyNow = true; // Mark this as a buy now flow
-//       this.cartService.setBuyNowFlow(false); // Reset Buy Now flow flag after reaching payment
-      this.cartService.setSelectedItem(null); // Reset the selected item
       console.log('Buy Now path - Total:', this.total);
     } else {
       // Cart Checkout path: Use cart items and total
       this.cartService.getTotal$().subscribe((total) => {
         this.total = total;
-//         console.log('Cart Checkout path - Total:', this.total);
+        console.log('Cart Checkout path - Total:', this.total);
 
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
           this.cartItems = items;
@@ -61,13 +95,11 @@ export class PaymentComponent implements OnInit {
     loadStripe('your-stripe-key').then((stripe) => {
       if (stripe) {
         this.stripe = stripe;
-        console.log('Stripe loaded successfully');
         this.setupStripeElements();
-      } else {
-        console.error('Stripe failed to load');
       }
     });
   }
+
 
 
   setupStripeElements() {
@@ -228,6 +260,8 @@ export class PaymentComponent implements OnInit {
       console.error('Payment failed:', error.message);
     } else if (paymentIntent) {
       console.log('Payment successful:', paymentIntent);
+      this.cartService.setBuyNowFlow(false);
+      this.cartService.setSelectedItem(null);
     }
   }
 
