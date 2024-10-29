@@ -75,6 +75,7 @@ export class NavbarComponent implements OnInit {
 
   navigateToHome() {
     this.navigationService.goToHome();
+    this.cartService.closeCart();
     this.closeMenu(); // Close the menu when navigating to home
   }
 
@@ -82,7 +83,10 @@ export class NavbarComponent implements OnInit {
     this.navigationService.goToContact();
   }
 
-  goToCart(): void {
-    this.navigationService.goToCart();
+//   goToCart(): void {
+//     this.navigationService.goToCart();
+//   }
+  goToCart() {
+    this.cartService.toggleCartVisibility();
   }
 }

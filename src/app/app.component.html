@@ -1,5 +1,14 @@
+<!--<app-navbar></app-navbar>-->
+<!--<app-cart></app-cart>-->
+<!--<router-outlet></router-outlet>-->
 <app-navbar></app-navbar>
-<!--<div class="content-container">-->
+
+<div *ngIf="isCartVisible" class="overlay-dimmer" (click)="closeCart()"></div>
+
+<!-- Add the cart overlay -->
+<div [class]="isCartVisible ? 'cart-overlay visible' : 'cart-overlay'">
+  <app-cart></app-cart>
+</div>
+
+
 <router-outlet></router-outlet>
-<!--  <app-footer></app-footer>-->
-<!--</div>-->

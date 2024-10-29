@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavigationService } from '../services/navigation.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +21,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private navigationService: NavigationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,8 +64,15 @@ export class CartComponent implements OnInit {
   }
 
   goToPayment(): void {
-    this.navigationService.goToPayment();
-    this.cartService.setSelectedItem(null);
+//     this.navigationService.goToPayment();
+//     this.cartService.setSelectedItem(null);
+    if (this.router.url === '/payment') {
+      // If already on the payment page, just close the cart
+      this.cartService.closeCart();
+    } else {
+          this.navigationService.goToPayment();
+          this.cartService.setSelectedItem(null);
+    }
   }
 
   goToHome(): void {

@@ -231,7 +231,8 @@ export class PaymentComponent implements OnInit {
   }
 
   editCart(){
-    this.navigationService.goToCart();
+//     this.navigationService.goToCart();
+    this.cartService.toggleCartVisibility();
   }
 
   onCardNumberInput(event: any): void {
@@ -265,4 +266,5 @@ export class PaymentComponent implements OnInit {
       (icon as HTMLElement).style.opacity = '1'; // Reset to full opacity
     });
   }
+
 }

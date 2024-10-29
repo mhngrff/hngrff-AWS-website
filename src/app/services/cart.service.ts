@@ -13,8 +13,24 @@ export class CartService {
   cartItems$ = this.cartItemsSubject.asObservable();
   private selectedItem: CartItem | null = null;
 
+  // Add visibility logic
+  private cartVisibleSubject = new BehaviorSubject<boolean>(false);
+  cartVisible$ = this.cartVisibleSubject.asObservable();
+
   constructor() {
     this.calculateTotal(); // Ensure total is set at startup
+  }
+
+  // Add method to toggle cart visibility
+  toggleCartVisibility(): void {
+    this.cartVisibleSubject.next(!this.cartVisibleSubject.value);
+    console.log('cart.service.ts - toggleCartVisibility accessed. ');
+  }
+
+  // Method to explicitly close the cart (if needed)
+  closeCart(): void {
+    this.cartVisibleSubject.next(false);
+    console.log('closeCart called fom cart service');
   }
 
   private loadCartFromStorage(): CartItem[] {
@@ -90,12 +106,10 @@ removeItem(item: CartItem): void {
   this.saveCartToStorage(updatedItems);
 }
 
-
-
-  clearCart(): void {
-    this.cartItemsSubject.next([]);
-    localStorage.removeItem(this.storageKey);
-  }
+//   clearCart(): void {
+//     this.cartItemsSubject.next([]);
+//     localStorage.removeItem(this.storageKey);
+//   }
 
   getCartItems(): Observable<CartItem[]> {
     return this.cartItems$;
