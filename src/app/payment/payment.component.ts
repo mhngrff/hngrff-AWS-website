@@ -28,6 +28,7 @@ export class PaymentComponent implements OnInit {
   cartItems: CartItem[] = []; // Store cart items or the single item
   total: number = 0;
 
+//   isBuyNow: boolean = this.cartService.getBuyNowFlow(); // Track if the user used "Buy Now"
   isBuyNow: boolean = false; // Track if the user used "Buy Now"
 
   constructor(
@@ -81,6 +82,7 @@ export class PaymentComponent implements OnInit {
       // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
       this.total = selectedItem.price * selectedItem.quantity;
+      this.isBuyNow = true;
       console.log('Buy Now path - Total:', this.total);
     } else {
       // Cart Checkout path: Use cart items and total
