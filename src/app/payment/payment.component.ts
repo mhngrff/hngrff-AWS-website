@@ -6,6 +6,7 @@ import Payment from 'payment';
 import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class PaymentComponent implements OnInit {
   cardCvcElement: StripeCardCvcElement | null = null;
   clientSecret: string | null = null;
   currentCardType: string | null = null; // Tracks detected card type
+  isBuyNowFlow$: Observable<boolean>;
 
   cartItems: CartItem[] = []; // Store cart items or the single item
   total: number = 0;
@@ -32,7 +34,8 @@ export class PaymentComponent implements OnInit {
     private http: HttpClient,
     private navigationService: NavigationService,
     private cartService: CartService,
-    ) {}
+    ) {    this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
+}
 
 //   ngOnInit() {
 //
