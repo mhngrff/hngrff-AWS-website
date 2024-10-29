@@ -1,10 +1,70 @@
+<!--<body>-->
+<!--<div class="cart-container">-->
+<!--  <div *ngIf="cartItems.length === 0" class="empty-cart-message">-->
+<!--    <p>Your cart is empty. <a (click)="goToHome()">Browse products</a>.</p>-->
+<!--  </div>-->
+
+
+<!--  <div *ngIf="isBuyNowFlow() && (isCartVisible$ | async)" class="buy-now-warning">-->
+<!--    <p>-->
+<!--      You're currently proceeding to purchase a selected item.-->
+<!--      <a (click)="cancelBuyNowFlow()">Please cancel this purchase</a> or-->
+<!--      <a (click)="continueBuyNowFlow()">click here to continue</a>.-->
+<!--    </p>-->
+<!--  </div>-->
+
+<!--  <div *ngIf="cartItems.length > 0 && !isBuyNowFlow()" class="cart-has-items">-->
+<!--    <div *ngFor="let item of cartItems" class="cart-item">-->
+<!--      <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="cart-thumbnail" />-->
+
+<!--      <div class="cart-item-details">-->
+<!--        <p class="cart-item-subtitle">{{ item.optionSubtitle }} - {{ item.price | currency }}</p>-->
+<!--        <div class="quantity-editor">-->
+<!--          <span class="quantity-decrement" (click)="decrementQuantity(item)">-</span>-->
+<!--          <span class="quantity-value">{{ item.quantity }}</span>-->
+<!--          <span class="quantity-increment" (click)="incrementQuantity(item)">+</span>-->
+<!--        </div>-->
+<!--        <p class="remove-item" (click)="removeItem(item)">Remove</p>-->
+<!--&lt;!&ndash;        <p class="remove-item" #removeButton (click)="logAndRemove(item)">Remove</p>&ndash;&gt;-->
+
+
+<!--        &lt;!&ndash;        <p class="remove-item" (click)="logAndRemove(item)">Remove</p>&ndash;&gt;-->
+
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="cart-summary">-->
+<!--      <div class="cart-total">-->
+<!--        <h3>Subtotal: {{ total | currency }}</h3>-->
+<!--      </div>-->
+<!--      <p class="tax-shipping-text">Taxes and shipping calculated at checkout</p>-->
+
+<!--      <div class="checkout-button-container">-->
+<!--        <button class="checkout-button" (click)="goToPayment()">Checkout</button>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
 <body>
 <div class="cart-container">
-  <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+  <!-- Buy Now Warning Message -->
+  <div *ngIf="(isBuyNowFlow$ | async) && (isCartVisible$ | async)" class="buy-now-warning">
+    <p>
+      You're currently proceeding to purchase a selected item.
+      <a (click)="cancelBuyNowFlow()">Please cancel this purchase</a> or
+      <a (click)="continueBuyNowFlow()">click here to continue</a>.
+    </p>
+  </div>
+
+  <!-- Empty Cart Message -->
+  <div *ngIf="cartItems.length === 0 && !(isBuyNowFlow$ | async)" class="empty-cart-message">
     <p>Your cart is empty. <a (click)="goToHome()">Browse products</a>.</p>
   </div>
 
-  <div *ngIf="cartItems.length > 0" class="cart-has-items">
+  <!-- Regular Cart Content -->
+  <div *ngIf="cartItems.length > 0 && !(isBuyNowFlow$ | async)" class="cart-has-items">
     <div *ngFor="let item of cartItems" class="cart-item">
       <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="cart-thumbnail" />
 
@@ -16,11 +76,6 @@
           <span class="quantity-increment" (click)="incrementQuantity(item)">+</span>
         </div>
         <p class="remove-item" (click)="removeItem(item)">Remove</p>
-<!--        <p class="remove-item" #removeButton (click)="logAndRemove(item)">Remove</p>-->
-
-
-        <!--        <p class="remove-item" (click)="logAndRemove(item)">Remove</p>-->
-
       </div>
     </div>
 
@@ -34,7 +89,6 @@
         <button class="checkout-button" (click)="goToPayment()">Checkout</button>
       </div>
     </div>
-
   </div>
 </div>
 </body>

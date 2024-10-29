@@ -9,6 +9,7 @@ import { CartService } from './services/cart.service';
 import { CommonModule } from '@angular/common';
 
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,18 +20,20 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'hngrff-angular-app';
   isCartVisible = false;
-    constructor(private router: Router, private cartService: CartService) {
 
-      this.router.events.subscribe(event => {
-        if (event instanceof NavigationStart) {
-          this.cartService.closeCart();
-          console.log('closecart called from navigationstart')
-        }
-      });
-      this.cartService.cartVisible$.subscribe((visible) => {
-        this.isCartVisible = visible;
-      });
-    }
+  constructor(private router: Router, private cartService: CartService) {
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.cartService.closeCart();
+      }
+    });
+
+    this.cartService.cartVisible$.subscribe((visible) => {
+      this.isCartVisible = visible;
+    });
+  }
+
 
   closeCart(): void {
     this.cartService.closeCart(); // Use the existing closeCart method from CartService

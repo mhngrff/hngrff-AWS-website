@@ -7,30 +7,44 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CartService {
+
   private storageKey = 'cartItems'; // Key for localStorage
 
   public cartItemsSubject = new BehaviorSubject<CartItem[]>(this.loadCartFromStorage());
   cartItems$ = this.cartItemsSubject.asObservable();
+
   private selectedItem: CartItem | null = null;
 
-  // Add visibility logic
   private cartVisibleSubject = new BehaviorSubject<boolean>(false);
   cartVisible$ = this.cartVisibleSubject.asObservable();
+
+  // Buy now flow observable
+  private isBuyNowFlowSubject = new BehaviorSubject<boolean>(false);
+  isBuyNowFlow$ = this.isBuyNowFlowSubject.asObservable();
 
   constructor() {
     this.calculateTotal(); // Ensure total is set at startup
   }
 
-  // Add method to toggle cart visibility
-  toggleCartVisibility(): void {
-    this.cartVisibleSubject.next(!this.cartVisibleSubject.value);
-    console.log('cart.service.ts - toggleCartVisibility accessed. ');
+  setBuyNowFlow(isBuyNow: boolean): void {
+    this.isBuyNowFlowSubject.next(isBuyNow);
   }
 
-  // Method to explicitly close the cart (if needed)
+  toggleCartVisibility(): void {
+    if (this.selectedItem !== null) {
+      // User is in "Buy Now" flow, show a message instead of opening the cart
+      console.log("You're currently in a 'Buy Now' flow. Please cancel to add items.");
+      // Emit visibility as false to ensure cart does not open in this state
+      this.cartVisibleSubject.next(false);
+    } else {
+      // Normal cart visibility toggle
+      this.cartVisibleSubject.next(!this.cartVisibleSubject.value);
+    }
+  }
+
   closeCart(): void {
     this.cartVisibleSubject.next(false);
-    console.log('closeCart called fom cart service');
+//     console.log('closeCart called fom cart service');
   }
 
   private loadCartFromStorage(): CartItem[] {
@@ -91,25 +105,19 @@ export class CartService {
     }
   }
 
-// cart.service.ts
+  removeItem(item: CartItem): void {
 
-removeItem(item: CartItem): void {
+    const updatedItems = this.cartItemsSubject.value.filter(
+      cartItem => cartItem.imageId !== item.imageId || cartItem.optionSubtitle !== item.optionSubtitle
+    );
 
-  const updatedItems = this.cartItemsSubject.value.filter(
-    cartItem => cartItem.imageId !== item.imageId || cartItem.optionSubtitle !== item.optionSubtitle
-  );
+    // Emit the updated cart to subscribers
+    this.cartItemsSubject.next(updatedItems);
 
-  // Emit the updated cart to subscribers
-  this.cartItemsSubject.next(updatedItems);
+    // Save the updated cart to localStorage
+    this.saveCartToStorage(updatedItems);
+  }
 
-  // Save the updated cart to localStorage
-  this.saveCartToStorage(updatedItems);
-}
-
-//   clearCart(): void {
-//     this.cartItemsSubject.next([]);
-//     localStorage.removeItem(this.storageKey);
-//   }
 
   getCartItems(): Observable<CartItem[]> {
     return this.cartItems$;

@@ -266,6 +266,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
     console.log('currentItem=', currentItem);
     this.cartService.setSelectedItem(currentItem); // Store the current item in the service
+    this.cartService.setBuyNowFlow(true); // Set the Buy Now flow
     this.navigationService.goToPayment(); // Navigate to the payment component
   }
 

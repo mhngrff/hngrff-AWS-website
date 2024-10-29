@@ -42,13 +42,14 @@ export class PaymentComponent implements OnInit {
       this.cartItems = [selectedItem];
       this.total = selectedItem.price * selectedItem.quantity;
       this.isBuyNow = true; // Mark this as a buy now flow
+//       this.cartService.setBuyNowFlow(false); // Reset Buy Now flow flag after reaching payment
       this.cartService.setSelectedItem(null); // Reset the selected item
       console.log('Buy Now path - Total:', this.total);
     } else {
       // Cart Checkout path: Use cart items and total
       this.cartService.getTotal$().subscribe((total) => {
         this.total = total;
-        console.log('Cart Checkout path - Total:', this.total);
+//         console.log('Cart Checkout path - Total:', this.total);
 
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
           this.cartItems = items;
@@ -71,13 +72,13 @@ export class PaymentComponent implements OnInit {
 
   setupStripeElements() {
     if (this.stripe) {
-      console.log("Setting up Stripe Elements...");
+//       console.log("Setting up Stripe Elements...");
 
       // Create an instance of Elements
       this.elements = this.stripe.elements();
 
       if (this.elements) {
-        console.log("Stripe Elements instance created successfully");
+//         console.log("Stripe Elements instance created successfully");
 
         // Create and mount the card number element
         this.cardNumberElement = this.elements.create('cardNumber', {
@@ -99,16 +100,16 @@ export class PaymentComponent implements OnInit {
         });
 
         if (this.cardNumberElement) {
-          console.log("Card number element created successfully");
+//           console.log("Card number element created successfully");
           this.cardNumberElement.mount('#card-number-element');
-          console.log("Card number element mounted successfully");
+//           console.log("Card number element mounted successfully");
 
           this.cardNumberElement?.on('change', (event: any) => {
-            console.log('Card number input:', event);
+//             console.log('Card number input:', event);
 
             // Check the event's brand field to identify card type
             const cardType = event.brand !== 'unknown' ? event.brand : null;
-            console.log('Detected card type:', cardType);
+//             console.log('Detected card type:', cardType);
 
             if (cardType) {
               this.updateCardIcons(cardType);
@@ -140,9 +141,9 @@ export class PaymentComponent implements OnInit {
         });
 
         if (this.cardExpiryElement) {
-          console.log("Card expiry element created successfully");
+//           console.log("Card expiry element created successfully");
           this.cardExpiryElement.mount('#card-expiry-element');
-          console.log("Card expiry element mounted successfully");
+//           console.log("Card expiry element mounted successfully");
         } else {
           console.error("Failed to create card expiry element");
         }
@@ -167,9 +168,9 @@ export class PaymentComponent implements OnInit {
         });
 
         if (this.cardCvcElement) {
-          console.log("Card CVC element created successfully");
+//           console.log("Card CVC element created successfully");
           this.cardCvcElement.mount('#card-cvc-element');
-          console.log("Card CVC element mounted successfully");
+//           console.log("Card CVC element mounted successfully");
         } else {
           console.error("Failed to create card CVC element");
         }

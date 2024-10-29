@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NavigationService } from '../services/navigation.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -17,16 +18,22 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
   total: number = 0;
   cartItems: CartItem[] = [];
+  isCartVisible$: Observable<boolean>;
+  isBuyNowFlow$: Observable<boolean>;
 
   constructor(
     private cartService: CartService,
     private navigationService: NavigationService,
     private cdr: ChangeDetectorRef,
     private router: Router
-  ) {}
+    ) {
+    this.isCartVisible$ = this.cartService.cartVisible$;
+    this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
+    }
 
   ngOnInit(): void {
     console.log('Cart component initialized');
+
     this.cartService.getTotal$().subscribe((total) => {
       this.total = total;
     });
@@ -35,6 +42,23 @@ export class CartComponent implements OnInit {
       console.log('Cart items on init:', items);
       this.cartItems = items;
     });
+
+//     // Log to check if the Buy Now flow is active
+//     console.log('Is Buy Now Flow:', this.isBuyNowFlow());
+//     this.isCartVisible$.subscribe((isVisible) => {
+//       console.log('Is Cart Visible:', isVisible);
+//     });
+  }
+
+  cancelBuyNowFlow(): void {
+    this.cartService.setBuyNowFlow(false); // Cancel Buy Now flow
+    this.cartService.setSelectedItem(null);
+    this.cartService.closeCart(); // Close the cart
+    this.router.navigate(['/']); // Navigate back to the homepage
+  }
+
+  continueBuyNowFlow(): void {
+    this.cartService.closeCart(); // Just close the cart overlay
   }
 
   incrementQuantity(item: CartItem): void {
@@ -79,4 +103,19 @@ export class CartComponent implements OnInit {
     this.navigationService.goToHome();
   }
 
+  isBuyNowFlow(): boolean {
+//     console.log('getSelectedItem: ', this.cartService.getSelectedItem());
+//     console.log('isBuyNowFlow accessed');
+    return this.cartService.getSelectedItem() !== null;
+  }
+
+//   cancelBuyNowFlow(): void {
+//     this.cartService.setSelectedItem(null); // Reset the "Buy Now" item
+//     this.cartService.closeCart(); // Ensure cart is closed
+//     this.router.navigate(['/']); // Redirect to the homepage
+//   }
+//
+//   continueBuyNowFlow(): void {
+//     this.cartService.closeCart(); // Just close the cart overlay
+//   }
 }
