@@ -60,7 +60,7 @@
 
   <!-- Empty Cart Message -->
   <div *ngIf="cartItems.length === 0 && !(isBuyNowFlow$ | async)" class="empty-cart-message">
-    <p>Your cart is empty. <a (click)="goToHome()">Browse products</a>.</p>
+    <p>Your cart is empty. <br><br> <a (click)="continueShopping()">Continue shopping</a></p>
   </div>
 
   <!-- Regular Cart Content -->

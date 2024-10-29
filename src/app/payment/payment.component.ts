@@ -7,6 +7,8 @@ import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router'; // Import Router
+
 
 
 @Component({
@@ -35,6 +37,7 @@ export class PaymentComponent implements OnInit {
     private http: HttpClient,
     private navigationService: NavigationService,
     private cartService: CartService,
+    private router: Router
     ) {    this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
 }
 
@@ -92,6 +95,12 @@ export class PaymentComponent implements OnInit {
 
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
           this.cartItems = items;
+
+          // If the cart becomes empty while on the payment page, redirect to home
+          if (items.length === 0) {
+            console.log("Cart is empty, redirecting to home page.");
+            this.router.navigate(['/']); // Navigate to the home page
+          }
         });
       });
     }
@@ -124,7 +133,7 @@ export class PaymentComponent implements OnInit {
               color: '#32325d',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
-              fontSize: '16px',
+              fontSize: '8vw',
               '::placeholder': {
                 color: '#aab7c4',
               },
@@ -165,7 +174,7 @@ export class PaymentComponent implements OnInit {
               color: '#32325d',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
-              fontSize: '16px',
+              fontSize: '9vw',
               '::placeholder': {
                 color: '#aab7c4',
               },
@@ -192,7 +201,7 @@ export class PaymentComponent implements OnInit {
               color: '#32325d',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
-              fontSize: '16px',
+              fontSize: '9vw',
               '::placeholder': {
                 color: '#aab7c4',
               },

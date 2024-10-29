@@ -112,4 +112,8 @@ export class CartComponent implements OnInit {
     return this.cartService.getSelectedItem() !== null;
   }
 
+  continueShopping(): void {
+    this.cartService.closeCart();
+    }
+
 }
