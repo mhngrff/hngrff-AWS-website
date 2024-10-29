@@ -66,7 +66,6 @@ export class CartService {
 
   closeCart(): void {
     this.cartVisibleSubject.next(false);
-//     console.log('closeCart called fom cart service');
   }
 
   private loadCartFromStorage(): CartItem[] {

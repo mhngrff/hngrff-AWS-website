@@ -51,10 +51,13 @@ export class CartComponent implements OnInit {
   }
 
   cancelBuyNowFlow(): void {
-    this.cartService.setBuyNowFlow(false); // Cancel Buy Now flow
-    this.cartService.setSelectedItem(null);
     this.cartService.closeCart(); // Close the cart
     this.router.navigate(['/']); // Navigate back to the homepage
+
+    setTimeout(()=> {
+    this.cartService.setBuyNowFlow(false); // Cancel Buy Now flow
+    this.cartService.setSelectedItem(null);
+    }, 500);
   }
 
   continueBuyNowFlow(): void {
