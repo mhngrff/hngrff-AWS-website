@@ -7,8 +7,8 @@ import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router'; // Import Router
-
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -29,8 +29,6 @@ export class PaymentComponent implements OnInit {
 
   cartItems: CartItem[] = []; // Store cart items or the single item
   total: number = 0;
-
-//   isBuyNow: boolean = this.cartService.getBuyNowFlow(); // Track if the user used "Buy Now"
   isBuyNow: boolean = false; // Track if the user used "Buy Now"
 
   constructor(
@@ -41,46 +39,11 @@ export class PaymentComponent implements OnInit {
     ) {    this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
 }
 
-//   ngOnInit() {
-//
-//     const selectedItem = this.cartService.getSelectedItem();
-//
-//     if (selectedItem) {
-//       // Buy Now path: Use selected item and set the flag
-//       this.cartItems = [selectedItem];
-//       this.total = selectedItem.price * selectedItem.quantity;
-//       this.isBuyNow = true; // Mark this as a buy now flow
-//       this.cartService.setSelectedItem(null); // Reset the selected item
-//       console.log('Buy Now path - Total:', this.total);
-//     } else {
-//       this.cartService.getTotal$().subscribe((total) => {
-//         this.total = total;
-//
-//         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
-//           this.cartItems = items;
-//         });
-//       });
-//     }
-//
-//     // Load Stripe Elements
-//     loadStripe('your-stripe-key').then((stripe) => {
-//       if (stripe) {
-//         this.stripe = stripe;
-//         console.log('Stripe loaded successfully');
-//         this.setupStripeElements();
-//       } else {
-//         console.error('Stripe failed to load');
-//       }
-//     });
-//   }
-
   ngOnInit() {
     // Restore Buy Now flag and selected item from local storage
     const isBuyNowFlow = this.cartService.getBuyNowFlow();
     this.cartService.setBuyNowFlow(isBuyNowFlow);
-
     const selectedItem = this.cartService.getSelectedItem();
-
     if (selectedItem && isBuyNowFlow) {
       // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
@@ -95,7 +58,6 @@ export class PaymentComponent implements OnInit {
 
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
           this.cartItems = items;
-
           // If the cart becomes empty while on the payment page, redirect to home
           if (items.length === 0) {
             console.log("Cart is empty, redirecting to home page.");
@@ -104,9 +66,9 @@ export class PaymentComponent implements OnInit {
         });
       });
     }
-
     // Load Stripe Elements
-    loadStripe('your-stripe-key').then((stripe) => {
+    console.log('Stripe Public Key:', environment.stripePublicKey);
+    loadStripe(environment.stripePublicKey).then((stripe) => {
       if (stripe) {
         this.stripe = stripe;
         this.setupStripeElements();
@@ -114,17 +76,46 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+  async handlePayment(event: Event) {
+    event.preventDefault();
+    console.log("Handling payment submission...");
+    if (!this.stripe || !this.cardNumberElement || !this.cardExpiryElement || !this.cardCvcElement) {
+      console.error("Stripe or card elements not properly set up");
+      return;
+    }
+    console.log("Creating payment intent...");
+    // Create a PaymentIntent by calling the backend
+    await this.createPaymentIntent();
+    if (!this.clientSecret) {
+      console.error("Failed to retrieve client secret from backend");
+      return;
+    }
+    console.log("Retrieved client secret:", this.clientSecret);
+    // Use the client secret to confirm the payment
+    const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
+      payment_method: {
+        card: this.cardNumberElement!,
+      }
+    });
+    if (error) {
+      console.error('Payment failed:', error.message);
+    } else if (paymentIntent) {
+      console.log('Payment successful:', paymentIntent);
+      this.cartService.setBuyNowFlow(false);
+      this.cartService.setSelectedItem(null);
+    }
+  }
 
+  editCart(){
+    this.cartService.toggleCartVisibility();
+  }
 
   setupStripeElements() {
     if (this.stripe) {
-//       console.log("Setting up Stripe Elements...");
 
-      // Create an instance of Elements
       this.elements = this.stripe.elements();
 
       if (this.elements) {
-//         console.log("Stripe Elements instance created successfully");
 
         // Create and mount the card number element
         this.cardNumberElement = this.elements.create('cardNumber', {
@@ -133,7 +124,7 @@ export class PaymentComponent implements OnInit {
               color: '#32325d',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
-              fontSize: '8vw',
+              fontSize: '7vw',
               '::placeholder': {
                 color: '#aab7c4',
               },
@@ -146,16 +137,12 @@ export class PaymentComponent implements OnInit {
         });
 
         if (this.cardNumberElement) {
-//           console.log("Card number element created successfully");
           this.cardNumberElement.mount('#card-number-element');
-//           console.log("Card number element mounted successfully");
 
           this.cardNumberElement?.on('change', (event: any) => {
-//             console.log('Card number input:', event);
 
             // Check the event's brand field to identify card type
             const cardType = event.brand !== 'unknown' ? event.brand : null;
-//             console.log('Detected card type:', cardType);
 
             if (cardType) {
               this.updateCardIcons(cardType);
@@ -187,9 +174,7 @@ export class PaymentComponent implements OnInit {
         });
 
         if (this.cardExpiryElement) {
-//           console.log("Card expiry element created successfully");
           this.cardExpiryElement.mount('#card-expiry-element');
-//           console.log("Card expiry element mounted successfully");
         } else {
           console.error("Failed to create card expiry element");
         }
@@ -214,9 +199,7 @@ export class PaymentComponent implements OnInit {
         });
 
         if (this.cardCvcElement) {
-//           console.log("Card CVC element created successfully");
           this.cardCvcElement.mount('#card-cvc-element');
-//           console.log("Card CVC element mounted successfully");
         } else {
           console.error("Failed to create card CVC element");
         }
@@ -240,48 +223,6 @@ export class PaymentComponent implements OnInit {
     } catch (error) {
       console.error('Error creating payment intent:', error);
     }
-  }
-
-  async handlePayment(event: Event) {
-    event.preventDefault();
-    console.log("Handling payment submission...");
-
-    if (!this.stripe || !this.cardNumberElement || !this.cardExpiryElement || !this.cardCvcElement) {
-      console.error("Stripe or card elements not properly set up");
-      return;
-    }
-
-    console.log("Creating payment intent...");
-
-    // Create a PaymentIntent by calling the backend
-    await this.createPaymentIntent();
-
-    if (!this.clientSecret) {
-      console.error("Failed to retrieve client secret from backend");
-      return;
-    }
-
-    console.log("Retrieved client secret:", this.clientSecret);
-
-    // Use the client secret to confirm the payment
-    const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
-      payment_method: {
-        card: this.cardNumberElement!,
-      }
-    });
-
-    if (error) {
-      console.error('Payment failed:', error.message);
-    } else if (paymentIntent) {
-      console.log('Payment successful:', paymentIntent);
-      this.cartService.setBuyNowFlow(false);
-      this.cartService.setSelectedItem(null);
-    }
-  }
-
-  editCart(){
-//     this.navigationService.goToCart();
-    this.cartService.toggleCartVisibility();
   }
 
   onCardNumberInput(event: any): void {

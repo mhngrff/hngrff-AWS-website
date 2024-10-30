@@ -109,17 +109,17 @@
 }
 
 .card-information{
-    border: 1px solid #ccc;
+    border: 1px solid #aab7c4;
     border-radius: 6px;
 //     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
   }
 
 #card-element {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #aab7c4;
   border-radius: 4px;
   margin-bottom: 20px;
-  height: 50px;  /* Ensure enough space for all card fields */
+//   height: 50px;  /* Ensure enough space for all card fields */
   width: 100%;   /* Take full width of the container */
 }
 
@@ -127,7 +127,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #aab7c4;
   height: 5vh;
 }
 
@@ -160,7 +160,7 @@
 
 .divider {
   width: 1px;
-  background-color: #ccc;
+  background-color: #aab7c4;
   height: 100%;
 }
 
@@ -199,26 +199,24 @@
 }
 
 .email-field input{
-      border: 1px solid #ccc;
-      border-radius: 6px;
-//       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-      width: 100%;
-      height: 5vh;
-      padding-left: 2vw;
-      font-size: 4vw;
-      -webkit-font-smoothing: antialiased;
-  }
+  padding: 10px;
+  border: 1px solid #aab7c4;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 4vw;
+  color: #32325d;
+  -webkit-font-smoothing: antialiased;
+}
 
 .cardholder-name-field input{
       -webkit-font-smoothing: antialiased;
       font-family: 'Roboto', sans-serif;
-      border: 1px solid #ccc;
+      border: 1px solid #aab7c4;
       border-radius: 6px;
-//       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
       width: 100%;
-      height: 5vh;
-      padding-left: 2vw;
+      padding: 10px;
       font-size: 4vw;
+      color: #32325d;
   }
 
 .cardholder-name-field input::placeholder{
@@ -234,7 +232,7 @@
 
 .section-heading {
   font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+  font-weight: 400;
   font-size: 3.5vw;
   color: black;
   margin-top: 2vh;
@@ -251,7 +249,7 @@
 .address-row-double input, .address-row-double select, .address-row input, .address-row select {
   flex: 1;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #aab7c4;
   border-radius: 6px;
   font-size: 4vw;
   -webkit-font-smoothing: antialiased;
@@ -260,10 +258,12 @@
 
 .address-row input, .address-row select {
   width: 100%;
+  color: #32325d;
   }
 
 .address-row-double input, .address-row-double select {
   width: 50%;
+  color: #32325d;
   }
 
 .address-row input::placeholder, .address-row-double input::placeholder {
@@ -272,8 +272,10 @@
 
 .address-row-double select {
   background-color: white;
-  color: #aab7c4;
+  color: #32325d;
 }
+
+// .address-row-double select {
 
 button#submit-button {
   width: 100%;
@@ -292,10 +294,23 @@ button#submit-button:hover {
 }
 
 .stripe-logo{
-  width: 35vw;
+  width: 34vw;
   height: auto;
-  margin-left: 30vw;
+  margin-left: 33vw;
   margin-top: 2vh;
+  margin-bottom: 1vh;
+  }
+
+
+.terms-privacy-links{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 24vw;
+  margin-left: 38vw;
   margin-bottom: 2vh;
   }
 
+.terms-privacy-links a p {
+  font-size: 3.5vw;
+  }

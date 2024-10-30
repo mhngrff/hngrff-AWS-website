@@ -7,7 +7,6 @@
 }
 
 .details-content {
-//   padding-top: 1vh;
   margin-top: 2vh;
   display: flex;
   flex-direction: column; /* Metadata visually below viewport */
@@ -37,11 +36,13 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-height: 60vh;
 }
 
 .scrollable-container {
   min-height: 35vh;
-  background-color: black;
+//   background-color: black;
+  background-color: #0e0e0b;
   display: flex;
   scroll-snap-type: x mandatory;
   overflow-x: scroll;
@@ -71,8 +72,8 @@ h2 {
 .image-slide img {
   width: 100%;
   height: auto;
-//   max-height: 60vh;
-  object-fit: cover;
+  max-height: 60vh;
+    object-fit: contain;
 }
 
 .arrow-navigation {
@@ -250,7 +251,7 @@ h2 {
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
   font-size: 4vw;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
+//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
 }
 
 .buy-now-button {
@@ -292,7 +293,7 @@ h2 {
   border: 1px solid gray;
   border-radius: 5px;
   height: 4vh;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
+//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
 }
 
 .details-quantity-editor {
@@ -307,7 +308,7 @@ h2 {
   height: 4vh;
   width: 20vw;
   justify-content: space-between; /* Space between '-' and '+' */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
+//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
 }
 
 .details-decrement, .details-increment {
