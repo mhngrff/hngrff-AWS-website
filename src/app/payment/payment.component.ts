@@ -9,12 +9,13 @@ import { CartItem } from '../models/cart-item.interface';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './payment.component.html',
 })
 export class PaymentComponent implements OnInit {
@@ -29,26 +30,40 @@ export class PaymentComponent implements OnInit {
 
   cartItems: CartItem[] = []; // Store cart items or the single item
   total: number = 0;
-  isBuyNow: boolean = false; // Track if the user used "Buy Now"
+
+  paymentForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private http: HttpClient,
     private navigationService: NavigationService,
     private cartService: CartService,
     private router: Router
-    ) {    this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
-}
+    ) {
+      this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
+      this.paymentForm = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        shippingName: ['', Validators.required],
+        addressLine1: ['', Validators.required],
+        addressLine2: [''],
+        city: ['', Validators.required],
+        state: ['', Validators.required],
+        zip: ['', Validators.required],
+        country: ['', Validators.required],
+        cardholderName: ['', Validators.required],
+      });
+    }
 
   ngOnInit() {
     // Restore Buy Now flag and selected item from local storage
     const isBuyNowFlow = this.cartService.getBuyNowFlow();
+    console.log('isBuyNowFlow$ = ', this.cartService.getBuyNowFlow());
     this.cartService.setBuyNowFlow(isBuyNowFlow);
     const selectedItem = this.cartService.getSelectedItem();
     if (selectedItem && isBuyNowFlow) {
       // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
       this.total = selectedItem.price * selectedItem.quantity;
-      this.isBuyNow = true;
       console.log('Buy Now path - Total:', this.total);
     } else {
       // Cart Checkout path: Use cart items and total
@@ -76,27 +91,71 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  async handlePayment(event: Event) {
-    event.preventDefault();
-    console.log("Handling payment submission...");
-    if (!this.stripe || !this.cardNumberElement || !this.cardExpiryElement || !this.cardCvcElement) {
-      console.error("Stripe or card elements not properly set up");
+//   async handlePayment(event: Event) {
+//     event.preventDefault();
+//     console.log("Handling payment submission...");
+//     if (!this.stripe || !this.cardNumberElement || !this.cardExpiryElement || !this.cardCvcElement) {
+//       console.error("Stripe or card elements not properly set up");
+//       return;
+//     }
+//     console.log("Creating payment intent...");
+//     // Create a PaymentIntent by calling the backend
+//     await this.createPaymentIntent();
+//     if (!this.clientSecret) {
+//       console.error("Failed to retrieve client secret from backend");
+//       return;
+//     }
+//     console.log("Retrieved client secret:", this.clientSecret);
+//     // Use the client secret to confirm the payment
+//     const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
+//       payment_method: {
+//         card: this.cardNumberElement!,
+//       }
+//     });
+//     if (error) {
+//       console.error('Payment failed:', error.message);
+//     } else if (paymentIntent) {
+//       console.log('Payment successful:', paymentIntent);
+//       this.cartService.setBuyNowFlow(false);
+//       this.cartService.setSelectedItem(null);
+//     }
+//   }
+
+  async handlePayment() {
+    if (this.paymentForm.invalid) {
+      console.error('Form is invalid, please fill out the required fields correctly.');
       return;
     }
-    console.log("Creating payment intent...");
-    // Create a PaymentIntent by calling the backend
+
+    const formData = this.paymentForm.value;
+    console.log('Form Data:', formData);
+
+    // Proceed with creating a Payment Intent and confirming the payment
     await this.createPaymentIntent();
+
     if (!this.clientSecret) {
       console.error("Failed to retrieve client secret from backend");
       return;
     }
-    console.log("Retrieved client secret:", this.clientSecret);
-    // Use the client secret to confirm the payment
-    const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
+
+    const { paymentIntent, error } = await this.stripe!.confirmCardPayment(this.clientSecret, {
       payment_method: {
         card: this.cardNumberElement!,
-      }
+        billing_details: {
+          name: formData.cardholderName,
+          email: formData.email,
+          address: {
+            line1: formData.addressLine1,
+            line2: formData.addressLine2,
+            city: formData.city,
+            state: formData.state,
+            postal_code: formData.zip,
+            country: formData.country,
+          },
+        },
+      },
     });
+
     if (error) {
       console.error('Payment failed:', error.message);
     } else if (paymentIntent) {
@@ -105,6 +164,7 @@ export class PaymentComponent implements OnInit {
       this.cartService.setSelectedItem(null);
     }
   }
+
 
   editCart(){
     this.cartService.toggleCartVisibility();

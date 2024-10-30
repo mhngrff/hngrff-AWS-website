@@ -16,7 +16,7 @@
     </div>
 
     <div class="edit-cart-subtotal-row">
-      <div *ngIf="!isBuyNow">
+      <div *ngIf="!(isBuyNowFlow$ | async)">
         <a  (click)="editCart()" class="edit-cart-text">Edit cart</a>
       </div>
 
@@ -28,37 +28,105 @@
   </div>
 
   <div class="payment-container">
-    <form id="payment-form" (submit)="handlePayment($event)">
+<!--    <form id="payment-form" (submit)="handlePayment($event)">-->
 
+<!--      &lt;!&ndash; Email Field &ndash;&gt;-->
+<!--      <label for="email" class="email-label">Email</label>-->
+<!--      <div class="email-field">-->
+<!--        <input type="email" id="email" name="email" required />-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Shipping Address Fields &ndash;&gt;-->
+<!--      <label for="address-line1" class="shipping-label">Shipping Information</label>-->
+
+<!--      <div class="address-row">-->
+<!--        <input type="text" id="shipping-name" name="shippingName" placeholder="Full Name" required />-->
+<!--      </div>-->
+
+<!--      <div class="address-row">-->
+<!--        <input type="text" id="address-line1" name="addressLine1" placeholder="Address Line 1" required />-->
+<!--      </div>-->
+
+<!--      <div class="address-row">-->
+<!--                <input type="text" id="address-line2" name="addressLine2" placeholder="Address Line 2 (Optional)" />-->
+<!--      </div>-->
+
+<!--      <div class="address-row-double">-->
+<!--        <input type="text" id="city" name="city" placeholder="City" required />-->
+<!--        <input type="text" id="state" name="state" placeholder="State/Province" required />-->
+<!--      </div>-->
+
+<!--      <div class="address-row-double">-->
+<!--        <input type="text" id="zip" name="zip" placeholder="Zip/Postal Code" required />-->
+<!--        <select id="country" name="country" required>-->
+<!--          <option value="">Select Country</option>-->
+<!--          <option value="US">United States</option>-->
+<!--          <option value="CA">Canada</option>-->
+<!--          &lt;!&ndash; Add more countries as needed &ndash;&gt;-->
+<!--        </select>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Cardholder Name &ndash;&gt;-->
+<!--      <label for="cardholder-name" class="cardholder-name-label">Cardholder Name</label>-->
+<!--      <div class="cardholder-name-field">-->
+<!--        <input id="cardholder-name" placeholder="Full Name on Card" required />-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Stripe Elements for Card Details &ndash;&gt;-->
+<!--      <div class="card-info-label">-->
+<!--        <span>Card Information</span>-->
+<!--      </div>-->
+<!--      <div class="card-information">-->
+<!--        <div class="card-number-row">-->
+<!--          <div class="card-number-input" id="card-number-element"></div>-->
+<!--          <div class="card-icons">-->
+<!--            <img src="assets/images/discover.png" alt="discover" class="card-icon" data-card-type="discover" />-->
+<!--            <img src="assets/images/visa.png" alt="visa" class="card-icon" data-card-type="visa" />-->
+<!--            <img src="assets/images/master.png" alt="master" class="card-icon" data-card-type="master" />-->
+<!--            <img src="assets/images/amex.png" alt="amex" class="card-icon" data-card-type="amex" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="expiration-cvc-row">-->
+<!--          <div class="expiration-input" id="card-expiry-element"></div>-->
+<!--          <div class="divider"></div>-->
+<!--          <div class="cvc-input" id="card-cvc-element"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Submit Button &ndash;&gt;-->
+<!--      <button type="submit" id="submit-button">Pay</button>-->
+<!--    </form>-->
+    <form [formGroup]="paymentForm" (ngSubmit)="handlePayment()">
       <!-- Email Field -->
       <label for="email" class="email-label">Email</label>
       <div class="email-field">
-        <input type="email" id="email" name="email" required />
+        <input type="email" id="email" formControlName="email" required />
       </div>
 
       <!-- Shipping Address Fields -->
       <label for="address-line1" class="shipping-label">Shipping Information</label>
 
       <div class="address-row">
-        <input type="text" id="shipping-name" name="shippingName" placeholder="Full Name" required />
+        <input type="text" id="shipping-name" formControlName="shippingName" placeholder="Full Name" required />
       </div>
 
       <div class="address-row">
-        <input type="text" id="address-line1" name="addressLine1" placeholder="Address Line 1" required />
+        <input type="text" id="address-line1" formControlName="addressLine1" placeholder="Address Line 1" required />
       </div>
 
       <div class="address-row">
-                <input type="text" id="address-line2" name="addressLine2" placeholder="Address Line 2 (Optional)" />
+        <input type="text" id="address-line2" formControlName="addressLine2" placeholder="Address Line 2 (Optional)" />
       </div>
 
       <div class="address-row-double">
-        <input type="text" id="city" name="city" placeholder="City" required />
-        <input type="text" id="state" name="state" placeholder="State/Province" required />
+        <input type="text" id="city" formControlName="city" placeholder="City" required />
+        <input type="text" id="state" formControlName="state" placeholder="State/Province" required />
       </div>
 
       <div class="address-row-double">
-        <input type="text" id="zip" name="zip" placeholder="Zip/Postal Code" required />
-        <select id="country" name="country" required>
+        <input type="text" id="zip" formControlName="zip" placeholder="Zip/Postal Code" required />
+        <select id="country" formControlName="country" required>
           <option value="">Select Country</option>
           <option value="US">United States</option>
           <option value="CA">Canada</option>
@@ -69,34 +137,35 @@
       <!-- Cardholder Name -->
       <label for="cardholder-name" class="cardholder-name-label">Cardholder Name</label>
       <div class="cardholder-name-field">
-        <input id="cardholder-name" placeholder="Full Name on Card" required />
+        <input id="cardholder-name" formControlName="cardholderName" placeholder="Full Name on Card" required />
       </div>
+      <!-- Stripe Elements Section -->
+      <div class="stripe-elements-container">
+        <div class="card-info-label">
+          <span>Card Information</span>
+        </div>
+        <div class="card-information">
+          <div class="card-number-row">
+            <div class="card-number-input" id="card-number-element"></div>
+            <div class="card-icons">
+              <img src="assets/images/discover.png" alt="discover" class="card-icon" data-card-type="discover" />
+              <img src="assets/images/visa.png" alt="visa" class="card-icon" data-card-type="visa" />
+              <img src="assets/images/master.png" alt="master" class="card-icon" data-card-type="master" />
+              <img src="assets/images/amex.png" alt="amex" class="card-icon" data-card-type="amex" />
+            </div>
+          </div>
 
-      <!-- Stripe Elements for Card Details -->
-      <div class="card-info-label">
-        <span>Card Information</span>
-      </div>
-      <div class="card-information">
-        <div class="card-number-row">
-          <div class="card-number-input" id="card-number-element"></div>
-          <div class="card-icons">
-            <img src="assets/images/discover.png" alt="discover" class="card-icon" data-card-type="discover" />
-            <img src="assets/images/visa.png" alt="visa" class="card-icon" data-card-type="visa" />
-            <img src="assets/images/master.png" alt="master" class="card-icon" data-card-type="master" />
-            <img src="assets/images/amex.png" alt="amex" class="card-icon" data-card-type="amex" />
+          <div class="expiration-cvc-row">
+            <div class="expiration-input" id="card-expiry-element"></div>
+            <div class="divider"></div>
+            <div class="cvc-input" id="card-cvc-element"></div>
           </div>
         </div>
-
-        <div class="expiration-cvc-row">
-          <div class="expiration-input" id="card-expiry-element"></div>
-          <div class="divider"></div>
-          <div class="cvc-input" id="card-cvc-element"></div>
-        </div>
       </div>
-
       <!-- Submit Button -->
-      <button type="submit" id="submit-button">Pay</button>
+      <button type="submit" id="submit-button" [disabled]="paymentForm.invalid">Pay</button>
     </form>
+
   </div>
 
   <div class="stripe-logo">
