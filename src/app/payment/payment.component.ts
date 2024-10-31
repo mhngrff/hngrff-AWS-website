@@ -120,36 +120,6 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-//   async handlePayment(event: Event) {
-//     event.preventDefault();
-//     console.log("Handling payment submission...");
-//     if (!this.stripe || !this.cardNumberElement || !this.cardExpiryElement || !this.cardCvcElement) {
-//       console.error("Stripe or card elements not properly set up");
-//       return;
-//     }
-//     console.log("Creating payment intent...");
-//     // Create a PaymentIntent by calling the backend
-//     await this.createPaymentIntent();
-//     if (!this.clientSecret) {
-//       console.error("Failed to retrieve client secret from backend");
-//       return;
-//     }
-//     console.log("Retrieved client secret:", this.clientSecret);
-//     // Use the client secret to confirm the payment
-//     const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
-//       payment_method: {
-//         card: this.cardNumberElement!,
-//       }
-//     });
-//     if (error) {
-//       console.error('Payment failed:', error.message);
-//     } else if (paymentIntent) {
-//       console.log('Payment successful:', paymentIntent);
-//       this.cartService.setBuyNowFlow(false);
-//       this.cartService.setSelectedItem(null);
-//     }
-//   }
-
   async handlePayment() {
     if (this.paymentForm.invalid) {
       console.error('Form is invalid, please fill out the required fields correctly.');
@@ -210,7 +180,7 @@ export class PaymentComponent implements OnInit {
         this.cardNumberElement = this.elements.create('cardNumber', {
           style: {
             base: {
-              color: '#32325d',
+              color: 'black',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
               fontSize: '7vw',
@@ -247,7 +217,7 @@ export class PaymentComponent implements OnInit {
         this.cardExpiryElement = this.elements.create('cardExpiry', {
           style: {
             base: {
-              color: '#32325d',
+              color: 'black',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
               fontSize: '9vw',
@@ -272,7 +242,7 @@ export class PaymentComponent implements OnInit {
         this.cardCvcElement = this.elements.create('cardCvc', {
           style: {
             base: {
-              color: '#32325d',
+              color: 'black',
               fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
               fontSmoothing: 'antialiased',
               fontSize: '9vw',

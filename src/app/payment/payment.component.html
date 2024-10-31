@@ -14,21 +14,23 @@
         </div>
       </div>
     </div>
-
-    <div class="edit-cart-subtotal-row">
-      <div *ngIf="!(isBuyNowFlow$ | async)">
+    <div class="edit-cart-row" *ngIf="!(isBuyNowFlow$ | async)">
         <a  (click)="editCart()" class="edit-cart-text">Edit cart</a>
-      </div>
+    </div>
 
-      <div class="order-summary-subtotal">
-        <h4>Subtotal: {{ subtotal | currency }}</h4>
-      </div>
-    </div>
+   <div class="subtotal-row">
+     <p>Subtotal</p>
+     <p> {{ subtotal | currency }}</p>
+   </div>
+
     <div class="shipping-cost-row">
-      <h4>Shipping: {{ shippingCost | currency }}</h4>
+      <p>Shipping</p>
+      <p>{{ shippingCost | currency }}</p>
     </div>
+
    <div class="grand-total-row">
-     <h3>Total: {{total | currency }}</h3>
+     <h3>Total</h3>
+     <h3>{{total | currency }}</h3>
    </div>
 
   </div>

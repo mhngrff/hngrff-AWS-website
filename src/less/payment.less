@@ -5,7 +5,7 @@
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
-  margin-top: 3vh;
+  margin-top: 2vh;
 }
 
 .order-summary-container{
@@ -20,6 +20,8 @@
   margin-left:10vw;
   width: 80vw;
   height: auto;
+  padding-bottom: 1vh;
+  border-bottom: 1px solid gray;
   }
 
 .payment-items{
@@ -44,14 +46,13 @@
     font-size: 3vw;
   }
 
-.edit-cart-subtotal-row {
+.edit-cart-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 80vw;
   margin-left: 10vw; /* Center within the 80vw container */
   height: 3vh;
-  border-top: 1px solid gray;
   margin-top: 1vh;
 }
 
@@ -69,52 +70,64 @@
   outline: none;
 }
 
-.order-summary-subtotal {
+.subtotal-row {
+  width: 80vw;
+  margin-left: 10vw;
   display: flex;
-  justify-content: flex-end; /* Align the total to the right */
+//   justify-content: flex-end; /* Align the total to the right */
+  justify-content: space-between; /* Align the total to the right */
   align-items: center;
-  width: auto;
   flex: 1;
+  margin-top: 1vh;
 }
 
-.order-summary-subtotal h4 {
+.subtotal-row p {
   font-family: 'Roboto', sans-serif;
+//     -webkit-font-smoothing: antialiased;
 //   font-weight: bold;
   font-size: 4vw;
   color: white;
   margin: 0;
+  z-index: 20;
 }
 
 .shipping-cost-row {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   width: 80vw;
-  margin-left: 10vw; /* Center within the 80vw container */
-  height: 3vh;
+  margin-left: 10vw;
+  display: flex;
+//   justify-content: flex-end; /* Align the total to the right */
+  justify-content: space-between; /* Align the total to the right */
+  align-items: center;
+  flex: 1;
+  margin-top: 1vh;
 }
 
-.shipping-cost-row h4 {
+.shipping-cost-row p {
     font-family: 'Roboto', sans-serif;
+//       -webkit-font-smoothing: antialiased;
 //     font-weight: bold;
     font-size: 4vw;
     color: white;
     margin: 0;
+    z-index: 20;
   }
 
 .grand-total-row {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   width: 80vw;
-  margin-left: 10vw; /* Center within the 80vw container */
-  height: 5vh;
+  margin-left: 10vw;
+  display: flex;
+//   justify-content: flex-end; /* Align the total to the right */
+  justify-content: space-between; /* Align the total to the right */
+  align-items: center;
+  flex: 1;
+  margin-top: 1vh;
 }
 
 .grand-total-row h3 {
     font-family: 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
     font-weight: bold;
-    font-size: 5vw;
+    font-size: 6vw;
     color: white;
     margin: 0;
   }
@@ -231,7 +244,7 @@
   border-radius: 6px;
   width: 100%;
   font-size: 4vw;
-  color: #32325d;
+  color: black;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -243,7 +256,7 @@
       width: 100%;
       padding: 10px;
       font-size: 4vw;
-      color: #32325d;
+      color: black;
   }
 
 .cardholder-name-field input::placeholder{
@@ -286,12 +299,12 @@
 
 .address-row input, .address-row select {
   width: 100%;
-  color: #32325d;
+  color: black;
   }
 
 .address-row-double input, .address-row-double select {
   width: 50%;
-  color: #32325d;
+  color: black;
   }
 
 .address-row input::placeholder, .address-row-double input::placeholder {
@@ -300,7 +313,7 @@
 
 .address-row-double select {
   background-color: white;
-  color: #32325d;
+  color: black;
 }
 
 // .address-row-double select {
