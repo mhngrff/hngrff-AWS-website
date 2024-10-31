@@ -5,7 +5,7 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "typeRoots": ["node_modules/@types", "types"],
-    "types": ["payment"]
+    "types": ["payment", "google.maps"]
   },
   "files": [
     "src/main.ts"

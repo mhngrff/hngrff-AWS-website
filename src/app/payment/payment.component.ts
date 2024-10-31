@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
 import { NavigationService } from '../services/navigation.service';
@@ -10,7 +10,12 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AddressAutocompleteService } from '../services/address-autocomplete.service';
 
+const countryNameMapping: { [key: string]: string } = {
+  'USA': 'United States',
+  // Add other country mappings if needed
+};
 
 @Component({
   selector: 'app-payment',
@@ -19,6 +24,8 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   templateUrl: './payment.component.html',
 })
 export class PaymentComponent implements OnInit {
+  @ViewChild('addressInput') addressInput!: ElementRef; // Reference to the address input field
+  @ViewChild('predictionList') predictionList!: ElementRef; // Reference to the prediction list
   stripe: Stripe | null = null;
   elements: StripeElements | null = null;
   cardNumberElement: StripeCardNumberElement | null = null;
@@ -29,16 +36,26 @@ export class PaymentComponent implements OnInit {
   isBuyNowFlow$: Observable<boolean>;
 
   cartItems: CartItem[] = []; // Store cart items or the single item
-  total: number = 0;
 
   paymentForm: FormGroup;
+
+  subtotal: number = 0;
+  shippingCost: number = 10.69;
+  total: number = 0;
+
+  addressPredictions: google.maps.places.AutocompletePrediction[] = [];
+
+  isPredictionsVisible: boolean = false;
+
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private navigationService: NavigationService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private addressAutocompleteService: AddressAutocompleteService,
+    private renderer: Renderer2
     ) {
       this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
       this.paymentForm = this.fb.group({
@@ -55,7 +72,6 @@ export class PaymentComponent implements OnInit {
     }
 
   ngOnInit() {
-    // Restore Buy Now flag and selected item from local storage
     const isBuyNowFlow = this.cartService.getBuyNowFlow();
     console.log('isBuyNowFlow$ = ', this.cartService.getBuyNowFlow());
     this.cartService.setBuyNowFlow(isBuyNowFlow);
@@ -63,12 +79,14 @@ export class PaymentComponent implements OnInit {
     if (selectedItem && isBuyNowFlow) {
       // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
-      this.total = selectedItem.price * selectedItem.quantity;
+      this.subtotal = selectedItem.price * selectedItem.quantity;
+      this.total = selectedItem.price * selectedItem.quantity + this.shippingCost;
       console.log('Buy Now path - Total:', this.total);
     } else {
       // Cart Checkout path: Use cart items and total
-      this.cartService.getTotal$().subscribe((total) => {
-        this.total = total;
+      this.cartService.getTotal$().subscribe((subtotal) => {
+        this.subtotal = subtotal;
+        this.total = subtotal + this.shippingCost;
         console.log('Cart Checkout path - Total:', this.total);
 
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
@@ -87,6 +105,17 @@ export class PaymentComponent implements OnInit {
       if (stripe) {
         this.stripe = stripe;
         this.setupStripeElements();
+      }
+    });
+
+    this.renderer.listen('document', 'click', (event: MouseEvent) => {
+      // Check if the click is outside of the address input and prediction list
+      if (
+        this.isPredictionsVisible &&
+        !this.addressInput.nativeElement.contains(event.target) &&
+        !this.predictionList.nativeElement.contains(event.target)
+      ) {
+        this.isPredictionsVisible = false; // Hide the prediction list
       }
     });
   }
@@ -276,7 +305,7 @@ export class PaymentComponent implements OnInit {
 
     try {
       const response = await this.http.post<{ clientSecret: string }>(
-        'http://localhost:3000/create-payment-intent',
+        'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent',
         { amount }
       ).toPromise();
       this.clientSecret = response?.clientSecret || null;
@@ -316,5 +345,109 @@ export class PaymentComponent implements OnInit {
       (icon as HTMLElement).style.opacity = '1'; // Reset to full opacity
     });
   }
+
+  onAddressInputChange(input: string) {
+    if (input.length > 2) { // Start autocomplete after a few characters are entered
+      this.addressAutocompleteService.getPlacePredictions(input)
+        .then(predictions => {
+          console.log('Predictions:', predictions);
+          this.addressPredictions = predictions; // Store predictions
+          this.isPredictionsVisible = predictions.length > 0;
+        })
+        .catch(error => {
+          console.error('Address Autocomplete Error:', error);
+          this.isPredictionsVisible = false;
+        });
+    } else {
+//       this.addressPredictions = []; // Clear predictions if input is too short
+      this.isPredictionsVisible = false;
+    }
+  }
+
+  selectPrediction(prediction: google.maps.places.AutocompletePrediction) {
+    if (prediction.place_id) {
+      this.onAddressSelected(prediction.place_id);
+      this.isPredictionsVisible = false;
+    }
+  }
+
+  onAddressSelected(placeId: string) {
+    // Create a request for place details
+    const request: google.maps.places.PlaceDetailsRequest = {
+      placeId: placeId,
+      fields: ['address_components'] // Specify the fields you need (e.g., address components)
+    };
+
+    // Initialize the PlacesService using an HTML div element (can be hidden)
+    const service = new google.maps.places.PlacesService(document.createElement('div'));
+
+    // Request place details
+    service.getDetails(request, (place, status) => {
+      if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
+        console.error('Failed to get place details:', status);
+        return;
+      }
+
+      if (!place.address_components) {
+        console.error('No address components found in place details');
+        return;
+      }
+
+      console.log('Place details:', place);
+
+      // Clear previous values in the form
+      this.paymentForm.patchValue({
+        addressLine1: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: ''
+      });
+
+      // Loop through the address components and fill in the form controls
+      for (const component of place.address_components) {
+        const addressType = component.types[0];
+
+        switch (addressType) {
+          case 'street_number':
+            this.paymentForm.patchValue({
+              addressLine1: `${component.long_name} ${this.paymentForm.get('addressLine1')?.value}`
+            });
+            break;
+          case 'route':
+            this.paymentForm.patchValue({
+              addressLine1: `${this.paymentForm.get('addressLine1')?.value} ${component.long_name}`
+            });
+            break;
+          case 'locality': // City
+            this.paymentForm.patchValue({
+              city: component.long_name
+            });
+            break;
+          case 'administrative_area_level_1': // State
+            this.paymentForm.patchValue({
+              state: component.short_name
+            });
+            break;
+          case 'postal_code': // ZIP Code
+            this.paymentForm.patchValue({
+              zip: component.long_name
+            });
+            break;
+          case 'country': // Country
+            const country = component.short_name;
+            const mappedCountry = countryNameMapping[country] || country; // Use the mapped value or fallback to original
+            this.paymentForm.patchValue({
+              country: mappedCountry
+            });
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  }
+
+
 
 }

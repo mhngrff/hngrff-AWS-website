@@ -44,18 +44,13 @@
     font-size: 3vw;
   }
 
-.order-summary-total h3{
-  color: white;
-  margin: 0;
-  }
-
 .edit-cart-subtotal-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 80vw;
   margin-left: 10vw; /* Center within the 80vw container */
-  height: 5vh;
+  height: 3vh;
   border-top: 1px solid gray;
   margin-top: 1vh;
 }
@@ -74,7 +69,7 @@
   outline: none;
 }
 
-.order-summary-total {
+.order-summary-subtotal {
   display: flex;
   justify-content: flex-end; /* Align the total to the right */
   align-items: center;
@@ -82,15 +77,47 @@
   flex: 1;
 }
 
-.order-summary-total h3 {
+.order-summary-subtotal h4 {
   font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-  font-size: 5vw;
+//   font-weight: bold;
+  font-size: 4vw;
   color: white;
   margin: 0;
-
 }
 
+.shipping-cost-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 80vw;
+  margin-left: 10vw; /* Center within the 80vw container */
+  height: 3vh;
+}
+
+.shipping-cost-row h4 {
+    font-family: 'Roboto', sans-serif;
+//     font-weight: bold;
+    font-size: 4vw;
+    color: white;
+    margin: 0;
+  }
+
+.grand-total-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 80vw;
+  margin-left: 10vw; /* Center within the 80vw container */
+  height: 5vh;
+}
+
+.grand-total-row h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 5vw;
+    color: white;
+    margin: 0;
+  }
 
 #submit-button {
   width: 100%;
@@ -244,6 +271,7 @@
   gap: 1vw;
   margin-top: 1vh;
   max-width: 100%;
+  position: relative;
 }
 
 .address-row-double input, .address-row-double select, .address-row input, .address-row select {
@@ -314,3 +342,32 @@ button#submit-button:hover {
 .terms-privacy-links a p {
   font-size: 3.5vw;
   }
+
+.autocomplete-suggestions {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  position: absolute;
+  z-index: 10;
+//   width: calc(100% - 40px);
+}
+
+.autocomplete-suggestions li {
+  font-family: 'Roboto', sans-serif;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 4vw;
+  -webkit-font-smoothing: antialiased;
+}
+
+.autocomplete-suggestions li:hover {
+  background-color: #f0f0f0;
+}
+
