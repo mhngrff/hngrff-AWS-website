@@ -25,7 +25,8 @@
 
     <div class="shipping-cost-row">
       <p>Shipping</p>
-      <p>{{ shippingCost | currency }}</p>
+<!--      <p>{{ shippingCost | currency }}</p>-->
+      <p>{{ shippingCost === null ? 'Enter shipping address' : (shippingCost | currency) }}</p>
     </div>
 
    <div class="grand-total-row">

@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit {
   }
 
   triggerFlashEffect(): void {
-    console.log('flash effect entered');
+//     console.log('flash effect entered');
     // Get cart icon and badge elements
     const cartIconContainer = document.querySelector('.cart-icon-container svg path') as HTMLElement;
     const cartIcon = document.querySelector('.cart-icon') as HTMLElement;
@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
       cartIconContainer.classList.add('flash-effect');
       cartIcon.classList.add('flash-effect');
       cartBadge.classList.add('flash-effect');
-      console.log('classes added')
+//       console.log('classes added')
 
       // Remove the flash-effect class after 0.5 seconds to allow re-triggering
       setTimeout(() => {

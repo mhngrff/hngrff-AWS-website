@@ -34,10 +34,12 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   selectedOption: string | null = null; // New variable for selected option
   selectedPrice: number | null = null; // New variable for selected price
+  selectedWeight: number | null = null;
 
   quantity: number = 1;
   imageId: string = ''; // Store image ID locally
   thumbnailUrl: string | null = null;
+//   weight: number = 0;
 
   private debounceTimer: any;
 
@@ -78,6 +80,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
         if (metadata?.options && metadata.options.length > 0) {
           this.selectedOption = metadata.options[0].subtitle;
           this.selectedPrice = metadata.options[0].price;
+          this.selectedWeight = metadata.options[0].weight;
         }
       });
     }
@@ -89,6 +92,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       if (metadata?.options) {
         const selected = metadata.options.find(option => option.subtitle === this.selectedOption);
         this.selectedPrice = selected ? selected.price : null;
+        this.selectedWeight = selected ? selected.weight : null;
       }
     });
   }
@@ -262,6 +266,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       price: this.selectedPrice || 0,
       quantity: this.quantity,
       thumbnailUrl: this.mainImageUrl || '',
+      weight: this.selectedWeight || 0
     };
 
     console.log('currentItem=', currentItem);
@@ -271,18 +276,20 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   }
 
   addToCart(): void {
-    if (this.selectedOption && this.selectedPrice !== null) {
+    if (this.selectedOption && this.selectedPrice && this.selectedWeight !== null) {
       this.cartService.addItem({
         imageId: this.imageId,
         optionSubtitle: this.selectedOption,
         price: this.selectedPrice,
         quantity: this.quantity,
-        thumbnailUrl: this.thumbnailUrl // Assuming the first option is used as a thumbnail
+        thumbnailUrl: this.thumbnailUrl, // Assuming the first option is used as a thumbnail
+        weight: this.selectedWeight
       });
     } else {
       console.error('Unable to add to cart: Invalid option or price.');
     }
   console.log('thumbnailUrl= ', this.mainImageUrl)
+  console.log('selectedWeight= ', this.selectedWeight)
   }
 
   incrementQuantity(): void {

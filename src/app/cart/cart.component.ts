@@ -32,22 +32,17 @@ export class CartComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    console.log('Cart component initialized');
+//     console.log('Cart component initialized');
 
     this.cartService.getTotal$().subscribe((total) => {
       this.total = total;
     });
 
     this.cartService.cartItems$.subscribe((items) => {
-      console.log('Cart items on init:', items);
+//       console.log('Cart items on init:', items);
       this.cartItems = items;
     });
 
-//     // Log to check if the Buy Now flow is active
-//     console.log('Is Buy Now Flow:', this.isBuyNowFlow());
-//     this.isCartVisible$.subscribe((isVisible) => {
-//       console.log('Is Cart Visible:', isVisible);
-//     });
   }
 
   cancelBuyNowFlow(): void {

@@ -4,4 +4,5 @@ export interface CartItem {
   price: number;
   quantity: number;
   thumbnailUrl: string | null;
+  weight: number;
 }

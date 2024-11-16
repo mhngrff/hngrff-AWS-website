@@ -8,4 +8,5 @@ export interface Option {
   subtitle: string;
   price: number;
   imageUrl: string;
+  weight: number;
 }

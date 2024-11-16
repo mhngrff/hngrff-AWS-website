@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddressAutocompleteService } from '../services/address-autocomplete.service';
+import { ShippingService } from '../services/shipping.service';
 
 const countryNameMapping: { [key: string]: string } = {
   'USA': 'United States',
@@ -40,13 +41,18 @@ export class PaymentComponent implements OnInit {
   paymentForm: FormGroup;
 
   subtotal: number = 0;
-  shippingCost: number = 10.69;
+  shippingCost: number | null = null;
   total: number = 0;
 
   addressPredictions: google.maps.places.AutocompletePrediction[] = [];
 
   isPredictionsVisible: boolean = false;
 
+  totalWeight: number = 0;
+
+  previousShippingCost: number = 0;
+
+  isValid: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +61,8 @@ export class PaymentComponent implements OnInit {
     private cartService: CartService,
     private router: Router,
     private addressAutocompleteService: AddressAutocompleteService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private shippingService: ShippingService,
     ) {
       this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
       this.paymentForm = this.fb.group({
@@ -73,34 +80,58 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit() {
     const isBuyNowFlow = this.cartService.getBuyNowFlow();
-    console.log('isBuyNowFlow$ = ', this.cartService.getBuyNowFlow());
     this.cartService.setBuyNowFlow(isBuyNowFlow);
     const selectedItem = this.cartService.getSelectedItem();
     if (selectedItem && isBuyNowFlow) {
       // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
       this.subtotal = selectedItem.price * selectedItem.quantity;
-      this.total = selectedItem.price * selectedItem.quantity + this.shippingCost;
+      this.total = selectedItem.price * selectedItem.quantity + (this.shippingCost ?? 0);
+      this.totalWeight = selectedItem.weight * selectedItem.quantity;
       console.log('Buy Now path - Total:', this.total);
+      console.log('Buy Now path - Total Weight:', this.totalWeight);
     } else {
       // Cart Checkout path: Use cart items and total
       this.cartService.getTotal$().subscribe((subtotal) => {
         this.subtotal = subtotal;
-        this.total = subtotal + this.shippingCost;
-        console.log('Cart Checkout path - Total:', this.total);
+        this.total = subtotal + (this.shippingCost ?? 0);
 
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
           this.cartItems = items;
           // If the cart becomes empty while on the payment page, redirect to home
           if (items.length === 0) {
-            console.log("Cart is empty, redirecting to home page.");
             this.router.navigate(['/']); // Navigate to the home page
           }
         });
       });
+
+      // Subscribe to total weight changes
+      this.cartService.getTotalWeight$().subscribe((weight) => {
+        this.totalWeight = weight;
+        console.log("Cart Checkout path - Updated Total Weight:", this.totalWeight);
+      });
     }
+
+   // Subscribe to form value changes for the address fields
+//     this.paymentForm.valueChanges.subscribe((formValues) => {
+//       if (this.isAddressValid(formValues)) {
+//         // Call the shipping rate API whenever the form has a valid address
+//         this.calculateShippingRate();
+//       }
+//     });
+
+       this.paymentForm.valueChanges.subscribe((formValues) => {
+         if (this.isAddressValid(formValues)) {
+           this.validateAddress(formValues);
+           } else {
+             this.isValid = false; // Reset validity if address is not complete
+           }
+
+       });
+
+
     // Load Stripe Elements
-    console.log('Stripe Public Key:', environment.stripePublicKey);
+//     console.log('Stripe Public Key:', environment.stripePublicKey);
     loadStripe(environment.stripePublicKey).then((stripe) => {
       if (stripe) {
         this.stripe = stripe;
@@ -120,6 +151,17 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+isAddressValid(formValues: any): boolean {
+  return (
+    formValues.addressLine1 &&
+    formValues.city &&
+    formValues.state &&
+    formValues.zip &&
+    formValues.country
+  );
+}
+
+
   async handlePayment() {
     if (this.paymentForm.invalid) {
       console.error('Form is invalid, please fill out the required fields correctly.');
@@ -127,7 +169,7 @@ export class PaymentComponent implements OnInit {
     }
 
     const formData = this.paymentForm.value;
-    console.log('Form Data:', formData);
+//     console.log('Form Data:', formData);
 
     // Proceed with creating a Payment Intent and confirming the payment
     await this.createPaymentIntent();
@@ -287,7 +329,7 @@ export class PaymentComponent implements OnInit {
   onCardNumberInput(event: any): void {
     this.cardNumberElement?.on('change', (event: any) => {
       const cardType = event.brand !== 'unknown' ? event.brand : null;
-      console.log('Detected card type:', cardType);
+//       console.log('Detected card type:', cardType);
 
       if (cardType) {
         this.updateCardIcons(cardType);
@@ -320,7 +362,7 @@ export class PaymentComponent implements OnInit {
     if (input.length > 2) { // Start autocomplete after a few characters are entered
       this.addressAutocompleteService.getPlacePredictions(input)
         .then(predictions => {
-          console.log('Predictions:', predictions);
+//           console.log('Predictions:', predictions);
           this.addressPredictions = predictions; // Store predictions
           this.isPredictionsVisible = predictions.length > 0;
         })
@@ -363,7 +405,7 @@ export class PaymentComponent implements OnInit {
         return;
       }
 
-      console.log('Place details:', place);
+//       console.log('Place details:', place);
 
       // Clear previous values in the form
       this.paymentForm.patchValue({
@@ -418,6 +460,81 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+  calculateShippingRate() {
 
+    const formValues = this.paymentForm.value;
+    const addressLine2 = formValues.addressLine2?.trim() ? formValues.addressLine2 : null;
+
+    const weightString = this.totalWeight.toString();
+
+    // Call the shipping service to calculate the rate
+    this.shippingService.calculateShippingRate(
+      formValues.shippingName,
+      formValues.addressLine1,
+      formValues.addressLine2,
+      formValues.city,
+      formValues.state,
+      formValues.zip,
+      formValues.country,
+      weightString
+    ).subscribe(
+      (shippingCost: number) => {
+        this.total -= this.previousShippingCost;
+
+        this.shippingCost = shippingCost;
+
+        this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
+
+        this.total = Number(this.total) + Number(this.shippingCost);
+
+        console.log("this.shippingCost = ", this.shippingCost);
+        console.log('Calculated shipping cost:', this.shippingCost);
+      },
+      (error) => {
+        console.error('Error calculating shipping rate:', error);
+      }
+    );
+  }
+
+  validateAddress(formValues: any) {
+    const addressLine2 = formValues.addressLine2?.trim() ? formValues.addressLine2 : null;
+    const payload = {
+      Address: {
+        AddressLine: [formValues.addressLine1],
+        City: formValues.city,
+        StateProvinceCode: formValues.state,
+        PostalCode: formValues.zip,
+        CountryCode: formValues.country
+      }
+    };
+
+    console.log("Payload being sent to validate address:", JSON.stringify(payload, null, 2));
+
+
+    this.shippingService.validateAddress(
+      formValues.addressLine1,
+      addressLine2,
+      formValues.city,
+      formValues.state,
+      formValues.zip,
+      formValues.country
+    ).subscribe(
+      (isValid: boolean) => {
+        if (isValid) {
+          console.log('Address validation successful:');
+          this.isValid = true;
+          // If the address is valid, calculate the shipping rate
+          this.calculateShippingRate();
+        } else {
+          console.log("Address is not valid.");
+          this.isValid = false;
+        }
+      },
+      (error) => {
+        console.error("Error validating address:", error);
+        this.isValid = false;
+      }
+    );
+  }
 
 }

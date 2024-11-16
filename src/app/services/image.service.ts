@@ -4,22 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Image } from '../models/image.interface';
 
-// export interface Option {
-//   subtitle: string;
-//   price: number;
-//   imageUrl: string;
-// }
-//
-// export interface Image {
-//   id: string;
-//   title: string;
-//   description: string;
-//   currency: string;
-//   mainImage: string;
-//   zoomImage?: string;
-//   options?: Option[];
-// }
-
 @Injectable({
   providedIn: 'root'
 })

@@ -26,22 +26,6 @@ export class CartService {
     this.calculateTotal(); // Ensure total is set at startup
   }
 
-//   setBuyNowFlow(isBuyNow: boolean): void {
-//     this.isBuyNowFlowSubject.next(isBuyNow);
-//   }
-
-//   toggleCartVisibility(): void {
-//     if (this.selectedItem !== null) {
-//       // User is in "Buy Now" flow, show a message instead of opening the cart
-//       console.log("You're currently in a 'Buy Now' flow. Please cancel to add items.");
-//       // Emit visibility as false to ensure cart does not open in this state
-//       this.cartVisibleSubject.next(true);
-//     } else {
-//       // Normal cart visibility toggle
-//       this.cartVisibleSubject.next(!this.cartVisibleSubject.value);
-//     }
-//   }
-
   toggleCartVisibility(): void {
     // Get the current cart visibility state
     const isCurrentlyVisible = this.cartVisibleSubject.value;
@@ -144,18 +128,10 @@ export class CartService {
     return this.cartItems$;
   }
 
-//   setSelectedItem(item: CartItem | null): void {
-//     this.selectedItem = item;
-//   }
-//
-//   getSelectedItem(): CartItem | null {
-//     return this.selectedItem;
-//   }
-
   setBuyNowFlow(isBuyNow: boolean): void {
     this.isBuyNowFlowSubject.next(isBuyNow);
     localStorage.setItem('isBuyNowFlow', JSON.stringify(isBuyNow)); // Persist the Buy Now flag
-    console.log(`Buy Now flow set to: ${isBuyNow}`);
+//     console.log(`Buy Now flow set to: ${isBuyNow}`);
   }
 
   getBuyNowFlow(): boolean {
@@ -177,9 +153,29 @@ export class CartService {
     return storedItem ? JSON.parse(storedItem) : null;
   }
 
-
-
   private calculateTotal(): void {
     this.getTotal$().subscribe();
   }
+
+//   getTotalWeight$(): Observable<number> {
+//     return this.cartItems$.pipe(
+//       map((items) => items.reduce((total, item) => total + item.weight * item.quantity, 0))
+//     );
+//   }
+
+  getTotalWeight$(): Observable<number> {
+    return this.cartItems$.pipe(
+      map((items) => {
+//         console.log('Current cart items:', items); // Log the current items in the cart
+        const totalWeight = items.reduce((total, item) => {
+//           console.log(`Adding item: ${item.optionSubtitle}, weight: ${item.weight}, quantity: ${item.quantity}`);
+          return total + item.weight * item.quantity;
+        }, 0);
+//         console.log('Total weight:', totalWeight); // Log the computed total weight
+        return totalWeight;
+      })
+    );
+  }
+
+
 }
