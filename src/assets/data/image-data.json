@@ -13,14 +13,14 @@
           "subtitle": "REDFISH - PRINT",
           "price": 50.00,
           "imageUrl": "/assets/images/redfish-1-600w.jpg",
-          "weight": 1
+          "weight": 0.1
         },
         {
           "type": "framed",
           "subtitle": "REDFISH - FRAMED",
           "price": 100.00,
           "imageUrl": "/assets/images/redfish-framed.jpg",
-          "weight": 10
+          "weight": 0.2
         }
       ]
     },
@@ -37,14 +37,14 @@
           "subtitle": "TROUT - PRINT",
           "price": 500.00,
           "imageUrl": "/assets/images/trout-1-600w.jpg",
-          "weight": 1
+          "weight": 0.1
         },
         {
           "type": "framed",
           "subtitle": "TROUT - FRAMED",
           "price": 800.00,
           "imageUrl": "/assets/images/trout-framed.jpg",
-          "weight": 10
+          "weight": 0.2
         }
       ]
     },
@@ -61,14 +61,14 @@
           "subtitle": "FLOUNDER - PRINT",
           "price": 500.00,
           "imageUrl": "/assets/images/flounder-1-600w.jpg",
-          "weight": 1
+          "weight": 0.1
         },
         {
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED",
           "price": 700.00,
           "imageUrl": "/assets/images/flounder-framed.jpg",
-          "weight": 10
+          "weight": 0.2
         }
       ]
     },
@@ -85,21 +85,21 @@
           "subtitle": "INSHORE SLAM - PRINT",
           "price": 500.00,
           "imageUrl": "/assets/images/fishslam-1-600w.jpg",
-          "weight": 1
+          "weight": 0.3
         },
         {
           "type": "one_frame",
           "subtitle": "INSHORE SLAM - 1 FRAME",
           "price": 800.00,
           "imageUrl": "/assets/images/fish-slam-framed.jpg",
-          "weight": 20
+          "weight": 0.5
         },
         {
           "type": "three_frames",
           "subtitle": "INSHORE SLAM - 3 FRAMES",
           "price": 1200.00,
           "imageUrl": "/assets/images/fish-slam-individual-framed.jpg",
-          "weight": 30
+          "weight": 0.6
         }
       ]
     }

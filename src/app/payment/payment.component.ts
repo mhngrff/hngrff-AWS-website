@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
 import { NavigationService } from '../services/navigation.service';
@@ -6,7 +6,7 @@ import Payment from 'payment';
 import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
-import { Observable } from 'rxjs';
+import { Observable, debounceTime } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -63,6 +63,7 @@ export class PaymentComponent implements OnInit {
     private addressAutocompleteService: AddressAutocompleteService,
     private renderer: Renderer2,
     private shippingService: ShippingService,
+    private cd: ChangeDetectorRef
     ) {
       this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
       this.paymentForm = this.fb.group({
@@ -112,23 +113,15 @@ export class PaymentComponent implements OnInit {
       });
     }
 
-   // Subscribe to form value changes for the address fields
-//     this.paymentForm.valueChanges.subscribe((formValues) => {
-//       if (this.isAddressValid(formValues)) {
-//         // Call the shipping rate API whenever the form has a valid address
-//         this.calculateShippingRate();
-//       }
-//     });
-
-       this.paymentForm.valueChanges.subscribe((formValues) => {
-         if (this.isAddressValid(formValues)) {
-           this.validateAddress(formValues);
-           } else {
-             this.isValid = false; // Reset validity if address is not complete
-           }
-
-       });
-
+      this.paymentForm.valueChanges
+//         .pipe(debounceTime(200)) // Adjust time as needed
+        .subscribe((formValues) => {
+          if (this.isAddressValid(formValues)) {
+            this.validateAddress(formValues);
+          } else {
+            this.isValid = false; // Reset validity if address is not complete
+          }
+        });
 
     // Load Stripe Elements
 //     console.log('Stripe Public Key:', environment.stripePublicKey);
@@ -384,7 +377,6 @@ isAddressValid(formValues: any): boolean {
   }
 
   onAddressSelected(placeId: string) {
-    // Create a request for place details
     const request: google.maps.places.PlaceDetailsRequest = {
       placeId: placeId,
       fields: ['address_components'] // Specify the fields you need (e.g., address components)
@@ -416,20 +408,19 @@ isAddressValid(formValues: any): boolean {
         country: ''
       });
 
+      let streetNumber = '';
+      let route = '';
+
       // Loop through the address components and fill in the form controls
       for (const component of place.address_components) {
         const addressType = component.types[0];
 
         switch (addressType) {
           case 'street_number':
-            this.paymentForm.patchValue({
-              addressLine1: `${component.long_name} ${this.paymentForm.get('addressLine1')?.value}`
-            });
+            streetNumber = component.long_name.trim();
             break;
           case 'route':
-            this.paymentForm.patchValue({
-              addressLine1: `${this.paymentForm.get('addressLine1')?.value} ${component.long_name}`
-            });
+            route = component.long_name.trim();
             break;
           case 'locality': // City
             this.paymentForm.patchValue({
@@ -457,19 +448,28 @@ isAddressValid(formValues: any): boolean {
             break;
         }
       }
+
+      const cleanedAddressLine1 = `${streetNumber} ${route}`.trim();
+      this.paymentForm.get('addressLine1')?.setValue(cleanedAddressLine1);
+
+      // Mark fields as dirty and update validity to reflect user action
+      this.paymentForm.markAllAsTouched();
+      this.paymentForm.updateValueAndValidity();
+
+      // Trigger address validation and shipping rate calculation directly
+      this.validateAddress(this.paymentForm.value);
+
     });
   }
 
   calculateShippingRate() {
-
     const formValues = this.paymentForm.value;
     const addressLine2 = formValues.addressLine2?.trim() ? formValues.addressLine2 : null;
-
     const weightString = this.totalWeight.toString();
 
     // Call the shipping service to calculate the rate
     this.shippingService.calculateShippingRate(
-      formValues.shippingName,
+//       formValues.shippingName,
       formValues.addressLine1,
       formValues.addressLine2,
       formValues.city,
@@ -507,10 +507,6 @@ isAddressValid(formValues: any): boolean {
         CountryCode: formValues.country
       }
     };
-
-    console.log("Payload being sent to validate address:", JSON.stringify(payload, null, 2));
-
-
     this.shippingService.validateAddress(
       formValues.addressLine1,
       addressLine2,
@@ -523,7 +519,6 @@ isAddressValid(formValues: any): boolean {
         if (isValid) {
           console.log('Address validation successful:');
           this.isValid = true;
-          // If the address is valid, calculate the shipping rate
           this.calculateShippingRate();
         } else {
           console.log("Address is not valid.");
@@ -538,3 +533,4 @@ isAddressValid(formValues: any): boolean {
   }
 
 }
+

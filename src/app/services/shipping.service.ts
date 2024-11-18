@@ -46,7 +46,7 @@ export class ShippingService {
 
 
   calculateShippingRate(
-    shippingName: string,
+//     shippingName: string,
     addressLine1: string,
     addressLine2: string | null,
     city: string,
@@ -60,7 +60,7 @@ export class ShippingService {
        addressLines.push(addressLine2);
      }
     const payload = {
-      Name: shippingName,
+//       Name: shippingName,
       Address: {
         AddressLine: addressLines,
 //         line1: addressLine1,
