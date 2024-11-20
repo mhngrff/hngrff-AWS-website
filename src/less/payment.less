@@ -151,7 +151,6 @@
 .card-information{
     border: 1px solid #aab7c4;
     border-radius: 6px;
-//     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
   }
 
 #card-element {
@@ -198,6 +197,19 @@
   padding-left: 2vw;
 }
 
+.billing-address-toggle{
+  display: flex;
+  align-items: center;
+  height: 5vh;
+  }
+
+.billing-address-toggle label {
+  font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #aab7c4;
+    margin-left: 2vw;
+  }
+
 .divider {
   width: 1px;
   background-color: #aab7c4;
@@ -219,7 +231,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-.card-info-label, .email-label, .cardholder-name-label, .shipping-label {
+.card-info-label, .email-label, .cardholder-name-label, .shipping-label, .billing-label {
   margin-bottom: 0.5vh;
   display: block;
   color: black;
@@ -279,7 +291,7 @@
   margin-bottom: 0;
 }
 
-.address-row, .address-row-double {
+.address-row, .address-row-double, .billing-address-row, .billing-address-row-double {
   display: flex;
   gap: 1vw;
   margin-top: 1vh;
@@ -287,7 +299,14 @@
   position: relative;
 }
 
-.address-row-double input, .address-row-double select, .address-row input, .address-row select {
+.address-row-double input,
+.address-row-double select,
+.address-row input,
+.address-row select,
+.billing-address-row-double input,
+.billing-address-row-double select,
+.billing-address-row input,
+.billing-address-row select,{
   flex: 1;
   padding: 10px;
   border: 1px solid #aab7c4;
@@ -297,26 +316,31 @@
 //   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
-.address-row input, .address-row select {
+.address-row input, .address-row select, .billing-address-row input, .billing-address-row select {
   width: 100%;
   color: black;
   }
 
-.address-row-double input, .address-row-double select {
+.address-row-double input,
+.address-row-double select,
+.billing-address-row-double input,
+.billing-address-row-double select {
   width: 50%;
   color: black;
   }
 
-.address-row input::placeholder, .address-row-double input::placeholder {
+.address-row input::placeholder,
+.address-row-double input::placeholder,
+.billing-address-row input::placeholder,
+.billing-address-row-double input::placeholder,{
   color: #aab7c4;
 }
 
-.address-row-double select {
-  background-color: white;
-  color: black;
-}
-
 // .address-row-double select {
+//   background-color: white;
+//   color: black;
+// }
+
 
 button#submit-button {
   width: 100%;
@@ -383,4 +407,76 @@ button#submit-button:hover {
 .autocomplete-suggestions li:hover {
   background-color: #f0f0f0;
 }
+
+// .form-error-message {
+//   color: red;
+//   margin-top: 10px;
+//   font-size: 0.9em;
+// }
+
+input.error-highlight {
+  border: 1px solid #fa755a;
+}
+
+select.error-highlight {
+  border: 1px solid #fa755a;
+}
+
+.stripe-error-highlight {
+  border: 1px solid #fa755a; /* Matches the red border for other input errors */
+}
+
+.error-highlight {
+  border: 1px solid #fa755a; /* Highlight with a red border */
+}
+
+
+.stripe-elements-container p {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #aab7c4;
+  font-size: 4vw;
+  margin-bottom: 0.5vh;
+  }
+
+
+#error-message-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  font-size: 16px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #721c24;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.close-btn:hover {
+  color: #f5c6cb;
+}
+
+
+
 

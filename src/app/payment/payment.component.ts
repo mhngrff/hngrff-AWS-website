@@ -12,47 +12,103 @@ import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddressAutocompleteService } from '../services/address-autocomplete.service';
 import { ShippingService } from '../services/shipping.service';
+import { StripeService } from '../services/stripe.service';
+import { FormsModule } from '@angular/forms';
 
 const countryNameMapping: { [key: string]: string } = {
   'USA': 'United States',
   // Add other country mappings if needed
 };
 
+const stateAbbreviationMapping: { [key: string]: string } = {
+  "ALABAMA": "AL",
+  "ALASKA": "AK",
+  "ARIZONA": "AZ",
+  "ARKANSAS": "AR",
+  "CALIFORNIA": "CA",
+  "COLORADO": "CO",
+  "CONNECTICUT": "CT",
+  "DELAWARE": "DE",
+  "FLORIDA": "FL",
+  "GEORGIA": "GA",
+  "HAWAII": "HI",
+  "IDAHO": "ID",
+  "ILLINOIS": "IL",
+  "INDIANA": "IN",
+  "IOWA": "IA",
+  "KANSAS": "KS",
+  "KENTUCKY": "KY",
+  "LOUISIANA": "LA",
+  "MAINE": "ME",
+  "MARYLAND": "MD",
+  "MASSACHUSETTS": "MA",
+  "MICHIGAN": "MI",
+  "MINNESOTA": "MN",
+  "MISSISSIPPI": "MS",
+  "MISSOURI": "MO",
+  "MONTANA": "MT",
+  "NEBRASKA": "NE",
+  "NEVADA": "NV",
+  "NEW HAMPSHIRE": "NH",
+  "NEW JERSEY": "NJ",
+  "NEW MEXICO": "NM",
+  "NEW YORK": "NY",
+  "NORTH CAROLINA": "NC",
+  "NORTH DAKOTA": "ND",
+  "OHIO": "OH",
+  "OKLAHOMA": "OK",
+  "OREGON": "OR",
+  "PENNSYLVANIA": "PA",
+  "RHODE ISLAND": "RI",
+  "SOUTH CAROLINA": "SC",
+  "SOUTH DAKOTA": "SD",
+  "TENNESSEE": "TN",
+  "TEXAS": "TX",
+  "UTAH": "UT",
+  "VERMONT": "VT",
+  "VIRGINIA": "VA",
+  "WASHINGTON": "WA",
+  "WEST VIRGINIA": "WV",
+  "WISCONSIN": "WI",
+  "WYOMING": "WY",
+  "DISTRICT OF COLUMBIA": "DC"
+};
+
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './payment.component.html',
 })
 export class PaymentComponent implements OnInit {
   @ViewChild('addressInput') addressInput!: ElementRef; // Reference to the address input field
   @ViewChild('predictionList') predictionList!: ElementRef; // Reference to the prediction list
-  stripe: Stripe | null = null;
-  elements: StripeElements | null = null;
-  cardNumberElement: StripeCardNumberElement | null = null;
-  cardExpiryElement: StripeCardExpiryElement | null = null;
-  cardCvcElement: StripeCardCvcElement | null = null;
-  clientSecret: string | null = null;
-  currentCardType: string | null = null; // Tracks detected card type
+  @ViewChild('billingAddressInput') billingAddressInput!: ElementRef; // Reference to the billing address input field
+  @ViewChild('billingPredictionList') billingPredictionList!: ElementRef; // Reference to the billing prediction list
+
   isBuyNowFlow$: Observable<boolean>;
-
   cartItems: CartItem[] = []; // Store cart items or the single item
-
   paymentForm: FormGroup;
-
   subtotal: number = 0;
   shippingCost: number | null = null;
   total: number = 0;
 
   addressPredictions: google.maps.places.AutocompletePrediction[] = [];
-
   isPredictionsVisible: boolean = false;
 
+  billingAddressPredictions: google.maps.places.AutocompletePrediction[] = [];
+  isBillingPredictionsVisible: boolean = false;
+
   totalWeight: number = 0;
-
   previousShippingCost: number = 0;
-
   isValid: boolean = false;
+  useShippingAsBilling: boolean = true;
+
+  formErrorMessage: string = '';
+  isStripeInvalid: boolean = false;
+
+  errorMessages: { id: number, message: string }[] = [];
+  errorIdCounter: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -63,74 +119,104 @@ export class PaymentComponent implements OnInit {
     private addressAutocompleteService: AddressAutocompleteService,
     private renderer: Renderer2,
     private shippingService: ShippingService,
-    private cd: ChangeDetectorRef
-    ) {
-      this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
-      this.paymentForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        shippingName: ['', Validators.required],
-        addressLine1: ['', Validators.required],
-        addressLine2: [''],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        zip: ['', Validators.required],
-        country: ['', Validators.required],
-        cardholderName: ['', Validators.required],
-      });
-    }
+    private cd: ChangeDetectorRef,
+    private stripeService: StripeService
+  ) {
+    this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
 
-  ngOnInit() {
+    this.paymentForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      shippingName: ['', Validators.required],
+      addressLine1: ['', Validators.required],
+      addressLine2: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required],
+      country: ['', Validators.required],
+      cardholderName: ['', Validators.required],
+
+      // Billing Address Fields
+      // billingName: ['', Validators.required],
+      // billingAddressLine1: ['', Validators.required],
+      // billingAddressLine2: [''],
+      // billingCity: ['', Validators.required],
+      // billingState: ['', Validators.required],
+      // billingZip: ['', Validators.required],
+      // billingCountry: ['', Validators.required],
+    });
+  }
+
+  async ngOnInit() {
     const isBuyNowFlow = this.cartService.getBuyNowFlow();
-    this.cartService.setBuyNowFlow(isBuyNowFlow);
     const selectedItem = this.cartService.getSelectedItem();
+
+    this.cartService.setBuyNowFlow(isBuyNowFlow);
+
     if (selectedItem && isBuyNowFlow) {
       // Buy Now path: Use selected item
       this.cartItems = [selectedItem];
       this.subtotal = selectedItem.price * selectedItem.quantity;
       this.total = selectedItem.price * selectedItem.quantity + (this.shippingCost ?? 0);
       this.totalWeight = selectedItem.weight * selectedItem.quantity;
-      console.log('Buy Now path - Total:', this.total);
-      console.log('Buy Now path - Total Weight:', this.totalWeight);
     } else {
       // Cart Checkout path: Use cart items and total
       this.cartService.getTotal$().subscribe((subtotal) => {
         this.subtotal = subtotal;
         this.total = subtotal + (this.shippingCost ?? 0);
-
         this.cartService.getCartItems().subscribe((items: CartItem[]) => {
           this.cartItems = items;
-          // If the cart becomes empty while on the payment page, redirect to home
           if (items.length === 0) {
-            this.router.navigate(['/']); // Navigate to the home page
+            this.router.navigate(['/']);
           }
         });
       });
 
-      // Subscribe to total weight changes
       this.cartService.getTotalWeight$().subscribe((weight) => {
         this.totalWeight = weight;
-        console.log("Cart Checkout path - Updated Total Weight:", this.totalWeight);
       });
     }
 
-      this.paymentForm.valueChanges
-//         .pipe(debounceTime(200)) // Adjust time as needed
-        .subscribe((formValues) => {
-          if (this.isAddressValid(formValues)) {
-            this.validateAddress(formValues);
-          } else {
-            this.isValid = false; // Reset validity if address is not complete
-          }
-        });
+   this.paymentForm.valueChanges
+     .pipe(debounceTime(300)) // Add debounce to limit frequency of calls
+     .subscribe((formValues) => {
+       if (
+         formValues.addressLine1 !== undefined &&
+         formValues.city !== undefined &&
+         formValues.state !== undefined &&
+         formValues.zip !== undefined &&
+         formValues.country !== undefined
+       ) {
+         if (this.isAddressValid(formValues)) {
+           this.validateAddress(formValues);
+         } else {
+           this.isValid = false;
+         }
+       }
+     });
 
-    // Load Stripe Elements
-//     console.log('Stripe Public Key:', environment.stripePublicKey);
-    loadStripe(environment.stripePublicKey).then((stripe) => {
-      if (stripe) {
-        this.stripe = stripe;
-        this.setupStripeElements();
+    // Initialize Stripe via the service
+    console.log('ngOnInit called. Initializing Stripe.');
+
+    await this.stripeService.initializeStripe();
+
+    console.log('Mounting Stripe card elements.');
+    this.stripeService.mountCardElements(
+      '#card-number-element',
+      '#card-expiry-element',
+      '#card-cvc-element',
+      (cardType: string | null) => {
+        console.log('Card type detected:', cardType);
+        this.onCardNumberInput(cardType); // Callback for handling card type changes
+      },
+      (isInvalid: boolean) => {
+        console.log('Stripe element validity change detected:', isInvalid);
+        this.isStripeInvalid = isInvalid; // Update the state based on validity
+        console.log('Updated isStripeInvalid to:', this.isStripeInvalid);
+        this.updateStripeFieldHighlight(); // Update the UI accordingly //this aint it
       }
-    });
+    );
+
+    console.log('Stripe card elements mounted.');
 
     this.renderer.listen('document', 'click', (event: MouseEvent) => {
       // Check if the click is outside of the address input and prediction list
@@ -141,53 +227,164 @@ export class PaymentComponent implements OnInit {
       ) {
         this.isPredictionsVisible = false; // Hide the prediction list
       }
+      // Billing address stuff
+      // if (
+      // this.isBillingPredictionsVisible &&
+      // !this.billingAddressInput.nativeElement.contains(event.target) &&
+      // !this.billingPredictionList.nativeElement.contains(event.target)
+      // ) {
+      // this.isBillingPredictionsVisible = false; // Hide the billing prediction list
+      // }
     });
   }
 
-isAddressValid(formValues: any): boolean {
-  return (
-    formValues.addressLine1 &&
-    formValues.city &&
-    formValues.state &&
-    formValues.zip &&
-    formValues.country
-  );
-}
+  isAddressValid(formValues: any): boolean {
+    return (
+      formValues.addressLine1 &&
+      formValues.city &&
+      formValues.state &&
+      formValues.zip &&
+      formValues.country
+    );
+  }
 
+  normalizeStateInput(state: string): string {
+    const normalizedState = state.trim().toUpperCase();
+    return stateAbbreviationMapping[normalizedState] || state;
+  }
+
+  // Billing address method
+  // toggleBillingAddress() {
+  // this.useShippingAsBilling = !this.useShippingAsBilling;
+  // this.updateBillingFieldsState();
+  // }
+  // Billing address method
+  // updateBillingFieldsState() {
+  // if (this.useShippingAsBilling) {
+  // // Disable the billing address fields if "use shipping address as billing address" is checked
+  // this.paymentForm.controls['billingName'].disable();
+  // this.paymentForm.controls['billingAddressLine1'].disable();
+  // this.paymentForm.controls['billingAddressLine2'].disable();
+  // this.paymentForm.controls['billingCity'].disable();
+  // this.paymentForm.controls['billingState'].disable();
+  // this.paymentForm.controls['billingZip'].disable();
+  // this.paymentForm.controls['billingCountry'].disable();
+  // } else {
+  // // Enable the billing address fields if "use shipping address as billing address" is unchecked
+  // this.paymentForm.controls['billingName'].enable();
+  // this.paymentForm.controls['billingAddressLine1'].enable();
+  // this.paymentForm.controls['billingAddressLine2'].enable();
+  // this.paymentForm.controls['billingCity'].enable();
+  // this.paymentForm.controls['billingState'].enable();
+  // this.paymentForm.controls['billingZip'].enable();
+  // this.paymentForm.controls['billingCountry'].enable();
+  // }
+  // }
 
   async handlePayment() {
-    if (this.paymentForm.invalid) {
-      console.error('Form is invalid, please fill out the required fields correctly.');
-      return;
+    console.log("Handle Payment called");
+
+     // Clear previous error messages
+     this.errorMessages = [];
+
+       let hasEmptyFields = false;
+       let hasInvalidFields = false;
+
+  // Iterate over each control in the form to determine if fields are empty or invalid
+  Object.keys(this.paymentForm.controls).forEach(field => {
+        if (field === 'addressLine2') {
+          return;
+        }
+
+    const control = this.paymentForm.get(field);
+
+    if (control) {
+      if (control.pristine || control.value === '' || control.value === null) {
+        hasEmptyFields = true; // If the control is pristine or its value is empty, it's considered empty
+      } else if (control.invalid && control.touched) {
+        // If the control is filled and touched but still invalid, mark it as invalid
+        hasInvalidFields = true;
+      }
+    }
+  });
+
+  // If there are empty fields, add the general error message
+  if (hasEmptyFields) {
+    this.addErrorMessage('Please fill out all required fields.');
+    this.markMissingFields();
+    this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
+//     this.isStripeInvalid = true; // Prevent payment submission
+//     this.updateStripeFieldHighlight();
+  }
+
+  // If there are specific invalid fields, add their respective messages
+  if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
+    this.addErrorMessage('Please enter a valid email address.');
+    hasInvalidFields = true;
+  }
+
+  if (!this.isValid && this.paymentForm.get('addressLine1')?.touched && this.paymentForm.get('addressLine1')?.value !== '') {
+    this.addErrorMessage('Please enter a valid shipping address.');
+    hasInvalidFields = true;
+  }
+
+  if (this.isStripeInvalid) {
+    this.addErrorMessage('Please provide valid card details.');
+    this.updateStripeFieldHighlight(); // Ensure Stripe fields are highlighted if invalid
+  }
+
+  // If there are any empty or invalid fields, we prevent submission
+  if (hasEmptyFields || hasInvalidFields) {
+    return;
+  }
+
+    if (this.isStripeInvalid || this.paymentForm.invalid || !this.isValid) {
+      return; // Do not proceed if there are validation issues
     }
 
     const formData = this.paymentForm.value;
-//     console.log('Form Data:', formData);
 
-    // Proceed with creating a Payment Intent and confirming the payment
-    await this.createPaymentIntent();
+    const clientSecret = await this.stripeService.createPaymentIntent(5000); // Set the amount
 
-    if (!this.clientSecret) {
+    if (!clientSecret) {
       console.error("Failed to retrieve client secret from backend");
       return;
     }
 
-    const { paymentIntent, error } = await this.stripe!.confirmCardPayment(this.clientSecret, {
+    console.log("Client secret retrieved:", clientSecret);
+
+    // Determine billing details based on the useShippingAsBilling flag
+    // const billingDetails = this.useShippingAsBilling
+    // ? {
+    // name: formData.shippingName,
+    // address: {
+    // line1: formData.addressLine1,
+    // line2: formData.addressLine2 || null,
+    // city: formData.city,
+    // state: formData.state,
+    // postal_code: formData.zip,
+    // country: formData.country,
+    // },
+    // }
+    // : {
+    // name: formData.billingName,
+    // address: {
+    // line1: formData.billingAddressLine1,
+    // line2: formData.billingAddressLine2 || null,
+    // city: formData.billingCity,
+    // state: formData.billingState,
+    // postal_code: formData.billingZip,
+    // country: formData.billingCountry,
+    // },
+    // };
+
+    // Confirm the payment using billing details
+    const { paymentIntent, error } = await this.stripeService.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: this.cardNumberElement!,
-        billing_details: {
-          name: formData.cardholderName,
-          email: formData.email,
-          address: {
-            line1: formData.addressLine1,
-            line2: formData.addressLine2,
-            city: formData.city,
-            state: formData.state,
-            postal_code: formData.zip,
-            country: formData.country,
-          },
-        },
+        card: this.stripeService.getCardElement(),
+        // billing_details: billingDetails,
       },
+      receipt_email: formData.email,
     });
 
     if (error) {
@@ -199,137 +396,16 @@ isAddressValid(formValues: any): boolean {
     }
   }
 
-
-  editCart(){
+  editCart() {
     this.cartService.toggleCartVisibility();
   }
 
-  setupStripeElements() {
-    if (this.stripe) {
-
-      this.elements = this.stripe.elements();
-
-      if (this.elements) {
-
-        // Create and mount the card number element
-        this.cardNumberElement = this.elements.create('cardNumber', {
-          style: {
-            base: {
-              color: 'black',
-              fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-              fontSmoothing: 'antialiased',
-              fontSize: '7vw',
-              '::placeholder': {
-                color: '#aab7c4',
-              },
-            },
-            invalid: {
-              color: '#fa755a',
-              iconColor: '#fa755a',
-            },
-          },
-        });
-
-        if (this.cardNumberElement) {
-          this.cardNumberElement.mount('#card-number-element');
-
-          this.cardNumberElement?.on('change', (event: any) => {
-
-            // Check the event's brand field to identify card type
-            const cardType = event.brand !== 'unknown' ? event.brand : null;
-
-            if (cardType) {
-              this.updateCardIcons(cardType);
-            } else {
-              this.resetCardIcons();
-            }
-          });
-        } else {
-          console.error("Failed to create card number element");
-        }
-
-        // Create and mount the card expiry element
-        this.cardExpiryElement = this.elements.create('cardExpiry', {
-          style: {
-            base: {
-              color: 'black',
-              fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-              fontSmoothing: 'antialiased',
-              fontSize: '9vw',
-              '::placeholder': {
-                color: '#aab7c4',
-              },
-            },
-            invalid: {
-              color: '#fa755a',
-              iconColor: '#fa755a',
-            },
-          },
-        });
-
-        if (this.cardExpiryElement) {
-          this.cardExpiryElement.mount('#card-expiry-element');
-        } else {
-          console.error("Failed to create card expiry element");
-        }
-
-        // Create and mount the card CVC element
-        this.cardCvcElement = this.elements.create('cardCvc', {
-          style: {
-            base: {
-              color: 'black',
-              fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-              fontSmoothing: 'antialiased',
-              fontSize: '9vw',
-              '::placeholder': {
-                color: '#aab7c4',
-              },
-            },
-            invalid: {
-              color: '#fa755a',
-              iconColor: '#fa755a',
-            },
-          },
-        });
-
-        if (this.cardCvcElement) {
-          this.cardCvcElement.mount('#card-cvc-element');
-        } else {
-          console.error("Failed to create card CVC element");
-        }
-      } else {
-        console.error("Failed to create Stripe Elements instance");
-      }
+  onCardNumberInput(cardType: string | null): void {
+    if (cardType) {
+      this.updateCardIcons(cardType);
     } else {
-      console.error("Stripe instance is not available");
+      this.resetCardIcons();
     }
-  }
-
-  async createPaymentIntent() {
-    const amount = 5000; // Set the amount (e.g., in cents, $50.00 => 5000)
-
-    try {
-      const response = await this.http.post<{ clientSecret: string }>(
-        'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent',
-        { amount }
-      ).toPromise();
-      this.clientSecret = response?.clientSecret || null;
-    } catch (error) {
-      console.error('Error creating payment intent:', error);
-    }
-  }
-
-  onCardNumberInput(event: any): void {
-    this.cardNumberElement?.on('change', (event: any) => {
-      const cardType = event.brand !== 'unknown' ? event.brand : null;
-//       console.log('Detected card type:', cardType);
-
-      if (cardType) {
-        this.updateCardIcons(cardType);
-      } else {
-        this.resetCardIcons();
-      }
-    });
   }
 
   updateCardIcons(cardType: string): void {
@@ -347,42 +423,56 @@ isAddressValid(formValues: any): boolean {
   resetCardIcons(): void {
     const icons = document.querySelectorAll('.card-icon');
     icons.forEach((icon) => {
-      (icon as HTMLElement).style.opacity = '1'; // Reset to full opacity
+      (icon as HTMLElement).style.opacity = '1';
     });
   }
 
-  onAddressInputChange(input: string) {
+  onAddressInputChange(type: 'shipping' | 'billing', input: string) {
+    // console.log(`Address input type: ${type}, input value: ${input}`);
     if (input.length > 2) { // Start autocomplete after a few characters are entered
       this.addressAutocompleteService.getPlacePredictions(input)
         .then(predictions => {
-//           console.log('Predictions:', predictions);
-          this.addressPredictions = predictions; // Store predictions
-          this.isPredictionsVisible = predictions.length > 0;
+          if (type === 'shipping') {
+            this.addressPredictions = [...predictions]; // Store predictions
+            this.isPredictionsVisible = predictions.length > 0;
+          } else if (type === 'billing') {
+            this.billingAddressPredictions = [...predictions];
+            this.isBillingPredictionsVisible = predictions.length > 0;
+          }
         })
         .catch(error => {
           console.error('Address Autocomplete Error:', error);
-          this.isPredictionsVisible = false;
+          if (type === 'shipping') {
+            this.isPredictionsVisible = false;
+          } else if (type === 'billing') {
+            this.isBillingPredictionsVisible = false;
+          }
         });
     } else {
-//       this.addressPredictions = []; // Clear predictions if input is too short
-      this.isPredictionsVisible = false;
+      if (type === 'shipping') {
+        this.isPredictionsVisible = false;
+      } else if (type === 'billing') {
+        this.isBillingPredictionsVisible = false;
+      }
     }
   }
 
-  selectPrediction(prediction: google.maps.places.AutocompletePrediction) {
+  selectPrediction(type: 'shipping' | 'billing', prediction: google.maps.places.AutocompletePrediction) {
     if (prediction.place_id) {
-      this.onAddressSelected(prediction.place_id);
-      this.isPredictionsVisible = false;
+      this.onAddressSelected(type, prediction.place_id);
+      if (type === 'shipping') {
+        this.isPredictionsVisible = false;
+      } else if (type === 'billing') {
+        this.isBillingPredictionsVisible = false;
+      }
     }
   }
 
-  onAddressSelected(placeId: string) {
+  onAddressSelected(type: 'shipping' | 'billing', placeId: string) {
     const request: google.maps.places.PlaceDetailsRequest = {
       placeId: placeId,
-      fields: ['address_components'] // Specify the fields you need (e.g., address components)
+      fields: ['address_components'] //
     };
-
-    // Initialize the PlacesService using an HTML div element (can be hidden)
     const service = new google.maps.places.PlacesService(document.createElement('div'));
 
     // Request place details
@@ -397,16 +487,24 @@ isAddressValid(formValues: any): boolean {
         return;
       }
 
-//       console.log('Place details:', place);
-
       // Clear previous values in the form
-      this.paymentForm.patchValue({
-        addressLine1: '',
-        city: '',
-        state: '',
-        zip: '',
-        country: ''
-      });
+      if (type === 'shipping') {
+        this.paymentForm.patchValue({
+          addressLine1: '',
+          city: '',
+          state: '',
+          zip: '',
+          country: ''
+        });
+      } else {
+        this.paymentForm.patchValue({
+          billingAddressLine1: '',
+          billingCity: '',
+          billingState: '',
+          billingZip: '',
+          billingCountry: ''
+        });
+      }
 
       let streetNumber = '';
       let route = '';
@@ -423,26 +521,34 @@ isAddressValid(formValues: any): boolean {
             route = component.long_name.trim();
             break;
           case 'locality': // City
-            this.paymentForm.patchValue({
-              city: component.long_name
-            });
+            if (type === 'shipping') {
+              this.paymentForm.patchValue({ city: component.long_name });
+            } else {
+              this.paymentForm.patchValue({ billingCity: component.long_name });
+            }
             break;
           case 'administrative_area_level_1': // State
-            this.paymentForm.patchValue({
-              state: component.short_name
-            });
+            if (type === 'shipping') {
+              this.paymentForm.patchValue({ state: component.short_name });
+            } else {
+              this.paymentForm.patchValue({ billingState: component.short_name });
+            }
             break;
           case 'postal_code': // ZIP Code
-            this.paymentForm.patchValue({
-              zip: component.long_name
-            });
+            if (type === 'shipping') {
+              this.paymentForm.patchValue({ zip: component.long_name });
+            } else {
+              this.paymentForm.patchValue({ billingZip: component.long_name });
+            }
             break;
           case 'country': // Country
             const country = component.short_name;
             const mappedCountry = countryNameMapping[country] || country; // Use the mapped value or fallback to original
-            this.paymentForm.patchValue({
-              country: mappedCountry
-            });
+            if (type === 'shipping') {
+              this.paymentForm.patchValue({ country: mappedCountry });
+            } else {
+              this.paymentForm.patchValue({ billingCountry: mappedCountry });
+            }
             break;
           default:
             break;
@@ -450,15 +556,20 @@ isAddressValid(formValues: any): boolean {
       }
 
       const cleanedAddressLine1 = `${streetNumber} ${route}`.trim();
-      this.paymentForm.get('addressLine1')?.setValue(cleanedAddressLine1);
+      if (type === 'shipping') {
+        this.paymentForm.get('addressLine1')?.setValue(cleanedAddressLine1);
+      } else {
+        this.paymentForm.get('billingAddressLine1')?.setValue(cleanedAddressLine1);
+      }
 
       // Mark fields as dirty and update validity to reflect user action
       this.paymentForm.markAllAsTouched();
       this.paymentForm.updateValueAndValidity();
 
       // Trigger address validation and shipping rate calculation directly
-      this.validateAddress(this.paymentForm.value);
-
+      if (type === 'shipping') {
+        this.validateAddress(this.paymentForm.value);
+      }
     });
   }
 
@@ -469,7 +580,6 @@ isAddressValid(formValues: any): boolean {
 
     // Call the shipping service to calculate the rate
     this.shippingService.calculateShippingRate(
-//       formValues.shippingName,
       formValues.addressLine1,
       formValues.addressLine2,
       formValues.city,
@@ -480,15 +590,15 @@ isAddressValid(formValues: any): boolean {
     ).subscribe(
       (shippingCost: number) => {
         this.total -= this.previousShippingCost;
-
         this.shippingCost = shippingCost;
-
         this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
-
         this.total = Number(this.total) + Number(this.shippingCost);
 
         console.log("this.shippingCost = ", this.shippingCost);
         console.log('Calculated shipping cost:', this.shippingCost);
+
+        // Trigger change detection to ensure UI reflects the updated cost
+        this.cd.detectChanges();
       },
       (error) => {
         console.error('Error calculating shipping rate:', error);
@@ -498,6 +608,8 @@ isAddressValid(formValues: any): boolean {
 
   validateAddress(formValues: any) {
     const addressLine2 = formValues.addressLine2?.trim() ? formValues.addressLine2 : null;
+    formValues.state = this.normalizeStateInput(formValues.state);
+
     const payload = {
       Address: {
         AddressLine: [formValues.addressLine1],
@@ -532,5 +644,94 @@ isAddressValid(formValues: any): boolean {
     );
   }
 
-}
+  markMissingFields() {
+    Object.keys(this.paymentForm.controls).forEach(field => {
 
+      if (field === 'addressLine2') {
+        return;
+      }
+      const control = this.paymentForm.get(field);
+
+      if (control) {
+        // Highlight empty fields
+        if (control.value === '' || control.value === null) {
+          console.log(`Field "${field}" is empty. Highlighting as missing.`);
+          control.markAsTouched();
+
+          // Add the red border by adding the class 'error-highlight'
+          const element = document.getElementById(field) as HTMLElement;
+          if (element) {
+            element.classList.add('error-highlight');
+          }
+        } else if (control.valid) {
+          // Remove highlight from fields that are now valid
+          const element = document.getElementById(field) as HTMLElement;
+          if (element) {
+            element.classList.remove('error-highlight');
+          }
+        }
+      } else {
+        console.warn(`Field "${field}" was not found in the form controls.`);
+      }
+    });
+
+    this.cd.detectChanges(); // Ensures that the UI updates with the changes made to the form control states
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control = this.paymentForm.get(field);
+    // The field is invalid if it has been interacted with (touched or dirty) and its value is not valid
+    return !!control && control.invalid && control.touched && control.value !== '';
+  }
+
+  // Method to remove highlight on user input
+  removeHighlight(field: string) {
+    const control = this.paymentForm.get(field);
+    if (control) {
+      control.markAsTouched();
+      control.updateValueAndValidity();
+
+      // Log for debugging
+      console.log(`Field: ${field}, Valid: ${control.valid}`);
+
+      // Get the input element by field id
+      const element = document.getElementById(field) as HTMLInputElement;
+      if (element && control.valid) {
+        console.log(`Removing error highlight from field: ${field}`);
+        element.classList.remove('error-highlight');
+      }
+    }
+  }
+
+  highlightUntouchedStripeFields() {
+    const stripeContainer = document.querySelector('.card-information') as HTMLElement;
+    if( !this.stripeService.areAllCardFieldsTouched()) {
+//               console.log('Adding error highlight.');
+              stripeContainer.classList.add('error-highlight');
+      }
+  }
+
+  updateStripeFieldHighlight() {
+//     console.log('updateStripeFieldHighlight called, isStripeInvalid:', this.isStripeInvalid);
+    const stripeContainer = document.querySelector('.card-information') as HTMLElement;
+    if (this.isStripeInvalid) {
+//       console.log('Adding error highlight.');
+//       stripeContainer.classList.add('error-highlight'); //this aint it
+    } else {
+//       console.log('Removing error highlight.');
+      stripeContainer.classList.remove('error-highlight');
+    }
+  }
+
+  // Add a new error message
+  addErrorMessage(message: string) {
+    const newError = { id: this.errorIdCounter++, message };
+    this.errorMessages.push(newError);
+  }
+
+  // Remove an error message by id
+  removeErrorMessage(id: number) {
+    this.errorMessages = this.errorMessages.filter(error => error.id !== id);
+  }
+
+}
