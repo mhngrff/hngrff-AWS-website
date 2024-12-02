@@ -37,7 +37,8 @@ export class StripeService {
     cardExpiryDiv: string,
     cardCvcDiv: string,
     onCardChangeCallback: (cardType: string | null) => void,
-    onValidityChangeCallback: (isInvalid: boolean) => void
+    onValidityChangeCallback: (isInvalid: boolean) => void,
+    onFieldInvalidCallback: () => void
   ) {
     if (this.elements) {
       console.log('Stripe elements initialized. Creating and mounting elements.');
@@ -87,6 +88,12 @@ export class StripeService {
       this.cardNumberElement.on('change', (event: any) => {
         this.cardNumberValid = event.complete && !event.error;
         this.updateOverallValidity(onValidityChangeCallback);
+
+        if (event.empty || !event.complete) {
+          console.log('Card number field cleared. Reapplying error highlight.');
+//           this.highlightUntouchedStripeFields();
+          onFieldInvalidCallback();
+        }
       });
 
       // Create and mount the card expiry element
@@ -117,6 +124,12 @@ export class StripeService {
       this.cardExpiryElement.on('change', (event: any) => {
         this.cardExpiryValid = event.complete && !event.error;
         this.updateOverallValidity(onValidityChangeCallback);
+
+        if (event.empty || !event.complete) {
+          console.log('Card number field cleared. Reapplying error highlight.');
+//           this.highlightUntouchedStripeFields();
+        onFieldInvalidCallback();
+        }
       });
 
       // Create and mount the card CVC element
@@ -147,6 +160,12 @@ export class StripeService {
       this.cardCvcElement.on('change', (event: any) => {
         this.cardCvcValid = event.complete && !event.error;
         this.updateOverallValidity(onValidityChangeCallback);
+
+        if (event.empty || !event.complete) {
+          console.log('Card number field cleared. Reapplying error highlight.');
+//           this.highlightUntouchedStripeFields();
+        onFieldInvalidCallback();
+        }
       });
 
     } else {

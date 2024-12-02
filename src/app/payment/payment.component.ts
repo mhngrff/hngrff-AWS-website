@@ -6,7 +6,7 @@ import Payment from 'payment';
 import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
-import { Observable, debounceTime } from 'rxjs';
+import { Observable, debounceTime, combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -134,15 +134,6 @@ export class PaymentComponent implements OnInit {
       zip: ['', Validators.required],
       country: ['', Validators.required],
       cardholderName: ['', Validators.required],
-
-      // Billing Address Fields
-      // billingName: ['', Validators.required],
-      // billingAddressLine1: ['', Validators.required],
-      // billingAddressLine2: [''],
-      // billingCity: ['', Validators.required],
-      // billingState: ['', Validators.required],
-      // billingZip: ['', Validators.required],
-      // billingCountry: ['', Validators.required],
     });
   }
 
@@ -160,20 +151,21 @@ export class PaymentComponent implements OnInit {
       this.totalWeight = selectedItem.weight * selectedItem.quantity;
     } else {
       // Cart Checkout path: Use cart items and total
-      this.cartService.getTotal$().subscribe((subtotal) => {
+      combineLatest([
+        this.cartService.getTotal$(),
+        this.cartService.getCartItems(),
+        this.cartService.getTotalWeight$()
+      ]).subscribe(([subtotal, items, totalWeight]) => {
         this.subtotal = subtotal;
         this.total = subtotal + (this.shippingCost ?? 0);
-        this.cartService.getCartItems().subscribe((items: CartItem[]) => {
-          this.cartItems = items;
-          if (items.length === 0) {
-            this.router.navigate(['/']);
-          }
-        });
+        this.cartItems = items;
+        this.totalWeight = parseFloat(totalWeight.toFixed(2));
+
+        if (items.length === 0) {
+          this.router.navigate(['/']);
+        }
       });
 
-      this.cartService.getTotalWeight$().subscribe((weight) => {
-        this.totalWeight = weight;
-      });
     }
 
    this.paymentForm.valueChanges
@@ -213,7 +205,12 @@ export class PaymentComponent implements OnInit {
         this.isStripeInvalid = isInvalid; // Update the state based on validity
         console.log('Updated isStripeInvalid to:', this.isStripeInvalid);
         this.updateStripeFieldHighlight(); // Update the UI accordingly //this aint it
-      }
+      },
+        () => {
+          // New callback to reapply the highlight if any field becomes empty or invalid
+          this.highlightUntouchedStripeFields();
+          console.log('this.highlightUntouchedStripeFields reached in ngOnInit');
+        }
     );
 
     console.log('Stripe card elements mounted.');
@@ -227,14 +224,6 @@ export class PaymentComponent implements OnInit {
       ) {
         this.isPredictionsVisible = false; // Hide the prediction list
       }
-      // Billing address stuff
-      // if (
-      // this.isBillingPredictionsVisible &&
-      // !this.billingAddressInput.nativeElement.contains(event.target) &&
-      // !this.billingPredictionList.nativeElement.contains(event.target)
-      // ) {
-      // this.isBillingPredictionsVisible = false; // Hide the billing prediction list
-      // }
     });
   }
 
@@ -253,90 +242,96 @@ export class PaymentComponent implements OnInit {
     return stateAbbreviationMapping[normalizedState] || state;
   }
 
-  // Billing address method
-  // toggleBillingAddress() {
-  // this.useShippingAsBilling = !this.useShippingAsBilling;
-  // this.updateBillingFieldsState();
-  // }
-  // Billing address method
-  // updateBillingFieldsState() {
-  // if (this.useShippingAsBilling) {
-  // // Disable the billing address fields if "use shipping address as billing address" is checked
-  // this.paymentForm.controls['billingName'].disable();
-  // this.paymentForm.controls['billingAddressLine1'].disable();
-  // this.paymentForm.controls['billingAddressLine2'].disable();
-  // this.paymentForm.controls['billingCity'].disable();
-  // this.paymentForm.controls['billingState'].disable();
-  // this.paymentForm.controls['billingZip'].disable();
-  // this.paymentForm.controls['billingCountry'].disable();
-  // } else {
-  // // Enable the billing address fields if "use shipping address as billing address" is unchecked
-  // this.paymentForm.controls['billingName'].enable();
-  // this.paymentForm.controls['billingAddressLine1'].enable();
-  // this.paymentForm.controls['billingAddressLine2'].enable();
-  // this.paymentForm.controls['billingCity'].enable();
-  // this.paymentForm.controls['billingState'].enable();
-  // this.paymentForm.controls['billingZip'].enable();
-  // this.paymentForm.controls['billingCountry'].enable();
-  // }
-  // }
-
   async handlePayment() {
     console.log("Handle Payment called");
 
-     // Clear previous error messages
-     this.errorMessages = [];
+//      // Clear previous error messages
+//      this.errorMessages = [];
+//
+//        let hasEmptyFields = false;
+//        let hasInvalidFields = false;
+//
+//   // Iterate over each control in the form to determine if fields are empty or invalid
+//   Object.keys(this.paymentForm.controls).forEach(field => {
+//         if (field === 'addressLine2') {
+//           return;
+//         }
+//
+//     const control = this.paymentForm.get(field);
+//
+//     if (control) {
+//       if (control.pristine || control.value === '' || control.value === null) {
+//         hasEmptyFields = true; // If the control is pristine or its value is empty, it's considered empty
+//       } else if (control.invalid && control.touched) {
+//         // If the control is filled and touched but still invalid, mark it as invalid
+//         hasInvalidFields = true;
+//       }
+//     }
+//   });
+//
+//   // If there are empty fields, add the general error message
+//   if (hasEmptyFields) {
+//     this.addErrorMessage('Please fill out all required fields.');
+//     this.markMissingFields();
+//     this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
+// //     this.isStripeInvalid = true; // Prevent payment submission
+// //     this.updateStripeFieldHighlight();
+//   }
+//
+//   // If there are specific invalid fields, add their respective messages
+//   if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
+//     this.addErrorMessage('Please enter a valid email address.');
+//     hasInvalidFields = true;
+//   }
+//
+//   if (!this.isValid && this.paymentForm.get('addressLine1')?.touched && this.paymentForm.get('addressLine1')?.value !== '') {
+//     this.addErrorMessage('Please enter a valid shipping address.');
+//     hasInvalidFields = true;
+//   }
+//
+//   if (this.isStripeInvalid) {
+//     this.addErrorMessage('Please provide valid card details.');
+//     this.updateStripeFieldHighlight(); // Ensure Stripe fields are highlighted if invalid
+//   }
+//
+//   // If there are any empty or invalid fields, we prevent submission
+//   if (hasEmptyFields || hasInvalidFields) {
+//     return;
+//   }
+//
+//     if (this.isStripeInvalid || this.paymentForm.invalid || !this.isValid) {
+//       return; // Do not proceed if there are validation issues
+//     }
 
-       let hasEmptyFields = false;
-       let hasInvalidFields = false;
+    // Clear previous error messages
+      this.errorMessages = [];
 
-  // Iterate over each control in the form to determine if fields are empty or invalid
-  Object.keys(this.paymentForm.controls).forEach(field => {
-        if (field === 'addressLine2') {
-          return;
-        }
+    // Use the helper method to validate form fields
+    const { hasEmptyFields, hasInvalidFields } = this.validateFormFields();
 
-    const control = this.paymentForm.get(field);
-
-    if (control) {
-      if (control.pristine || control.value === '' || control.value === null) {
-        hasEmptyFields = true; // If the control is pristine or its value is empty, it's considered empty
-      } else if (control.invalid && control.touched) {
-        // If the control is filled and touched but still invalid, mark it as invalid
-        hasInvalidFields = true;
-      }
+    if (hasEmptyFields) {
+      this.addErrorMessage('Please fill out all required fields.');
+      this.markMissingFields();
+      this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
     }
-  });
 
-  // If there are empty fields, add the general error message
-  if (hasEmptyFields) {
-    this.addErrorMessage('Please fill out all required fields.');
-    this.markMissingFields();
-    this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
-//     this.isStripeInvalid = true; // Prevent payment submission
-//     this.updateStripeFieldHighlight();
-  }
+    if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
+      this.addErrorMessage('Please enter a valid email address.');
+    }
 
-  // If there are specific invalid fields, add their respective messages
-  if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
-    this.addErrorMessage('Please enter a valid email address.');
-    hasInvalidFields = true;
-  }
+    if (!this.isValid && this.paymentForm.get('addressLine1')?.touched && this.paymentForm.get('addressLine1')?.value !== '') {
+      this.addErrorMessage('Please enter a valid shipping address.');
+    }
 
-  if (!this.isValid && this.paymentForm.get('addressLine1')?.touched && this.paymentForm.get('addressLine1')?.value !== '') {
-    this.addErrorMessage('Please enter a valid shipping address.');
-    hasInvalidFields = true;
-  }
+    if (this.isStripeInvalid) {
+      this.addErrorMessage('Please provide valid card details.');
+      this.updateStripeFieldHighlight(); // Ensure Stripe fields are highlighted if invalid
+    }
 
-  if (this.isStripeInvalid) {
-    this.addErrorMessage('Please provide valid card details.');
-    this.updateStripeFieldHighlight(); // Ensure Stripe fields are highlighted if invalid
-  }
-
-  // If there are any empty or invalid fields, we prevent submission
-  if (hasEmptyFields || hasInvalidFields) {
-    return;
-  }
+    // If there are any empty or invalid fields, we prevent submission
+    if (hasEmptyFields || hasInvalidFields) {
+      return;
+    }
 
     if (this.isStripeInvalid || this.paymentForm.invalid || !this.isValid) {
       return; // Do not proceed if there are validation issues
@@ -352,31 +347,6 @@ export class PaymentComponent implements OnInit {
     }
 
     console.log("Client secret retrieved:", clientSecret);
-
-    // Determine billing details based on the useShippingAsBilling flag
-    // const billingDetails = this.useShippingAsBilling
-    // ? {
-    // name: formData.shippingName,
-    // address: {
-    // line1: formData.addressLine1,
-    // line2: formData.addressLine2 || null,
-    // city: formData.city,
-    // state: formData.state,
-    // postal_code: formData.zip,
-    // country: formData.country,
-    // },
-    // }
-    // : {
-    // name: formData.billingName,
-    // address: {
-    // line1: formData.billingAddressLine1,
-    // line2: formData.billingAddressLine2 || null,
-    // city: formData.billingCity,
-    // state: formData.billingState,
-    // postal_code: formData.billingZip,
-    // country: formData.billingCountry,
-    // },
-    // };
 
     // Confirm the payment using billing details
     const { paymentIntent, error } = await this.stripeService.confirmCardPayment(clientSecret, {
@@ -688,12 +658,6 @@ export class PaymentComponent implements OnInit {
   removeHighlight(field: string) {
     const control = this.paymentForm.get(field);
     if (control) {
-      control.markAsTouched();
-      control.updateValueAndValidity();
-
-      // Log for debugging
-      console.log(`Field: ${field}, Valid: ${control.valid}`);
-
       // Get the input element by field id
       const element = document.getElementById(field) as HTMLInputElement;
       if (element && control.valid) {
@@ -704,11 +668,16 @@ export class PaymentComponent implements OnInit {
   }
 
   highlightUntouchedStripeFields() {
+//     const stripeContainer = document.querySelector('.card-information') as HTMLElement;
+//     if( !this.stripeService.areAllCardFieldsTouched()) {
+//       stripeContainer.classList.add('error-highlight');
+//       }
     const stripeContainer = document.querySelector('.card-information') as HTMLElement;
-    if( !this.stripeService.areAllCardFieldsTouched()) {
-//               console.log('Adding error highlight.');
-              stripeContainer.classList.add('error-highlight');
-      }
+    if (!this.stripeService.areAllCardFieldsTouched()) {
+      stripeContainer.classList.add('error-highlight');
+    } else {
+      stripeContainer.classList.remove('error-highlight'); // Optionally remove the highlight if all fields are touched.
+    }
   }
 
   updateStripeFieldHighlight() {
@@ -733,5 +702,29 @@ export class PaymentComponent implements OnInit {
   removeErrorMessage(id: number) {
     this.errorMessages = this.errorMessages.filter(error => error.id !== id);
   }
+
+  private validateFormFields(): { hasEmptyFields: boolean; hasInvalidFields: boolean } {
+    let hasEmptyFields = false;
+    let hasInvalidFields = false;
+
+    Object.keys(this.paymentForm.controls).forEach(field => {
+      if (field === 'addressLine2') {
+        return; // Skip optional fields
+      }
+
+      const control = this.paymentForm.get(field);
+
+      if (control) {
+        if (control.pristine || control.value === '' || control.value === null) {
+          hasEmptyFields = true;
+        } else if (control.invalid && control.touched) {
+          hasInvalidFields = true;
+        }
+      }
+    });
+
+    return { hasEmptyFields, hasInvalidFields };
+  }
+
 
 }
