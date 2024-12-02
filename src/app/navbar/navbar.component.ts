@@ -18,9 +18,8 @@ import { filter } from 'rxjs/operators';
 export class NavbarComponent implements OnInit, OnDestroy {
   cartItemCount: number = 0;
   lastScrollTop: number = 0;
-  isHidden: boolean = false;
   shouldHideNavbar: boolean = false;
-  currentOffset: number = 0;
+  isHidden: boolean = false;
   private navbarHeight: number = 0; //calculated dynamically for differing viewport sizes
 
   private subscriptions: Subscription = new Subscription();
@@ -39,19 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-//   ngOnInit(): void {
-//     this.cartService.cartItems$.subscribe((items: CartItem[]) => {
-//       this.cartItemCount = items.reduce((count, item) => count + item.quantity, 0);
-//
-//       this.cdr.detectChanges();
-//       // Trigger the flash effect after the update is complete
-//       setTimeout(() => {
-//         this.triggerFlashEffect();
-//       }, 0); // Adding a small delay to allow DOM updates
-//     });
-//   }
   ngOnInit(): void {
-    this.updateNavbarHeight();
     // Subscribe to cartItems$ to update cartItemCount
     const cartSub = this.cartService.cartItems$.subscribe((items) => {
       this.cartItemCount = items.reduce((count, item) => count + item.quantity, 0);
@@ -80,30 +67,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-    if (scrollTop > this.lastScrollTop) {
-      // User is scrolling down
-      this.currentOffset = Math.min(this.currentOffset + (scrollTop - this.lastScrollTop), this.navbarHeight);
-    } else {
-      // User is scrolling up
-      this.currentOffset = Math.max(this.currentOffset - (this.lastScrollTop - scrollTop), 0);
-    }
-
-    // Set the top offset of the navbar to gradually hide/show
-//     const navbar = document.getElementById('navbar');
     const navbar = document.querySelector('.navbar') as HTMLElement | null;
-
-//     const navbar = document.querySelector('.navbar');
     if (navbar) {
-      navbar.style.top = `-${this.currentOffset}px`;
+      if (scrollTop > this.lastScrollTop) {
+        // User is scrolling down, hide the navbar
+        navbar.style.top = `-8vh`;
+      } else {
+        // User is scrolling up, show the navbar
+        navbar.style.top = `0`;
+      }
     }
 
-    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-  }
-
-  @HostListener('window:resize', [])
-  onWindowResize(): void {
-    // Recalculate the navbar height on window resize
-    this.updateNavbarHeight();
+    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative values
   }
 
   triggerFlashEffect(): void {
@@ -152,12 +127,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 //   }
   goToCart() {
     this.cartService.toggleCartVisibility();
-  }
-
-  private updateNavbarHeight(): void {
-    // Calculate the navbar height in pixels based on the viewport height
-    const vh = window.innerHeight / 100; // 1vh in pixels
-    this.navbarHeight = vh * 8; // Assuming the navbar height is 8vh
   }
 
   ngOnDestroy(): void {
