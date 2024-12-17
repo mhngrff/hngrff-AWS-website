@@ -43,7 +43,6 @@ export class AppComponent implements OnInit{
   }
 
 
-
   closeCart(): void {
     this.cartService.closeCart(); // Use the existing closeCart method from CartService
   }

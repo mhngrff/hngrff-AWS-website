@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement } from '@stripe/stripe-js';
+import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement, StripeError } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
 import { NavigationService } from '../services/navigation.service';
 import Payment from 'payment';
@@ -245,64 +245,6 @@ export class PaymentComponent implements OnInit {
   async handlePayment() {
     console.log("Handle Payment called");
 
-//      // Clear previous error messages
-//      this.errorMessages = [];
-//
-//        let hasEmptyFields = false;
-//        let hasInvalidFields = false;
-//
-//   // Iterate over each control in the form to determine if fields are empty or invalid
-//   Object.keys(this.paymentForm.controls).forEach(field => {
-//         if (field === 'addressLine2') {
-//           return;
-//         }
-//
-//     const control = this.paymentForm.get(field);
-//
-//     if (control) {
-//       if (control.pristine || control.value === '' || control.value === null) {
-//         hasEmptyFields = true; // If the control is pristine or its value is empty, it's considered empty
-//       } else if (control.invalid && control.touched) {
-//         // If the control is filled and touched but still invalid, mark it as invalid
-//         hasInvalidFields = true;
-//       }
-//     }
-//   });
-//
-//   // If there are empty fields, add the general error message
-//   if (hasEmptyFields) {
-//     this.addErrorMessage('Please fill out all required fields.');
-//     this.markMissingFields();
-//     this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
-// //     this.isStripeInvalid = true; // Prevent payment submission
-// //     this.updateStripeFieldHighlight();
-//   }
-//
-//   // If there are specific invalid fields, add their respective messages
-//   if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
-//     this.addErrorMessage('Please enter a valid email address.');
-//     hasInvalidFields = true;
-//   }
-//
-//   if (!this.isValid && this.paymentForm.get('addressLine1')?.touched && this.paymentForm.get('addressLine1')?.value !== '') {
-//     this.addErrorMessage('Please enter a valid shipping address.');
-//     hasInvalidFields = true;
-//   }
-//
-//   if (this.isStripeInvalid) {
-//     this.addErrorMessage('Please provide valid card details.');
-//     this.updateStripeFieldHighlight(); // Ensure Stripe fields are highlighted if invalid
-//   }
-//
-//   // If there are any empty or invalid fields, we prevent submission
-//   if (hasEmptyFields || hasInvalidFields) {
-//     return;
-//   }
-//
-//     if (this.isStripeInvalid || this.paymentForm.invalid || !this.isValid) {
-//       return; // Do not proceed if there are validation issues
-//     }
-
     // Clear previous error messages
       this.errorMessages = [];
 
@@ -348,22 +290,26 @@ export class PaymentComponent implements OnInit {
 
     console.log("Client secret retrieved:", clientSecret);
 
-    // Confirm the payment using billing details
-    const { paymentIntent, error } = await this.stripeService.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: this.stripeService.getCardElement(),
-        // billing_details: billingDetails,
-      },
-      receipt_email: formData.email,
-    });
+    const cardElement = this.stripeService.getCardElement();
 
-    if (error) {
-      console.error('Payment failed:', error.message);
-    } else if (paymentIntent) {
-      console.log('Payment successful:', paymentIntent);
-      this.cartService.setBuyNowFlow(false);
-      this.cartService.setSelectedItem(null);
+    console.log('Card element:', cardElement);
+
+    try {
+      const { paymentIntent, error } = await this.stripeService.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: this.stripeService.getCardElement(),
+        },
+        receipt_email: formData.email,
+      });
+
+      if (error) {
+        const stripeError = error as StripeError; // Cast error to StripeError
+        console.error('Payment failed:', stripeError.message, stripeError);
+      }
+    } catch (e) {
+      console.error('Error during confirmCardPayment:', e);
     }
+
   }
 
   editCart() {
@@ -538,6 +484,11 @@ export class PaymentComponent implements OnInit {
 
       // Trigger address validation and shipping rate calculation directly
       if (type === 'shipping') {
+        this.removeHighlight('city');
+        this.removeHighlight('state');
+        this.removeHighlight('zip');
+        this.removeHighlight('country');
+
         this.validateAddress(this.paymentForm.value);
       }
     });
@@ -574,6 +525,7 @@ export class PaymentComponent implements OnInit {
         console.error('Error calculating shipping rate:', error);
       }
     );
+//     console.log("Shipping rate calculation attempted. ");
   }
 
   validateAddress(formValues: any) {
@@ -612,6 +564,7 @@ export class PaymentComponent implements OnInit {
         this.isValid = false;
       }
     );
+//     console.log("Address validation attempted. ");
   }
 
   markMissingFields() {
@@ -654,7 +607,7 @@ export class PaymentComponent implements OnInit {
     return !!control && control.invalid && control.touched && control.value !== '';
   }
 
-  // Method to remove highlight on user input
+  // Method to remove highlight on user input - This is called directly from the HTML for each field
   removeHighlight(field: string) {
     const control = this.paymentForm.get(field);
     if (control) {
@@ -710,6 +663,7 @@ export class PaymentComponent implements OnInit {
     Object.keys(this.paymentForm.controls).forEach(field => {
       if (field === 'addressLine2') {
         return; // Skip optional fields
+        console.log("field: ", field);
       }
 
       const control = this.paymentForm.get(field);

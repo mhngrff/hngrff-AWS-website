@@ -310,7 +310,7 @@
         id="country"
         formControlName="country"
         [ngClass]="{'error-highlight': isFieldInvalid('country')}"
-        (input)="removeHighlight('country')"
+        (change)="removeHighlight('country')"
         required>
         <option value="">Select Country</option>
         <option value="US">United States</option>

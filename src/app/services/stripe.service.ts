@@ -3,6 +3,7 @@ import { loadStripe, Stripe, StripeElements, StripeCardNumberElement, StripeCard
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +42,22 @@ export class StripeService {
     onFieldInvalidCallback: () => void
   ) {
     if (this.elements) {
+          console.log('Checking for existing Stripe elements...');
+
+          // Destroy existing elements before creating new ones
+          if (this.cardNumberElement) {
+            this.cardNumberElement.destroy();
+            this.cardNumberElement = null;
+          }
+          if (this.cardExpiryElement) {
+            this.cardExpiryElement.destroy();
+            this.cardExpiryElement = null;
+          }
+          if (this.cardCvcElement) {
+            this.cardCvcElement.destroy();
+            this.cardCvcElement = null;
+          }
+
       console.log('Stripe elements initialized. Creating and mounting elements.');
       // Create and mount the card number element
       this.cardNumberElement = this.elements.create('cardNumber', {
@@ -92,7 +109,7 @@ export class StripeService {
         if (event.empty || !event.complete) {
           console.log('Card number field cleared. Reapplying error highlight.');
 //           this.highlightUntouchedStripeFields();
-          onFieldInvalidCallback();
+//           onFieldInvalidCallback(); // REMOVED TO PREVENT PREEMPTIVE HIGHLIGHTING
         }
       });
 
@@ -128,7 +145,7 @@ export class StripeService {
         if (event.empty || !event.complete) {
           console.log('Card number field cleared. Reapplying error highlight.');
 //           this.highlightUntouchedStripeFields();
-        onFieldInvalidCallback();
+//         onFieldInvalidCallback(); // REMOVED TO PREVENT PREEMPTIVE HIGHLIGHTING
         }
       });
 
@@ -163,8 +180,7 @@ export class StripeService {
 
         if (event.empty || !event.complete) {
           console.log('Card number field cleared. Reapplying error highlight.');
-//           this.highlightUntouchedStripeFields();
-        onFieldInvalidCallback();
+//         onFieldInvalidCallback(); // REMOVED TO PREVENT PREEMPTIVE HIGHLIGHTING
         }
       });
 
@@ -191,24 +207,36 @@ export class StripeService {
   }
 
   // Method to confirm the Card Payment
-  async confirmCardPayment(clientSecret: string, paymentData: any) {
-    console.log("Confirming card payment with client secret:", clientSecret);
-    console.log("Payment data:", paymentData);
 
-    if (!this.stripe) {
-      console.error("Stripe instance not initialized.");
+  async confirmCardPayment(clientSecret: string, paymentData: any) {
+    if (!this.stripe || !this.cardNumberElement) {
+      console.error("Stripe instance or card element is not initialized.");
       return { paymentIntent: null, error: { message: 'Stripe not initialized' } };
     }
 
-    const result = await this.stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: this.cardNumberElement!,
-        billing_details: paymentData
-      }
-    });
+    console.log('Confirming card payment with:', clientSecret);
 
-    return result;
+    try {
+      const result = await this.stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: this.cardNumberElement,
+        },
+        receipt_email: paymentData.email, // Explicitly pass receipt email
+      });
+
+      if (result.error) {
+        console.error('Payment failed:', result.error.message);
+      } else {
+        console.log('Payment successful:', result.paymentIntent);
+      }
+
+      return result;
+    } catch (e) {
+      console.error('Error during confirmCardPayment:', e);
+      return { paymentIntent: null, error: e };
+    }
   }
+
 
   // New method to get the Card Element
   getCardElement(): StripeCardNumberElement | null {
