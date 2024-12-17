@@ -112,6 +112,11 @@ export class StripeService {
 //           this.highlightUntouchedStripeFields();
 //           onFieldInvalidCallback(); // REMOVED TO PREVENT PREEMPTIVE HIGHLIGHTING
         }
+
+        if (event.complete) {
+             this.cardExpiryElement?.focus(); // Focus on Expiry next
+        }
+
       });
 
       // Create and mount the card expiry element
@@ -149,6 +154,10 @@ export class StripeService {
 //           this.highlightUntouchedStripeFields();
 //         onFieldInvalidCallback(); // REMOVED TO PREVENT PREEMPTIVE HIGHLIGHTING
         }
+        if (event.complete) {
+          console.log('Card Expiry complete. Focusing on CVC.');
+          this.cardCvcElement?.focus(); // Focus on CVC
+        }
       });
 
       // Create and mount the card CVC element
@@ -185,6 +194,9 @@ export class StripeService {
           console.log('Card number field cleared. Reapplying error highlight.');
 //         onFieldInvalidCallback(); // REMOVED TO PREVENT PREEMPTIVE HIGHLIGHTING
         }
+
+
+
       });
 
     } else {
