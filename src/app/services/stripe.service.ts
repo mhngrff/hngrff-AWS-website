@@ -66,7 +66,8 @@ export class StripeService {
             color: 'black',
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: 'antialiased',
-            fontSize: '7vw',
+//             fontSize: '7vw',
+            fontSize: '16px',
             '::placeholder': {
               color: '#aab7c4',
             },
@@ -120,7 +121,8 @@ export class StripeService {
             color: 'black',
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: 'antialiased',
-            fontSize: '9vw',
+//             fontSize: '9vw',
+            fontSize: '16px',
             '::placeholder': {
               color: '#aab7c4',
             },
@@ -156,7 +158,8 @@ export class StripeService {
             color: 'black',
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: 'antialiased',
-            fontSize: '9vw',
+//             fontSize: '9vw',
+            fontSize: '16px',
             '::placeholder': {
               color: '#aab7c4',
             },
