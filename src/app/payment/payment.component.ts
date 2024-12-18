@@ -139,10 +139,6 @@ export class PaymentComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.setFixedViewportHeight();
-
-    window.addEventListener('orientationchange', this.setFixedViewportHeight.bind(this));
-
     const isBuyNowFlow = this.cartService.getBuyNowFlow();
     const selectedItem = this.cartService.getSelectedItem();
 
@@ -683,11 +679,6 @@ export class PaymentComponent implements OnInit {
     });
 
     return { hasEmptyFields, hasInvalidFields };
-  }
-
-  setFixedViewportHeight() {
-    const viewportHeight = window.innerHeight; // Get the current height
-    document.documentElement.style.setProperty('--fixed-vh', `${viewportHeight}px`);
   }
 
 }
