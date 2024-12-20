@@ -110,6 +110,12 @@ export class PaymentComponent implements OnInit {
   errorMessages: { id: number, message: string }[] = [];
   errorIdCounter: number = 0;
 
+    isAddressValidationInProgress = false; // Tracks whether address validation is in progress
+    isShippingCalculationInProgress = false; // Tracks whether shipping cost calculation is in progress
+    isShippingCostCalculated = false; // Tracks whether the shipping cost is calculated
+    isSubmitInProgress = false;
+
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -180,6 +186,8 @@ export class PaymentComponent implements OnInit {
          formValues.country !== undefined
        ) {
          if (this.isAddressValid(formValues)) {
+
+           this.isAddressValidationInProgress = true;
            this.validateAddress(formValues);
          } else {
            this.isValid = false;
@@ -246,8 +254,33 @@ export class PaymentComponent implements OnInit {
   async handlePayment() {
     console.log("Handle Payment called");
 
-    // Clear previous error messages
-      this.errorMessages = [];
+    this.errorMessages = [];
+
+//     if(this.isAddressValidationInProgress || this.isShippingCalculationInProgress){
+//       this.addErrorMessage('Please wait for shipping cost calculation to complete.');
+//       }
+
+    this.isSubmitInProgress = true;
+
+      // Create Observables for validation and calculation status
+      const validationInProgress$ = new Observable((observer) => {
+        const checkValidationStatus = () => {
+          if (!this.isAddressValidationInProgress && !this.isShippingCalculationInProgress) {
+            observer.next(true);
+            observer.complete();
+          } else {
+            setTimeout(checkValidationStatus, 100); // Check every 100ms
+          }
+        };
+        checkValidationStatus();
+      })
+
+      await validationInProgress$.toPromise(); // Wait until both processes are complete
+
+      // Remove the loading message after validation is complete
+      this.errorMessages = this.errorMessages.filter(
+        (error) => error.message !== "Validating address and calculating shipping cost. Please wait..."
+      );
 
     // Use the helper method to validate form fields
     const { hasEmptyFields, hasInvalidFields } = this.validateFormFields();
@@ -273,10 +306,12 @@ export class PaymentComponent implements OnInit {
 
     // If there are any empty or invalid fields, we prevent submission
     if (hasEmptyFields || hasInvalidFields) {
+      this.isSubmitInProgress = false;
       return;
     }
 
     if (this.isStripeInvalid || this.paymentForm.invalid || !this.isValid) {
+      this.isSubmitInProgress = false;
       return; // Do not proceed if there are validation issues
     }
 
@@ -286,6 +321,8 @@ export class PaymentComponent implements OnInit {
 
     if (!clientSecret) {
       console.error("Failed to retrieve client secret from backend");
+      this.addErrorMessage("Failed to retrieve payment details. Please try again.");
+      this.isSubmitInProgress = false;
       return;
     }
 
@@ -306,9 +343,16 @@ export class PaymentComponent implements OnInit {
       if (error) {
         const stripeError = error as StripeError; // Cast error to StripeError
         console.error('Payment failed:', stripeError.message, stripeError);
+//         this.addErrorMessage(`Payment failed: ${error.message}`);
+      } else {
+        console.log("Payment successful:", paymentIntent);
+         // You can redirect to a success page here
       }
     } catch (e) {
       console.error('Error during confirmCardPayment:', e);
+      this.addErrorMessage("An unexpected error occurred. Please try again.");
+    } finally {
+      this.isSubmitInProgress = false;
     }
 
   }
@@ -496,6 +540,9 @@ export class PaymentComponent implements OnInit {
   }
 
   calculateShippingRate() {
+    console.log('Calculating shipping rate...');
+    this.isShippingCalculationInProgress = true;
+
     const formValues = this.paymentForm.value;
     const addressLine2 = formValues.addressLine2?.trim() ? formValues.addressLine2 : null;
     const weightString = this.totalWeight.toString();
@@ -516,6 +563,9 @@ export class PaymentComponent implements OnInit {
         this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
         this.total = Number(this.total) + Number(this.shippingCost);
 
+        this.isShippingCalculationInProgress = false;
+        this.isShippingCostCalculated = true;
+
         console.log("this.shippingCost = ", this.shippingCost);
         console.log('Calculated shipping cost:', this.shippingCost);
 
@@ -530,6 +580,7 @@ export class PaymentComponent implements OnInit {
   }
 
   validateAddress(formValues: any) {
+    console.log('Validating address...');
     const addressLine2 = formValues.addressLine2?.trim() ? formValues.addressLine2 : null;
     formValues.state = this.normalizeStateInput(formValues.state);
 
@@ -554,6 +605,8 @@ export class PaymentComponent implements OnInit {
         if (isValid) {
           console.log('Address validation successful:');
           this.isValid = true;
+
+          this.isAddressValidationInProgress = false;
           this.calculateShippingRate();
         } else {
           console.log("Address is not valid.");
@@ -563,6 +616,8 @@ export class PaymentComponent implements OnInit {
       (error) => {
         console.error("Error validating address:", error);
         this.isValid = false;
+
+        this.isAddressValidationInProgress = false;
       }
     );
 //     console.log("Address validation attempted. ");

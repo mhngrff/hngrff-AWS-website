@@ -226,6 +226,11 @@
 
 </div>
 
+<div class="overlay" *ngIf="isSubmitInProgress">
+  <div class="spinner"></div>
+<!--  <p>Processing your payment. Please wait...</p>-->
+</div>
+
 <div class="payment-container">
   <form [formGroup]="paymentForm" (ngSubmit)="handlePayment()">
     <!-- Email Field -->

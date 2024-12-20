@@ -348,18 +348,12 @@
   color: #aab7c4;
 }
 
-// .address-row-double select {
-//   background-color: white;
-//   color: black;
-// }
-
-
 button#submit-button {
   width: 100%;
   background-color: #007bff;
   color: white;
-  padding: 0.5rem;
-  font-size: 4vw;
+  padding: 0.7rem;
+  font-size: 5vw;
   border: none;
   border-radius: 4px;
 //   margin-top: 2vh;
@@ -422,11 +416,6 @@ button#submit-button:hover {
   background-color: #f0f0f0;
 }
 
-// .form-error-message {
-//   color: red;
-//   margin-top: 10px;
-//   font-size: 0.9em;
-// }
 
 input.error-highlight {
   border: 1px solid #fa755a;
@@ -494,6 +483,41 @@ select.error-highlight {
   color: #f5c6cb;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Lightened screen effect */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.overlay p {
+  color: white;
+  font-size: 1.2em;
+  text-align: center;
+}
 
 
 

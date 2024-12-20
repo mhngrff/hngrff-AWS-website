@@ -242,7 +242,7 @@ export class StripeService {
       if (result.error) {
         console.error('Payment failed:', result.error.message);
       } else {
-        console.log('Payment successful:', result.paymentIntent);
+//         console.log('Payment successful:', result.paymentIntent);
       }
 
       return result;
