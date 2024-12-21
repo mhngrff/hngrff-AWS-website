@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 })
 export class NavigationService {
   private orderDetails: any;
+  private transactionCompleted = false;
 
   constructor(private router: Router) {}
 
@@ -46,5 +47,17 @@ export class NavigationService {
     getOrderDetails() {
         const storedDetails = sessionStorage.getItem('orderDetails');
         return storedDetails ? JSON.parse(storedDetails) : null;
+    }
+
+    setTransactionStatus(status: boolean): void {
+      this.transactionCompleted = status;
+      sessionStorage.setItem('transactionCompleted', JSON.stringify(status));
+    }
+
+    getTransactionStatus(): boolean {
+        if (!this.transactionCompleted) {
+          this.transactionCompleted = JSON.parse(sessionStorage.getItem('transactionCompleted') || 'false');
+        }
+        return this.transactionCompleted;
     }
 }

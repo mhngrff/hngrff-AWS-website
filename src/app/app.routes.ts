@@ -5,6 +5,7 @@ import { DetailsComponent } from './details/details.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CartComponent } from './cart/cart.component';
 import { CartNotEmptyGuard } from './guards/cart-not-empty.guard';
+import { SuccessGuard } from './guards/success.guard';
 import { SuccessComponent } from './success/success.component';
 
 export const routes: Routes = [
@@ -13,7 +14,7 @@ export const routes: Routes = [
   { path: 'details/:imageId', component: DetailsComponent },
   { path: 'payment', component: PaymentComponent, canActivate: [CartNotEmptyGuard] },
   { path: 'cart', component: CartComponent },
-  { path: 'success', component: SuccessComponent }
+  { path: 'success', component: SuccessComponent, canActivate: [SuccessGuard] }
   ];
 
 

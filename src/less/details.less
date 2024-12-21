@@ -35,15 +35,13 @@ h2 {
   position: relative;
   width: 100%; /* Take full container width */
   height: auto;
+  min-height: 33vh; //THIS FUNCTIONS AS AN IMAGE "PLACEHOLDER"
   display: flex;
   align-items: center;
   justify-content: center;
-//   max-height: 60vh;
 }
 
 .scrollable-container {
-//   min-height: 35vh;
-//   background-color: black;
   background-color: #0e0e0b;
   display: flex;
   scroll-snap-type: x mandatory;
@@ -222,19 +220,19 @@ h2 {
   z-index: 21;
 }
 
-.image-placeholder {
-  width: 100vw;
-  height: 29vh; /* This appears to be exact, will need to change based on default image */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  font-size: 1.2rem;
-  text-align: center;
-  background-color: black;
-//   background-color: #ccc;
-//   opacity: .1;
-}
+// .image-placeholder {
+//   width: 100vw;
+//   height: 29vh; /* This appears to be exact, will need to change based on default image */
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   color: #666;
+//   font-size: 1.2rem;
+//   text-align: center;
+//   background-color: black;
+// //   background-color: #ccc;
+// //   opacity: .1;
+// }
 
 .details-image {
   opacity: 0; /* Start with hidden image */

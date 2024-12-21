@@ -369,6 +369,7 @@ export class PaymentComponent implements OnInit {
               country: formData.country,
             }
           };
+          this.navigationService.setTransactionStatus(true);
           this.navigationService.setOrderDetails(orderDetails);
           this.navigationService.goToSuccess(orderDetails);
       }
