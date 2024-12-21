@@ -7,7 +7,7 @@ import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
 import { Observable, debounceTime, combineLatest } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddressAutocompleteService } from '../services/address-autocomplete.service';
@@ -126,7 +126,8 @@ export class PaymentComponent implements OnInit {
     private renderer: Renderer2,
     private shippingService: ShippingService,
     private cd: ChangeDetectorRef,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
 
@@ -168,8 +169,10 @@ export class PaymentComponent implements OnInit {
         this.cartItems = items;
         this.totalWeight = parseFloat(totalWeight.toFixed(2));
 
-        if (items.length === 0) {
-//           this.router.navigate(['/']); //FIRST ITEM CART BUG?
+        const currentRoute = this.activatedRoute.snapshot.routeConfig?.path;
+
+        if (items.length === 0 && currentRoute === 'payment') {
+          this.router.navigate(['/']);
         }
       });
 
