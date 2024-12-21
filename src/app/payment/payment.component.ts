@@ -256,10 +256,6 @@ export class PaymentComponent implements OnInit {
 
     this.errorMessages = [];
 
-//     if(this.isAddressValidationInProgress || this.isShippingCalculationInProgress){
-//       this.addErrorMessage('Please wait for shipping cost calculation to complete.');
-//       }
-
     this.isSubmitInProgress = true;
 
       // Create Observables for validation and calculation status
@@ -317,7 +313,9 @@ export class PaymentComponent implements OnInit {
 
     const formData = this.paymentForm.value;
 
-    const clientSecret = await this.stripeService.createPaymentIntent(5000); // Set the amount
+    const amountInCents = Math.round(this.total * 100);
+
+    const clientSecret = await this.stripeService.createPaymentIntent(amountInCents); // Set the amount
 
     if (!clientSecret) {
       console.error("Failed to retrieve client secret from backend");
@@ -345,8 +343,24 @@ export class PaymentComponent implements OnInit {
         console.error('Payment failed:', stripeError.message, stripeError);
 //         this.addErrorMessage(`Payment failed: ${error.message}`);
       } else {
-        console.log("Payment successful:", paymentIntent);
-         // You can redirect to a success page here
+          console.log("Payment successful:", paymentIntent);
+
+          const orderDetails = {
+            email: formData.email,
+            items: this.cartItems, // Adjust if Buy Now flow creates issues
+            total: this.total,
+            shippingAddress: {
+              name: formData.shippingName,
+              addressLine1: formData.addressLine1,
+              addressLine2: formData.addressLine2,
+              city: formData.city,
+              state: formData.state,
+              zip: formData.zip,
+              country: formData.country,
+            }
+          };
+          this.navigationService.setOrderDetails(orderDetails);
+          this.navigationService.goToSuccess(orderDetails);
       }
     } catch (e) {
       console.error('Error during confirmCardPayment:', e);

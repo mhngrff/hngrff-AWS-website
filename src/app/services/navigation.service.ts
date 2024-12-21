@@ -5,7 +5,17 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class NavigationService {
+  private orderDetails: any;
+
   constructor(private router: Router) {}
+
+  setOrderDetails(details: any) {
+    this.orderDetails = details;
+  }
+
+  getOrderDetails() {
+    return this.orderDetails;
+  }
 
   goToHome(): void {
     this.router.navigate(['/']);
@@ -25,5 +35,12 @@ export class NavigationService {
 
   goToCart(): void {
     this.router.navigate(['/cart']);
+    }
+
+  goToSuccess(orderDetails: any) {
+    console.log('Navigating to success with order details:', orderDetails);
+    this.router.navigate(['/success'], {
+      state: {orderDetails }
+      });
     }
 }
