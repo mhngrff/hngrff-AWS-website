@@ -169,7 +169,7 @@ export class PaymentComponent implements OnInit {
         this.totalWeight = parseFloat(totalWeight.toFixed(2));
 
         if (items.length === 0) {
-          this.router.navigate(['/']);
+//           this.router.navigate(['/']); //FIRST ITEM CART BUG?
         }
       });
 

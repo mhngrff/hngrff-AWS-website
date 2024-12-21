@@ -47,7 +47,7 @@ export class CartComponent implements OnInit {
 
   cancelBuyNowFlow(): void {
     this.cartService.closeCart(); // Close the cart
-    this.router.navigate(['/']); // Navigate back to the homepage
+    this.router.navigate(['/']); // Navigate back to the homepage FIRST ITEM CART BUG??
 
     setTimeout(()=> {
     this.cartService.setBuyNowFlow(false); // Cancel Buy Now flow
