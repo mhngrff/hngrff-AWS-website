@@ -1,15 +1,39 @@
 .success-container{
-  margin-left: 10vw;
-  margin-top: 8vh;
+//   margin-left: 10vw;
+  margin-top: 10vh;
+//   width: 80vw;
+  }
+
+.success-message {
+  background-color: #1a1a16;
+  padding: 1rem;
   width: 80vw;
+  margin-left: 10vw;
+  border-radius: 8px;
+  margin-top: 1rem;
+  }
+
+.success-message h1{
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  }
+
+.success-message p {
+  font-size: 16px;
+  text-align: center;
   }
 
 h1, h3, p {
   font-family: 'Roboto', sans-serif;
   color: white;
+  margin-bottom: 0;
   }
 
 .success-summary-items{
+  margin-left: 10vw;
+  width: 80vw;
+  margin-top: 1rem;
   height: auto;
 //   padding-bottom: 1vh;
   padding-bottom: 0.5rem;
@@ -20,3 +44,99 @@ h1, h3, p {
   width: 20vw;
   height: auto;
   }
+
+.success-items{
+  display: flex;
+  flex-direction: column;
+  }
+
+.success-item{
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+//   margin-top: 1vh;
+  margin-top: 0.5rem;
+  }
+
+.success-subtitle-quantity-price{
+  flex: 1;
+  justify-content: flex-end;
+  font-family: 'Roboto', sans-serif;
+  }
+
+.success-subtitle-quantity-price p{
+    font-size: 3vw;
+  }
+
+// .shipping-and-total {
+//     margin-left: 10vw;
+//     width: 80vw;
+//     text-align: right;
+//
+//   }
+
+.success-subtotal-row {
+  width: 80vw;
+  margin-left: 10vw;
+  display: flex;
+  justify-content: space-between; /* Align the total to the right */
+  align-items: center;
+  flex: 1;
+  margin-top: 0.5rem;
+}
+
+.success-subtotal-row p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 4vw;
+  color: white;
+  margin: 0;
+  z-index: 20;
+}
+
+.success-shipping-cost-row {
+  width: 80vw;
+  margin-left: 10vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  margin-top: 0.5rem;
+}
+
+.success-shipping-cost-row p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 4vw;
+    color: white;
+    margin: 0;
+    z-index: 20;
+  }
+
+.success-grand-total-row {
+  width: 80vw;
+  margin-left: 10vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  margin-top: 0.5rem;
+}
+
+.success-grand-total-row h3 {
+    font-family: 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+    font-size: 6vw;
+    color: white;
+    margin: 0;
+  }
+
+.shipping-information{
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 2rem;
+  }
+
+.shipping-information p {
+  font-size: 16px;
+  }
+

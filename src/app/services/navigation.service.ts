@@ -9,14 +9,6 @@ export class NavigationService {
 
   constructor(private router: Router) {}
 
-  setOrderDetails(details: any) {
-    this.orderDetails = details;
-  }
-
-  getOrderDetails() {
-    return this.orderDetails;
-  }
-
   goToHome(): void {
     this.router.navigate(['/']);
   }
@@ -39,8 +31,20 @@ export class NavigationService {
 
   goToSuccess(orderDetails: any) {
     console.log('Navigating to success with order details:', orderDetails);
+
+    sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
     this.router.navigate(['/success'], {
       state: {orderDetails }
       });
+    }
+
+    setOrderDetails(details: any) {
+      this.orderDetails = details;
+    }
+
+    getOrderDetails() {
+        const storedDetails = sessionStorage.getItem('orderDetails');
+        return storedDetails ? JSON.parse(storedDetails) : null;
     }
 }

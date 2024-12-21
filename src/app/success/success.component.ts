@@ -18,10 +18,21 @@ export class SuccessComponent implements OnInit {
   ngOnInit() {
     this.orderDetails = this.navigationService.getOrderDetails();
 
-    if (this.orderDetails) {
-      console.log('Order Details from service:', this.orderDetails);
+    // If not found in the service (e.g., after page refresh), try sessionStorage
+    if (!this.orderDetails) {
+      const storedDetails = sessionStorage.getItem('orderDetails');
+      if (storedDetails) {
+        this.orderDetails = JSON.parse(storedDetails);
+        console.log('Order Details retrieved from sessionStorage:', this.orderDetails);
+      } else {
+        console.error('Order details not found in service or sessionStorage.');
+      }
     } else {
-      console.error('Order details not found in service.');
+      console.log('Order Details from service:', this.orderDetails);
     }
+  }
+
+  ngOnDestroy() {
+    sessionStorage.removeItem('orderDetails');
   }
 }

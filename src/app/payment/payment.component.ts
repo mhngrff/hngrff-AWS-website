@@ -285,6 +285,11 @@ export class PaymentComponent implements OnInit {
       this.addErrorMessage('Please fill out all required fields.');
       this.markMissingFields();
       this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
+
+      const formData = this.paymentForm.value;
+      console.log("formData = ", this.paymentForm.value);
+      console.log("hasEmptyFields = ", hasEmptyFields);
+      console.log("hasInvalidFields = ", hasInvalidFields);
     }
 
     if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
@@ -348,7 +353,9 @@ export class PaymentComponent implements OnInit {
           const orderDetails = {
             email: formData.email,
             items: this.cartItems, // Adjust if Buy Now flow creates issues
+            subtotal: this.subtotal,
             total: this.total,
+            shippingCost: this.shippingCost,
             shippingAddress: {
               name: formData.shippingName,
               addressLine1: formData.addressLine1,
@@ -540,6 +547,7 @@ export class PaymentComponent implements OnInit {
       // Mark fields as dirty and update validity to reflect user action
       this.paymentForm.markAllAsTouched();
       this.paymentForm.updateValueAndValidity();
+
 
       // Trigger address validation and shipping rate calculation directly
       if (type === 'shipping') {
@@ -738,14 +746,24 @@ export class PaymentComponent implements OnInit {
 
       const control = this.paymentForm.get(field);
 
-      if (control) {
-        if (control.pristine || control.value === '' || control.value === null) {
-          hasEmptyFields = true;
-        } else if (control.invalid && control.touched) {
-          hasInvalidFields = true;
+//       if (control) {
+//         if (control.pristine || control.value === '' || control.value === null) {
+//           hasEmptyFields = true;
+//         } else if (control.invalid && control.touched) {
+//           hasInvalidFields = true;
+//         }
+//       }
+//     });
+
+        if (control) {
+          // Check for empty or invalid fields
+          if (!control.value || control.value.trim() === '') {
+            hasEmptyFields = true;
+          } else if (control.invalid) {
+            hasInvalidFields = true;
+          }
         }
-      }
-    });
+      });
 
     return { hasEmptyFields, hasInvalidFields };
   }
