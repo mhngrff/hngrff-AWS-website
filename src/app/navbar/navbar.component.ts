@@ -66,8 +66,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
-    if (!this.shouldHideNavbar) {
-      return; // Do nothing if the navbar shouldn't be hidden
+    const isOnPaymentPage = this.router.url === '/payment';
+
+    if (!isOnPaymentPage) {
+      // Always show the navbar on non-payment pages
+      const navbar = document.querySelector('.navbar') as HTMLElement | null;
+      if (navbar) {
+        navbar.style.top = `0`;
+      }
+      return;
     }
 
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
