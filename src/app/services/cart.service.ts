@@ -177,5 +177,8 @@ export class CartService {
     );
   }
 
-
+  clearCart(): void {
+    this.cartItemsSubject.next([]); // Reset the cart items
+    this.saveCartToStorage([]); // Clear the localStorage cart data
+  }
 }

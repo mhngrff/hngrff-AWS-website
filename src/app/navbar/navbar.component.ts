@@ -21,8 +21,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   shouldHideNavbar: boolean = false;
   isHidden: boolean = false;
   private navbarHeight: number = 0; //calculated dynamically for differing viewport sizes
-
   private subscriptions: Subscription = new Subscription();
+  isSuccessPage = false;
 
   constructor(
     private router: Router,
@@ -39,6 +39,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.router.events.subscribe(() => {
+      this.isSuccessPage = this.router.url === '/success';
+       });
+
     // Subscribe to cartItems$ to update cartItemCount
     const cartSub = this.cartService.cartItems$.subscribe((items) => {
       this.cartItemCount = items.reduce((count, item) => count + item.quantity, 0);

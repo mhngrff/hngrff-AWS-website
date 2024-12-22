@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../services/navigation.service';
 import { CommonModule } from '@angular/common';
+import { NavigationStart, Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +14,10 @@ import { CommonModule } from '@angular/common';
 export class SuccessComponent implements OnInit {
   orderDetails: any;
 
-  constructor(private navigationService: NavigationService) {}
+  constructor(
+    private navigationService: NavigationService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
     this.orderDetails = this.navigationService.getOrderDetails();
@@ -30,9 +34,20 @@ export class SuccessComponent implements OnInit {
     } else {
       console.log('Order Details from service:', this.orderDetails);
     }
+
+    // Prevent back navigation to the payment page
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && event.navigationTrigger === 'popstate') {
+        // Redirect to home if back navigation leads to payment
+        if (this.router.url === '/payment') {
+          this.router.navigate(['/success']); // Redirect to home or another page
+        }
+      }
+    });
+
   }
 
-  ngOnDestroy() {
-    sessionStorage.removeItem('orderDetails');
-  }
+//   ngOnDestroy() {
+//     sessionStorage.removeItem('orderDetails');
+//   }
 }

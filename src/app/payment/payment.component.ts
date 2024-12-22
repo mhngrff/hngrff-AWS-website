@@ -371,6 +371,12 @@ export class PaymentComponent implements OnInit {
           };
           this.navigationService.setTransactionStatus(true);
           this.navigationService.setOrderDetails(orderDetails);
+
+          if (!this.cartService.getBuyNowFlow()) {
+            console.log("Payment component acknowledged cart checkout flow, clearing cart");
+            this.cartService.clearCart();
+          }
+
           this.navigationService.goToSuccess(orderDetails);
       }
     } catch (e) {

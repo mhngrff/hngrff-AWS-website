@@ -20,7 +20,7 @@
   </div>
 
   <div class="cart-icon-container">
-  <div class="cart-icon" (click)="goToCart()">
+  <div *ngIf="!isSuccessPage" class="cart-icon" (click)="goToCart()">
     <a>
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M17 2H7C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5zm3 15c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10c1.654 0 3 1.346 3 3v10z"
@@ -28,5 +28,14 @@
       </svg>    </a>
     <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
   </div>
+
+    <div *ngIf="isSuccessPage" class="home-icon" (click)="navigateToHome()">
+      <a>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 7.90637V18C19 19.1046 18.1046 20 17 20H7C5.89543 20 5 19.1046 5 18V7.90637M2 10.0001L10.8531 3.80297C11.5417 3.32092 12.4583 3.32092 13.1469 3.80297L22 10.0001" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+    </div>
   </div>
 </nav>
