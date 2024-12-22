@@ -22,6 +22,10 @@ export class NavigationService {
     this.router.navigate(['/contact']);
   }
 
+  goToAbout(): void {
+    this.router.navigate(['/about']);
+  }
+
   goToPayment(): void {
     this.router.navigate(['/payment']);
     }

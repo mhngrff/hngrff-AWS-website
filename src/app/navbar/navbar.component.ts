@@ -132,11 +132,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   navigateToContact(): void {
     this.navigationService.goToContact();
+    this.closeMenu();
   }
 
-//   goToCart(): void {
-//     this.navigationService.goToCart();
-//   }
+  navigateToAbout(): void {
+    this.navigationService.goToAbout();
+    this.closeMenu();
+  }
+
   goToCart() {
     this.cartService.toggleCartVisibility();
   }
