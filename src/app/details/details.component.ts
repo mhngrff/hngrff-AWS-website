@@ -104,23 +104,28 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   }
 
   onScroll(): void {
+    console.log("onScroll called");
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
     }
 
-    // Set a debounce delay (e.g., 100ms) to limit how frequently we update the index
     this.debounceTimer = setTimeout(() => {
       if (this.scrollableContainer) {
         const container = this.scrollableContainer.nativeElement;
+
+        // Dynamically detect the slide width with type assertion
+        const slide = container.querySelector('.image-slide') as HTMLElement | null;
+        const slideWidth = slide?.offsetWidth || window.innerWidth;
+
         const scrollPosition = container.scrollLeft;
-        const newIndex = Math.round(scrollPosition / window.innerWidth);
+        const newIndex = Math.round(scrollPosition / slideWidth);
 
         if (newIndex !== this.currentIndex) {
           this.currentIndex = newIndex;
           this.updateArrowStates();
         }
       }
-    }, 100); // Adjust debounce delay to change how quickly the progress indicator updates after scrolling
+    }, 100);
   }
 
   updateArrowStates(): void {
@@ -135,7 +140,6 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.scrollToCurrentIndex();
 
     }
-//     this.updateArrowStates(); THIS APPEARS TO DO NOTHING
   }
 
   navigateRight(): void {
@@ -144,54 +148,18 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.scrollToCurrentIndex();
 
     }
-//     this.updateArrowStates(); THIS APPEARS TO DO NOTHING
   }
 
-//   scrollToCurrentIndex(): void {
-//     const scrollableContainer = document.querySelector('.scrollable-container') as HTMLElement;
-//     const offset = this.currentIndex * window.innerWidth;
-//     scrollableContainer.scrollTo({
-//       left: offset,
-//       behavior: 'smooth'
-//     });
-//   }
-
-//   scrollToCurrentIndex(): void {
-//     const scrollableContainer = this.scrollableContainer.nativeElement;
-//     const targetOffset = this.currentIndex * window.innerWidth;
-//
-//     // Temporarily disable scroll updates to prevent mid-animation progress indicator changes
-//     this.scrollableContainer.nativeElement.removeEventListener('scroll', this.onScroll.bind(this));
-//
-//     // Scroll smoothly to the target position
-//     scrollableContainer.scrollTo({
-//       left: targetOffset,
-//       behavior: 'smooth'
-//     });
-//
-//     // Monitor the scroll position until it matches the targetOffset
-//     const handleScroll = () => {
-//       const currentScrollPosition = scrollableContainer.scrollLeft;
-//
-//       if (Math.abs(currentScrollPosition - targetOffset) <= 1) {
-//         // Re-enable the scroll event listener when the rest state is reached
-//         scrollableContainer.removeEventListener('scroll', handleScroll);
-//         this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
-//
-//         // Update arrow states and progress indicator at the rest state
-//         setTimeout(() => {
-//         this.updateArrowStates();
-//         }, 100);
-//       }
-//     };
-//
-//     // Attach the listener to monitor the scroll progress
-//     scrollableContainer.addEventListener('scroll', handleScroll);
-//   }
-
   scrollToCurrentIndex(): void {
+    console.log("scrollToCurrentIndex called");
     const scrollableContainer = this.scrollableContainer.nativeElement;
-    const targetOffset = this.currentIndex * window.innerWidth;
+
+    // Dynamically detect the width of each slide
+    const slide = scrollableContainer.querySelector('.image-slide') as HTMLElement | null;
+    const slideWidth = slide?.offsetWidth || window.innerWidth; // Fallback to full width for safety
+
+    // Calculate the target scroll position based on the current index and slide width
+    const targetOffset = this.currentIndex * slideWidth;
 
     // Temporarily disable scroll updates to prevent mid-animation progress indicator changes
     this.scrollableContainer.nativeElement.removeEventListener('scroll', this.onScroll.bind(this));
@@ -199,29 +167,33 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     // Scroll smoothly to the target position
     scrollableContainer.scrollTo({
       left: targetOffset,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
 
     // Create an IntersectionObserver to monitor when the current image is centered
     const targetSlide = scrollableContainer.children[this.currentIndex] as HTMLElement;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // When the slide is fully in view, update arrow states and re-enable listeners
-          observer.disconnect(); // Disconnect observer once target is in view
-          this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
-          this.updateArrowStates();
-        }
-      });
-    }, {
-      root: scrollableContainer,
-      threshold: 0.5 // Adjust the threshold as needed; 0.5 means it considers the target "in view" when 50% visible
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // When the slide is fully in view, update arrow states and re-enable listeners
+            observer.disconnect(); // Disconnect observer once target is in view
+            this.scrollableContainer.nativeElement.addEventListener('scroll', this.onScroll.bind(this));
+            this.updateArrowStates();
+          }
+        });
+      },
+      {
+        root: scrollableContainer,
+        threshold: 0.5, // Adjust the threshold as needed; 0.5 means it considers the target "in view" when 50% visible
+      }
+    );
 
     // Start observing the current slide element
     observer.observe(targetSlide);
   }
+
 
 
 
@@ -299,7 +271,9 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   decrementQuantity(): void {
     if (this.quantity > 1) {
       this.quantity--;
-    }
+    } else {
+
+      }
   }
 
 }

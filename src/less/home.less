@@ -1,44 +1,120 @@
 /* Content styling for desktop */
 html, body{
-//   background-color: #000;
-//   background-color: #050503;
-//   background-color: #1a1a16;
   background-color: #0d0d0b;
   }
 
+/* DESKTOP */
 @media only screen and (min-width: 786px) {
-  .parallax {
-    background-attachment: fixed;
-    background-size: 100vw auto;
-    background-position: top left;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 50vh; /* Adjusting this will make the content higher up on the page */
-    background-color: #050503;
-  }
+    body {
+        margin: 0;
+        height: 100vh;
+        overflow-x: hidden; /* Prevent horizontal overflow */
+    }
+    .parallax {
+//       background-image: url('/assets/images/costa-rica2.jpg');
+//       background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
+//       background-size: 100vw auto;
+//       background-position: top left;
+//       background-repeat: no-repeat;
+//       width: 100vw;
+//       height: 90vh; /* Adjusting this will make the content higher up on the page */
+//       position: absolute;
+//       z-index: 1;
+//       margin-top: 10vh;
+      height: 0;
+    }
 
-.images-section {
-  position: relative;
-  z-index: 2; /* Ensure images are above the content */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 0;
+    .content-alignment-container{
+      margin-top: 11vh;
+      display: flex;
+      flex-direction: row;
+      padding-left: 10vw;
+      padding-right: 10vw;
+      width: 80vw;
+//       justify-content: space-between;
+//       justify-content: flex-end;
+//       gap: 1vw;
+      }
+
+    .primary-images-container{
+        width: 39vw;
+        height: auto;
+        outline: 1px solid white;
+        margin-right: 1vw;
+        padding: 10px;
+        margin-bottom: 5vh;
+    }
+
+    .secondary-content-container{
+        margin-left: 1vw;
+        width: 39vw;
+        height: 1000px;
+        outline: 1px solid white;
+      }
+
+    .image-label {
+      position: relative;
+      z-index: 2;
+      top: 1vh;
+      width: 100%;
+      text-align: left;
+      color: white;
+    }
+
+    .image-label h2 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        font-size: 1.5vw; /* Adjust font size for headings */
+        margin-bottom: 3vh;
+    }
+
+    .images-section {
+        position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+        display: flex;
+        flex-direction: column;
+//         align-items: flex-start;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        gap: 2vh; //CONTROL SPACING BETWEEN IMAGES
+        padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
+    }
+
+    .individual-image-container {
+      position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+      z-index: 2; /* Ensure images are above the background */
+      display: block;
+    }
+
+    .images-section a {
+      margin-bottom: 1vh;
+    }
+
+    .image {
+      width: 100%;
+      padding: 0;
+    }
+
+    p {
+      margin: 0;
+      color: white;
+      font-size: 1vw;
+      font-weight: 300;
+      z-index: 1000;
+    }
+
 }
 
-/* General Image Styling */
-.image {
-  width: 60vw;
-}
 
-}
 
-/* Media query for smaller screens (mobile) */
+
+
+
+/* MOBILE */
 @media only screen and (max-width: 786px) {
   body {
       margin: 0;
-//       height: 95vh; /* Ensure the body takes full height */
-      height: 100vh; /* Ensure the body takes full height */
+      height: 100vh;
       overflow-x: hidden; /* Prevent horizontal overflow */
   }
   .parallax {
@@ -51,70 +127,75 @@ html, body{
     height: 92vh; /* Adjusting this will make the content higher up on the page */
     position: absolute;
     z-index: 1;
-    margin-top: 8vh;
+//     margin-top: 8vh;
   }
 
-.container{
+  .primary-images-container{
+      width: 80vw;
+      margin: 8vh auto 4vh;
+      height: auto;
+      display: block;
+  }
+
+  .secondary-content-container {
     width: 80vw;
-    margin: 8vh auto 4vh;
-//     height: 150vh;
-    height: auto;
-    display: block;
+    height: 50px;
+    outline: 2px solid white;
+    margin-left: 10vw;
+    margin-bottom: 5vw;
+    position: relative;
+    z-index: 2;
+    }
+
+  .image-label {
+    position: relative;
+    z-index: 2;
+    top: 1vh;
+    width: 100%;
+    text-align: left;
+    color: white;
   }
 
-.image-label {
-  position: relative;  /* Makes the text section overlap the background */
-  z-index: 2;  /* Ensure it's above the background but in line with the images */
-  top: 1vh;  /* Adjust this to control how high or low the text appears on the background */
-  width: 100%;
-  text-align: left;
-  color: white; /* Text color that contrasts the background */
-}
+  .image-label h2 {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      font-size: 4vw; /* Adjust font size for headings */
+      margin-bottom: 1vh;
+  }
 
-.image-label h2 {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 4vw; /* Adjust font size for headings */
+  .images-section {
+      position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      align-items: center;
+      height: auto;
+      gap: 2vh; //CONTROL SPACING BETWEEN IMAGES
+      padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
+  }
+
+  .individual-image-container {
+    position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+    z-index: 2; /* Ensure images are above the background */
+    display: block;
+    width: 80vw;
+  }
+
+  .images-section a {
     margin-bottom: 1vh;
   }
 
-.images-section {
-    position: relative; /* Ensure it stays within the document flow but on top of the parallax */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    align-items: center;
-    height: auto;
-    gap: 2vh; //CONTROL SPACING BETWEEN IMAGES
-    padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
+  .image {
+    width: 80vw;
+    padding: 0;
   }
 
-.individual-image-container {
-  position: relative; /* Ensure it stays within the document flow but on top of the parallax */
-  z-index: 2; /* Ensure images are above the background */
-  display: block;
-  width: 80vw;
-//   height: 50vh;
-//   height: auto; //Let the height be determined by the height of the image
-}
-
-.images-section a {
-  margin-bottom: 1vh;
-  }
-
-/* General Image Styling */
-.image {
-  width: 80vw;
-  padding: 0;
-  }
-
-p {
-  margin: 0;
-  color: white;
-  font-size: 3vw;
-//   text-align: right;
-  font-weight: 300;
-  z-index: 1000;
+  p {
+    margin: 0;
+    color: white;
+    font-size: 3vw;
+    font-weight: 300;
+    z-index: 1000;
   }
 
 }

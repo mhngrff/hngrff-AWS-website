@@ -1,5 +1,7 @@
 <body>
 <div *ngIf="imageMetadata$ | async as metadata">
+  <div class="details-alignment-container">
+    <div class="viewport-and-arrows">
   <!-- Viewport for Images -->
   <div class="viewport">
     <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
@@ -17,8 +19,6 @@
     </div>
   </div>
 
-  <div class="details-container">
-
     <!-- Arrow Navigation: Should be below viewport -->
     <div class="arrow-navigation">
       <div class="left-arrow" [ngClass]="{'disabled-arrow': isAtFirstImage}" (click)="!isAtFirstImage && navigateLeft()">
@@ -35,6 +35,9 @@
         </svg>
       </div>
     </div>
+    </div>
+
+    <div class="details-container">
 
     <!-- Metadata: Title, Description, Price -->
     <div class="details-content">
@@ -76,6 +79,7 @@
     </div>
     </div>
 
+  </div>
   </div>
 </div>
 

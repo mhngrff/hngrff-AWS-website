@@ -29,7 +29,6 @@
             ],
             "styles": [
               "dist/css/app.css",
-              "dist/css/styles.css",
               "dist/css/home.css",
               "dist/css/navbar.css",
               "dist/css/footer.css",

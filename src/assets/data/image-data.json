@@ -11,14 +11,14 @@
         {
           "type": "print",
           "subtitle": "REDFISH - JUST THE PRINT",
-          "price": 100.00,
+          "price": 50.00,
           "imageUrl": "/assets/images/redfish-1-600w.jpg",
           "weight": 0.1
         },
         {
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
-          "price": 250.00,
+          "price": 200.00,
           "imageUrl": "/assets/images/redfish-framed.jpg",
           "weight": 0.2
         }
@@ -35,14 +35,14 @@
         {
           "type": "print",
           "subtitle": "TROUT - JUST THE PRINT",
-          "price": 100.00,
+          "price": 50.00,
           "imageUrl": "/assets/images/trout-1-600w.jpg",
           "weight": 0.1
         },
         {
           "type": "framed",
           "subtitle": "TROUT - FRAMED PRINT",
-          "price": 250.00,
+          "price": 200.00,
           "imageUrl": "/assets/images/trout-framed.jpg",
           "weight": 0.2
         }
@@ -59,14 +59,14 @@
         {
           "type": "print",
           "subtitle": "FLOUNDER - JUST THE PRINT",
-          "price": 100.00,
+          "price": 50.00,
           "imageUrl": "/assets/images/flounder-1-600w.jpg",
           "weight": 0.1
         },
         {
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED PRINT",
-          "price": 250.00,
+          "price": 200.00,
           "imageUrl": "/assets/images/flounder-framed.jpg",
           "weight": 0.2
         }
@@ -83,7 +83,7 @@
         {
           "type": "print",
           "subtitle": "SLAM - JUST THE PRINTS",
-          "price": 270.00,
+          "price": 120.00,
           "imageUrl": "/assets/images/fishslam-1-600w.jpg",
           "weight": 0.3
         },

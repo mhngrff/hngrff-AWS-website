@@ -1,369 +1,715 @@
-.details-container {
-  width: 86vw;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.details-content {
-//   margin-top: 2vh;
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column; /* Metadata visually below viewport */
-  align-items: flex-start;
-  width: 100%;
-  padding: 5%;
-//   min-height: 40vh;
-  background-color: #1a1a16;
-  border-radius: 5px;
-//   margin-bottom: 4vh;
-  margin-bottom: 2rem;
-}
 
-h2 {
+/* DESKTOP */
+@media only screen and (min-width: 786px) {
+
+    .details-alignment-container{
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      height:90vh;
+      margin-top: 10vh;
+      justify-content: center;
+    }
+
+    .viewport-and-arrows{
+      width: 38vw;
+      margin-right: 3vw;
+      margin-top: 1rem;
+      }
+
+    .details-container {
+      width: 38vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .details-content {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column; /* Metadata visually below viewport */
+      width: 100%;
+      background-color: #1a1a16;
+      margin-bottom: 2rem;
+      padding: 16px;
+    }
+
+    h2 {
+        font-family: 'Roboto', sans-serif;
+        color: white;
+        font-size: 2.5vw;
+        font-weight: 400;
+        margin-top: 1vh;;
+    }
+
+
+    .viewport {
+      position: relative;
+      width: 100%; /* Take full container width */
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scrollable-container {
+      background-color: #0e0e0b;
+//       background-color: #181816;
+//       background-color: #1a1a16;
+      display: flex;
+      scroll-snap-type: x mandatory;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      width: auto;
+      height: auto;
+      scroll-behavior: smooth;
+
+      /* Hide scrollbar */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* Internet explorer, edge */
+    }
+
+    .scrollable-container::-webkit-scrollbar {
+      display: none; /* chrome, safari, opera */
+    }
+
+    .image-slide {
+      flex: 0 0 38vw; /* Each image takes up the full viewport width */
+      scroll-snap-align: center;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-slide img {
+      width: 99%;
+      max-height: 80vh;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .arrow-navigation {
+      width: 50%;
+      margin-left: 25%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .progress-indicator {
+//       margin-left: 30vw;
+//       margin-right: 30vw;
+      }
+
+    .left-arrow,
+    .right-arrow {
+      width: 3vw;
+      cursor: pointer;
+      transition: opacity 0.4s ease;
+    }
+
+    .left-arrow.disabled-arrow svg path,
+    .right-arrow.disabled-arrow svg path {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transition: opacity 0.2s ease;
+    }
+
+    .left-arrow svg path,
+    .right-arrow svg path {
+      stroke: white;
+      stroke-width: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    .progress-indicator {
+      font-family: 'Roboto', sans-serif;
+      color: white;
+      font-size: max(1vw, 16px);
+      font-weight: 300;
+    }
+
+    .expand-icon {
+      position: absolute; /* Position relative to the viewport container */
+      bottom: 2%;
+      left: 2%; /* Adjust this to move horizontally */
+      width: 2vw; /* Set appropriate size */
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10; /* Ensures the icon is on top of the image */
+      transition: opacity 0.8s ease-out;
+      opacity: 0;
+      will-change: opacity;
+      transition: all 0.1s ease;
+    }
+
+    .expand-icon:hover{
+      transform: scale(1.2)
+      }
+
+    .expand-icon.visible {
+      opacity: 1;
+      will-change: opacity;
+    }
+
+    .expand-icon svg path {
+      fill: none;
+      stroke: white; /* Set the stroke color if needed */
+      transition: opacity 0.1s ease;
+      will-change: opacity;
+    }
+
+    /* Exit Icon Styling */
+    .exit-icon {
+      position: fixed; /* Fixes the icon position to the viewport, unaffected by scrolling */
+      top: 3rem;
+      right: 1rem;
+      width: 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3000; /* Higher than zoom content to keep it visible */
+
+      transition: all 0.1s ease;
+    }
+
+    .exit-icon:hover{
+      transform: scale(1.2);
+      }
+
+    .exit-icon svg path {
+      fill: white;
+      stroke: white;
+      stroke-width: 10;
+    }
+
+    /* Full-Screen Zoom View Overlay */
+    .zoom-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.7); /* Slightly gray out the background */
+      z-index: 2000; /* Make sure it's above everything else */
+      display: flex; /* Center the zoom-content */
+      align-items: center; /* Vertically center */
+      justify-content: center; /* Horizontally center */
+      overflow: auto; /* Prevent scrolling beyond zoomed content */
+      margin: 0;
+      padding: 0;
+
+      display: flex; /* Center the zoom-content */
+      align-items: center; /* Vertically center */
+      justify-content: flex-start; /* Horizontally center */
+    }
+
+    .zoom-content {
+      width: 95vw;
+      height: 95vh;
+      position: relative; /* Keep the exit icon and other content positioned within bounds */
+      overflow: visible; /* Ensure the image does not overflow */
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .zoomed-image {
+      width: auto; /* Keep natural width, allowing horizontal scroll if necessary */
+      height: auto; /* Keep natural height */
+    //   max-height: 100%; /* Ensure the image fits inside zoom-content */
+    //   max-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Close Button for Zoom View */
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.5); /* Semi-transparent background for visibility */
+      border: none;
+      color: black;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 21;
+    }
+
+    .details-image {
+      opacity: 0; /* Start with hidden image */
+      transition: opacity 0.1s ease-in-out; /* Quick transition to make fade-in smooth */
+    }
+
+    .details-image.loaded {
+      opacity: 1; /* Make it visible once loaded */
+      transition: opacity 0.1s ease-in-out;
+    }
+
+    .add-to-cart-button {
+      width: 100%;
+      height: 3rem;
+      margin-top: 2rem;
+      color: white;
+      background-color: transparent;
+      border: 1px solid gray;
+      border-radius: 5px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      transition: all 50ms ease;
+    }
+
+    .add-to-cart-button:hover {
+      outline: 1px solid gray;
+      box-shadow: 0px 3px 5px rgba(0, 0, 0, 1);
+      }
+
+    .buy-now-button {
+      width: 100%;
+      height: 3rem;
+      margin-top: 1rem;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+      font-size: 20px;
+      transition: all 50ms ease;
+    }
+
+    .buy-now-button:hover{
+      color: #dedede;
+      background-color: #005abe;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
+      }
+
+
+    .dropdown-increment-row {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: row; /* Makes the children align horizontally */
+      align-items: center; /* Vertically centers all children */
+      justify-content: center; /* Distributes space between the dropdown and quantity selector */
+      width: 100%; /* Takes the full width of the container */
+      height: 2rem;
+    }
+
+    .option-selector {
+      flex: 1; /* Takes up equal space within the row */
+    }
+
+    .option-selector select {
+      font-size: 16px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      color: white;
+      background-color: transparent;
+      border: 1px solid gray;
+      border-radius: 5px;
+      height: 2.5rem;
+      width: 70%;
+      -webkit-appearance: menulist-button;
+      transition: all 50ms ease;
+    }
+
+    .option-selector select:hover{
+      outline: 1px solid gray;
+      box-shadow: 0px 3px 5px rgba(0, 0, 0, 1);
+      }
+
+    .details-quantity-editor {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      background-color: transparent;
+      border: 1px solid gray;
+      border-radius: 5px;
+      padding: 0 10px;
+      font-size: max(1vw, 16px);
+      height: 2.5rem;
+      justify-content: space-between; /* Space between '-' and '+' */
+      width: 15%;
+      transition: all 50ms ease;
+    }
+
+    .details-quantity-editor:hover {
+        outline: 1px solid gray;
+        box-shadow: 0px 3px 5px rgba(0, 0, 0, 1);
+      }
+
+    .details-decrement, .details-increment {
+      cursor: pointer;
+      font-size: max(1vw, 20px);
+      color: white;
+    }
+
+    .details-quantity-value {
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      color: white;
+    }
+
+    .details-content p {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      margin-top: 1rem;
+      z-index: 20;
+      font-size: 20px;
+      }
+
+    .price h3 {
+      margin: 0;
+      color: white;
+      font-size: 2vw;
+      font-weight: 300;
+      z-index: 20;
+    }
+
+    .input-section{
+      width: 100%;
+    }
+
+  }
+
+@media only screen and (max-width: 786px) {
+  .details-container {
+    width: 86vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .details-content {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column; /* Metadata visually below viewport */
+    align-items: flex-start;
+    width: 100%;
+    padding: 5%;
+    background-color: #1a1a16;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+      font-family: 'Roboto', sans-serif;
+      color: white;
+      font-size: 6vw;
+      font-weight: 400;
+      margin: 0;
+  }
+
+
+  .viewport {
+    margin-top: 8vh; /* Spacing above viewport */
+    position: relative;
+    width: 100%; /* Take full container width */
+    height: auto;
+  //   min-height: 33vh; //THIS FUNCTIONS AS AN IMAGE "PLACEHOLDER"
+    min-height: 62vw; //THIS FUNCTIONS AS AN IMAGE "PLACEHOLDER"
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scrollable-container {
+    background-color: #0e0e0b;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: auto;
+    scroll-behavior: smooth;
+
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet explorer, edge */
+  }
+
+  .scrollable-container::-webkit-scrollbar {
+    display: none; /* chrome, safari, opera */
+  }
+
+  .image-slide {
+    flex: 0 0 100vw; /* Each image takes up the full viewport width */
+    scroll-snap-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-slide img {
+    width: 99%;
+    height: auto;
+    max-height: 25rem;
+      object-fit: contain;
+  }
+
+  .arrow-navigation {
+    width: 96%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: 2%;
+  }
+
+  .progress-indicator {
+    margin-left: 30vw;
+    margin-right: 30vw;
+    }
+
+  .left-arrow,
+  .right-arrow {
+    width: 6vw;
+    cursor: pointer;
+    transition: opacity 0.4s ease;
+  }
+
+  .left-arrow.disabled-arrow svg path,
+  .right-arrow.disabled-arrow svg path {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transition: opacity 0.2s ease;
+  }
+
+  .left-arrow svg path,
+  .right-arrow svg path {
+    stroke: white;
+    stroke-width: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .progress-indicator {
     font-family: 'Roboto', sans-serif;
     color: white;
-    font-size: 6vw;
-    font-weight: 400;
+    font-size: 3vw;
+    font-weight: 300;
+  }
+
+  .expand-icon {
+    position: absolute; /* Position relative to the viewport container */
+  //   bottom: 1.5vh; /* IF YOU MOVE THIS TOO FAR DOWN, CREATES WEIRD VERTICAL SCROLL BEHAVIOR */
+    bottom: 5px;
+    left: 1.5vw; /* Adjust this to move horizontally */
+    width: 6vw; /* Set appropriate size */
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10; /* Ensures the icon is on top of the image */
+    transition: opacity 0.8s ease-out;
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  .expand-icon.visible {
+    opacity: 1;
+    will-change: opacity;
+  }
+
+  .expand-icon svg path {
+    fill: none;
+    stroke: white; /* Set the stroke color if needed */
+    transition: opacity 0.1s ease;
+    will-change: opacity;
+  }
+
+  /* Exit Icon Styling */
+  .exit-icon {
+    position: fixed; /* Fixes the icon position to the viewport, unaffected by scrolling */
+    top: 1rem;
+    right: 1rem;
+    width: 9vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3000; /* Higher than zoom content to keep it visible */
+  }
+
+  .exit-icon svg path {
+    fill: white;
+    stroke: white;
+    stroke-width: 10;
+  }
+
+  /* Full-Screen Zoom View Overlay */
+  .zoom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly gray out the background */
+    z-index: 2000; /* Make sure it's above everything else */
+    display: flex; /* Center the zoom-content */
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    overflow: auto; /* Prevent scrolling beyond zoomed content */
     margin: 0;
-}
+    padding: 0;
 
-
-.viewport {
-  margin-top: 8vh; /* Spacing above viewport */
-  position: relative;
-  width: 100%; /* Take full container width */
-  height: auto;
-//   min-height: 33vh; //THIS FUNCTIONS AS AN IMAGE "PLACEHOLDER"
-  min-height: 62vw; //THIS FUNCTIONS AS AN IMAGE "PLACEHOLDER"
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.scrollable-container {
-  background-color: #0e0e0b;
-  display: flex;
-  scroll-snap-type: x mandatory;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-  width: 100%;
-  height: auto;
-  scroll-behavior: smooth;
-
-  /* Hide scrollbar */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet explorer, edge */
-}
-
-.scrollable-container::-webkit-scrollbar {
-  display: none; /* chrome, safari, opera */
-}
-
-.image-slide {
-  flex: 0 0 100vw; /* Each image takes up the full viewport width */
-  scroll-snap-align: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-slide img {
-  width: 99%;
-  height: auto;
-//   max-height: 60vh;
-  max-height: 25rem;
-    object-fit: contain;
-}
-
-.arrow-navigation {
-  width: 105%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.progress-indicator {
-  margin-left: 30vw;
-  margin-right: 30vw;
+    display: flex; /* Center the zoom-content */
+    align-items: center; /* Vertically center */
+    justify-content: flex-start; /* Horizontally center */
   }
 
-.left-arrow,
-.right-arrow {
-  width: 6vw;
-  cursor: pointer;
-  transition: opacity 0.4s ease;
-}
+  .zoom-content {
+    width: 95vw;
+    height: 95vh;
+    position: relative; /* Keep the exit icon and other content positioned within bounds */
+    overflow: visible; /* Ensure the image does not overflow */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
-.left-arrow.disabled-arrow svg path,
-.right-arrow.disabled-arrow svg path {
-  opacity: 0.3;
-  cursor: not-allowed;
-  transition: opacity 0.2s ease;
-}
+  .zoomed-image {
+    width: auto; /* Keep natural width, allowing horizontal scroll if necessary */
+    height: auto; /* Keep natural height */
+  //   max-height: 100%; /* Ensure the image fits inside zoom-content */
+  //   max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-.left-arrow svg path,
-.right-arrow svg path {
-  stroke: white;
-  stroke-width: 1;
-  transition: opacity 0.2s ease;
-}
+  /* Close Button for Zoom View */
+  .close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.5); /* Semi-transparent background for visibility */
+    border: none;
+    color: black;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 21;
+  }
 
-.progress-indicator {
-  font-family: 'Roboto', sans-serif;
-  color: white;
-  font-size: 3vw;
-  font-weight: 300;
-}
+  .details-image {
+    opacity: 0; /* Start with hidden image */
+    transition: opacity 0.1s ease-in-out; /* Quick transition to make fade-in smooth */
+  }
 
-.expand-icon {
-  position: absolute; /* Position relative to the viewport container */
-//   bottom: 1.5vh; /* IF YOU MOVE THIS TOO FAR DOWN, CREATES WEIRD VERTICAL SCROLL BEHAVIOR */
-  bottom: 5px;
-  left: 1.5vw; /* Adjust this to move horizontally */
-  width: 6vw; /* Set appropriate size */
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10; /* Ensures the icon is on top of the image */
-  transition: opacity 0.8s ease-out;
-  opacity: 0;
-  will-change: opacity;
-}
+  .details-image.loaded {
+    opacity: 1; /* Make it visible once loaded */
+    transition: opacity 0.1s ease-in-out;
+  }
 
-.expand-icon.visible {
-  opacity: 1;
-  will-change: opacity;
-}
+  .add-to-cart-button {
+    width: 100%;
+    height: 3rem;
+    margin-top: 1rem;
+    color: white;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+  }
 
-.expand-icon svg path {
-  fill: none;
-  stroke: white; /* Set the stroke color if needed */
-  transition: opacity 0.1s ease;
-  will-change: opacity;
-}
-
-/* Exit Icon Styling */
-.exit-icon {
-  position: fixed; /* Fixes the icon position to the viewport, unaffected by scrolling */
-//   top: 3vh;
-  top: 1rem;
-  right: 1rem;
-  width: 9vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 3000; /* Higher than zoom content to keep it visible */
-}
-
-.exit-icon svg path {
-  fill: white;
-  stroke: white;
-  stroke-width: 10;
-}
-
-/* Full-Screen Zoom View Overlay */
-.zoom-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7); /* Slightly gray out the background */
-  z-index: 2000; /* Make sure it's above everything else */
-  display: flex; /* Center the zoom-content */
-  align-items: center; /* Vertically center */
-  justify-content: center; /* Horizontally center */
-  overflow: auto; /* Prevent scrolling beyond zoomed content */
-  margin: 0;
-  padding: 0;
-
-  display: flex; /* Center the zoom-content */
-  align-items: center; /* Vertically center */
-  justify-content: flex-start; /* Horizontally center */
-}
-
-.zoom-content {
-  width: 95vw;
-  height: 95vh;
-  position: relative; /* Keep the exit icon and other content positioned within bounds */
-  overflow: visible; /* Ensure the image does not overflow */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.zoomed-image {
-  width: auto; /* Keep natural width, allowing horizontal scroll if necessary */
-  height: auto; /* Keep natural height */
-//   max-height: 100%; /* Ensure the image fits inside zoom-content */
-//   max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Close Button for Zoom View */
-.close-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(255, 255, 255, 0.5); /* Semi-transparent background for visibility */
-  border: none;
-  color: black;
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 21;
-}
-
-// .image-placeholder {
-//   width: 100vw;
-//   height: 29vh; /* This appears to be exact, will need to change based on default image */
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   color: #666;
-//   font-size: 1.2rem;
-//   text-align: center;
-//   background-color: black;
-// //   background-color: #ccc;
-// //   opacity: .1;
-// }
-
-.details-image {
-  opacity: 0; /* Start with hidden image */
-  transition: opacity 0.1s ease-in-out; /* Quick transition to make fade-in smooth */
-}
-
-.details-image.loaded {
-  opacity: 1; /* Make it visible once loaded */
-  transition: opacity 0.1s ease-in-out;
-}
-
-.add-to-cart-button {
-//   width: 80vw;
-  width: 100%;
-//   height: 6vh;
-  height: 3rem;
-//   margin-top: 2vh;
-  margin-top: 1rem;
-  color: white;
-  background-color: transparent;
-  border: 1px solid gray;
-  border-radius: 5px;
-  font-family: 'Roboto', sans-serif;
-//   font-size: 4vw;
-  font-size: 16px;
-//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
-}
-
-.buy-now-button {
-  width: 100%;
-//   height: 6vh;
-  height: 3rem;
-//   margin-top: 2vh;
-  margin-top: 1rem;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-//   font-size: 4vw;
-  font-size: 16px;
-//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
-}
-
-
-.dropdown-increment-row {
-//   margin-top: 4vh;
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: row; /* Makes the children align horizontally */
-  align-items: center; /* Vertically centers all children */
-  justify-content: center; /* Distributes space between the dropdown and quantity selector */
-  width: 100%; /* Takes the full width of the container */
-//   height: 5vh;
-  height: 2rem;
-}
-
-.option-selector {
-  flex: 1; /* Takes up equal space within the row */
-}
-
-.option-selector select {
-  width: 53vw;
-//   font-size: 3vw;
-  font-size: 14px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  color: white;
-  background-color: transparent;
-  border: 1px solid gray;
-  border-radius: 5px;
-//   height: 4vh;
-  height: 2rem;
-  -webkit-appearance: menulist-button;
-}
-
-.details-quantity-editor {
-  display: flex;
-  align-items: center;
-  gap: 1vw;
-  background-color: transparent;
-  border: 1px solid gray;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 4vw;
-//   height: 4vh;
-  height: 2rem;
-  width: 20vw;
-  justify-content: space-between; /* Space between '-' and '+' */
-//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
-}
-
-.details-decrement, .details-increment {
-  cursor: pointer;
-  font-size: 5vw;
-  color: white;
-}
-
-.details-quantity-value {
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  color: white;
-  width: 30px;
-}
-
-
-
-.details-content p {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-//   margin-top: 2vh;
-  margin-top: 1rem;
-  z-index: 20;
-  font-size: 16px;
+  .buy-now-button {
+    width: 100%;
+    height: 3rem;
+    margin-top: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
   }
 
 
-.price h3 {
-  margin: 0;
-  color: white;
-  font-size: 5vw;
-  font-weight: 300;
-  z-index: 20;
-}
-
-.input-section{
-//   border-top: 1px solid gray;
-//   background-color: gray;
-  width: 100%;
+  .dropdown-increment-row {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row; /* Makes the children align horizontally */
+    align-items: center; /* Vertically centers all children */
+    justify-content: center; /* Distributes space between the dropdown and quantity selector */
+    width: 100%; /* Takes the full width of the container */
+    height: 2rem;
   }
+
+  .option-selector {
+    flex: 1; /* Takes up equal space within the row */
+  }
+
+  .option-selector select {
+    width: 53vw;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: white;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 2rem;
+    -webkit-appearance: menulist-button;
+  }
+
+  .details-quantity-editor {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 4vw;
+    height: 2rem;
+    width: 20vw;
+    justify-content: space-between; /* Space between '-' and '+' */
+  }
+
+  .details-decrement, .details-increment {
+    cursor: pointer;
+    font-size: 5vw;
+    color: white;
+  }
+
+  .details-quantity-value {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: white;
+    width: 30px;
+  }
+
+  .details-content p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin-top: 1rem;
+    z-index: 20;
+    font-size: 16px;
+    }
+
+
+  .price h3 {
+    margin: 0;
+    color: white;
+    font-size: 5vw;
+    font-weight: 300;
+    z-index: 20;
+  }
+
+  .input-section{
+    width: 100%;
+  }
+}
 
 
