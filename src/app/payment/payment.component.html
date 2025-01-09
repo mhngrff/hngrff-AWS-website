@@ -181,64 +181,6 @@
         </div>
       </div>
 
-      <!-- DEPRECATED BILLING ADDRESS FIELDS -->
-<!--      <div class="billing-address-toggle">-->
-<!--        <input-->
-<!--          type="checkbox"-->
-<!--          id="useShippingAsBilling"-->
-<!--          [checked]="useShippingAsBilling"-->
-<!--          (change)="toggleBillingAddress()"-->
-<!--          class="checkbox"-->
-<!--        />-->
-<!--        <label for="useShippingAsBilling">Use shipping address as billing address</label>-->
-<!--      </div>-->
-
-<!--      <div class="billing-address-field" *ngIf="!useShippingAsBilling">-->
-
-<!--        <label for="billing-address-line1" class="billing-label">Billing Address</label>-->
-
-<!--        <div class="billing-address-row">-->
-<!--          <input type="text" id="billing-name" formControlName="billingName" placeholder="Full Name" required />-->
-<!--        </div>-->
-
-<!--        <div class="billing-address-row">-->
-<!--          <input-->
-<!--            #billingAddressInput-->
-<!--            type="text"-->
-<!--            id="billing-address-line1"-->
-<!--            formControlName="billingAddressLine1"-->
-<!--            (input)="onAddressInputChange('billing', billingAddressInput.value)"-->
-<!--            placeholder="Address Line 1"-->
-<!--            required-->
-<!--          />-->
-
-<!--          <ul #billingPredictionList *ngIf="isBillingPredictionsVisible" class="autocomplete-suggestions">-->
-<!--            <li *ngFor="let prediction of billingAddressPredictions" (click)="selectPrediction('billing', prediction)">-->
-<!--              {{ prediction.description }}-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-
-<!--        <div class="billing-address-row">-->
-<!--          <input type="text" id="billing-address-line2" formControlName="billingAddressLine2" placeholder="Address Line 2 (Optional)" />-->
-<!--        </div>-->
-
-<!--        <div class="billing-address-row-double">-->
-<!--          <input type="text" id="billing-city" formControlName="billingCity" placeholder="City" required />-->
-<!--          <input type="text" id="billing-state" formControlName="billingState" placeholder="State/Province" required />-->
-<!--        </div>-->
-
-<!--        <div class="billing-address-row-double">-->
-<!--          <input type="text" id="billing-zip" formControlName="billingZip" placeholder="Zip/Postal Code" required />-->
-<!--          <select id="billing-country" formControlName="billingCountry" required>-->
-<!--            <option value="">Select Country</option>-->
-<!--            <option value="US">United States</option>-->
-<!--            <option value="CA">Canada</option>-->
-<!--            &lt;!&ndash; Add more countries as needed &ndash;&gt;-->
-<!--          </select>-->
-<!--        </div>-->
-<!--      </div>-->
-
     </div>
     <!-- Submit Button -->
 <!--    <button type="submit" id="submit-button" [disabled]="paymentForm.invalid">Pay</button>-->

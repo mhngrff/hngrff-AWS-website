@@ -6,7 +6,7 @@ import Payment from 'payment';
 import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItem } from '../models/cart-item.interface';
-import { Observable, debounceTime, combineLatest } from 'rxjs';
+import { Observable, debounceTime, combineLatest, Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -115,6 +115,8 @@ export class PaymentComponent implements OnInit {
     isShippingCostCalculated = false; // Tracks whether the shipping cost is calculated
     isSubmitInProgress = false;
 
+    private subscription: Subscription | null = null;
+
 
   constructor(
     private fb: FormBuilder,
@@ -159,7 +161,7 @@ export class PaymentComponent implements OnInit {
       this.totalWeight = selectedItem.weight * selectedItem.quantity;
     } else {
       // Cart Checkout path: Use cart items and total
-      combineLatest([
+      this.subscription = combineLatest([
         this.cartService.getTotal$(),
         this.cartService.getCartItems(),
         this.cartService.getTotalWeight$()
@@ -756,15 +758,6 @@ export class PaymentComponent implements OnInit {
 
       const control = this.paymentForm.get(field);
 
-//       if (control) {
-//         if (control.pristine || control.value === '' || control.value === null) {
-//           hasEmptyFields = true;
-//         } else if (control.invalid && control.touched) {
-//           hasInvalidFields = true;
-//         }
-//       }
-//     });
-
         if (control) {
           // Check for empty or invalid fields
           if (!control.value || control.value.trim() === '') {
@@ -777,5 +770,11 @@ export class PaymentComponent implements OnInit {
 
     return { hasEmptyFields, hasInvalidFields };
   }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+    }
 
 }
