@@ -59,7 +59,7 @@ body{
     }
 
     .cart-thumbnail {
-      width: 15vw;
+      width: 8vw;
       height: auto;
       object-fit: contain;
     }
@@ -118,7 +118,7 @@ body{
 
     .remove-item {
       font-family: 'Roboto', sans-serif;
-      font-weight: bold;
+      text-decoration: underline;
       font-size: 20px;
       cursor: pointer;
       color: white;
@@ -126,7 +126,7 @@ body{
     }
 
     .remove-item:hover{
-      text-decoration: underline;
+      font-weight: bold;
       }
 
     .cart-summary {
@@ -191,7 +191,12 @@ body{
     .buy-now-warning p a, .empty-cart-message p a {
         font-size: min(2vw, 20px);
         font-family: 'Roboto', sans-serif;
+        cursor: pointer;
         text-decoration: underline;
+      }
+
+    .buy-now-warning p a:hover, .empty-cart-message p a:hover {
+      font-weight: bold;
       }
 
 }
