@@ -1,6 +1,6 @@
 <div class="success-container">
   <ng-container *ngIf="isLoading">
-    <div class="loading-spinner">Loading your order details...</div>
+    <div class="loading-spinner"> {{ spinnerText }}</div>
   </ng-container>
 
   <ng-container *ngIf="!isLoading && !errorMessage">
