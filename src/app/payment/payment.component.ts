@@ -14,6 +14,7 @@ import { AddressAutocompleteService } from '../services/address-autocomplete.ser
 import { ShippingService } from '../services/shipping.service';
 import { StripeService } from '../services/stripe.service';
 import { FormsModule } from '@angular/forms';
+import { OrdersService } from '../services/orders.service';
 
 const countryNameMapping: { [key: string]: string } = {
   'USA': 'United States',
@@ -130,6 +131,7 @@ export class PaymentComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private stripeService: StripeService,
     private activatedRoute: ActivatedRoute,
+    private ordersService: OrdersService
   ) {
     this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
 
@@ -215,15 +217,15 @@ export class PaymentComponent implements OnInit {
         this.onCardNumberInput(cardType); // Callback for handling card type changes
       },
       (isInvalid: boolean) => {
-        console.log('Stripe element validity change detected:', isInvalid);
+//         console.log('Stripe element validity change detected:', isInvalid);
         this.isStripeInvalid = isInvalid; // Update the state based on validity
-        console.log('Updated isStripeInvalid to:', this.isStripeInvalid);
+//         console.log('Updated isStripeInvalid to:', this.isStripeInvalid);
         this.updateStripeFieldHighlight(); // Update the UI accordingly //this aint it
       },
         () => {
           // New callback to reapply the highlight if any field becomes empty or invalid
           this.highlightUntouchedStripeFields();
-          console.log('this.highlightUntouchedStripeFields reached in ngOnInit');
+//           console.log('this.highlightUntouchedStripeFields reached in ngOnInit');
         }
     );
 
@@ -257,13 +259,10 @@ export class PaymentComponent implements OnInit {
   }
 
   async handlePayment() {
-    console.log("Handle Payment called");
 
     this.errorMessages = [];
-
     this.isSubmitInProgress = true;
 
-      // Create Observables for validation and calculation status
       const validationInProgress$ = new Observable((observer) => {
         const checkValidationStatus = () => {
           if (!this.isAddressValidationInProgress && !this.isShippingCalculationInProgress) {
@@ -292,9 +291,9 @@ export class PaymentComponent implements OnInit {
       this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
 
       const formData = this.paymentForm.value;
-      console.log("formData = ", this.paymentForm.value);
-      console.log("hasEmptyFields = ", hasEmptyFields);
-      console.log("hasInvalidFields = ", hasInvalidFields);
+//       console.log("formData = ", this.paymentForm.value);
+//       console.log("hasEmptyFields = ", hasEmptyFields);
+//       console.log("hasInvalidFields = ", hasInvalidFields);
     }
 
     if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
@@ -355,31 +354,50 @@ export class PaymentComponent implements OnInit {
       } else {
           console.log("Payment successful:", paymentIntent);
 
-          const orderDetails = {
-            email: formData.email,
-            items: this.cartItems, // Adjust if Buy Now flow creates issues
-            subtotal: this.subtotal,
-            total: this.total,
-            shippingCost: this.shippingCost,
-            shippingAddress: {
-              name: formData.shippingName,
-              addressLine1: formData.addressLine1,
-              addressLine2: formData.addressLine2,
-              city: formData.city,
-              state: formData.state,
-              zip: formData.zip,
-              country: formData.country,
+                const orderDetails = {
+                  orderId: `ORD-${Date.now()}`, // Generate unique order ID
+                  customerName: formData.shippingName,
+                  customerEmail: formData.email,
+                  products: this.cartItems.map(item => ({
+                    productId: item.productId,
+                    productName: item.optionSubtitle,
+                    quantity: item.quantity,
+                    unitPrice: item.price,
+                    thumbnailUrl: item.thumbnailUrl,
+                  })),
+                  subtotal: this.subtotal,
+                  total: this.total,
+                  shippingCost: this.shippingCost,
+                  shippingAddress: {
+                    street: formData.addressLine1,
+                    city: formData.city,
+                    state: formData.state,
+                    zip: formData.zip,
+                    country: formData.country,
+                  },
+                  orderDate: new Date().toISOString(),
+                };
+
+          try {
+            const response = await this.ordersService.createOrder(orderDetails).toPromise();
+            console.log("Order created successfully:", response);
+
+            const fetchedOrder = await this.ordersService.getOrder(orderDetails.orderId).toPromise();
+            console.log("Fetched order details:", fetchedOrder);
+
+            this.navigationService.setTransactionStatus(true);
+
+            const navigationResult = await this.navigationService.goToSuccess(orderDetails.orderId);
+
+            if (navigationResult && !this.cartService.getBuyNowFlow()) {
+              console.log("Payment component acknowledged cart checkout flow, clearing cart");
+              this.cartService.clearCart();
             }
-          };
-          this.navigationService.setTransactionStatus(true);
-          this.navigationService.setOrderDetails(orderDetails);
 
-          if (!this.cartService.getBuyNowFlow()) {
-            console.log("Payment component acknowledged cart checkout flow, clearing cart");
-            this.cartService.clearCart();
+          } catch (orderError) {
+            console.error("Failed to create or fetch order:", orderError);
+            this.addErrorMessage("Your payment was successful, but we couldn't save your order details. Please contact support.");
           }
-
-          this.navigationService.goToSuccess(orderDetails);
       }
     } catch (e) {
       console.error('Error during confirmCardPayment:', e);
@@ -600,8 +618,8 @@ export class PaymentComponent implements OnInit {
         this.isShippingCalculationInProgress = false;
         this.isShippingCostCalculated = true;
 
-        console.log("this.shippingCost = ", this.shippingCost);
-        console.log('Calculated shipping cost:', this.shippingCost);
+//         console.log("this.shippingCost = ", this.shippingCost);
+//         console.log('Calculated shipping cost:', this.shippingCost);
 
         // Trigger change detection to ensure UI reflects the updated cost
         this.cd.detectChanges();
@@ -668,7 +686,7 @@ export class PaymentComponent implements OnInit {
       if (control) {
         // Highlight empty fields
         if (control.value === '' || control.value === null) {
-          console.log(`Field "${field}" is empty. Highlighting as missing.`);
+//           console.log(`Field "${field}" is empty. Highlighting as missing.`);
           control.markAsTouched();
 
           // Add the red border by adding the class 'error-highlight'
@@ -704,7 +722,7 @@ export class PaymentComponent implements OnInit {
       // Get the input element by field id
       const element = document.getElementById(field) as HTMLInputElement;
       if (element && control.valid) {
-        console.log(`Removing error highlight from field: ${field}`);
+//         console.log(`Removing error highlight from field: ${field}`);
         element.classList.remove('error-highlight');
       }
     }

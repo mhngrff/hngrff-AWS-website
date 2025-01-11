@@ -4,9 +4,9 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2vh 0; //ADD SOME PADDING FOR SOME SPACE AROUND CONTENT
+  padding: 2vh 0;
   width: 100%;
-  position: relative; //ADDED
+  position: relative;
   z-index: 998;
 }
 
@@ -21,30 +21,74 @@ footer {
   z-index: 999;
 }
 
-.footer-icons {
-    display: flex;          /* Use flexbox for centering */
-    justify-content: flex-start; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    width: 15vw;             /* Set desired width */
-  }
-.email-icon {
-  color: gray;
-  fill: none;
-  width: 100%;
-  height: auto;
-  margin-right: 2vw;
-  }
+@media only screen and (max-width: 786px) {
 
-.instagram-icon {
-  width: 100%;
-  height: auto;
-  margin-right: 2vw;
-  }
+  .footer-icons {
+      display: flex;          /* Use flexbox for centering */
+      justify-content: flex-start; /* Center horizontally */
+      align-items: center;     /* Center vertically */
+      width: 15vw;             /* Set desired width */
+    }
+  .email-icon {
+    color: gray;
+    fill: none;
+    width: 100%;
+    height: auto;
+    margin-right: 2vw;
+    }
 
-.copyright {
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  font-size: 3vw;
-  color: white;
-  margin-left: 0.5vw;
+  .instagram-icon {
+    width: 100%;
+    height: auto;
+    margin-right: 2vw;
+    }
+
+  .copyright {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 3vw;
+    color: white;
+    margin-left: 0.5vw;
+  }
+}
+
+@media only screen and (min-width: 786px) {
+
+    .footer-icons {
+        display: flex;          /* Use flexbox for centering */
+        justify-content: flex-start; /* Center horizontally */
+        align-items: center;     /* Center vertically */
+        width: 5vw;             /* Set desired width */
+      }
+    .email-icon {
+      color: gray;
+      fill: none;
+      width: 80%;
+      height: auto;
+//       margin-right: 2vw;
+      }
+
+    .email-icon:hover{
+      transform: scale(1.05);
+      }
+
+    .instagram-icon {
+      width: 80%;
+      height: auto;
+//       margin-right: 2vw;
+      }
+
+    .instagram-icon:hover {
+      transform: scale(1.05);
+      }
+
+    .copyright p {
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+//       font-size: 3vw;
+      font-size: 14px;
+      color: white;
+      margin-left: 0.5vw;
+    }
+
 }

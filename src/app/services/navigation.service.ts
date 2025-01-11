@@ -34,19 +34,24 @@ export class NavigationService {
     this.router.navigate(['/cart']);
     }
 
-  goToSuccess(orderDetails: any) {
-    console.log('Navigating to success with order details:', orderDetails);
+  goToSuccess(orderId: string): Promise<boolean> {
+    console.log('Navigating to success with order ID:', orderId);
 
-    sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+    sessionStorage.setItem('orderId', orderId);
+    console.log('OrderId in sessionStorage:', sessionStorage.getItem('orderId'));
+    console.log('TransactionCompleted in sessionStorage:', sessionStorage.getItem('transactionCompleted'));
 
-    this.router.navigate(['/success'], {
-      state: {orderDetails }
+    return this.router.navigate(['/success'])
+      .then(() => {
+        console.log("Navigation to success complete.");
+        return true;
+      })
+      .catch((error) => {
+        console.error("Navigation to success failed:", error);
+        this.router.navigate(['/']);
+        return false;
       });
-    }
-
-    setOrderDetails(details: any) {
-      this.orderDetails = details;
-    }
+  }
 
     getOrderDetails() {
         const storedDetails = sessionStorage.getItem('orderDetails');
@@ -55,13 +60,16 @@ export class NavigationService {
 
     setTransactionStatus(status: boolean): void {
       this.transactionCompleted = status;
+      console.log("setTransactionStatus accessed, transactionCompleted = ", status);
       sessionStorage.setItem('transactionCompleted', JSON.stringify(status));
     }
 
     getTransactionStatus(): boolean {
         if (!this.transactionCompleted) {
           this.transactionCompleted = JSON.parse(sessionStorage.getItem('transactionCompleted') || 'false');
+          console.log("getTransactionStatus accessed, !transactionCompleted = TRUE (bad path)");
         }
         return this.transactionCompleted;
+        console.log("getTransactionStatus accessed, !transactionCompleted = FALSE (good path)");
     }
 }

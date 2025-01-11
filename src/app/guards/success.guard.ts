@@ -13,8 +13,10 @@ export class SuccessGuard implements CanActivate {
     const hasTransactionCompleted = this.navigationService.getTransactionStatus();
 
     if (hasTransactionCompleted) {
+      console.log("Success guard accessed, GOOD PATH");
       return true; // Allow navigation if the transaction was successful
     } else {
+      console.log("Success guard accessed, BAD PATH");
       this.router.navigate(['/']); // Redirect to the homepage or a different page
       return false;
     }

@@ -13,14 +13,16 @@
           "subtitle": "REDFISH - JUST THE PRINT",
           "price": 50.00,
           "imageUrl": "/assets/images/redfish-1-600w.jpg",
-          "weight": 0.1
+          "weight": 0.1,
+          "productId": "A1"
         },
         {
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
           "price": 200.00,
           "imageUrl": "/assets/images/redfish-framed.jpg",
-          "weight": 0.2
+          "weight": 0.2,
+          "productId": "A2"
         }
       ]
     },
@@ -37,14 +39,16 @@
           "subtitle": "TROUT - JUST THE PRINT",
           "price": 50.00,
           "imageUrl": "/assets/images/trout-1-600w.jpg",
-          "weight": 0.1
+          "weight": 0.1,
+          "productId": "B1"
         },
         {
           "type": "framed",
           "subtitle": "TROUT - FRAMED PRINT",
           "price": 200.00,
           "imageUrl": "/assets/images/trout-framed.jpg",
-          "weight": 0.2
+          "weight": 0.2,
+          "productId": "B2"
         }
       ]
     },
@@ -61,14 +65,16 @@
           "subtitle": "FLOUNDER - JUST THE PRINT",
           "price": 50.00,
           "imageUrl": "/assets/images/flounder-1-600w.jpg",
-          "weight": 0.1
+          "weight": 0.1,
+          "productId": "C1"
         },
         {
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED PRINT",
           "price": 200.00,
           "imageUrl": "/assets/images/flounder-framed.jpg",
-          "weight": 0.2
+          "weight": 0.2,
+          "productId": "C2"
         }
       ]
     },
@@ -85,21 +91,24 @@
           "subtitle": "SLAM - JUST THE PRINTS",
           "price": 120.00,
           "imageUrl": "/assets/images/fishslam-1-600w.jpg",
-          "weight": 0.3
+          "weight": 0.3,
+          "productId": "D1"
         },
         {
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
           "price": 300.00,
           "imageUrl": "/assets/images/fish-slam-framed.jpg",
-          "weight": 0.5
+          "weight": 0.5,
+          "productId": "D2"
         },
         {
           "type": "three_frames",
           "subtitle": "SLAM - PRINTS IN 3 FRAMES",
           "price": 500.00,
           "imageUrl": "/assets/images/fish-slam-individual-framed.jpg",
-          "weight": 0.6
+          "weight": 0.6,
+          "productId": "D3"
         }
       ]
     }

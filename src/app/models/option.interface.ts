@@ -9,4 +9,5 @@ export interface Option {
   price: number;
   imageUrl: string;
   weight: number;
+  productId: string;
 }
