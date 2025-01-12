@@ -139,13 +139,8 @@ generatePdf() {
   const margin = 25; // Increased margin
   const fontSizeBase = 14; // Base font size for scaling
 
-  // Draw a white background for the entire page
-  doc.setFillColor(255, 255, 255); // Set fill color to white
-  doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Draw a filled rectangle
-
-  // Load the logo and process it dynamically
-  const logoUrl = '/assets/images/hngrffLogoBlack.png'; // Update to your assets directory
-  const logoWidth = 50; // Adjust as needed
+  const logoUrl = '/assets/images/hngrffLogoBlack.png';
+  const logoWidth = 50;
   const logoHeight = 14;
 
   const promises = this.orderDetails.products.map((product) =>
@@ -237,8 +232,21 @@ generatePdf() {
         yPosition += 8;
         doc.text(`${this.orderDetails.shippingAddress.country}`, margin, yPosition);
 
-        // Save PDF
-        doc.save(`Order_${this.orderDetails.OrderId}.pdf`);
+//         // Save PDF
+//         doc.save(`Order_${this.orderDetails.OrderId}.pdf`);
+        // Generate PDF as Blob
+        const pdfBlob = doc.output('blob');
+
+        // Create a download link dynamically
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(pdfBlob);
+        link.download = `Order_${this.orderDetails.OrderId}.pdf`;
+
+        // Trigger download
+        link.click();
+
+        // Clean up the object URL
+        URL.revokeObjectURL(link.href);
       })
     )
     .catch((error) => {
