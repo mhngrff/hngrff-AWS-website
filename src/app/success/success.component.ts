@@ -235,19 +235,26 @@ generatePdf() {
         // Generate PDF Blob
         const pdfBlob = doc.output('blob');
 
-        // Trigger download
-        const file = new File([pdfBlob], `Order_${this.orderDetails.OrderId}.pdf`, {
-          type: 'application/pdf',
-        });
-
+        // Create a hidden download link
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(file);
-        link.download = file.name;
+        const url = URL.createObjectURL(pdfBlob);
 
-        // Trigger the download programmatically
-        document.body.appendChild(link); // Required for Firefox
-        link.click();
-        document.body.removeChild(link); // Cleanup
+        // Check if Safari requires a manual click
+        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+          link.href = url;
+          link.download = `Order_${this.orderDetails.OrderId}.pdf`;
+          link.click();
+        } else {
+          // For Chrome and other browsers
+          link.href = url;
+          link.download = `Order_${this.orderDetails.OrderId}.pdf`;
+          document.body.appendChild(link); // Required for Firefox
+          link.click();
+          document.body.removeChild(link); // Cleanup
+        }
+
+        // Revoke Blob URL after download
+        URL.revokeObjectURL(url);
 
       })
     )
