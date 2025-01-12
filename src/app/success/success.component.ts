@@ -232,30 +232,18 @@ generatePdf() {
         yPosition += 8;
         doc.text(`${this.orderDetails.shippingAddress.country}`, margin, yPosition);
 
-        // Generate PDF Blob
+        // Generate the PDF as a Blob
         const pdfBlob = doc.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // Create a hidden download link
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(pdfBlob);
+        // Attempt to open the PDF in a new tab
+        const newTab = window.open(pdfUrl, '_blank');
 
-        // Check if Safari requires a manual click
-        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
-          link.href = url;
-          link.download = `Order_${this.orderDetails.OrderId}.pdf`;
-          link.click();
-        } else {
-          // For Chrome and other browsers
-          link.href = url;
-          link.download = `Order_${this.orderDetails.OrderId}.pdf`;
-          document.body.appendChild(link); // Required for Firefox
-          link.click();
-          document.body.removeChild(link); // Cleanup
+        // Safari fallback: If the new tab fails to open, navigate to the PDF directly
+        if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+          console.warn('Could not open PDF in a new tab. Navigating to PDF URL instead.');
+          window.location.href = pdfUrl;
         }
-
-        // Revoke Blob URL after download
-        URL.revokeObjectURL(url);
-
       })
     )
     .catch((error) => {
