@@ -232,20 +232,33 @@ generatePdf() {
         yPosition += 8;
         doc.text(`${this.orderDetails.shippingAddress.country}`, margin, yPosition);
 
-        const pdfBlob = doc.output('blob');
-        const pdfUrl = URL.createObjectURL(pdfBlob);
+      const pdfBlob = doc.output('blob');
+      const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const userAgent = navigator.userAgent || navigator.vendor;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+      const isChrome = /Chrome/.test(userAgent) && /Google Inc/.test(navigator.vendor);
 
-        if (isMobile) {
-          const anchor = document.createElement('a');
-          anchor.href = pdfUrl;
-          anchor.target = '_self';
-          anchor.download = `${this.orderDetails.OrderId}.pdf`;
-          anchor.click();
-        } else {
-          doc.save(`${this.orderDetails.OrderId}.pdf`);
+      if (isMobile && isChrome) {
+        // Chrome on mobile: Force download using a hidden <a> tag
+        const anchor = document.createElement('a');
+        anchor.href = pdfUrl;
+        anchor.download = `${this.orderDetails.OrderId}.pdf`;
+        anchor.style.display = 'none';
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+      } else if (isMobile) {
+        // General fallback for other mobile browsers
+        const newTab = window.open(pdfUrl, '_blank');
+        if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+          console.warn('Could not open new tab; navigating directly to URL.');
+          window.location.href = pdfUrl; // Fallback
         }
+      } else {
+        // Default behavior for desktop
+        doc.save(`${this.orderDetails.OrderId}.pdf`);
+      }
       })
     )
     .catch((error) => {
