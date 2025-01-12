@@ -20,6 +20,7 @@
     "@angular/router": "^18.2.0",
     "@stripe/stripe-js": "^4.9.0",
     "@types/stripe-v3": "^3.1.33",
+    "jspdf": "^2.5.2",
     "payment": "^2.4.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

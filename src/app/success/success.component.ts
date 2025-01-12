@@ -3,7 +3,33 @@ import { NavigationService } from '../services/navigation.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { OrdersService } from '../services/orders.service';
+import { jsPDF } from 'jspdf';
 
+interface Product {
+  productId: string;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  thumbnailUrl: string;
+}
+
+interface OrderDetails {
+  OrderId: string;
+  customerName: string;
+  customerEmail: string;
+  products: Product[];
+  subtotal: number;
+  total: number;
+  shippingCost: number;
+  shippingAddress: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  };
+  orderDate: string;
+}
 
 @Component({
   selector: 'app-success',
@@ -12,25 +38,48 @@ import { OrdersService } from '../services/orders.service';
   templateUrl: './success.component.html',
   styleUrls: ['./success.component.css']
 })
+
 export class SuccessComponent implements OnInit {
-  orderDetails: any;
+//   orderDetails?: OrderDetails;
   isLoading = true;
   errorMessage: string | null = null;
   spinnerText = 'Fetching your order';
 
   private spinnerInterval: any;
 
+
+  orderDetails: OrderDetails = {
+    OrderId: '',
+    customerName: '',
+    customerEmail: '',
+    products: [],
+    subtotal: 0,
+    total: 0,
+    shippingCost: 0,
+    shippingAddress: {
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      country: '',
+    },
+    orderDate: '',
+  };
+
+
+
   constructor(
     private ordersService: OrdersService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
     ) {}
 
   ngOnInit() {
     this.startSpinner();
 
     const orderId = sessionStorage.getItem('orderId');
+//     this.orderID = orderId;
     console.log("Reached success component with orderId: ", orderId);
 
       if (!orderId) {
@@ -46,6 +95,7 @@ export class SuccessComponent implements OnInit {
             this.isLoading = false;
             this.stopSpinner();
             console.log('Fetched order details:', this.orderDetails);
+            console.log('orderId:', this.orderDetails.OrderId);
           },
           (error) => {
             console.error('Error fetching order details:', error);
@@ -81,6 +131,151 @@ export class SuccessComponent implements OnInit {
           this.spinnerInterval = null;
         }
       }
+
+generatePdf() {
+  const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 25; // Increased margin
+  const fontSizeBase = 14; // Base font size for scaling
+
+  // Draw a white background for the entire page
+  doc.setFillColor(255, 255, 255); // Set fill color to white
+  doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Draw a filled rectangle
+
+  // Load the logo and process it dynamically
+  const logoUrl = '/assets/images/hngrffLogoBlack.png'; // Update to your assets directory
+  const logoWidth = 50; // Adjust as needed
+  const logoHeight = 14;
+
+  const promises = this.orderDetails.products.map((product) =>
+    this.convertToBase64(product.thumbnailUrl).then(({ base64, width, height }) => {
+      const imageWidth = 40; // Fixed width
+      const aspectRatio = height / width;
+      const imageHeight = imageWidth * aspectRatio;
+      return { base64, imageWidth, imageHeight, product };
+    })
+  );
+
+  Promise.all(promises)
+    .then((products) =>
+      this.convertToBase64(logoUrl).then(({ base64 }) => {
+        // Add the logo at the top
+        doc.addImage(base64, 'PNG', pageWidth / 2 - logoWidth / 2, 10, logoWidth, logoHeight);
+
+        let yPosition = 40; // Start position after the logo
+
+        // Order ID
+        doc.setFontSize(fontSizeBase + 2); // Larger font for header
+        doc.text(`Order ID: ${this.orderDetails.OrderId}`, margin, yPosition);
+        yPosition += 10;
+
+        // Products Section
+        products.forEach(({ base64, imageWidth, imageHeight, product }) => {
+          // Add product image
+          doc.addImage(base64, 'JPEG', margin, yPosition, imageWidth, imageHeight);
+
+          // Add product details
+          doc.setFontSize(fontSizeBase);
+          doc.text(product.productName, margin + imageWidth + 10, yPosition + 10);
+          doc.text(
+            `$${product.unitPrice.toFixed(2)}`,
+            pageWidth - margin,
+            yPosition + 10,
+            { align: 'right' }
+          );
+
+          yPosition += imageHeight + 10; // Space between products
+        });
+
+        // Horizontal Line
+        doc.setDrawColor(0);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 10;
+
+        // Totals Section
+        doc.setFontSize(fontSizeBase);
+        doc.text(`Subtotal:`, margin, yPosition);
+        doc.text(`$${this.orderDetails.subtotal.toFixed(2)}`, pageWidth - margin, yPosition, {
+          align: 'right',
+        });
+
+        yPosition += 10;
+        doc.text(`Shipping:`, margin, yPosition);
+        console.log('shippingCost:', this.orderDetails.shippingCost, typeof this.orderDetails.shippingCost);
+        doc.text(`$${this.orderDetails.shippingCost}`, pageWidth - margin, yPosition, {
+          align: 'right',
+        });
+
+        yPosition += 10;
+        doc.setFontSize(fontSizeBase + 2); // Highlighted size
+        doc.text(`Total:`, margin, yPosition);
+        doc.text(`$${this.orderDetails.total.toFixed(2)}`, pageWidth - margin, yPosition, {
+          align: 'right',
+        });
+
+        yPosition += 20;
+
+        // Shipping Address Section
+        doc.setFontSize(fontSizeBase + 2);
+        doc.text(`Ship to:`, margin, yPosition);
+
+        yPosition += 10;
+        doc.setFontSize(fontSizeBase);
+        doc.text(`${this.orderDetails.customerName}`, margin, yPosition);
+
+        yPosition += 8;
+        doc.text(`${this.orderDetails.shippingAddress.street}`, margin, yPosition);
+
+        yPosition += 8; // Reduced line height
+        doc.text(
+          `${this.orderDetails.shippingAddress.city}, ${this.orderDetails.shippingAddress.state} ${this.orderDetails.shippingAddress.zip}`,
+          margin,
+          yPosition
+        );
+
+        yPosition += 8;
+        doc.text(`${this.orderDetails.shippingAddress.country}`, margin, yPosition);
+
+        // Save PDF
+        doc.save(`Order_${this.orderDetails.OrderId}.pdf`);
+      })
+    )
+    .catch((error) => {
+      console.error('Error generating PDF:', error);
+    });
+}
+
+
+
+convertToBase64(imageUrl: string): Promise<{ base64: string; width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+        const dataUrl = canvas.toDataURL('image/jpeg');
+        resolve({
+          base64: dataUrl.split(',')[1], // Base64 without the metadata
+          width: img.width,
+          height: img.height,
+        });
+      } else {
+        reject('Failed to get canvas context');
+      }
+    };
+    img.onerror = (err) => reject(err);
+    img.src = imageUrl;
+  });
+}
+
+
+
 
       ngOnDestroy() {
         this.stopSpinner();
