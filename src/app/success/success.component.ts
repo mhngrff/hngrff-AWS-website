@@ -232,17 +232,19 @@ generatePdf() {
         yPosition += 8;
         doc.text(`${this.orderDetails.shippingAddress.country}`, margin, yPosition);
 
-        // Generate the PDF as a Blob
         const pdfBlob = doc.output('blob');
         const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // Attempt to open the PDF in a new tab
-        const newTab = window.open(pdfUrl, '_blank');
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-        // Safari fallback: If the new tab fails to open, navigate to the PDF directly
-        if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
-          console.warn('Could not open PDF in a new tab. Navigating to PDF URL instead.');
-          window.location.href = pdfUrl;
+        if (isMobile) {
+          const anchor = document.createElement('a');
+          anchor.href = pdfUrl;
+          anchor.target = '_self';
+          anchor.download = `${this.orderDetails.OrderId}.pdf`;
+          anchor.click();
+        } else {
+          doc.save(`${this.orderDetails.OrderId}.pdf`);
         }
       })
     )
