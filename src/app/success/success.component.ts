@@ -232,21 +232,23 @@ generatePdf() {
         yPosition += 8;
         doc.text(`${this.orderDetails.shippingAddress.country}`, margin, yPosition);
 
-//         // Save PDF
-//         doc.save(`Order_${this.orderDetails.OrderId}.pdf`);
-        // Generate PDF as Blob
+        // Generate PDF Blob
         const pdfBlob = doc.output('blob');
 
-        // Create a download link dynamically
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(pdfBlob);
-        link.download = `Order_${this.orderDetails.OrderId}.pdf`;
-
         // Trigger download
-        link.click();
+        const file = new File([pdfBlob], `Order_${this.orderDetails.OrderId}.pdf`, {
+          type: 'application/pdf',
+        });
 
-        // Clean up the object URL
-        URL.revokeObjectURL(link.href);
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(file);
+        link.download = file.name;
+
+        // Trigger the download programmatically
+        document.body.appendChild(link); // Required for Firefox
+        link.click();
+        document.body.removeChild(link); // Cleanup
+
       })
     )
     .catch((error) => {
