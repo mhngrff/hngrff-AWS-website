@@ -382,12 +382,8 @@ export class PaymentComponent implements OnInit {
             const response = await this.ordersService.createOrder(orderDetails).toPromise();
             console.log("Order created successfully:", response);
 
-            const fetchedOrder = await this.ordersService.getOrder(orderDetails.orderId).toPromise();
-            console.log("Fetched order details:", fetchedOrder);
-
             this.navigationService.setTransactionStatus(true);
-
-            const navigationResult = await this.navigationService.goToSuccess(orderDetails.orderId);
+            const navigationResult = await this.navigationService.goToSuccess(response);
 
             if (navigationResult && !this.cartService.getBuyNowFlow()) {
               console.log("Payment component acknowledged cart checkout flow, clearing cart");

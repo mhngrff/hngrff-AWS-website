@@ -16,7 +16,7 @@
 
     <div class="success-summary-items">
       <div class="orderid-download-row">
-        <h3>{{ orderDetails.OrderId }}</h3>
+        <h3>{{ orderDetails.orderId }}</h3>
       </div>
       <div *ngIf="orderDetails.products.length > 0" class="success-items">
         <div *ngFor="let item of orderDetails.products" class="success-item">

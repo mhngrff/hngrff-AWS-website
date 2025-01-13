@@ -14,7 +14,7 @@ interface Product {
 }
 
 interface OrderDetails {
-  OrderId: string;
+  orderId: string;
   customerName: string;
   customerEmail: string;
   products: Product[];
@@ -40,7 +40,6 @@ interface OrderDetails {
 })
 
 export class SuccessComponent implements OnInit {
-//   orderDetails?: OrderDetails;
   isLoading = true;
   errorMessage: string | null = null;
   spinnerText = 'Fetching your order';
@@ -49,7 +48,7 @@ export class SuccessComponent implements OnInit {
 
 
   orderDetails: OrderDetails = {
-    OrderId: '',
+    orderId: '',
     customerName: '',
     customerEmail: '',
     products: [],
@@ -75,45 +74,29 @@ export class SuccessComponent implements OnInit {
     private router: Router,
     ) {}
 
-  ngOnInit() {
-    this.startSpinner();
+    ngOnInit() {
+      this.startSpinner();
 
-    const orderId = sessionStorage.getItem('orderId');
-//     this.orderID = orderId;
-    console.log("Reached success component with orderId: ", orderId);
+      const storedOrderDetails = sessionStorage.getItem('orderDetails')!;
 
-      if (!orderId) {
-        console.error('No orderId found in sessionStorage. Redirecting to homepage.');
-        this.router.navigate(['/']); // Redirect to homepage if orderId is missing
-        return;
-      }
+        const parsedOrderDetails = JSON.parse(storedOrderDetails);
 
-        // Fetch the order details dynamically
-        this.ordersService.getOrder(orderId).subscribe(
-          (orderDetails) => {
-            this.orderDetails = orderDetails;
-            this.isLoading = false;
-            this.stopSpinner();
-            console.log('Fetched order details:', this.orderDetails);
-            console.log('orderId:', this.orderDetails.OrderId);
-          },
-          (error) => {
-            console.error('Error fetching order details:', error);
-            this.isLoading = false;
-            this.router.navigate(['/']); // Redirect to homepage if fetching fails
-          }
-        );
+        this.orderDetails = parsedOrderDetails.order || {};
+        console.log("this.orderDetails = ", this.orderDetails);
+
+        this.isLoading = false;
+        this.stopSpinner();
 
       // Prevent back navigation to the payment page
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationStart && event.navigationTrigger === 'popstate') {
-          // Redirect to home if back navigation leads to payment
-          if (this.router.url === '/payment') {
-            this.router.navigate(['/success']); // Redirect to home or another page
+          if (event.url === '/payment') {
+            this.router.navigate(['/']); // Redirect to home or another page
           }
         }
       });
     }
+
 
     startSpinner(): void {
       let dotCount = 0;
