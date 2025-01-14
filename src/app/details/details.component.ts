@@ -82,7 +82,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.selectedPrice = metadata.options[0].price;
           this.selectedWeight = metadata.options[0].weight;
           this.selectedProductId = metadata.options[0].productId;
-          console.log('Default selected option:', this.selectedOption);
+//           console.log('Default selected option:', this.selectedOption);
         }
       });
     }
@@ -264,7 +264,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     } else {
       console.error('Unable to add to cart: Invalid option or price.');
     }
-  console.log('thumbnailUrl= ', this.mainImageUrl)
+//   console.log('thumbnailUrl= ', this.mainImageUrl)
   console.log('selectedWeight= ', this.selectedWeight)
   }
 

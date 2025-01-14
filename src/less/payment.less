@@ -16,6 +16,12 @@
       margin-top: 10vh;
       }
 
+    .shipping-info-container p {
+      font-size: 16px;
+      line-height: 1.5rem;
+      opacity: 0.6;
+      }
+
     .payment-container {
       background-color: white;
       padding: 20px;
@@ -122,6 +128,14 @@
        margin-top: 0.5rem;
        max-height: 30px;
      }
+
+     .info-icon{
+       display: none;
+       }
+
+     .modal-content {
+       display: none;
+       }
 
      .shipping-cost-row p {
        font-family: 'Roboto', sans-serif;
@@ -540,6 +554,53 @@
      display: none;
      }
 
+  .modal-content {
+    position: fixed;
+    top: 33%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    padding: 15px;
+    background: #1a1a16;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    z-index: 5000;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  /* Background overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 4999;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .modal-open .modal-content,
+  .modal-open .modal-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hidden {
+    opacity: 0;
+    visibility: hidden;
+    }
+
+  .close-info {
+    font-family: 'Roboto', sans-serif;
+    text-align: right;
+    }
+
+  .shipping-cost-row .text-and-icon .modal-content p {
+    font-size: 16px;
+    line-height: 1.5rem;
+    }
+
    .order-summary-container{
      display: flex;
      flex-direction: column;
@@ -648,6 +709,27 @@
        color: white;
        margin: 0;
        z-index: 20;
+     }
+
+   .text-and-icon {
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     }
+
+   .info-icon {
+     display: flex;
+     width: 6vw;
+     height: 6vw;
+     margin-left: 1vw;
+     align-items: center;
+     justify-content: center;
+     }
+
+   .info-icon svg{
+     width: 4vw;
+     height: 4vw;
+//      align-self: center;
      }
 
    .grand-total-row {

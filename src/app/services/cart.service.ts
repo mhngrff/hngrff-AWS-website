@@ -157,12 +157,6 @@ export class CartService {
     this.getTotal$().subscribe();
   }
 
-//   getTotalWeight$(): Observable<number> {
-//     return this.cartItems$.pipe(
-//       map((items) => items.reduce((total, item) => total + item.weight * item.quantity, 0))
-//     );
-//   }
-
   getTotalWeight$(): Observable<number> {
     return this.cartItems$.pipe(
       map((items) => {

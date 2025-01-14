@@ -118,6 +118,8 @@ export class PaymentComponent implements OnInit {
 
     private subscription: Subscription | null = null;
 
+    isModalOpen: boolean = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -169,9 +171,11 @@ export class PaymentComponent implements OnInit {
         this.cartService.getTotalWeight$()
       ]).subscribe(([subtotal, items, totalWeight]) => {
         this.subtotal = subtotal;
-        this.total = subtotal + (this.shippingCost ?? 0);
+        this.total = Number(subtotal) + Number(this.shippingCost ?? 0);
+        console.log("ngoninit() - this.total = ", this.total);
         this.cartItems = items;
         this.totalWeight = parseFloat(totalWeight.toFixed(2));
+        console.log("ngoninit() - this.totalWeight = ", this.totalWeight);
 
         const currentRoute = this.activatedRoute.snapshot.routeConfig?.path;
 
@@ -207,7 +211,7 @@ export class PaymentComponent implements OnInit {
 
     await this.stripeService.initializeStripe();
 
-    console.log('Mounting Stripe card elements.');
+//     console.log('Mounting Stripe card elements.');
     this.stripeService.mountCardElements(
       '#card-number-element',
       '#card-expiry-element',
@@ -263,6 +267,7 @@ export class PaymentComponent implements OnInit {
     this.errorMessages = [];
     this.isSubmitInProgress = true;
 
+console.time("Address Validation and Shipping");
       const validationInProgress$ = new Observable((observer) => {
         const checkValidationStatus = () => {
           if (!this.isAddressValidationInProgress && !this.isShippingCalculationInProgress) {
@@ -276,14 +281,17 @@ export class PaymentComponent implements OnInit {
       })
 
       await validationInProgress$.toPromise(); // Wait until both processes are complete
+console.timeEnd('Address Validation and Shipping');
 
       // Remove the loading message after validation is complete
       this.errorMessages = this.errorMessages.filter(
         (error) => error.message !== "Validating address and calculating shipping cost. Please wait..."
       );
 
+console.time("Form Validation");
     // Use the helper method to validate form fields
     const { hasEmptyFields, hasInvalidFields } = this.validateFormFields();
+console.timeEnd("Form Validation");
 
     if (hasEmptyFields) {
       this.addErrorMessage('Please fill out all required fields.');
@@ -322,9 +330,11 @@ export class PaymentComponent implements OnInit {
 
     const formData = this.paymentForm.value;
 
+console.time("Create Payment Intent");
     const amountInCents = Math.round(this.total * 100);
 
     const clientSecret = await this.stripeService.createPaymentIntent(amountInCents); // Set the amount
+console.timeEnd("Create Payment Intent");
 
     if (!clientSecret) {
       console.error("Failed to retrieve client secret from backend");
@@ -337,8 +347,9 @@ export class PaymentComponent implements OnInit {
 
     const cardElement = this.stripeService.getCardElement();
 
-    console.log('Card element:', cardElement);
+//     console.log('Card element:', cardElement);
 
+console.time("Confirm Card Payment");
     try {
       const { paymentIntent, error } = await this.stripeService.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -351,9 +362,11 @@ export class PaymentComponent implements OnInit {
         const stripeError = error as StripeError; // Cast error to StripeError
         console.error('Payment failed:', stripeError.message, stripeError);
 //         this.addErrorMessage(`Payment failed: ${error.message}`);
+console.timeEnd("Confirm Card Payment");
       } else {
           console.log("Payment successful:", paymentIntent);
-
+console.timeEnd("Confirm Card Payment");
+console.time("Create Order");
                 const orderDetails = {
                   orderId: `ORD-${Date.now()}`, // Generate unique order ID
                   customerName: formData.shippingName,
@@ -378,10 +391,11 @@ export class PaymentComponent implements OnInit {
                   orderDate: new Date().toISOString(),
                 };
 
+
           try {
             const response = await this.ordersService.createOrder(orderDetails).toPromise();
             console.log("Order created successfully:", response);
-
+console.timeEnd("Create Order");
             this.navigationService.setTransactionStatus(true);
             const navigationResult = await this.navigationService.goToSuccess(response);
 
@@ -393,6 +407,7 @@ export class PaymentComponent implements OnInit {
           } catch (orderError) {
             console.error("Failed to create or fetch order:", orderError);
             this.addErrorMessage("Your payment was successful, but we couldn't save your order details. Please contact support.");
+console.timeEnd("Create Order");
           }
       }
     } catch (e) {
@@ -609,13 +624,13 @@ export class PaymentComponent implements OnInit {
         this.total -= this.previousShippingCost;
         this.shippingCost = shippingCost;
         this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
+
         this.total = Number(this.total) + Number(this.shippingCost);
+
+        console.log("calculated total from calculateShippingRate() : ", this.total);
 
         this.isShippingCalculationInProgress = false;
         this.isShippingCostCalculated = true;
-
-//         console.log("this.shippingCost = ", this.shippingCost);
-//         console.log('Calculated shipping cost:', this.shippingCost);
 
         // Trigger change detection to ensure UI reflects the updated cost
         this.cd.detectChanges();
@@ -725,10 +740,6 @@ export class PaymentComponent implements OnInit {
   }
 
   highlightUntouchedStripeFields() {
-//     const stripeContainer = document.querySelector('.card-information') as HTMLElement;
-//     if( !this.stripeService.areAllCardFieldsTouched()) {
-//       stripeContainer.classList.add('error-highlight');
-//       }
     const stripeContainer = document.querySelector('.card-information') as HTMLElement;
     if (!this.stripeService.areAllCardFieldsTouched()) {
       stripeContainer.classList.add('error-highlight');
@@ -742,7 +753,6 @@ export class PaymentComponent implements OnInit {
     const stripeContainer = document.querySelector('.card-information') as HTMLElement;
     if (this.isStripeInvalid) {
 //       console.log('Adding error highlight.');
-//       stripeContainer.classList.add('error-highlight'); //this aint it
     } else {
 //       console.log('Removing error highlight.');
       stripeContainer.classList.remove('error-highlight');
@@ -784,6 +794,20 @@ export class PaymentComponent implements OnInit {
 
     return { hasEmptyFields, hasInvalidFields };
   }
+
+    // Method to open the modal
+    openInfo(): void {
+      this.isModalOpen = true;
+      console.log("this.isModalOpen= ", this.isModalOpen);
+//       document.body.classList.add('modal-open');
+    }
+
+    // Method to close the modal
+    closeInfo(): void {
+      this.isModalOpen = false;
+      console.log("this.isModalOpen= ", this.isModalOpen);
+//       document.body.classList.remove('modal-open');
+    }
 
     ngOnDestroy(): void {
         if (this.subscription) {

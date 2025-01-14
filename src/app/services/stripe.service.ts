@@ -42,7 +42,7 @@ export class StripeService {
     onFieldInvalidCallback: () => void
   ) {
     if (this.elements) {
-          console.log('Checking for existing Stripe elements...');
+//           console.log('Checking for existing Stripe elements...');
 
           // Destroy existing elements before creating new ones
           if (this.cardNumberElement) {
@@ -58,7 +58,7 @@ export class StripeService {
             this.cardCvcElement = null;
           }
 
-      console.log('Stripe elements initialized. Creating and mounting elements.');
+//       console.log('Stripe elements initialized. Creating and mounting elements.');
       // Create and mount the card number element
       this.cardNumberElement = this.elements.create('cardNumber', {
         style: {
