@@ -1,4 +1,6 @@
-  <div id="error-message-container">
+<div class="payment-parallax"></div>
+
+<div id="error-message-container">
     <div *ngFor="let error of errorMessages" class="error-message">
       <span class="error-text">{{ error.message }}</span>
       <button class="close-btn" (click)="removeErrorMessage(error.id)">&times;</button>

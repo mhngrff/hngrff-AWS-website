@@ -2,6 +2,20 @@
 /* DESKTOP */
 @media only screen and (min-width: 786px) {
 
+      .payment-parallax {
+          width: 100vw;
+          height: 100vh;
+          background: linear-gradient(to right, #0b0b09, rgba(11, 11, 9, 0) 30%, rgba(11, 11, 9, 0) 70%, #0b0b09), url(/assets/images/surf-image.jpg);
+//           margin-top: 10vh;
+          background-position: 0 100%;
+          background-size: cover;
+          position: fixed;
+          z-index: 1;
+          opacity: 0.5;
+  //         margin-left: 2.5vw;
+          top: 0;
+      }
+
     .payment-content-alignment-container{
       display: flex;
       flex-direction: row;
@@ -9,6 +23,7 @@
 //       max-width: 1400px; //MAYBE CONSIDER THIS IN FUTURE
       margin-left: 10vw;
       margin-top: 12vh;
+      z-index: 2;
     }
 
     .shipping-info-container{
@@ -19,7 +34,7 @@
     .shipping-info-container p {
       font-size: 16px;
       line-height: 1.5rem;
-      opacity: 0.6;
+//       opacity: 0.6;
       }
 
     .payment-container {
@@ -27,20 +42,24 @@
       padding: 20px;
       border-radius: 3px;
       width: 40%;
+      max-height: 750px;
       margin-right: 5%;
       order: 1;
       min-width: 400px;
+      z-index: 2;
     }
 
     .order-summary-container{
       position: sticky;
-      top: 10vh;
+      top: 12vh;
+      margin-top: 2vh;
       align-self: flex-start;
       display: flex;
       flex-direction: column;
       height: auto;
       width: 55%;
       order: 2;
+      z-index: 2;
     }
 
     .payment-thumbnail {
@@ -364,6 +383,8 @@
      }
 
      .stripe-logo{
+       position: relative;
+       z-index: 20;
        width: (80vw * 0.4);
        min-width: 400px;
        padding: 12px;
@@ -375,10 +396,12 @@
        }
 
      .stripe-logo svg:hover{
+       z-index: 2;
        transform: scale(1.05);
        }
 
      .stripe-logo svg {
+       z-index: 2000;
        transition: transform 0.1s ease;
        width: 175px;
        height: 50px;
@@ -386,6 +409,7 @@
 
 
      .terms-privacy-links{
+       z-index: 2;
        display: flex;
        flex-direction: row;
        justify-content: center;
@@ -400,7 +424,7 @@
      .terms-privacy-links a p {
 
        font-size: 16px;
-       opacity: 0.6;
+//        opacity: 0.6;
        }
 
      .autocomplete-suggestions {

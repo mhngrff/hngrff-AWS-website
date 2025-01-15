@@ -1,55 +1,111 @@
 /* Content styling for desktop */
 html, body{
-  background-color: #0d0d0b;
+//   background-color: #0d0d0b;
+  background-color: #0b0b09;
+//   background-color: white;
   }
 
 /* DESKTOP */
 @media only screen and (min-width: 786px) {
     body {
+//       background-image: url('/assets/images/surf-image.jpg');
+//       background-size: 100vw;
+//       position: fixed;
         margin: 0;
-        height: 100vh;
+//         height: 100vh;
         overflow-x: hidden; /* Prevent horizontal overflow */
     }
+
     .parallax {
-//       background-image: url('/assets/images/costa-rica2.jpg');
-//       background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
-//       background-size: 100vw auto;
-//       background-position: top left;
-//       background-repeat: no-repeat;
-//       width: 100vw;
-//       height: 90vh; /* Adjusting this will make the content higher up on the page */
-//       position: absolute;
-//       z-index: 1;
-//       margin-top: 10vh;
-      height: 0;
+        width: 100vw;
+        height: 90vh;
+        background: linear-gradient(to right, #0b0b09, rgba(11, 11, 9, 0) 30%, rgba(11, 11, 9, 0) 70%, #0b0b09), url(/assets/images/surf-image.jpg);
+        margin-top: 10vh;
+        background-position: 0 100%;
+        background-size: cover;
+        position: fixed;
+        z-index: 1;
+        opacity: 0.7;
+//         margin-left: 2.5vw;
     }
 
     .content-alignment-container{
-      margin-top: 11vh;
+      margin-top: 13vh;
+//       margin-bottom: 5vh;
       display: flex;
       flex-direction: row;
-      padding-left: 10vw;
-      padding-right: 10vw;
-      width: 80vw;
+//       padding-left: 10vw;
+//       padding-right: 10vw;
+//       width: 80vw;
 //       justify-content: space-between;
 //       justify-content: flex-end;
 //       gap: 1vw;
       }
 
     .primary-images-container{
-        width: 39vw;
+//       background: #0b0b09;
+//         width: 39vw;
+        width: 25vw;
         height: auto;
-        outline: 1px solid white;
+//         outline: 1px solid white;
         margin-right: 1vw;
         padding: 10px;
-        margin-bottom: 5vh;
+        margin-left: 10vw;
+        z-index: 10;
+//         margin-bottom: 5vh;
     }
 
-    .secondary-content-container{
+    .primary-content-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+//       background-image: url('/assets/images/surf-image.jpg');
         margin-left: 1vw;
-        width: 39vw;
-        height: 1000px;
-        outline: 1px solid white;
+//         width: 39vw;
+        width: 53vw;
+//         height: 1000px;
+//         outline: 1px solid white;
+        z-index: 10;
+      }
+
+        .primary-content-container .top-text {
+            text-align: right;
+          }
+
+                .primary-content-container .bottom-text {
+                    width: 70%;
+                  }
+
+    .primary-content-container .top-text h1 {
+      margin-top: 0;
+      font-size: 5vw;
+      font-family: 'Roboto', sans-serif;
+      }
+    .primary-content-container .top-text h2 {
+      margin-bottom: 0;
+         font-size: 4vw;
+         font-family: 'Roboto', sans-serif;
+         }
+
+       .primary-content-container .bottom-text h2{
+         text-align: left;
+         margin-bottom: 1vh;
+         }
+
+     .primary-content-container .bottom-text h3 {
+          font-size: 1.2vw;
+//           bottom: 0;
+          margin-top: 0;
+          margin-bottom: 2vh;
+       }
+
+    .secondary-images-container{
+      display: flex;
+      flex-direction: column;
+      width: 80vw;
+      margin-left: 10vw;
+      margin-top: 5vh;
+      margin-bottom: 5vh;
       }
 
     .image-label {
@@ -72,13 +128,23 @@ html, body{
         position: relative; /* Ensure it stays within the document flow but on top of the parallax */
         display: flex;
         flex-direction: column;
-//         align-items: flex-start;
         align-items: center;
         justify-content: center;
         height: auto;
         gap: 2vh; //CONTROL SPACING BETWEEN IMAGES
         padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
     }
+
+      .secondary-images-section {
+          position: relative; /* Ensure it stays within the document flow but on top of the parallax */
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          height: auto;
+          gap: 2vh; //CONTROL SPACING BETWEEN IMAGES
+          padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
+      }
 
     .individual-image-container {
       position: relative; /* Ensure it stays within the document flow but on top of the parallax */
@@ -118,33 +184,69 @@ html, body{
       overflow-x: hidden; /* Prevent horizontal overflow */
   }
   .parallax {
-    background-image: url('/assets/images/costa-rica2.jpg');
+//     background-image: url('/assets/images/costa-rica2.jpg');
+    background-image: url('/assets/images/surf-image.jpg');
     background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
-    background-size: 100vw auto;
-    background-position: top left;
+//     background-size: 100vw auto;
+    background-size: auto 96vh;
+    background-position: 30% 100%;
     background-repeat: no-repeat;
     width: 100vw;
-    height: 92vh; /* Adjusting this will make the content higher up on the page */
+    height: 96vh; /* Adjusting this will make the content higher up on the page */
     position: absolute;
     z-index: 1;
-//     margin-top: 8vh;
+    margin-top: 4vh;
+    opacity: 0.6;
   }
+
+  .content-alignment-container {
+    margin-top: 9vh;
+     display: flex;
+     flex-direction: column;
+    }
 
   .primary-images-container{
       width: 80vw;
-      margin: 8vh auto 4vh;
+      margin: 2vh auto 4vh;
+//       margin-top: 12vh;
       height: auto;
       display: block;
+      order: 1;
   }
 
-  .secondary-content-container {
+  .primary-content-container {
     width: 80vw;
     height: 50px;
-    outline: 2px solid white;
+//     outline: 2px solid white;
     margin-left: 10vw;
     margin-bottom: 5vw;
     position: relative;
     z-index: 2;
+    order: 2;
+    text-align: right;
+    }
+
+  .primary-content-container h2{
+    font-size: 4vw;
+    margin-bottom: 0;
+    }
+
+    .primary-content-container h1{
+      font-size: 7vw;
+      margin-top: 0;
+      }
+
+    .primary-content-container .bottom-text {
+      display: none;
+      }
+
+  .secondary-images-container {
+    width: 80vw;
+    margin: 8vh auto 4vh;
+    height: auto;
+    display: block;
+    order: 3;
+
     }
 
   .image-label {
