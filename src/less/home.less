@@ -173,7 +173,7 @@ html, body{
 @media only screen and (max-width: 786px) {
   body {
       margin: 0;
-      height: 100vh;
+      height: 100dvh;
       overflow-x: hidden; /* Prevent horizontal overflow */
   }
   .parallax {
@@ -181,11 +181,11 @@ html, body{
     background-image: url('/assets/images/surf-image.jpg');
     background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
 //     background-size: 100vw auto;
-    background-size: auto 96vh;
+    background-size: auto 96dvh;
     background-position: 30% 100%;
     background-repeat: no-repeat;
     width: 100vw;
-    height: 96vh; /* Adjusting this will make the content higher up on the page */
+    height: 96dvh; /* Adjusting this will make the content higher up on the page */
     position: absolute;
     z-index: 1;
     margin-top: 4vh;
@@ -220,12 +220,12 @@ html, body{
     }
 
   .primary-content-container h2{
-    font-size: 4vw;
+    font-size: 5vw;
     margin-bottom: 0;
     }
 
     .primary-content-container h1{
-      font-size: 7vw;
+      font-size: 6vw;
       margin-top: 0;
       }
 
@@ -245,10 +245,12 @@ html, body{
   .image-label {
     position: relative;
     z-index: 2;
-    top: 1vh;
+//     top: 2rem;
     width: 100%;
     text-align: left;
     color: white;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .image-label h2 {
