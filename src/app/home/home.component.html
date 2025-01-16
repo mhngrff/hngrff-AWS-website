@@ -40,14 +40,14 @@
   </div>
 
   <div class="secondary-images-container">
-
+  <hr>
   <div class="image-label">
     <h2>SHOP INDIVIDUAL PRINTS</h2>
   </div>
 
   <div class="secondary-images-section">
     <div class="individual-image-container" *ngFor="let image of images | slice:1:4">
-      <p>{{ image.title }}</p>
+<!--      <p>{{ image.title }}</p>-->
       <a (click)="goToDetails(image.id)">
         <img
          class="image"
@@ -57,7 +57,6 @@
     </div>
   </div>
   </div>
-
 <footer>
   <div class="footer-content">
     <div class="footer-icons">
