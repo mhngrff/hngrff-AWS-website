@@ -78,7 +78,11 @@
 
     </div>
     </div>
+      <div class="extra-information">
+    <p *ngIf="metadata.title == 'INSHORE SLAM'"> - For a detailed view of each work, try shopping <a> individual prints </a> and selecting the expand icon. <br /><br /> - Inspired by the INSHORE SLAM, an anglers achievement of catching 3 inshore species in a single day. <br /><br />From top to bottom: Redfish, speckled trout, flounder </p>
+    <p *ngIf="metadata.title != 'INSHORE SLAM'"> - For a detailed view of this piece, select the expand icon in the bottom left of the first image. <br /><br /> </p>
 
+    </div>
   </div>
   </div>
 </div>
