@@ -20,7 +20,7 @@
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
           "price": 300.00,
-          "imageUrl": "/assets/images/fish-slam-framed3.jpg",
+          "imageUrl": "/assets/images/fish-slam-framed4.jpg",
           "weight": 0.5,
           "productId": "D2"
         },
@@ -54,7 +54,7 @@
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
           "price": 200.00,
-          "imageUrl": "/assets/images/redfish-framed3.jpg",
+          "imageUrl": "/assets/images/redfish-framed4.jpg",
           "weight": 0.2,
           "productId": "A2"
         }
@@ -80,7 +80,7 @@
           "type": "framed",
           "subtitle": "TROUT - FRAMED PRINT",
           "price": 200.00,
-          "imageUrl": "/assets/images/trout-framed3.jpg",
+          "imageUrl": "/assets/images/trout-framed4.jpg",
           "weight": 0.2,
           "productId": "B2"
         }
@@ -106,7 +106,7 @@
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED PRINT",
           "price": 200.00,
-          "imageUrl": "/assets/images/flounder-framed2.jpg",
+          "imageUrl": "/assets/images/flounder-framed4.jpg",
           "weight": 0.2,
           "productId": "C2"
         }
