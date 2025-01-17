@@ -1,7 +1,5 @@
-/* Content styling for desktop */
 html, body{
   background-color: #0b0b09;
-//   overscroll-behavior: none;
   }
 
 /* DESKTOP */
@@ -153,7 +151,6 @@ html, body{
       transform: scale(1.03);
       }
 
-
     p {
       margin: 0;
       color: white;
@@ -164,11 +161,6 @@ html, body{
 
 }
 
-
-
-
-
-
 /* MOBILE */
 @media only screen and (max-width: 786px) {
   body {
@@ -177,15 +169,13 @@ html, body{
       overflow-x: hidden; /* Prevent horizontal overflow */
   }
   .parallax {
-//     background-image: url('/assets/images/costa-rica2.jpg');
     background-image: url('/assets/images/surf-image.jpg');
-    background-attachment: scroll; /* local simulates what mobile actually looks like (no parallax) */
-//     background-size: 100vw auto;
+    background-attachment: scroll;
     background-size: auto 96dvh;
     background-position: 30% 100%;
     background-repeat: no-repeat;
     width: 100vw;
-    height: 96dvh; /* Adjusting this will make the content higher up on the page */
+    height: 96dvh;
     position: absolute;
     z-index: 1;
     margin-top: 4vh;
@@ -199,43 +189,51 @@ html, body{
     }
 
   .primary-images-container{
-      width: 80vw;
-      margin: 1vh auto 1vh;
-//       margin-top: 12vh;
+      width: 100vw;
       height: auto;
       display: block;
       order: 1;
   }
 
   .primary-content-container {
-    width: 80vw;
-    height: 50px;
-//     outline: 2px solid white;
-    margin-left: 10vw;
-    margin-bottom: 5vw;
+    width: 100%;
+    height: auto;
     position: relative;
     z-index: 2;
     order: 2;
     text-align: right;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     }
 
   .primary-content-container h2{
     font-size: 5vw;
     margin-bottom: 0;
+    padding-right: 10%;
     }
 
-    .primary-content-container h1{
-      font-size: 6vw;
-      margin-top: 0;
-      }
+  .primary-content-container h1{
+    font-size: 6vw;
+    margin-top: 0;
+    padding-right: 10%;
+    }
 
-    .primary-content-container .bottom-text {
-      display: none;
-      }
+  .primary-content-container .bottom-text {
+    display: none;
+    }
+
+  hr {
+    width: 80%;
+    height: 1px;
+    color: white;
+    background-color: white;
+    margin: 0;
+    margin-left: 10%;
+    }
 
   .secondary-images-container {
-    width: 80vw;
-    margin: 4vh auto 4vh;
+    width: 100vw;
+    margin: 0 auto 4vh;
     height: auto;
     display: block;
     order: 3;
@@ -245,37 +243,47 @@ html, body{
   .image-label {
     position: relative;
     z-index: 2;
-//     top: 2rem;
     width: 100%;
     text-align: left;
     color: white;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    padding-left: 10%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .image-label h2 {
-      font-family: 'Roboto', sans-serif;
-      font-weight: 400;
-      font-size: 5vw; /* Adjust font size for headings */
-      margin-bottom: 3vh;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 5vw;
   }
 
   .images-section {
-      position: relative; /* Ensure it stays within the document flow but on top of the parallax */
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      align-items: center;
-      height: auto;
-      padding: 0; //SPACE BETWEEN FIRST IMAGE AND IMAGE LABEL
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center;
+    height: auto;
+    padding: 0;
+  }
+
+  .secondary-images-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center;
+    height: auto;
+    padding: 0;
   }
 
   .individual-image-container {
-    position: relative; /* Ensure it stays within the document flow but on top of the parallax */
-    z-index: 2; /* Ensure images are above the background */
+    position: relative;
+    z-index: 2;
     display: block;
-    width: 80vw;
-    margin-bottom: 5vw;
+    width: 100%;
+    padding-left: 20%;
+    padding-bottom: 5vw;
   }
 
   .images-section a {

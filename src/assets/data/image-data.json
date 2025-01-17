@@ -3,7 +3,7 @@
     {
       "id": "slam",
       "title": "INSHORE SLAM",
-      "description": "3 prints, individually proofed, numbered, and signed.",
+      "description": "3 prints, individually proofed, numbered, and signed. Each print is 1 of 100. ",
       "currency": "USD",
       "zoomImage": "",
       "thumbnail": "/assets/images/fishslam-1-200w.jpg",
@@ -37,7 +37,7 @@
     {
       "id": "redfish",
       "title": "REDFISH",
-      "description": "Individually proofed, numbered, and signed.",
+      "description": "Individually proofed, numbered, and signed. 1 of 100. ",
       "currency": "USD",
       "zoomImage": "/assets/images/redfish-high-def.jpg",
       "thumbnail": "/assets/images/redfish-1-200w.jpg",
@@ -63,7 +63,7 @@
     {
       "id": "trout",
       "title": "TROUT",
-      "description": "Individually proofed, numbered, and signed.",
+      "description": "Individually proofed, numbered, and signed. 1 of 100.",
       "currency": "USD",
       "zoomImage": "/assets/images/trout-high-def.jpg",
       "thumbnail": "/assets/images/trout-1-200w.jpg",
@@ -89,7 +89,7 @@
     {
       "id": "flounder",
       "title": "FLOUNDER",
-      "description": "Individually proofed, numbered, and signed.",
+      "description": "Individually proofed, numbered, and signed. 1 of 100.",
       "currency": "USD",
       "zoomImage": "/assets/images/flounder-high-def.jpg",
       "thumbnail": "/assets/images/flounder-1-200w.jpg",
