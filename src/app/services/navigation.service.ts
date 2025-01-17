@@ -14,6 +14,10 @@ export class NavigationService {
     this.router.navigate(['/']);
   }
 
+  goToIndividualPrints(): void {
+  this.router.navigate(['/'], { queryParams: { scrollTo: 'individualPrints' } });
+  }
+
   goToDetails(imageId: string): void {
     this.router.navigate(['/details', imageId]);
   }

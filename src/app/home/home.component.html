@@ -45,7 +45,7 @@
     <h2>SHOP INDIVIDUAL PRINTS</h2>
   </div>
 
-  <div class="secondary-images-section">
+  <div class="secondary-images-section" id="individualPrints">
     <div class="individual-image-container" *ngFor="let image of images | slice:1:4">
 <!--      <p>{{ image.title }}</p>-->
       <a (click)="goToDetails(image.id)">

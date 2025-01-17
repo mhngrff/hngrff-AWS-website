@@ -280,4 +280,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       }
   }
 
+  goToIndividualPrints(){
+    this.navigationService.goToIndividualPrints();
+  }
 }

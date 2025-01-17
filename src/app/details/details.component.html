@@ -48,18 +48,18 @@
 
       <p>{{ metadata.description }}</p>
 
+      <label>Framing options </label>
       <div class = "input-section">
-      <div class="dropdown-increment-row">
-      <!-- Dropdown to select version (unframed, framed, etc.) -->
-      <div class="option-selector" *ngIf="metadata.options && metadata.options.length > 0">
-<!--        <label for="options-dropdown">Select an option:</label>-->
-        <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
-          <option *ngFor="let option of metadata.options" [value]="option.subtitle">
-            {{ option.subtitle }}
-          </option>
-        </select>
-      </div>
-
+        <div class="dropdown-increment-row">
+        <!-- Dropdown to select version (unframed, framed, etc.) -->
+          <div class="option-selector" *ngIf="metadata.options && metadata.options.length > 0">
+<!--            <label for="options-dropdown">Style </label>-->
+            <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
+              <option *ngFor="let option of metadata.options" [value]="option.subtitle">
+              {{ option.subtitle }}
+              </option>
+            </select>
+          </div>
         <div class="details-quantity-editor">
           <span class="details-decrement" (click)="decrementQuantity()">-</span>
           <span class="details-quantity-value">{{ quantity }}</span>
@@ -78,11 +78,49 @@
 
     </div>
     </div>
-      <div class="extra-information">
-    <p *ngIf="metadata.title == 'INSHORE SLAM'"> - For a detailed view of each work, try shopping <a> individual prints </a> and selecting the expand icon. <br /><br /> - Inspired by the INSHORE SLAM, an anglers achievement of catching 3 inshore species in a single day. <br /><br />From top to bottom: Redfish, speckled trout, flounder </p>
-    <p *ngIf="metadata.title != 'INSHORE SLAM'"> - Select the expand icon in the bottom left corner to view fine details. <br /><br /> </p>
+      <div class="slam-information" *ngIf="metadata.title == 'INSHORE SLAM'">
+<!--        <p>{{ metadata.description }}</p>-->
+        <p> Inspired by the INSHORE SLAM, an anglers achievement of catching 3 inshore species in a single day. From top to bottom: Redfish, speckled trout, flounder<br /><br/></p>
+        <p> For a detailed view of each work, try shopping <a (click)="goToIndividualPrints()"> individual prints</a> and selecting the expand icon. <br/><br/></p>
+        <p><strong> PRINTS: </strong><br/></p>
+        <p> - Original medium: White and Black ink on toned gray paper<br/></p>
+        <p> - Size: 3 prints, each 6.5"x12" <br/></p>
+        <p> - Printed with archival inks on photo matte paper<br/><br/></p>
 
-    </div>
+        <p><strong>  SINGLE FRAME: </strong><br/></p>
+        <p> - Rustic black frame<br/></p>
+        <p> - 3/4" white mat around borders<br/></p>
+        <p> - 1/2" white mat between fish<br/></p>
+        <p> - Glass front<br/></p>
+        <p> - Wire hanger<br/></p>
+        <p> - felt pads for nonabrasive hanging<br/><br/></p>
+
+        <p><strong>  INDIVIDUAL FRAMES: </strong><br/></p>
+        <p> - My personal favorite display option<br/></p>
+        <p> - 3 rustic black frames<br/></p>
+        <p> - 1" white mats <br/></p>
+        <p> - Glass fronts <br/></p>
+        <p> - Wire hangers <br/></p>
+        <p> - felt pads for nonabrasive hanging<br/><br /></p>
+        <p> Frames are made to order, please allow 7 days for production</p>
+
+      </div>
+      <div class="singles-information" *ngIf="metadata.title != 'INSHORE SLAM'">
+        <p> Select the expand icon in the bottom left corner to view fine details. <br /><br /> </p>
+        <p><strong> PRINTS: </strong><br/><br></p>
+        <p> - Original medium: White and Black ink on toned gray paper<br/></p>
+        <p> - Size: 6.5"x12" <br/></p>
+        <p> - Printed with archival inks on photo matte paper<br/><br/></p>
+
+        <p><strong>  FRAMES: </strong><br/></p>
+        <p> - Rustic black frame<br/></p>
+        <p> - 1" white mat<br/></p>
+        <p> - Glass front<br/></p>
+        <p> - Wire hanger<br/></p>
+        <p> - felt pads for nonabrasive hanging<br/><br/></p>
+        <p> Frames are made to order, please allow 7 days for production</p>
+
+      </div>
   </div>
   </div>
 </div>
