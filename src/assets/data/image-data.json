@@ -28,7 +28,7 @@
           "type": "three_frames",
           "subtitle": "SLAM - PRINTS IN 3 FRAMES",
           "price": 500.00,
-          "imageUrl": "/assets/images/fish-slam-individual-framed.jpg",
+          "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg",
           "weight": 0.6,
           "productId": "D3"
         }
@@ -39,7 +39,7 @@
       "title": "REDFISH",
       "description": "Individually proofed, numbered, and signed. 1 of 100. ",
       "currency": "USD",
-      "zoomImage": "/assets/images/redfish-high-def.jpg",
+      "zoomImage": "/assets/images/redfish-1-1200w.jpg",
       "thumbnail": "/assets/images/redfish-1-200w.jpg",
       "options": [
         {
@@ -54,7 +54,7 @@
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
           "price": 200.00,
-          "imageUrl": "/assets/images/redfish-framed4.jpg",
+          "imageUrl": "/assets/images/redfish-framed5.jpg",
           "weight": 0.2,
           "productId": "A2"
         }
@@ -65,7 +65,7 @@
       "title": "TROUT",
       "description": "Individually proofed, numbered, and signed. 1 of 100.",
       "currency": "USD",
-      "zoomImage": "/assets/images/trout-high-def.jpg",
+      "zoomImage": "/assets/images/trout-1-1200w.jpg",
       "thumbnail": "/assets/images/trout-1-200w.jpg",
       "options": [
         {
@@ -80,7 +80,7 @@
           "type": "framed",
           "subtitle": "TROUT - FRAMED PRINT",
           "price": 200.00,
-          "imageUrl": "/assets/images/trout-framed4.jpg",
+          "imageUrl": "/assets/images/trout-framed5.jpg",
           "weight": 0.2,
           "productId": "B2"
         }
@@ -91,7 +91,7 @@
       "title": "FLOUNDER",
       "description": "Individually proofed, numbered, and signed. 1 of 100.",
       "currency": "USD",
-      "zoomImage": "/assets/images/flounder-high-def.jpg",
+      "zoomImage": "/assets/images/flounder-1-1200w.jpg",
       "thumbnail": "/assets/images/flounder-1-200w.jpg",
       "options": [
         {
@@ -106,7 +106,7 @@
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED PRINT",
           "price": 200.00,
-          "imageUrl": "/assets/images/flounder-framed4.jpg",
+          "imageUrl": "/assets/images/flounder-framed5.jpg",
           "weight": 0.2,
           "productId": "C2"
         }
