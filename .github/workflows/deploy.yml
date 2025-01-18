@@ -11,41 +11,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20.17.0'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.17.0'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
 
-      - name: Install Gulp
-        run: npm install --global gulp-cli
+    - name: Install Gulp
+      run: npm install --global gulp-cli
 
-      - name: Run Gulp
-        run: gulp less
+    - name: Run Gulp
+      run: gulp less
 
-      - name: Build
-        run: |
-          if [ "${{ github.ref_name }}" == "prod"]; then
-            ng build --configuration production
-          else
-            ng build --configuration development
-          fi
+    - name: Build
+      run: |
+        if [ "${{ github.ref_name }}" == "prod"]; then
+          ng build --configuration production
+        else
+          ng build --configuration development
+        fi
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
 
-      - name: Sync files to S3
-        run: |
-          aws s3 sync ./dist/hngrff-angular-app s3://hngrff.com --delete
+    - name: Sync files to S3
+      run: |
+        aws s3 sync ./dist/hngrff-angular-app s3://hngrff.com --delete
