@@ -3,17 +3,20 @@
     <div class="loading-spinner"> {{ spinnerText }}</div>
   </ng-container>
 
-  <ng-container *ngIf="!isLoading && !errorMessage">
+<!--  <ng-container *ngIf="!isLoading && !errorMessage">-->
+
+    <div class="success-alignment-container">
 
     <div class="success-message">
       <h1>Order Successful </h1>
 <!--      <h3>{{ orderDetails.OrderId }}</h3>-->
       <p>
-        Thank you for your purchase, <br />{{ orderDetails.customerName }}. <br /><br />
+        Thank you for your purchase, {{ orderDetails.customerName }}. <br /><br />
         A stripe invoice and a copy of your order summary has been sent to <strong>{{ orderDetails.customerEmail }}</strong>. <br /><br /> Check your inbox, or take a screenshot for your records.
       </p>
     </div>
 
+      <div class="order-container">
     <div class="success-summary-items">
       <div class="orderid-download-row">
         <h3>{{ orderDetails.orderId }}</h3>
@@ -57,7 +60,8 @@
         {{ orderDetails.shippingAddress.country }}
       </p>
     </div>
-  </ng-container>
+      </div>
+<!--  </ng-container>-->
 
   <ng-container *ngIf="errorMessage">
     <div class="error-message">
