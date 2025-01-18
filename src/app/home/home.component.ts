@@ -17,6 +17,7 @@ import { filter } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   images: Image[] = [];
+  imageLoaded: boolean = false;
 
   constructor(
     private imageService: ImageService,
@@ -45,6 +46,11 @@ export class HomeComponent implements OnInit {
         }, 150); // Delay to ensure DOM is rendered
       }
     });
+  }
+
+
+  onImageLoad(): void{
+    this.imageLoaded = true;
   }
 
   goToDetails(imageId: string): void {

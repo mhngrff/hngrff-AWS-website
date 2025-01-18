@@ -1,46 +1,125 @@
-.about-container{
-//   height: 83vh; //Figure out what's going on with footer, this should help with home page issues
-  margin-left: 5vw;
-  margin-top: 10vh;
-  width: 90vw;
+
+@media only screen and (max-width: 786px) {
+
+  .about-container{
+    margin-left: 5vw;
+    margin-top: 10vh;
+    width: 90vw;
+    }
+
+  .about-container p {
+  //   margin-top: 10vh;
+    font-size: 16px;
+    line-height: 1.5rem;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+  //   margin-left: 10vw;
+    }
+
+  hr {
+    height: 1px;
+    width: 100%;
+    margin: 0;
+    margin-top: 2rem;
+    }
+  .about-me-photos, .about-website-photos {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    }
+
+   .about-me-photos .overlay-header, .about-website-photos .overlay-header {
+    position: absolute;
+     top: 78%; /* Center vertically */
+      left: 3%;
+  //     transform: translate(-50%, -50%);
+    }
+  .about-me-photos h1, .about-website-photos h1 {
+    font-size: 7vw;
+    }
+
+  .about-me-photos img, .about-website-photos img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    }
   }
 
-.about-container p {
-//   margin-top: 10vh;
-  font-size: 16px;
-  line-height: 1.5rem;
-  padding-left: 2.5%;
-  padding-right: 2.5%;
-//   margin-left: 10vw;
-  }
+@media only screen and (min-width: 786px) {
 
-hr {
-  height: 1px;
-  width: 100%;
-  margin: 0;
-  margin-top: 2rem;
-  }
-.about-me-photos, .about-website-photos {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-  }
+    .about-content-alignment-container {
+      display: flex;
+      flex-direction: column;
+      }
 
- .about-me-photos .overlay-header, .about-website-photos .overlay-header {
-  position: absolute;
-   top: 78%; /* Center vertically */
-    left: 3%;
-//     transform: translate(-50%, -50%);
-  }
-.about-me-photos h1, .about-website-photos h1 {
-  font-size: 7vw;
-  }
+    .about-container{
+      margin-left: 10vw;
+      margin-top: 10vh;
+      width: 80vw;
+      }
 
-.about-me-photos img, .about-website-photos img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+    .about-me-container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      }
+
+    .about-me-text{
+      order: 1;
+//       width: 100vw;
+      }
+
+    .about-me-photos {
+//       width: 20%;
+      order: 2;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+
+      }
+
+    .about-container p {
+    //   margin-top: 10vh;
+      font-size: 16px;
+      line-height: 1.5rem;
+      padding-left: 2.5%;
+      padding-right: 2.5%;
+    //   margin-left: 10vw;
+      }
+
+    hr {
+      height: 1px;
+      width: 100%;
+      margin: 0;
+      margin-top: 2rem;
+      }
+    .about-me-photos, .about-website-photos {
+//       width: 100%;
+//       height: 100%;
+//       position: relative;
+//       display: inline-block;
+//       margin-bottom: 0.5rem;
+      }
+
+     .about-me-photos .overlay-header, .about-website-photos .overlay-header {
+      position: absolute;
+       top: 78%; /* Center vertically */
+        left: 3%;
+    //     transform: translate(-50%, -50%);
+      }
+    .about-me-photos h1, .about-website-photos h1 {
+      font-size: 7vw;
+      }
+
+    .about-me-photos img, .about-website-photos img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      }
+
+
   }

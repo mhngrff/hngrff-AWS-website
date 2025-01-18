@@ -6,16 +6,19 @@
 
   <div class="primary-images-container">
 
-<!--    <div class="images-section">-->
-      <div class="individual-image-container" *ngFor="let image of images | slice:0:1">
-       <a (click)="goToDetails(image.id)">
+<!--      <div class="individual-image-container" *ngFor="let image of images | slice:0:1">-->
+      <div class="primary-image-wrapper">
+<!--      <div class="primary-image-wrapper" *ngFor="let image of images | slice:0:1">-->
+       <a *ngFor="let image of images | slice:0:1" (click)="goToDetails(image.id)">
           <img
-           class="image"
-           [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
-            [alt]="image.title + ' drawing'">
+            class="image"
+            [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+            [alt]="image.title"
+            [class.loaded]="imageLoaded"
+            (load)="onImageLoad()">
         </a>
       </div>
-<!--    </div>-->
+<!--      </div>-->
   </div>
 
     <div class="primary-content-container">
@@ -39,7 +42,8 @@
   </div>
 
   <div class="secondary-images-section" id="individualPrints">
-    <div class="individual-image-container" *ngFor="let image of images | slice:1:4">
+<!--    <div class="individual-image-container" *ngFor="let image of images | slice:1:4">-->
+    <div class="secondary-image-wrapper" *ngFor="let image of images | slice:1:4">
       <a (click)="goToDetails(image.id)">
         <img
          class="image"
