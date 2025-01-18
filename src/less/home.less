@@ -2,11 +2,29 @@ html, body{
   background-color: #0b0b09;
   }
 
+.bottom-hr {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 4%;
+  }
+
+ .line {
+   position: relative;
+   height: 1px;
+   background-color: white;
+   width: 100%;
+   z-index: 3;
+   }
+
 /* DESKTOP */
 @media only screen and (min-width: 786px) {
     body {
         overflow-x: hidden;
     }
+
+    .bottom-hr{
+      display: none;
+      }
 
     .parallax {
         width: 100vw;
@@ -292,6 +310,24 @@ html, body{
     font-weight: 300;
     z-index: 1000;
   }
+
+    .line {
+      position: relative;
+      height: 1px;
+      background-color: white;
+      width: 80%;
+      margin-left: 10%;
+      z-index: 3;
+      }
+
+    .bottom-line {
+      position: relative;
+      height: 1px;
+      background-color: gray;
+            width: 80%;
+            margin-left: 10%;
+      z-index: 3;
+      }
 
 }
 
