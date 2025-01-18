@@ -1,19 +1,13 @@
 <body>
 
-  <!--<section class="parallax-container">-->
     <div class="parallax"></div>
-  <!--</section>-->
 
   <div class="content-alignment-container">
 
   <div class="primary-images-container">
-<!--    <div class="image-label">-->
-<!--      <h2>INSHORE COLLECTION - INDIVIDUAL PRINTS</h2>-->
-<!--    </div>-->
 
-    <div class="images-section">
+<!--    <div class="images-section">-->
       <div class="individual-image-container" *ngFor="let image of images | slice:0:1">
-<!--        <p>{{ image.title }}</p>-->
        <a (click)="goToDetails(image.id)">
           <img
            class="image"
@@ -21,7 +15,7 @@
             [alt]="image.title + ' drawing'">
         </a>
       </div>
-    </div>
+<!--    </div>-->
   </div>
 
     <div class="primary-content-container">
@@ -32,13 +26,11 @@
       </div>
       <div class="bottom-text">
         <h2>the INSHORE SLAM</h2>
-<!--        <h3> catching redfish, speckled trout, and flounder in the same day. Celebrate the beautiful Lowcountry with this hand-drawn limited collection.</h3>-->
         <h3> redfish, speckled trout, flounder <br /> 100 prints made, individually signed and numbered </h3>
       </div>
     </div>
     </div>
 
-<!--  </div>-->
 
   <div class="secondary-images-container">
   <hr>
@@ -48,7 +40,6 @@
 
   <div class="secondary-images-section" id="individualPrints">
     <div class="individual-image-container" *ngFor="let image of images | slice:1:4">
-<!--      <p>{{ image.title }}</p>-->
       <a (click)="goToDetails(image.id)">
         <img
          class="image"
