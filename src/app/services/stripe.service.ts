@@ -27,6 +27,7 @@ export class StripeService {
   async initializeStripe() {
     if (!this.stripe) {
       this.stripe = await loadStripe(environment.stripePublicKey);
+      console.log("stripe pk=", this.stripe);
     }
     if (this.stripe && !this.elements) {
       this.elements = this.stripe.elements();
