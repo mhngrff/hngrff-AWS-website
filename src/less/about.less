@@ -1,7 +1,7 @@
 .about-container{
 //   height: 83vh; //Figure out what's going on with footer, this should help with home page issues
   margin-left: 5vw;
-  margin-top: 15vw;
+  margin-top: 10vh;
   width: 90vw;
   }
 
@@ -9,6 +9,8 @@
 //   margin-top: 10vh;
   font-size: 16px;
   line-height: 1.5rem;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
 //   margin-left: 10vw;
   }
 
@@ -21,4 +23,25 @@ hr {
   width: 100%;
   margin: 0;
   margin-top: 2rem;
+  }
+.about-me-photos, .about-website-photos {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  }
+
+ .about-me-photos .overlay-header, .about-website-photos .overlay-header {
+  position: absolute;
+   top: 78%; /* Center vertically */
+    left: 3%;
+//     transform: translate(-50%, -50%);
+  }
+.about-me-photos h1, .about-website-photos h1 {
+  font-size: 7vw;
+  }
+
+.about-me-photos img, .about-website-photos img {
+  display: block;
+  width: 100%;
   }
