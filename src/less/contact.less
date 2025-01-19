@@ -1,9 +1,112 @@
 .contact-container{
-  height: 83vh; //Figure out what's going on with footer, this should help with home page issues
-  }
+  min-height: 80vh; //Figure out what's going on with footer, this should help with home page issues
+  margin-top: 5rem;
+  width: 80vw;
+  margin-left: 10vw;
+}
 
 .contact-container p {
-  margin-top: 10vh;
+  font-size: 18px;
+  z-index: 3;
+}
+
+.email-instagram, .faq {
+  background-color: #1a1a16;
+  padding: 5%;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.email, .insta {
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h3 {
+  margin: 0;
+}
+
+.header-arrow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 3rem;
+}
+
+.header-arrow h4 {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+.header-arrow .arrow {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 4;
+}
+
+.header-arrow .arrow.rotate {
+  transform: rotate(90deg);
+}
+
+.faq .line{
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  background-color: white;
+}
+
+.shipping-text, .framing-text, .tracking-text {
+
+  opacity: 0;
+  max-height: 0;
+  transition: max-height 0.5s ease, opacity 0.1s ease;
+}
+
+.shipping-text p, .framing-text p, .tracking-text p {
   font-size: 16px;
-  margin-left: 10vw;
+  line-height: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.shipping-text.hidden, .framing-text.hidden, .tracking-text.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.shipping-text:not(.hidden), .framing-text:not(.hidden), .tracking-text:not(.hidden){
+  max-height: 1000px;
+  opacity: 1;
+  transition: max-height 0.5s ease-out, opacity 0.1s ease-in;
+}
+
+@media only screen and (min-width: 786px) {
+  .contact-container{
+    min-height: 82dvh; //Figure out what's going on with footer, this should help with home page issues
+    margin-top: 5.75rem;
   }
+
+  .email-instagram, .faq {
+    background-color: #1a1a16;
+    padding: 2.5%;
+    border-radius: 4px;
+    margin-top: 4rem;
+    margin-bottom: 0;
+  }
+
+  .email-instagram {
+//     margin-top: 6rem;
+    }
+
+}
+

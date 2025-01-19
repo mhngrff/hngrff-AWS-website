@@ -1,5 +1,85 @@
 <div class="contact-container">
-  <p>contact page</p>
+<!--  <p>contact page</p>-->
+  <div class="contact-alignment-container">
+    <div class="email-instagram">
+      <div class="email">
+        <h3>email:</h3>
+        <p>matt.hanagriff&#64;gmail.com</p>
+      </div>
+      <div class="insta">
+        <h3>instagram: </h3>
+        <p>&#64;hngrff</p>
+      </div>
+    </div>
+    <div class="faq">
+
+      <h3>FAQ</h3>
+
+      <div class="header-arrow" (click)="toggleShipping()">
+        <h4>When will my order arrive?</h4>
+        <svg
+          class="arrow"
+          [class.rotate]="isShippingVisible"
+          viewBox="0 0 24 24"
+          fill="white"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="shipping-text" [class.hidden]="!isShippingVisible">
+<!--        <p><strong>When will my order ship?</strong><br /><br /></p>-->
+        <p [class.hidden]="!isShippingVisible">All shipments are based on <strong>UPS Ground</strong> (1-5 business days depending on location), shipped from Charleston, SC. <br/><br/> Framing is made to order, and takes about a week for production. I am notified immediately via SMS when your order is placed, so you can expect that the order fulfillment process will begin ASAP. </p>
+      </div>
+
+      <div class="line"></div>
+
+
+
+      <div class="header-arrow" (click)="toggleTracking()">
+        <h4>Can I track my order?</h4>
+        <svg
+          class="arrow"
+          [class.rotate]="isTrackingVisible"
+          viewBox="0 0 24 24"
+          fill="white"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="tracking-text" [class.hidden]="!isTrackingVisible">
+        <!--        <p><strong>When will my order ship?</strong><br /><br /></p>-->
+        <p> I can send you your UPS tracking number upon request. </p>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="header-arrow" (click)="toggleFraming()">
+        <h4>TBD</h4>
+          <svg
+            class="arrow"
+            [class.rotate]="isFramingVisible"
+            viewBox="0 0 24 24"
+            fill="white"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </div>
+
+      <div class="framing-text" [class.hidden]="!isFramingVisible">
+        <p>Future concerns will be addressed here. <br/><br/> What are you doing? Go buy something. </p>
+      </div>
+
+      <div class="line"></div>
+
+<!--      <h4>Etc</h4>-->
+
+<!--      <div class="line"></div>-->
+    </div>
+
+
+  </div>
 </div>
 
 <footer>
