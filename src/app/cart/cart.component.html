@@ -1,52 +1,3 @@
-<!--<body>-->
-<!--<div class="cart-container">-->
-<!--  <div *ngIf="cartItems.length === 0" class="empty-cart-message">-->
-<!--    <p>Your cart is empty. <a (click)="goToHome()">Browse products</a>.</p>-->
-<!--  </div>-->
-
-
-<!--  <div *ngIf="isBuyNowFlow() && (isCartVisible$ | async)" class="buy-now-warning">-->
-<!--    <p>-->
-<!--      You're currently proceeding to purchase a selected item.-->
-<!--      <a (click)="cancelBuyNowFlow()">Please cancel this purchase</a> or-->
-<!--      <a (click)="continueBuyNowFlow()">click here to continue</a>.-->
-<!--    </p>-->
-<!--  </div>-->
-
-<!--  <div *ngIf="cartItems.length > 0 && !isBuyNowFlow()" class="cart-has-items">-->
-<!--    <div *ngFor="let item of cartItems" class="cart-item">-->
-<!--      <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="cart-thumbnail" />-->
-
-<!--      <div class="cart-item-details">-->
-<!--        <p class="cart-item-subtitle">{{ item.optionSubtitle }} - {{ item.price | currency }}</p>-->
-<!--        <div class="quantity-editor">-->
-<!--          <span class="quantity-decrement" (click)="decrementQuantity(item)">-</span>-->
-<!--          <span class="quantity-value">{{ item.quantity }}</span>-->
-<!--          <span class="quantity-increment" (click)="incrementQuantity(item)">+</span>-->
-<!--        </div>-->
-<!--        <p class="remove-item" (click)="removeItem(item)">Remove</p>-->
-<!--&lt;!&ndash;        <p class="remove-item" #removeButton (click)="logAndRemove(item)">Remove</p>&ndash;&gt;-->
-
-
-<!--        &lt;!&ndash;        <p class="remove-item" (click)="logAndRemove(item)">Remove</p>&ndash;&gt;-->
-
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="cart-summary">-->
-<!--      <div class="cart-total">-->
-<!--        <h3>Subtotal: {{ total | currency }}</h3>-->
-<!--      </div>-->
-<!--      <p class="tax-shipping-text">Taxes and shipping calculated at checkout</p>-->
-
-<!--      <div class="checkout-button-container">-->
-<!--        <button class="checkout-button" (click)="goToPayment()">Checkout</button>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--  </div>-->
-<!--</div>-->
-<!--</body>-->
 <body>
 <div class="cart-container">
   <!-- Buy Now Warning Message -->
@@ -86,6 +37,18 @@
       <p class="tax-shipping-text">Shipping calculated at checkout</p>
 
       <div class="checkout-button-container">
+        <svg
+          class="exit"
+          width="800px"
+          height="800px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          (click)="closeCart()">
+          <g id="Menu / Close_MD">
+            <path id="Vector" d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
         <button class="checkout-button" (click)="goToPayment()">Checkout</button>
       </div>
     </div>

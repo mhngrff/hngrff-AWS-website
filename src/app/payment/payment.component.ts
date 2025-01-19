@@ -813,6 +813,7 @@ console.timeEnd("Create Order");
         if (this.subscription) {
           this.subscription.unsubscribe();
         }
+      this.cartService.setBuyNowFlow(false);
     }
 
 }

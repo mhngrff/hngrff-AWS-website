@@ -111,4 +111,8 @@ export class CartComponent implements OnInit {
     this.cartService.closeCart();
     }
 
+  closeCart(): void {
+    this.cartService.closeCart();
+    }
+
 }
