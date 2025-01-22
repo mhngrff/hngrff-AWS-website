@@ -383,6 +383,7 @@ console.time("Create Order");
                   shippingCost: this.shippingCost,
                   shippingAddress: {
                     street: formData.addressLine1,
+                    addressLine2: formData.addressLine2 || null,
                     city: formData.city,
                     state: formData.state,
                     zip: formData.zip,

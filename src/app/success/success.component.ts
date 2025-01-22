@@ -23,6 +23,7 @@ interface OrderDetails {
   shippingCost: number;
   shippingAddress: {
     street: string;
+    addressLine2?: string;
     city: string;
     state: string;
     zip: string;

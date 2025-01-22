@@ -3,72 +3,72 @@
     <div class="loading-spinner"> {{ spinnerText }}</div>
   </ng-container>
 
-<!--  <ng-container *ngIf="!isLoading && !errorMessage">-->
-
     <div class="success-alignment-container">
 
-    <div class="success-message">
-      <h1>Order Successful </h1>
-<!--      <h3>{{ orderDetails.OrderId }}</h3>-->
-      <p>
-        Thank you for your purchase, {{ orderDetails.customerName }}. <br /><br />
-        A stripe invoice and a copy of your order summary has been sent to <strong>{{ orderDetails.customerEmail }}</strong>. <br /><br /> Check your inbox, or take a screenshot for your records.
-      </p>
-    </div>
+      <div class="success-message">
+        <h1>Order Successful </h1>
+        <p>
+          Thank you for your purchase, {{ orderDetails.customerName }}. <br /><br />
+          A stripe invoice and a copy of your order summary has been sent to <strong>{{ orderDetails.customerEmail }}</strong>. <br /><br /> Check your inbox, or take a screenshot for your records.
+        </p>
+      </div>
 
       <div class="order-container">
-    <div class="success-summary-items">
-      <div class="orderid-download-row">
-        <h3>{{ orderDetails.orderId }}</h3>
-      </div>
-      <div *ngIf="orderDetails.products.length > 0" class="success-items">
-        <div *ngFor="let item of orderDetails.products" class="success-item">
-          <img [src]="item.thumbnailUrl" [alt]="item.productName" class="success-thumbnail" />
-          <div class="success-subtitle-quantity-price">
-            <p>
-              {{ item.productName }}
-              <span class="quantity"> x {{ item.quantity }}</span> &nbsp;
-              <span class="price">{{ item.unitPrice | currency }}</span>
-            </p>
+        <div class="success-summary-items">
+          <div class="orderid-download-row">
+            <h3>{{ orderDetails.orderId }}</h3>
+          </div>
+          <div *ngIf="orderDetails.products.length > 0" class="success-items">
+            <div *ngFor="let item of orderDetails.products" class="success-item">
+              <img [src]="item.thumbnailUrl" [alt]="item.productName" class="success-thumbnail" />
+              <div class="success-subtitle-quantity-price">
+              <p>
+                {{ item.productName }}
+                <span class="quantity"> x {{ item.quantity }}</span> &nbsp;
+                <span class="price">{{ item.unitPrice | currency }}</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+
+        <div class="success-subtotal-row">
+          <p>Subtotal</p>
+          <p>{{ orderDetails.subtotal | currency }}</p>
+        </div>
+
+        <div class="success-shipping-cost-row">
+          <p>Shipping</p>
+          <p>{{ orderDetails.shippingCost | currency }}</p>
+        </div>
+
+        <div class="success-grand-total-row">
+          <h3>Total</h3>
+          <h3>{{ orderDetails.total | currency }}</h3>
+        </div>
+
+        <div class="shipping-information">
+          <h3>Ship to: </h3>
+          <p>
+            {{ orderDetails.customerName }} <br />
+            {{ orderDetails.shippingAddress.street }}<br />
+            <span *ngIf="orderDetails.shippingAddress.addressLine2">
+              {{ orderDetails.shippingAddress.addressLine2 }} <br />
+            </span>
+            {{ orderDetails.shippingAddress.city }}, {{ orderDetails.shippingAddress.state }}
+            {{ orderDetails.shippingAddress.zip }}<br />
+            {{ orderDetails.shippingAddress.country }}
+          </p>
+        </div>
       </div>
-    </div>
 
-    <div class="success-subtotal-row">
-      <p>Subtotal</p>
-      <p>{{ orderDetails.subtotal | currency }}</p>
+      <ng-container *ngIf="errorMessage">
+        <div class="error-message">
+          <h3>Error</h3>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </ng-container>
     </div>
-
-    <div class="success-shipping-cost-row">
-      <p>Shipping</p>
-      <p>{{ orderDetails.shippingCost | currency }}</p>
-    </div>
-
-    <div class="success-grand-total-row">
-      <h3>Total</h3>
-      <h3>{{ orderDetails.total | currency }}</h3>
-    </div>
-
-    <div class="shipping-information">
-      <h3>Ship to: </h3>
-      <p>
-        {{ orderDetails.customerName }} <br />
-        {{ orderDetails.shippingAddress.street }}<br />
-        {{ orderDetails.shippingAddress.city }}, {{ orderDetails.shippingAddress.state }}
-        {{ orderDetails.shippingAddress.zip }}<br />
-        {{ orderDetails.shippingAddress.country }}
-      </p>
-    </div>
-      </div>
-<!--  </ng-container>-->
-
-  <ng-container *ngIf="errorMessage">
-    <div class="error-message">
-      <h3>Error</h3>
-      <p>{{ errorMessage }}</p>
-    </div>
-  </ng-container>
 </div>
 
 <footer>
