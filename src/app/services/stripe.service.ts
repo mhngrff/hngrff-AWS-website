@@ -27,7 +27,7 @@ export class StripeService {
   async initializeStripe() {
     if (!this.stripe) {
       this.stripe = await loadStripe(environment.stripePublicKey);
-      console.log("stripe pk=", this.stripe);
+//       console.log("stripe pk=", this.stripe);
     }
     if (this.stripe && !this.elements) {
       this.elements = this.stripe.elements();
@@ -210,7 +210,7 @@ export class StripeService {
     try {
       console.log("Creating payment intent for amount:", amount);
       const response = await this.http.post<{ clientSecret: string }>(
-        'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent',
+        'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent-test',
         { amount: amount }
       ).toPromise();
 

@@ -18,28 +18,39 @@ html, body{
 
 /* DESKTOP */
 @media only screen and (min-width: 786px) {
-    body {
-        overflow-x: hidden;
-    }
-
+    html, body{
+      all:unset;
+      background-color: #0b0b09;
+      }
+//     body {
+//         overflow-x: hidden;
+//     }
     .bottom-hr{
-      display: none;
+//         width: 80%;
+//         margin-left: 10%;
+//         margin-top: 4%;
+//         color: white;
+//         height: 1px;
+//       display: none;
       }
 
     .parallax {
+        position: sticky;
+        top: 5.75rem;
         width: 100vw;
         height: 90vh;
         background: linear-gradient(to right, #0b0b09, rgba(11, 11, 9, 0) 30%, rgba(11, 11, 9, 0) 70%, #0b0b09), url(/assets/images/surf-image.jpg);
         margin-top: 5.75rem;
         background-position: 0 100%;
         background-size: cover;
-        position: fixed;
+//         position: fixed;
         z-index: 1;
         opacity: 0.7;
     }
 
     .content-alignment-container{
-      margin-top: 13vh;
+//       margin-top: 13vh;
+      margin-top: -88vh;
       display: flex;
       flex-direction: row;
       }
@@ -109,6 +120,16 @@ html, body{
       margin-bottom: 5vh;
     }
 
+    .tertiary-images-container{
+      width: 80vw;
+      margin-left: 10vw;
+      margin-top: 10vh;
+      }
+
+    .tertiary-images-section{
+      width: 40%;
+      }
+
     .image-label {
       position: relative;
       z-index: 2;
@@ -138,25 +159,11 @@ html, body{
       z-index: 3;
     }
 
-    .individual-image-container {
-//       position: relative; /* Ensure it stays within the document flow but on top of the parallax */
-//       z-index: 2; /* Ensure images are above the background */
-//       display: block;
-    }
-
-//     .images-section a {
-//       margin-bottom: 1vh;
-//     }
-
     .image {
       width: 100%;
       padding: 0;
       transition: transform 0.25s ease;
     }
-
-//     .image:hover{
-//       transform: scale(1.03);
-//       }
 
     p {
       margin: 0;
@@ -204,23 +211,35 @@ html, body{
         }
 
           .email-icon {
-            color: white;
+            color: gray;
             }
 
           .footer-content .copyright p {
-            color: white;
+            color: gray;
             }
 
 }
 
 /* MOBILE */
 @media only screen and (max-width: 786px) {
+      html, body{
+//         all:unset;
+        background-color: #0b0b09;
+        }
+
   body {
       margin: 0;
       height: 100dvh;
       overflow-x: hidden; /* Prevent horizontal overflow */
   }
+
+  .main-content{
+//     margin-bottom: 5rem;
+//     padding-bottom: 5rem;
+    }
   .parallax {
+    position: sticky;
+    top: 4vh;
     background-image: url('/assets/images/surf-image.jpg');
     background-attachment: scroll;
     background-size: auto 96dvh;
@@ -228,14 +247,15 @@ html, body{
     background-repeat: no-repeat;
     width: 100vw;
     height: 96dvh;
-    position: absolute;
+//     position: absolute;
     z-index: 1;
-    margin-top: 4vh;
+//     margin-top: 4vh;
     opacity: 0.6;
   }
 
   .content-alignment-container {
-    margin-top: 9vh;
+//     margin-top: 9vh;
+    margin-top: -85vh;
      display: flex;
      flex-direction: column;
     }
@@ -297,6 +317,28 @@ html, body{
     margin-bottom: 1vh;
   }
 
+  .tertiary-images-container{
+    margin-top: 2.5rem;
+    width: 80vw;
+    margin-left: 10vw;
+    }
+
+  .tertiary-images-section {
+    margin-top: 2.5rem;
+    margin-bottom: 3rem;
+//     width:50%;
+    }
+
+  .tertiary-image-wrapper {
+    width: 100%;
+
+    }
+
+    .tertiary-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      }
 
 
   .primary-images-container {
@@ -317,6 +359,7 @@ html, body{
       height: auto;
       order: 3;
       z-index: 2;
+      padding-bottom: 1rem;
       }
 
   .primary-image-wrapper {
@@ -368,18 +411,18 @@ html, body{
     .bottom-line {
       position: relative;
       height: 1px;
-      background-color: white;
+      background-color: gray;
             width: 80%;
             margin-left: 10%;
       z-index: 3;
       }
 
     .email-icon {
-      color: white;
+      color: gray;
       }
 
     .footer-content .copyright p {
-      color: white;
+      color: gray;
       }
 
 }
