@@ -210,7 +210,8 @@ export class StripeService {
     try {
       console.log("Creating payment intent for amount:", amount);
       const response = await this.http.post<{ clientSecret: string }>(
-        'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent-test',
+//         'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent-test',
+            'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent',
         { amount: amount }
       ).toPromise();
 
