@@ -123,7 +123,7 @@
         {
           "type": "print",
           "subtitle": "MIRAGE - PRINT",
-          "price": 80.00,
+          "price": 100.00,
           "imageUrl": "/assets/images/rowboat_cropped_600w.jpg",
           "weight": 1,
           "productId": "E1"
@@ -131,7 +131,7 @@
         {
           "type": "framed",
           "subtitle": "MIRAGE - FRAMED",
-          "price": 250.00,
+          "price": 300.00,
           "imageUrl": "/assets/images/rowboat_framed_600w.jpg",
           "weight": 8,
           "productId": "E2"
