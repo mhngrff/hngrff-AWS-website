@@ -69,6 +69,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.totalImages = image.options.length;
           this.thumbnailUrl = image.thumbnail || null;
           this.updateArrowStates();
+//           console.log("this.zoomImageUrl = ", this.zoomImageUrl);
         } else {
           console.error(`Image with id ${id} not found`);
         }

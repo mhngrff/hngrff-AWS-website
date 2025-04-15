@@ -114,17 +114,17 @@
     },
     {
       "id": "rowboat",
-      "title": "MIRAGE",
-      "description": "Individually proofed and signed.",
+      "title": "THE MIRAGE",
+      "description": "Individually proofed and signed. 13.5 x 17 in. ",
       "currency": "USD",
-      "zoomImage": "",
-      "thumbnail": "/assets/images/rowboat_thumbnail.jpg",
+      "zoomImage": "/assets/images/mirage-2000h.jpg",
+      "thumbnail": "/assets/images/mirage-thumbnail.jpg",
       "options": [
         {
           "type": "print",
           "subtitle": "MIRAGE - PRINT",
           "price": 100.00,
-          "imageUrl": "/assets/images/rowboat_cropped_600w.jpg",
+          "imageUrl": "/assets/images/mirage-1400h.jpg",
           "weight": 1,
           "productId": "E1"
         },
@@ -135,6 +135,32 @@
           "imageUrl": "/assets/images/rowboat_framed_600w.jpg",
           "weight": 8,
           "productId": "E2"
+        }
+      ]
+    },
+    {
+      "id": "shells",
+      "title": "SHELLS OF FOLLY",
+      "description": "Individually proofed, numbered and signed. 1 of 200.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/shells-3800w.jpg",
+      "thumbnail": "/assets/images/shells-default-1200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "SHELLS - PRINT",
+          "price": 60.00,
+          "imageUrl": "/assets/images/shells-default-1200w.jpg",
+          "weight": 1,
+          "productId": "F1"
+        },
+        {
+          "type": "framed",
+          "subtitle": "SHELLS - FRAMED",
+          "price": 250.00,
+          "imageUrl": "/assets/images/shells-framed-draft.jpg",
+          "weight": 8,
+          "productId": "F2"
         }
       ]
     }
