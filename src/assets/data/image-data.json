@@ -19,7 +19,7 @@
         {
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
-          "price": 300.00,
+          "price": 350.00,
           "imageUrl": "/assets/images/fish-slam-framed5.jpg",
           "weight": 10,
           "productId": "D2"
@@ -27,7 +27,7 @@
         {
           "type": "three_frames",
           "subtitle": "SLAM - PRINTS IN 3 FRAMES",
-          "price": 500.00,
+          "price": 600.00,
           "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg",
           "weight": 12,
           "productId": "D3"
@@ -53,7 +53,7 @@
         {
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
-          "price": 200.00,
+          "price": 250.00,
           "imageUrl": "/assets/images/redfish-framed5.jpg",
           "weight": 8,
           "productId": "A2"
@@ -79,7 +79,7 @@
         {
           "type": "framed",
           "subtitle": "TROUT - FRAMED PRINT",
-          "price": 200.00,
+          "price": 250.00,
           "imageUrl": "/assets/images/trout-framed5.jpg",
           "weight": 8,
           "productId": "B2"
@@ -105,7 +105,7 @@
         {
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED PRINT",
-          "price": 200.00,
+          "price": 250.00,
           "imageUrl": "/assets/images/flounder-framed5.jpg",
           "weight": 8,
           "productId": "C2"
@@ -131,7 +131,7 @@
         {
           "type": "framed",
           "subtitle": "MIRAGE - FRAMED",
-          "price": 300.00,
+          "price": 350.00,
           "imageUrl": "/assets/images/rowboat_framed_600w.jpg",
           "weight": 8,
           "productId": "E2"
@@ -141,24 +141,32 @@
     {
       "id": "shells",
       "title": "SHELLS OF FOLLY",
-      "description": "Individually proofed, numbered and signed. 1 of 200.",
+      "description": "Individually proofed, numbered and signed. 1 of 200. Select options to choose between labelled and unlabelled prints. Each labeling is done by hand. ",
       "currency": "USD",
       "zoomImage": "/assets/images/shells-2000w.jpg",
       "thumbnail": "/assets/images/shells-default-1200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "SHELLS - PRINT",
+          "subtitle": "SHELLS - UNLABELLED PRINT",
           "price": 60.00,
           "imageUrl": "/assets/images/shells-default-1200w.jpg",
           "weight": 1,
           "productId": "F1"
         },
         {
+          "type": "print",
+          "subtitle": "SHELLS - LABELLED PRINT",
+          "price": 75.00,
+          "imageUrl": "/assets/images/shells-framed-1200w.jpg",
+          "weight": 1,
+          "productId": "F1"
+        },
+        {
           "type": "framed",
           "subtitle": "SHELLS - FRAMED",
-          "price": 250.00,
-          "imageUrl": "/assets/images/shells-framed-draft.jpg",
+          "price": 350.00,
+          "imageUrl": "/assets/images/shells-labeled-1200w.jpg",
           "weight": 8,
           "productId": "F2"
         }
