@@ -171,6 +171,40 @@
           "productId": "F2"
         }
       ]
+    },
+    {
+      "id": "lighthouse",
+      "title": "MORRIS ISLAND LIGHTHOUSE",
+      "description": "Individually proofed and signed.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/lighthouse-1100w.jpg",
+      "thumbnail": "/assets/images/lighthouse-600w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Print - 9 x 12",
+          "price": 50.00,
+          "imageUrl": "/assets/images/lighthouse-600w.jpg",
+          "weight": 1,
+          "productId": "G1"
+        },
+        {
+          "type": "print",
+          "subtitle": "Print - 12 x 16 ",
+          "price": 100.00,
+          "imageUrl": "",
+          "weight": 1,
+          "productId": "G2"
+        },
+        {
+          "type": "framed",
+          "subtitle": "Framed 12 x 16 print",
+          "price": 350.00,
+          "imageUrl": "",
+          "weight": 8,
+          "productId": "G3"
+        }
+      ]
     }
   ]
 }
