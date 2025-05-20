@@ -192,7 +192,7 @@
           "type": "print",
           "subtitle": "Print - 12 x 16 ",
           "price": 100.00,
-          "imageUrl": "",
+          "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
           "productId": "G2"
         },
@@ -200,7 +200,7 @@
           "type": "framed",
           "subtitle": "Framed 12 x 16 print",
           "price": 350.00,
-          "imageUrl": "",
+          "imageUrl": "/assets/images/lighthouse-script-700w.jpg",
           "weight": 8,
           "productId": "G3"
         }
