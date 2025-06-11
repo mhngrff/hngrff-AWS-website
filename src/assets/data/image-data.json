@@ -123,7 +123,7 @@
         {
           "type": "print",
           "subtitle": "MIRAGE - PRINT",
-          "price": 100.00,
+          "price": 80.00,
           "imageUrl": "/assets/images/mirage-1400h.jpg",
           "weight": 1,
           "productId": "E1"
@@ -191,7 +191,7 @@
         {
           "type": "print",
           "subtitle": "Print - 12 x 16 ",
-          "price": 100.00,
+          "price": 80.00,
           "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
           "productId": "G2"
