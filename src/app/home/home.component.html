@@ -63,10 +63,22 @@
 <div class="tertiary-images-container">
 
   <h2>LATEST WORK</h2>
-<!--  <div class="line"></div>-->
 
 <div class="tertiary-images-section" id="tertiaryPrints">
-  <!--    <div class="individual-image-container" *ngFor="let image of images | slice:1:4">-->
+
+  <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:7:8">
+    <a (click)="goToDetails(image.id)">
+      <img
+        class="image"
+        [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+        [alt]="image.title + ' drawing'" loading="lazy">
+    </a>
+  </div>
+
+  <h3 class="mirage-title">BAPTISM</h3>
+  <div class="line"></div>
+
+
   <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:6:7">
     <a (click)="goToDetails(image.id)">
       <img

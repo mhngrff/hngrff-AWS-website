@@ -205,6 +205,32 @@
           "productId": "G3"
         }
       ]
+    },
+    {
+      "id": "baptism",
+      "title": "BAPTISM",
+      "description": "Individually proofed and signed.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/baptism-5000w.jpg",
+      "thumbnail": "/assets/images/baptism-500w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Print - 9 x 12",
+          "price": 50.00,
+          "imageUrl": "/assets/images/baptism-1000w.jpg",
+          "weight": 1,
+          "productId": "H1"
+        },
+        {
+          "type": "print",
+          "subtitle": "Print - 12 x 16 ",
+          "price": 80.00,
+          "imageUrl": "/assets/images/baptism-framed-700w.jpg",
+          "weight": 1,
+          "productId": "H2"
+        }
+      ]
     }
   ]
 }
