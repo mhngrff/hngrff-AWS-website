@@ -261,7 +261,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
         thumbnailUrl: this.thumbnailUrl, // Assuming the first option is used as a thumbnail
         weight: this.selectedWeight,
         productId: this.selectedProductId
-      });
+      })
+    console.log('added imageid: ', this.selectedOption);
     } else {
       console.error('Unable to add to cart: Invalid option or price.');
     }
