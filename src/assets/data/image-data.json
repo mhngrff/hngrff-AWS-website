@@ -229,6 +229,14 @@
           "imageUrl": "/assets/images/baptism-framed-700w.jpg",
           "weight": 1,
           "productId": "H2"
+        },
+        {
+          "type": "print",
+          "subtitle": "Framed Print 12 x 16",
+          "price": 350.00,
+          "imageUrl": "",
+          "weight": 8,
+          "productId": "H3"
         }
       ]
     }
