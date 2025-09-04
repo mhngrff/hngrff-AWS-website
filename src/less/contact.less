@@ -66,28 +66,32 @@ h3 {
   background-color: white;
 }
 
-.shipping-text, .framing-text, .tracking-text {
+.shipping-text, .commission-text, .tracking-text, .original-text {
   opacity: 0;
   max-height: 0;
   transition: max-height 0.5s ease, opacity 0.1s ease;
 }
 
-.shipping-text p, .framing-text p, .tracking-text p {
+.shipping-text p, .commission-text p, .tracking-text p, .original-text p {
   font-size: 16px;
   line-height: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-.shipping-text.hidden, .framing-text.hidden, .tracking-text.hidden {
+.shipping-text.hidden, .commission-text.hidden, .tracking-text.hidden, .original-text.hidden {
   max-height: 0;
   opacity: 0;
 }
 
-.shipping-text:not(.hidden), .framing-text:not(.hidden), .tracking-text:not(.hidden){
+.shipping-text:not(.hidden), .commission-text:not(.hidden), .tracking-text:not(.hidden), .original-text:not(.hidden){
   max-height: 1000px;
   opacity: 1;
   transition: max-height 0.5s ease-out, opacity 0.1s ease-in;
 }
+
+.contact-link p {
+  text-decoration: underline;
+  }
 
 @media only screen and (min-width: 786px) {
   .contact-container{
@@ -106,6 +110,15 @@ h3 {
   .email-instagram {
 //     margin-top: 6rem;
     }
+
+  .contact-link p {
+    text-decoration: underline;
+    cursor: pointer;
+    }
+
+    .contact-link p:hover{
+        transform: scale(1.03);
+      }
 
 }
 

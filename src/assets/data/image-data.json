@@ -239,6 +239,40 @@
           "productId": "H3"
         }
       ]
+    },
+    {
+      "id": "sailfish",
+      "title": "SAILFISH",
+      "description": "NOT YET FOR SALE",
+      "currency": "USD",
+      "zoomImage": "/assets/images/3_2RatioSailfish.jpg",
+      "thumbnail": "/assets/images/3_2RatioSailfish.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Sailfish Print ? x ?",
+          "price": 50.00,
+          "imageUrl": "/assets/images/3_2RatioSailfish.jpg",
+          "weight": 1,
+          "productId": "I1"
+        },
+        {
+          "type": "print",
+          "subtitle": "Sailfish Print ?? x ?? ",
+          "price": 80.00,
+          "imageUrl": "/assets/images/3_2RatioSailfish.jpg",
+          "weight": 1,
+          "productId": "I2"
+        },
+        {
+          "type": "print",
+          "subtitle": "Framed Print ?? x ??",
+          "price": 350.00,
+          "imageUrl": "/assets/images/3_2RatioSailfish.jpg",
+          "weight": 8,
+          "productId": "I3"
+        }
+      ]
     }
   ]
 }

@@ -9,8 +9,9 @@ import { Component } from '@angular/core';
 })
 export class ContactComponent {
   isShippingVisible = false;
-  isFramingVisible = false;
   isTrackingVisible = false;
+  isCommissionVisible = false;
+  isOriginalVisible = false;
 
   toggleShipping(): void {
     this.isShippingVisible = !this.isShippingVisible;
@@ -20,8 +21,12 @@ export class ContactComponent {
     this.isTrackingVisible = !this.isTrackingVisible;
   }
 
-  toggleFraming(): void {
-    this.isFramingVisible = !this.isFramingVisible;
+  toggleCommission(): void {
+    this.isCommissionVisible = !this.isCommissionVisible;
+  }
+
+  toggleOriginal(): void {
+    this.isOriginalVisible = !this.isOriginalVisible;
   }
 
 }

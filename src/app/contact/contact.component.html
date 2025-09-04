@@ -4,11 +4,19 @@
     <div class="email-instagram">
       <div class="email">
         <h3>email:</h3>
+        <div class="contact-link">
+        <a href="mailto:matt.hanagriff@gmail.com" aria-label="Send Email">
         <p>matt.hanagriff&#64;gmail.com</p>
+        </a>
+        </div>
       </div>
       <div class="insta">
         <h3>instagram: </h3>
+        <div class="contact-link">
+        <a href="https://www.instagram.com/hngrff" target="_blank" aria-label="Instagram">
         <p>&#64;hngrff</p>
+        </a>
+        </div>
       </div>
     </div>
     <div class="faq">
@@ -29,7 +37,7 @@
 
       <div class="shipping-text" [class.hidden]="!isShippingVisible">
 <!--        <p><strong>When will my order ship?</strong><br /><br /></p>-->
-        <p>All shipments are based on <strong>UPS Ground</strong> (1-5 business days depending on location), shipped from Charleston, SC. <br/><br/> Framing is made to order, and takes about a week for production. I am notified immediately via SMS when your order is placed, so you can expect that the order fulfillment process will begin ASAP. </p>
+        <p>In short, 1 - 3 weeks. Print orders should arrive within 1-2 weeks, framed orders may take longer. Frames are made to order and can take up to 14 days for production. All shipments are based on <strong>UPS Ground</strong> (1-5 business days), OR <strong>USPS standard mail</strong> (2-5 business days) shipped from Charleston, SC. <br/><br/> </p>
       </div>
 
       <div class="line"></div>
@@ -50,16 +58,16 @@
 
       <div class="tracking-text" [class.hidden]="!isTrackingVisible">
         <!--        <p><strong>When will my order ship?</strong><br /><br /></p>-->
-        <p> I can send you your UPS tracking number upon request. </p>
+        <p> Once your shipping label has been created, I will email your UPS / USPS tracking number as a response to your order confirmation.  </p>
       </div>
 
       <div class="line"></div>
 
-      <div class="header-arrow" (click)="toggleFraming()">
-        <h4>TBD</h4>
+      <div class="header-arrow" (click)="toggleCommission()">
+        <h4>Can I commission custom artwork?</h4>
           <svg
             class="arrow"
-            [class.rotate]="isFramingVisible"
+            [class.rotate]="isCommissionVisible"
             viewBox="0 0 24 24"
             fill="white"
             xmlns="http://www.w3.org/2000/svg">
@@ -67,9 +75,36 @@
           </svg>
       </div>
 
-      <div class="framing-text" [class.hidden]="!isFramingVisible">
-        <p>Future concerns will be addressed here. <br/></p>
+      <div class="commission-text" [class.hidden]="!isCommissionVisible">
+        <p>Yes. Please email me at matt.hanagriff&#64;gmal.com (linked above) to start the commission process. Total price depends on these factors: <br/><br/>
+          - Size <br/>
+          - Subject <br/>
+          - Budget <br/>
+          - Timeline <br/><br/>
+          Cost typically ranges from $500 - $2000. You can expect between 1 - 2 months for completion and delivery.
+        </p>
       </div>
+
+      <div class="line"></div>
+
+      <div class="header-arrow" (click)="toggleOriginal()">
+        <h4>Do you sell your originals?</h4>
+        <svg
+          class="arrow"
+          [class.rotate]="isOriginalVisible"
+          viewBox="0 0 24 24"
+          fill="white"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="original-text" [class.hidden]="!isOriginalVisible">
+        <p>Yes. Please email me at matt.hanagriff&#64;gmal.com (linked above) to start this process.
+        </p>
+      </div>
+
+
 
       <div class="line"></div>
 
