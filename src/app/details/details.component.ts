@@ -285,4 +285,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   goToIndividualPrints(){
     this.navigationService.goToIndividualPrints();
   }
+
+  goToContact(){
+    this.navigationService.goToContact();
+    }
 }
