@@ -127,24 +127,33 @@ private updateStickerPrices(): void {
 
 
 
+//   getTotal$(): Observable<number> {
+//     return this.cartItems$.pipe(
+//       map((items) => {
+//         // Check if there is at least one non-sticker item
+//         const hasNonSticker = items.some(item => !item.optionSubtitle.toLowerCase().includes('sticker'));
+//
+//         return items.reduce((total, item) => {
+//           if (item.optionSubtitle.toLowerCase().includes('sticker') && hasNonSticker) {
+//             // Stickers are free if there's at least one non-sticker
+//             return total + 0;
+//           } else {
+//             // Normal price otherwise
+//             return total + item.price * item.quantity;
+//           }
+//         }, 0);
+//       })
+//     );
+//   }
+
   getTotal$(): Observable<number> {
     return this.cartItems$.pipe(
-      map((items) => {
-        // Check if there is at least one non-sticker item
-        const hasNonSticker = items.some(item => !item.optionSubtitle.toLowerCase().includes('sticker'));
-
-        return items.reduce((total, item) => {
-          if (item.optionSubtitle.toLowerCase().includes('sticker') && hasNonSticker) {
-            // Stickers are free if there's at least one non-sticker
-            return total + 0;
-          } else {
-            // Normal price otherwise
-            return total + item.price * item.quantity;
-          }
-        }, 0);
-      })
+      map((items) =>
+        items.reduce((total, item) => total + (item.price ?? 0), 0)
+      )
     );
   }
+
 
   addItem(item: CartItem): void {
     const currentItems = this.cartItemsSubject.value;
