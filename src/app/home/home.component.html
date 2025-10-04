@@ -62,6 +62,7 @@
 
 <div class="tertiary-images-container">
   <h2>STICKERS</h2>
+  <div class="tertiary-images-section">
 
   <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:9:10">
     <a (click)="goToDetails(image.id)">
@@ -72,6 +73,8 @@
     </a>
   </div>
 
+  <h3 class="sticker-title">REDFISH</h3>
+
   <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:10:11">
     <a (click)="goToDetails(image.id)">
       <img
@@ -80,6 +83,8 @@
         [alt]="image.title + ' drawing'" loading="lazy">
     </a>
   </div>
+
+  <h3 class="sticker-title">TROUT</h3>
 
   <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:11:12">
     <a (click)="goToDetails(image.id)">
@@ -90,6 +95,8 @@
     </a>
   </div>
 
+  <h3 class="sticker-title">FLOUNDER</h3>
+
   <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:12:13">
     <a (click)="goToDetails(image.id)">
       <img
@@ -99,6 +106,8 @@
     </a>
   </div>
 
+  <h3 class="sticker-title">SAILFISH</h3>
+
   <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:13:14">
     <a (click)="goToDetails(image.id)">
       <img
@@ -107,7 +116,12 @@
         [alt]="image.title + ' drawing'" loading="lazy">
     </a>
   </div>
+
+  <h3 class="sticker-title">INSHORE SLAM BUNDLE</h3>
+    <div class="line"></div>
 </div>
+</div>
+
 
 <div class="tertiary-images-container">
 

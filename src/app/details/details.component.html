@@ -51,23 +51,21 @@
       <label>Framing options </label>
             </div>
       <div class = "input-section">
-        <div *ngIf="!isStickerItem()">
         <div class="dropdown-increment-row">
+<!--          <div *ngIf="!isStickerItem()">-->
         <!-- Dropdown to select version (unframed, framed, etc.) -->
-          <div class="option-selector" *ngIf="metadata.options && metadata.options.length > 0">
-            <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
-              <option *ngFor="let option of metadata.options" [value]="option.subtitle">
-              {{ option.subtitle }}
-              </option>
-            </select>
-          </div>
+            <div class="option-selector" *ngIf="!isStickerItem() && metadata.options && metadata.options.length > 0">
+              <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
+                <option *ngFor="let option of metadata.options" [value]="option.subtitle">
+                  {{ option.subtitle }}
+                </option>
+              </select>
+           </div>
         <div class="details-quantity-editor">
           <span class="details-decrement" (click)="decrementQuantity()">-</span>
           <span class="details-quantity-value">{{ quantity }}</span>
           <span class="details-increment" (click)="incrementQuantity()">+</span>
         </div>
-      </div>
-
       </div>
 
       <a (click)="addToCart()">
@@ -194,20 +192,11 @@
 
       <div class="singles-information" *ngIf="metadata.title == 'REDFISH STICKER' || metadata.title == 'TROUT STICKER' || metadata.title == 'FLOUNDER STICKER' || metadata.title == 'SAILFISH STICKER' || metadata.title == 'INSHORE SLAM STICKERS'">
         <p>
-<!--          <strong> PRINTS: </strong><br/>-->
           <br/>
           - 5" long <br/>
           - Glossy Vinyl Finish <br/>
-          - Incredible resolution + high fidelity to the original artworks <br/>
-<!--          <br/>-->
-<!--          <strong>LOOKS GREAT ON ANY COOLER, TUMBLER, TRUCK, YOU NAME IT</strong>-->
-
-
-<!--          <strong>  FRAMES: </strong><br/>-->
-<!--          - Total dimensions 16 <sup>3</sup>&frasl;<sub>4</sub>" x 21" <br/>-->
-<!--          - Semi gloss black finish on real wood <br/>-->
-<!--          - Polished glass <br/>-->
-<!--          - finished back-->
+          - Incredible resolution + high fidelity to the original artworks <br/><br/>
+           * <em>Up to 3 stickers</em> <br/>
         </p>
       </div>
 
@@ -259,3 +248,4 @@
     </div>
   </div>
 </footer>
+</div>

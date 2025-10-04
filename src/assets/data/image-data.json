@@ -269,7 +269,7 @@
     {
       "id": "redfishsticker",
       "title": "REDFISH STICKER",
-      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
       "currency": "USD",
       "thumbnail": "/assets/images/RedfishSticker-1000w.png",
       "options": [
@@ -286,7 +286,7 @@
     {
       "id": "troutsticker",
       "title": "TROUT STICKER",
-      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
       "currency": "USD",
       "thumbnail": "/assets/images/TroutSticker-1000w.png",
       "options": [
@@ -303,7 +303,7 @@
     {
       "id": "floundersticker",
       "title": "FLOUNDER STICKER",
-      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
       "currency": "USD",
       "thumbnail": "/assets/images/FlounderSticker-1000w.png",
       "options": [
@@ -320,7 +320,7 @@
     {
       "id": "sailfishsticker",
       "title": "SAILFISH STICKER",
-      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
       "currency": "USD",
       "thumbnail": "/assets/images/SailfishSticker-1000w.png",
       "options": [
@@ -337,7 +337,7 @@
     {
       "id": "slamsticker",
       "title": "INSHORE SLAM STICKERS",
-      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
       "currency": "USD",
       "thumbnail": "/assets/images/SlamSticker-1000w.png",
       "options": [

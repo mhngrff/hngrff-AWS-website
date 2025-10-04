@@ -91,12 +91,10 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
-isStickerItem(): boolean {
-  const optionSubtitle = this.latestImage?.options?.[0]?.subtitle;
-  return optionSubtitle ? optionSubtitle.toLowerCase().includes('sticker') : false;
-}
-
-
+  isStickerItem(): boolean {
+    const optionSubtitle = this.latestImage?.options?.[0]?.subtitle;
+    return optionSubtitle ? optionSubtitle.toLowerCase().includes('sticker') : false;
+  }
 
 
   // New method for handling dropdown option change

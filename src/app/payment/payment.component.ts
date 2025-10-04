@@ -171,11 +171,26 @@ export class PaymentComponent implements OnInit {
         this.cartService.getTotalWeight$()
       ]).subscribe(([subtotal, items, totalWeight]) => {
         this.subtotal = subtotal;
-        this.total = Number(subtotal) + Number(this.shippingCost ?? 0);
-        console.log("ngoninit() - this.total = ", this.total);
+//         this.total = Number(subtotal) + Number(this.shippingCost ?? 0);
+//         console.log("ngoninit() - this.total = ", this.total);
         this.cartItems = items;
         this.totalWeight = parseFloat(totalWeight.toFixed(2));
-        console.log("ngoninit() - this.totalWeight = ", this.totalWeight);
+//         console.log("ngoninit() - this.totalWeight = ", this.totalWeight);
+
+
+        // Recalculate shipping whenever the cart changes
+        const isStickerOnlyOrder = items.every(item =>
+          item.optionSubtitle.toLowerCase().includes('sticker')
+        );
+
+        if (isStickerOnlyOrder) {
+          this.shippingCost = 2.5;
+        } else {
+          this.calculateShippingRate(); // already sets this.shippingCost internally
+        }
+
+        // Update total
+        this.updateTotal(); // this.total = subtotal + shippingCost
 
         const currentRoute = this.activatedRoute.snapshot.routeConfig?.path;
 
@@ -246,6 +261,15 @@ export class PaymentComponent implements OnInit {
       }
     });
   }
+
+//   updateTotal() {
+//     this.total = this.subtotal + (this.shippingCost ?? 0);
+//   }
+
+  updateTotal(): void {
+    this.total = Number(this.subtotal) + Number(this.shippingCost ?? 0);
+  }
+
 
   isAddressValid(formValues: any): boolean {
     return (
@@ -610,19 +634,15 @@ console.timeEnd("Create Order");
         item.optionSubtitle.toLowerCase().includes('sticker')
       );
 
-      if (isStickerOnlyOrder) {
-        const flatStickerShipping = 5; // Set your flat rate
-        this.total -= this.previousShippingCost; // remove any previous shipping
-        this.shippingCost = flatStickerShipping;
-        this.previousShippingCost = flatStickerShipping;
-        this.total += flatStickerShipping;
+    if (isStickerOnlyOrder) {
+      this.shippingCost = 2.5;
+      this.updateTotal();
+      this.isShippingCalculationInProgress = false;
+      this.isShippingCostCalculated = true;
+      this.cd.detectChanges();
+      return;
+    }
 
-        this.isShippingCalculationInProgress = false;
-        this.isShippingCostCalculated = true;
-        this.cd.detectChanges(); // Update UI
-        console.log('Sticker-only order detected. Flat shipping applied:', flatStickerShipping);
-        return; // Skip calling external shipping API
-      }
 
     this.isShippingCalculationInProgress = true;
 
@@ -640,21 +660,31 @@ console.timeEnd("Create Order");
       formValues.country,
       weightString
     ).subscribe(
-      (shippingCost: number) => {
-        this.total -= this.previousShippingCost;
-        this.shippingCost = shippingCost;
-        this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
+//       (shippingCost: number) => {
+          //         this.total -= this.previousShippingCost;
+          //         this.shippingCost = shippingCost;
+          //         this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
+          //
+          //         this.total = Number(this.total) + Number(this.shippingCost);
+          //
+          //         console.log("calculated total from calculateShippingRate() : ", this.total);
+          //
+          //         this.isShippingCalculationInProgress = false;
+          //         this.isShippingCostCalculated = true;
+          //
+          //         // Trigger change detection to ensure UI reflects the updated cost
+          //         this.cd.detectChanges();
+          //       }
+            (shippingCost: number) => {
+              this.shippingCost = shippingCost; // Set the shipping cost
+              this.updateTotal(); // Recalculate total = subtotal + shipping
+              this.previousShippingCost = shippingCost; // Store previous for reference if needed
 
-        this.total = Number(this.total) + Number(this.shippingCost);
+              this.isShippingCalculationInProgress = false;
+              this.isShippingCostCalculated = true;
 
-        console.log("calculated total from calculateShippingRate() : ", this.total);
-
-        this.isShippingCalculationInProgress = false;
-        this.isShippingCostCalculated = true;
-
-        // Trigger change detection to ensure UI reflects the updated cost
-        this.cd.detectChanges();
-      },
+              this.cd.detectChanges(); // Trigger UI update
+            },
       (error) => {
         console.error('Error calculating shipping rate:', error);
       }

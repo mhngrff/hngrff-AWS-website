@@ -22,6 +22,10 @@ export class CartService {
   private isBuyNowFlowSubject = new BehaviorSubject<boolean>(false);
   isBuyNowFlow$ = this.isBuyNowFlowSubject.asObservable();
 
+  private shippingSubject = new BehaviorSubject<number>(0);
+  shipping$ = this.shippingSubject.asObservable();
+
+
   constructor() {
     this.calculateTotal(); // Ensure total is set at startup
     this.updateStickerPrices();
@@ -75,19 +79,53 @@ export class CartService {
     );
   }
 
-  private updateStickerPrices(): void {
-    const updatedItems = [...this.cartItemsSubject.value];
-    const hasNonSticker = updatedItems.some(item => !this.isSticker(item));
+private updateStickerPrices(): void {
+  const updatedItems = [...this.cartItemsSubject.value];
+
+  // Check if there's at least one print (non-sticker)
+  const hasPrint = updatedItems.some(item => !this.isSticker(item));
+
+  if (!hasPrint) {
+    // No prints, reset sticker prices to original
+    updatedItems.forEach(item => {
+      if (this.isSticker(item)) {
+        item.price = item.originalPrice ?? item.price;
+      }
+    });
+  } else {
+    // There is at least one print
+    let remainingFreeStickers = 3; // max free stickers per print
 
     updatedItems.forEach(item => {
       if (this.isSticker(item)) {
-        item.price = hasNonSticker ? 0 : item.originalPrice ?? item.price;
+        const quantity = item.quantity;
+        const bundleSize = item.optionSubtitle.toLowerCase().includes('bundle') ? 3 : 1;
+        const totalStickersForItem = quantity * bundleSize;
+
+       if (remainingFreeStickers >= totalStickersForItem) {
+         // All stickers free
+         item.price = 0;
+         remainingFreeStickers -= totalStickersForItem;
+       } else if (remainingFreeStickers > 0) {
+         // Some free, some paid
+         const paidStickers = totalStickersForItem - remainingFreeStickers;
+         const perStickerPrice = (item.originalPrice ?? item.price) / bundleSize;
+         item.price = perStickerPrice * paidStickers; // total price for the line
+         remainingFreeStickers = 0;
+       } else {
+         // All paid
+         item.price = item.originalPrice ?? item.price;
+       }
+
       }
     });
-
-    this.cartItemsSubject.next(updatedItems);
-    this.saveCartToStorage(updatedItems);
   }
+
+  this.cartItemsSubject.next(updatedItems);
+  this.saveCartToStorage(updatedItems);
+}
+
+
 
   getTotal$(): Observable<number> {
     return this.cartItems$.pipe(
