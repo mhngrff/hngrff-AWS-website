@@ -17,11 +17,13 @@
         <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="payment-thumbnail">
 
         <div class="subtitle-quantity-price">
-          <p>{{ item.optionSubtitle }}
+          <p>
+            {{ item.optionSubtitle }}
             <span class="quantity"> x {{ item.quantity }}</span> &nbsp;
-            <span class="price">{{ item.price | currency }}</span>
+            <span class="price">{{ item.price === 0 ? 'FREE' : (item.price | currency) }}</span>
           </p>
         </div>
+
       </div>
     </div>
   </div>

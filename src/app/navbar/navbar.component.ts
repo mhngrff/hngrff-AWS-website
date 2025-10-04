@@ -140,6 +140,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.closeMenu();
   }
 
+  navigateToStickers(): void {
+    this.navigationService.goToStickers();
+    this.closeMenu();
+  }
+
   goToCart() {
     this.cartService.toggleCartVisibility();
   }

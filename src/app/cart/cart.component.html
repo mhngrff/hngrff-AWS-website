@@ -20,7 +20,10 @@
       <img [src]="item.thumbnailUrl" [alt]="item.optionSubtitle" class="cart-thumbnail" />
 
       <div class="cart-item-details">
-        <p class="cart-item-subtitle">{{ item.optionSubtitle }} - {{ item.price | currency }}</p>
+        <p class="cart-item-subtitle">{{ item.optionSubtitle }} -
+          <span *ngIf="item.price === 0">FREE</span>
+          <span *ngIf="item.price !== 0">{{ item.price | currency }}</span>
+        </p>
         <div class="quantity-editor">
           <span class="quantity-decrement" (click)="decrementQuantity(item)">-</span>
           <span class="quantity-value">{{ item.quantity }}</span>

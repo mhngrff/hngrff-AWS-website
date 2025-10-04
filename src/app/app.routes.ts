@@ -8,6 +8,7 @@ import { CartNotEmptyGuard } from './guards/cart-not-empty.guard';
 import { SuccessGuard } from './guards/success.guard';
 import { SuccessComponent } from './success/success.component';
 import { AboutComponent } from './about/about.component';
+import { StickersComponent } from './stickers/stickers.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,8 @@ export const routes: Routes = [
   { path: 'payment', component: PaymentComponent, canActivate: [CartNotEmptyGuard] },
   { path: 'cart', component: CartComponent },
   { path: 'success', component: SuccessComponent, canActivate: [SuccessGuard] },
-  { path: 'about', component: AboutComponent }
+  { path: 'about', component: AboutComponent },
+  { path: 'stickers', component: StickersComponent }
   ];
 
 

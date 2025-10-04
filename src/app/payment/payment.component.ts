@@ -605,6 +605,25 @@ console.timeEnd("Create Order");
 
   calculateShippingRate() {
     console.log('Calculating shipping rate...');
+
+      const isStickerOnlyOrder = this.cartItems.every(item =>
+        item.optionSubtitle.toLowerCase().includes('sticker')
+      );
+
+      if (isStickerOnlyOrder) {
+        const flatStickerShipping = 5; // Set your flat rate
+        this.total -= this.previousShippingCost; // remove any previous shipping
+        this.shippingCost = flatStickerShipping;
+        this.previousShippingCost = flatStickerShipping;
+        this.total += flatStickerShipping;
+
+        this.isShippingCalculationInProgress = false;
+        this.isShippingCostCalculated = true;
+        this.cd.detectChanges(); // Update UI
+        console.log('Sticker-only order detected. Flat shipping applied:', flatStickerShipping);
+        return; // Skip calling external shipping API
+      }
+
     this.isShippingCalculationInProgress = true;
 
     const formValues = this.paymentForm.value;

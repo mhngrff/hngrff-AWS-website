@@ -30,6 +30,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   isAtFirstImage = true;
   isAtLastImage = false;
   isDefaultView = true;
+  latestImage: Image | null = null; // 10/4/2025 STICKER UPDATE
 
   selectedOption: string | null = null; // New variable for selected option
   selectedPrice: number | null = null; // New variable for selected price
@@ -64,6 +65,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.image$ = this.imageService.getImageById(id!);
       this.image$.subscribe((image: Image | undefined) => {
         if (image && image.options && image.options.length > 0) {
+          this.latestImage = image;
           this.zoomImageUrl = image.zoomImage || null;
           this.mainImageUrl = image.options[0].imageUrl;
           this.totalImages = image.options.length;
@@ -88,6 +90,14 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
+isStickerItem(): boolean {
+  const optionSubtitle = this.latestImage?.options?.[0]?.subtitle;
+  return optionSubtitle ? optionSubtitle.toLowerCase().includes('sticker') : false;
+}
+
+
+
 
   // New method for handling dropdown option change
   onOptionChange(): void {

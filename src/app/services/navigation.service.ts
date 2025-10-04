@@ -30,6 +30,10 @@ export class NavigationService {
     this.router.navigate(['/about']);
   }
 
+  goToStickers(): void {
+    this.router.navigate(['/stickers']);
+  }
+
   goToPayment(): void {
     this.router.navigate(['/payment']);
     }

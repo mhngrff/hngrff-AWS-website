@@ -265,6 +265,91 @@
           "productId": "I2"
         }
       ]
+    },
+    {
+      "id": "redfishsticker",
+      "title": "REDFISH STICKER",
+      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "currency": "USD",
+      "thumbnail": "/assets/images/RedfishSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Redfish Sticker",
+          "price": 6.00,
+          "imageUrl": "/assets/images/RedfishSticker-1000w.png",
+          "weight": 0.1,
+          "productId": "I1"
+        }
+      ]
+    },
+    {
+      "id": "troutsticker",
+      "title": "TROUT STICKER",
+      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "currency": "USD",
+      "thumbnail": "/assets/images/TroutSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Trout Sticker",
+          "price": 6.00,
+          "imageUrl": "/assets/images/TroutSticker-1000w.png",
+          "weight": 0.1,
+          "productId": "I1"
+        }
+      ]
+    },
+    {
+      "id": "floundersticker",
+      "title": "FLOUNDER STICKER",
+      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "currency": "USD",
+      "thumbnail": "/assets/images/FlounderSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Flounder Sticker",
+          "price": 6.00,
+          "imageUrl": "/assets/images/FlounderSticker-1000w.png",
+          "weight": 0.1,
+          "productId": "I1"
+        }
+      ]
+    },
+    {
+      "id": "sailfishsticker",
+      "title": "SAILFISH STICKER",
+      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "currency": "USD",
+      "thumbnail": "/assets/images/SailfishSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Sailfish Sticker",
+          "price": 7.00,
+          "imageUrl": "/assets/images/SailfishSticker-1000w.png",
+          "weight": 0.1,
+          "productId": "I1"
+        }
+      ]
+    },
+    {
+      "id": "slamsticker",
+      "title": "INSHORE SLAM STICKERS",
+      "description": "ALL STICKERS ARE FREE WITH ANY PRINT PURCHASE",
+      "currency": "USD",
+      "thumbnail": "/assets/images/SlamSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Inshore Slam Stickers",
+          "price": 15.00,
+          "imageUrl": "/assets/images/SlamSticker-1000w.png",
+          "weight": 1,
+          "productId": "I1"
+        }
+      ]
     }
   ]
 }

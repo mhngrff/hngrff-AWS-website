@@ -6,4 +6,5 @@ export interface CartItem {
   thumbnailUrl: string | null;
   weight: number;
   productId: string;
+  originalPrice?: number;
 }

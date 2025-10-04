@@ -47,8 +47,11 @@
 
       <p>{{ metadata.description }}</p>
 
+            <div *ngIf="!isStickerItem()">
       <label>Framing options </label>
+            </div>
       <div class = "input-section">
+        <div *ngIf="!isStickerItem()">
         <div class="dropdown-increment-row">
         <!-- Dropdown to select version (unframed, framed, etc.) -->
           <div class="option-selector" *ngIf="metadata.options && metadata.options.length > 0">
@@ -63,6 +66,7 @@
           <span class="details-quantity-value">{{ quantity }}</span>
           <span class="details-increment" (click)="incrementQuantity()">+</span>
         </div>
+      </div>
 
       </div>
 
@@ -73,8 +77,6 @@
       <a (click)="buyNow()">
         <button class="buy-now-button">BUY NOW</button>
       </a>
-
-    </div>
     </div>
       <div class="slam-information" *ngIf="metadata.title == 'INSHORE SLAM'">
         <p>
@@ -185,6 +187,25 @@
               I am still working out the best framing option for this piece. If you are interested in buying one, <a (click)="goToContact()"><strong><u>email me</u></strong></a> and we can discuss.
 <!--          - Total dimensions ? <sup>?</sup>&frasl;<sub>?</sub>" x ?" <br/>-->
 <!--          - Rustic black finish on real wood <br/>-->
+<!--          - Polished glass <br/>-->
+<!--          - finished back-->
+        </p>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'REDFISH STICKER' || metadata.title == 'TROUT STICKER' || metadata.title == 'FLOUNDER STICKER' || metadata.title == 'SAILFISH STICKER' || metadata.title == 'INSHORE SLAM STICKERS'">
+        <p>
+<!--          <strong> PRINTS: </strong><br/>-->
+          <br/>
+          - 5" long <br/>
+          - Glossy Vinyl Finish <br/>
+          - Incredible resolution + high fidelity to the original artworks <br/>
+<!--          <br/>-->
+<!--          <strong>LOOKS GREAT ON ANY COOLER, TUMBLER, TRUCK, YOU NAME IT</strong>-->
+
+
+<!--          <strong>  FRAMES: </strong><br/>-->
+<!--          - Total dimensions 16 <sup>3</sup>&frasl;<sub>4</sub>" x 21" <br/>-->
+<!--          - Semi gloss black finish on real wood <br/>-->
 <!--          - Polished glass <br/>-->
 <!--          - finished back-->
         </p>

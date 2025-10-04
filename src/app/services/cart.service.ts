@@ -24,6 +24,7 @@ export class CartService {
 
   constructor() {
     this.calculateTotal(); // Ensure total is set at startup
+    this.updateStickerPrices();
   }
 
   toggleCartVisibility(): void {
@@ -54,18 +55,56 @@ export class CartService {
 
   private loadCartFromStorage(): CartItem[] {
     const storedCart = localStorage.getItem(this.storageKey);
-    return storedCart ? JSON.parse(storedCart) : [];
+    const items: CartItem[] = storedCart ? JSON.parse(storedCart) : [];
+
+    return items.map(item => ({
+      ...item,
+      originalPrice: item.originalPrice ?? item.price
+    }));
   }
+
 
   private saveCartToStorage(cart: CartItem[]): void {
     localStorage.setItem(this.storageKey, JSON.stringify(cart));
   }
 
+  private isSticker(item: CartItem): boolean {
+    return (
+      item.imageId.toLowerCase().includes('sticker') ||
+      item.optionSubtitle.toLowerCase().includes('sticker')
+    );
+  }
+
+  private updateStickerPrices(): void {
+    const updatedItems = [...this.cartItemsSubject.value];
+    const hasNonSticker = updatedItems.some(item => !this.isSticker(item));
+
+    updatedItems.forEach(item => {
+      if (this.isSticker(item)) {
+        item.price = hasNonSticker ? 0 : item.originalPrice ?? item.price;
+      }
+    });
+
+    this.cartItemsSubject.next(updatedItems);
+    this.saveCartToStorage(updatedItems);
+  }
+
   getTotal$(): Observable<number> {
     return this.cartItems$.pipe(
-      map((items) =>
-        items.reduce((total, item) => total + item.price * item.quantity, 0)
-      )
+      map((items) => {
+        // Check if there is at least one non-sticker item
+        const hasNonSticker = items.some(item => !item.optionSubtitle.toLowerCase().includes('sticker'));
+
+        return items.reduce((total, item) => {
+          if (item.optionSubtitle.toLowerCase().includes('sticker') && hasNonSticker) {
+            // Stickers are free if there's at least one non-sticker
+            return total + 0;
+          } else {
+            // Normal price otherwise
+            return total + item.price * item.quantity;
+          }
+        }, 0);
+      })
     );
   }
 
@@ -82,14 +121,17 @@ export class CartService {
       };
       const updatedItems = [...currentItems];
       updatedItems[existingItemIndex] = updatedItem;
-
       this.cartItemsSubject.next(updatedItems);
     } else {
-      this.cartItemsSubject.next([...currentItems, item]);
+      // Set originalPrice when first adding the item
+      const newItem = { ...item, originalPrice: item.price };
+      this.cartItemsSubject.next([...currentItems, newItem]);
     }
 
     this.saveCartToStorage(this.cartItemsSubject.value);
+    this.updateStickerPrices();
   }
+
 
   updateItemQuantity(imageId: string, optionSubtitle: string, quantity: number): void {
     const currentItems = this.cartItemsSubject.value;
@@ -107,6 +149,7 @@ export class CartService {
 
       this.cartItemsSubject.next(updatedItems);
       this.saveCartToStorage(updatedItems);
+      this.updateStickerPrices();
     }
   }
 
@@ -121,6 +164,7 @@ export class CartService {
 
     // Save the updated cart to localStorage
     this.saveCartToStorage(updatedItems);
+    this.updateStickerPrices();
   }
 
 
