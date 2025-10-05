@@ -117,6 +117,7 @@ export class PaymentComponent implements OnInit {
     isSubmitInProgress = false;
 
     private subscription: Subscription | null = null;
+    private shippingSub: Subscription | null = null;
 
     isModalOpen: boolean = false;
 
@@ -171,25 +172,11 @@ export class PaymentComponent implements OnInit {
         this.cartService.getTotalWeight$()
       ]).subscribe(([subtotal, items, totalWeight]) => {
         this.subtotal = subtotal;
-//         this.total = Number(subtotal) + Number(this.shippingCost ?? 0);
-//         console.log("ngoninit() - this.total = ", this.total);
         this.cartItems = items;
         this.totalWeight = parseFloat(totalWeight.toFixed(2));
 //         console.log("ngoninit() - this.totalWeight = ", this.totalWeight);
 
-
-        // Recalculate shipping whenever the cart changes
-        const isStickerOnlyOrder = items.every(item =>
-          item.optionSubtitle.toLowerCase().includes('sticker')
-        );
-
-        if (isStickerOnlyOrder) {
-          this.shippingCost = 2.5;
-        } else {
-          this.calculateShippingRate(); // already sets this.shippingCost internally
-        }
-
-//         this.recalcShipping();
+        this.recalcShipping();
 
         // Update total
         this.updateTotal(); // this.total = subtotal + shippingCost
@@ -636,14 +623,22 @@ console.timeEnd("Create Order");
         item.optionSubtitle.toLowerCase().includes('sticker')
       );
 
-    if (isStickerOnlyOrder) {
-      this.shippingCost = 2.5;
-      this.updateTotal();
-      this.isShippingCalculationInProgress = false;
-      this.isShippingCostCalculated = true;
-      this.cd.detectChanges();
-      return;
-    }
+      // Cancel any previous shipping request (avoid race conditions)
+      if (this.shippingSub) {
+        this.shippingSub.unsubscribe();
+        this.shippingSub = null;
+      }
+
+      if (isStickerOnlyOrder) {
+        // Stickers-only: flat rate, cancel any in-progress calculation
+        this.isShippingCalculationInProgress = false;
+        this.isShippingCostCalculated = true;
+        this.shippingCost = 2.5;
+        this.previousShippingCost = 2.5;
+        this.updateTotal();
+        this.cd.detectChanges();
+        return;
+      }
 
 
     this.isShippingCalculationInProgress = true;
@@ -686,6 +681,7 @@ console.timeEnd("Create Order");
               this.isShippingCostCalculated = true;
 
               this.cd.detectChanges(); // Trigger UI update
+              this.shippingSub = null;
             },
       (error) => {
         console.error('Error calculating shipping rate:', error);
@@ -693,6 +689,83 @@ console.timeEnd("Create Order");
     );
 //     console.log("Shipping rate calculation attempted. ");
   }
+
+// private recalcShipping(): void {
+//   if (!this.cartItems || this.cartItems.length === 0) {
+//     this.shippingCost = 0;
+//     this.updateTotal();
+//     return;
+//   }
+//
+//   // any item that is NOT a sticker counts as a "print"
+//   const hasPrint = this.cartItems.some(item =>
+//     !item.optionSubtitle.toLowerCase().includes('sticker')
+//   );
+//
+//   if (hasPrint) {
+//     // fall back to existing API-driven method
+//     this.calculateShippingRate();
+//   } else {
+//     // stickers only → flat $2.50
+//     this.shippingCost = 2.5;
+//     this.updateTotal();
+//   }
+// }
+
+private recalcShipping(): void {
+  if (!this.cartItems || this.cartItems.length === 0) {
+    // Empty cart -> no shipping
+    // Cancel any in-progress shipping call
+    if (this.shippingSub) {
+      this.shippingSub.unsubscribe();
+      this.shippingSub = null;
+    }
+    this.shippingCost = 0;
+    this.isShippingCalculationInProgress = false;
+    this.isShippingCostCalculated = false;
+    this.updateTotal();
+    this.cd.detectChanges();
+    return;
+  }
+
+  // If any item is NOT a sticker → prints present => dynamic shipping
+  const hasPrint = this.cartItems.some(item =>
+    !item.optionSubtitle.toLowerCase().includes('sticker')
+  );
+
+  if (hasPrint) {
+    // If we previously set a flat $2.5 because of stickers-only, clear that and recalc
+    // Cancel any prior shipping call and call calculateShippingRate which will start a new one
+    if (this.shippingSub) {
+      this.shippingSub.unsubscribe();
+      this.shippingSub = null;
+    }
+    // Only call calculateShippingRate() if we have an address; otherwise keep prior state
+    const formValues = this.paymentForm.value;
+    if (this.isAddressValid(formValues)) {
+      this.calculateShippingRate();
+    } else {
+      // No valid address yet: leave shippingCost as-is (or set to null if you prefer)
+      // For immediate UI feedback we can set to null to prompt user:
+      // this.shippingCost = null;
+      this.isShippingCalculationInProgress = false;
+      this.isShippingCostCalculated = false;
+      this.cd.detectChanges();
+    }
+  } else {
+    // Stickers-only -> flat $2.50. Cancel any in-flight dynamic call.
+    if (this.shippingSub) {
+      this.shippingSub.unsubscribe();
+      this.shippingSub = null;
+    }
+    this.shippingCost = 2.5;
+    this.isShippingCalculationInProgress = false;
+    this.isShippingCostCalculated = true;
+    this.previousShippingCost = 2.5;
+    this.updateTotal();
+    this.cd.detectChanges();
+  }
+}
 
   validateAddress(formValues: any) {
     console.log('Validating address...');

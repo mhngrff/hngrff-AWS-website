@@ -261,15 +261,6 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   addToCart(): void {
     if (this.selectedOption && this.selectedPrice && this.selectedWeight && this.selectedProductId !== null) {
-//       this.cartService.addItem({
-//         imageId: this.imageId,
-//         optionSubtitle: this.selectedOption,
-//         price: this.selectedPrice,
-//         quantity: this.quantity,
-//         thumbnailUrl: this.thumbnailUrl, // Assuming the first option is used as a thumbnail
-//         weight: this.selectedWeight,
-//         productId: this.selectedProductId
-//       })
          this.cartService.addItem({
            imageId: this.imageId,
            optionSubtitle: this.selectedOption || '',

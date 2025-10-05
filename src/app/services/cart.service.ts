@@ -146,11 +146,69 @@ export class CartService {
 
   getTotal$(): Observable<number> {
     return this.cartItems$.pipe(
-      map(items =>
-        items.reduce((total, item) => total + item.price, 0) // no * quantity
-      )
+      map(items => {
+        // Defensive copy (not strictly necessary)
+        const cart = items ?? [];
+
+        // Are there any non-sticker items? If no prints then no free-sticker logic.
+        const hasPrint = cart.some(i => !this.isSticker(i));
+
+        let subtotal = 0;
+
+        if (!hasPrint) {
+          // No prints: every line contributes its full price.
+          cart.forEach(item => {
+            // Use internalQuantity (UI count) when present, otherwise fall back to quantity
+            const lineQty = (item.internalQuantity ?? item.quantity ?? 1);
+            // For bundles originalPrice already represents the bundle price (e.g. $15)
+            subtotal += (item.originalPrice ?? item.price) * lineQty;
+          });
+          return subtotal;
+        }
+
+        // There is at least one print => up to 3 free stickers total (same algorithm as updateStickerPrices)
+        let remainingFreeStickers = 3;
+
+        // Iterate in cart order and allocate free stickers to sticker lines first
+        cart.forEach(item => {
+          if (!this.isSticker(item)) {
+            // Non-sticker (print etc.) -> full price times quantity
+            const qty = item.quantity ?? 1;
+            subtotal += (item.originalPrice ?? item.price) * qty;
+          } else {
+
+            // Sticker line (could be bundle or single)
+            const isBundle = item.optionSubtitle.toLowerCase().includes('stickers');
+            const bundleSize = isBundle ? 3 : 1;
+
+            // internalQuantity already accounts for bundle size
+            const totalStickersForLine = item.internalQuantity ?? (item.quantity ?? 1) * bundleSize;
+
+            if (remainingFreeStickers >= totalStickersForLine) {
+              // entire line free
+              remainingFreeStickers -= totalStickersForLine;
+            } else if (remainingFreeStickers > 0) {
+              // some free, some paid
+              const paidStickers = totalStickersForLine - remainingFreeStickers;
+              const perStickerPrice = (item.originalPrice ?? item.price) / bundleSize;
+              subtotal += paidStickers * perStickerPrice;
+              remainingFreeStickers = 0;
+            } else {
+              // all paid
+              const perStickerPrice = (item.originalPrice ?? item.price) / bundleSize;
+              subtotal += totalStickersForLine * perStickerPrice;
+            }
+
+
+          }
+        });
+
+        return subtotal;
+      })
     );
   }
+
+
 
   addItem(item: CartItem): void {
       const currentItems = this.cartItemsSubject.value;
@@ -231,7 +289,8 @@ export class CartService {
 
 
   getCartItems(): Observable<CartItem[]> {
-    return this.cartItems$;
+//     return this.cartItems$;
+    return this.cartItemsSubject.asObservable();
   }
 
   setBuyNowFlow(isBuyNow: boolean): void {
@@ -276,32 +335,6 @@ export class CartService {
       })
     );
   }
-
-//   private recalcShipping(): void {
-//       const items = this.cartItemsSubject.value;
-//
-//       if (items.length === 0) {
-//           // Empty cart → free shipping
-//           this.shippingSubject.next(0);
-//           return;
-//       }
-//
-//       const hasPrint = items.some(item => !this.isSticker(item));
-//
-//       if (hasPrint) {
-//           // Cart contains at least one print → dynamic shipping based on total weight
-//           const totalWeight = items.reduce(
-//               (sum, item) => sum + item.weight * (item.internalQuantity ?? item.quantity),
-//               0
-//           );
-//           const dynamicRate = this.calculateDynamicShipping(totalWeight);
-//           this.shippingSubject.next(dynamicRate);
-//       } else {
-//           // Stickers-only → flat rate
-//           this.shippingSubject.next(2.5);
-//       }
-//   }
-
 
   clearCart(): void {
     this.cartItemsSubject.next([]); // Reset the cart items
