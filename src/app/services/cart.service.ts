@@ -155,16 +155,42 @@ export class CartService {
 
         let subtotal = 0;
 
+//         if (!hasPrint) {
+//           // No prints: every line contributes its full price.
+//           cart.forEach(item => {
+//             // Use internalQuantity (UI count) when present, otherwise fall back to quantity
+//             const lineQty = (item.internalQuantity ?? item.quantity ?? 1);
+//             // For bundles originalPrice already represents the bundle price (e.g. $15)
+//             subtotal += (item.originalPrice ?? item.price) * lineQty;
+//           });
+//           return subtotal;
+//         }
         if (!hasPrint) {
-          // No prints: every line contributes its full price.
           cart.forEach(item => {
-            // Use internalQuantity (UI count) when present, otherwise fall back to quantity
-            const lineQty = (item.internalQuantity ?? item.quantity ?? 1);
-            // For bundles originalPrice already represents the bundle price (e.g. $15)
-            subtotal += (item.originalPrice ?? item.price) * lineQty;
+            if (!this.isSticker(item)) {
+              // Normal items (prints, etc.)
+              subtotal += (item.originalPrice ?? item.price) * (item.quantity ?? 1);
+            } else {
+              // Sticker logic
+              const isBundle = item.optionSubtitle.toLowerCase().includes('stickers');
+              const bundleSize = isBundle ? 3 : 1;
+
+              const uiQty = item.internalQuantity ?? item.quantity ?? 1;
+              const totalStickers = uiQty * bundleSize;
+
+              const perStickerPrice = (item.originalPrice ?? item.price) / bundleSize;
+
+              if(isBundle){
+              subtotal += ((totalStickers * perStickerPrice)/3);
+//               subtotal += bundleSize * perStickerPrice;
+              } else {
+                subtotal += totalStickers * perStickerPrice;
+                }
+            }
           });
           return subtotal;
         }
+
 
         // There is at least one print => up to 3 free stickers total (same algorithm as updateStickerPrices)
         let remainingFreeStickers = 3;
