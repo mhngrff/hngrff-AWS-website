@@ -7,4 +7,5 @@ export interface CartItem {
   weight: number;
   productId: string;
   originalPrice?: number;
+  internalQuantity?: number;
 }

@@ -189,6 +189,8 @@ export class PaymentComponent implements OnInit {
           this.calculateShippingRate(); // already sets this.shippingCost internally
         }
 
+//         this.recalcShipping();
+
         // Update total
         this.updateTotal(); // this.total = subtotal + shippingCost
 

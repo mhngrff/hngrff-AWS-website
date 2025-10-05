@@ -261,15 +261,25 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   addToCart(): void {
     if (this.selectedOption && this.selectedPrice && this.selectedWeight && this.selectedProductId !== null) {
-      this.cartService.addItem({
-        imageId: this.imageId,
-        optionSubtitle: this.selectedOption,
-        price: this.selectedPrice,
-        quantity: this.quantity,
-        thumbnailUrl: this.thumbnailUrl, // Assuming the first option is used as a thumbnail
-        weight: this.selectedWeight,
-        productId: this.selectedProductId
-      })
+//       this.cartService.addItem({
+//         imageId: this.imageId,
+//         optionSubtitle: this.selectedOption,
+//         price: this.selectedPrice,
+//         quantity: this.quantity,
+//         thumbnailUrl: this.thumbnailUrl, // Assuming the first option is used as a thumbnail
+//         weight: this.selectedWeight,
+//         productId: this.selectedProductId
+//       })
+         this.cartService.addItem({
+           imageId: this.imageId,
+           optionSubtitle: this.selectedOption || '',
+           price: this.selectedPrice || 0,
+           quantity: this.quantity,          // UI-facing
+           internalQuantity: this.quantity * (this.selectedOption?.toLowerCase().includes('stickers') ? 3 : 1), // bundle for pricing
+           thumbnailUrl: this.thumbnailUrl,
+           weight: this.selectedWeight || 0,
+           productId: this.selectedProductId || ''
+         });
     console.log('added imageid: ', this.selectedOption);
     } else {
       console.error('Unable to add to cart: Invalid option or price.');

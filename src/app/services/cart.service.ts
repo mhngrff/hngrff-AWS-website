@@ -79,106 +79,120 @@ export class CartService {
     );
   }
 
-private updateStickerPrices(): void {
-  const updatedItems = [...this.cartItemsSubject.value];
+  private updateStickerPrices(): void {
+      const updatedItems = [...this.cartItemsSubject.value];
 
-  // Check if there's at least one print (non-sticker)
-  const hasPrint = updatedItems.some(item => !this.isSticker(item));
+      console.log('updateStickerPrices - start: cart items:', updatedItems.map(item => ({
+          name: item.optionSubtitle,
+          quantity: item.quantity,
+          internalQuantity: item.internalQuantity,
+          originalPrice: item.originalPrice,
+          price: item.price
+      })));
 
-  if (!hasPrint) {
-    // No prints, reset sticker prices to original
-    updatedItems.forEach(item => {
-      if (this.isSticker(item)) {
-        item.price = item.originalPrice ?? item.price;
+      // Check if there's at least one print (non-sticker)
+      const hasPrint = updatedItems.some(item => !this.isSticker(item));
+
+      if (!hasPrint) {
+          // No prints, reset sticker prices to original line totals
+          updatedItems.forEach(item => {
+              if (this.isSticker(item)) {
+                  const bundleSize = item.optionSubtitle.toLowerCase().includes('stickers') ? 3 : 1;
+                  const qty = item.internalQuantity ?? item.quantity * bundleSize;
+                  item.price = (item.originalPrice ?? item.price) * (qty / bundleSize);
+              }
+          });
+      } else {
+          let remainingFreeStickers = 3; // max free stickers per print
+
+          // Separate bundles and singles so bundles get priority
+          const stickerItems = updatedItems.filter(item => this.isSticker(item));
+          const bundleItems = stickerItems.filter(item => item.optionSubtitle.toLowerCase().includes('stickers'));
+          const singleItems = stickerItems.filter(item => !item.optionSubtitle.toLowerCase().includes('stickers'));
+          const orderedItems = [...bundleItems, ...singleItems];
+
+          orderedItems.forEach(item => {
+              const bundleSize = item.optionSubtitle.toLowerCase().includes('stickers') ? 3 : 1;
+              const qty = item.internalQuantity ?? item.quantity * bundleSize;
+              const perStickerPrice = (item.originalPrice ?? item.price) / bundleSize;
+
+              if (remainingFreeStickers >= qty) {
+                  // Entire line is free
+                  item.price = 0;
+                  remainingFreeStickers -= qty;
+              } else if (remainingFreeStickers > 0) {
+                  // Part free, part paid
+                  const paidStickers = qty - remainingFreeStickers;
+                  item.price = paidStickers * perStickerPrice;
+                  remainingFreeStickers = 0;
+              } else {
+                  // All paid
+                  item.price = qty * perStickerPrice;
+              }
+          });
       }
-    });
-  } else {
-    // There is at least one print
-    let remainingFreeStickers = 3; // max free stickers per print
 
-    updatedItems.forEach(item => {
-      if (this.isSticker(item)) {
-        const quantity = item.quantity;
-        const bundleSize = item.optionSubtitle.toLowerCase().includes('bundle') ? 3 : 1;
-        const totalStickersForItem = quantity * bundleSize;
+      console.log('updateStickerPrices - end: cart items:', updatedItems.map(item => ({
+          name: item.optionSubtitle,
+          quantity: item.quantity,
+          internalQuantity: item.internalQuantity,
+          originalPrice: item.originalPrice,
+          price: item.price
+      })));
 
-       if (remainingFreeStickers >= totalStickersForItem) {
-         // All stickers free
-         item.price = 0;
-         remainingFreeStickers -= totalStickersForItem;
-       } else if (remainingFreeStickers > 0) {
-         // Some free, some paid
-         const paidStickers = totalStickersForItem - remainingFreeStickers;
-         const perStickerPrice = (item.originalPrice ?? item.price) / bundleSize;
-         item.price = perStickerPrice * paidStickers; // total price for the line
-         remainingFreeStickers = 0;
-       } else {
-         // All paid
-         item.price = item.originalPrice ?? item.price;
-       }
-
-      }
-    });
+      this.cartItemsSubject.next(updatedItems);
+      this.saveCartToStorage(updatedItems);
   }
-
-  this.cartItemsSubject.next(updatedItems);
-  this.saveCartToStorage(updatedItems);
-}
-
-
-
-//   getTotal$(): Observable<number> {
-//     return this.cartItems$.pipe(
-//       map((items) => {
-//         // Check if there is at least one non-sticker item
-//         const hasNonSticker = items.some(item => !item.optionSubtitle.toLowerCase().includes('sticker'));
-//
-//         return items.reduce((total, item) => {
-//           if (item.optionSubtitle.toLowerCase().includes('sticker') && hasNonSticker) {
-//             // Stickers are free if there's at least one non-sticker
-//             return total + 0;
-//           } else {
-//             // Normal price otherwise
-//             return total + item.price * item.quantity;
-//           }
-//         }, 0);
-//       })
-//     );
-//   }
 
   getTotal$(): Observable<number> {
     return this.cartItems$.pipe(
-      map((items) =>
-        items.reduce((total, item) => total + (item.price ?? 0), 0)
+      map(items =>
+        items.reduce((total, item) => total + item.price, 0) // no * quantity
       )
     );
   }
 
-
   addItem(item: CartItem): void {
-    const currentItems = this.cartItemsSubject.value;
-    const existingItemIndex = currentItems.findIndex(
-      cartItem => cartItem.imageId === item.imageId && cartItem.optionSubtitle === item.optionSubtitle
-    );
+      const currentItems = this.cartItemsSubject.value;
 
-    if (existingItemIndex !== -1) {
-      const updatedItem = {
-        ...currentItems[existingItemIndex],
-        quantity: currentItems[existingItemIndex].quantity + item.quantity
+      // Determine bundle size (3 for sticker bundle, 1 otherwise)
+      const bundleSize = item.optionSubtitle.toLowerCase().includes('stickers') ? 3 : 1;
+
+      // Set internalQuantity for pricing, keep quantity for UI
+      const adjustedItem: CartItem = {
+          ...item,
+          quantity: item.quantity,         // UI-facing
+          internalQuantity: item.quantity * bundleSize  // used in pricing logic
       };
-      const updatedItems = [...currentItems];
-      updatedItems[existingItemIndex] = updatedItem;
-      this.cartItemsSubject.next(updatedItems);
-    } else {
-      // Set originalPrice when first adding the item
-      const newItem = { ...item, originalPrice: item.price };
-      this.cartItemsSubject.next([...currentItems, newItem]);
-    }
 
-    this.saveCartToStorage(this.cartItemsSubject.value);
-    this.updateStickerPrices();
+      const existingItemIndex = currentItems.findIndex(
+          cartItem =>
+              cartItem.imageId === adjustedItem.imageId &&
+              cartItem.optionSubtitle === adjustedItem.optionSubtitle
+      );
+
+      if (existingItemIndex !== -1) {
+        const updatedItem = {
+            ...currentItems[existingItemIndex],
+            quantity: currentItems[existingItemIndex].quantity + adjustedItem.quantity,
+            internalQuantity: (currentItems[existingItemIndex].internalQuantity ?? currentItems[existingItemIndex].quantity)
+                              + (adjustedItem.internalQuantity ?? 0)
+        };
+
+          const updatedItems = [...currentItems];
+          updatedItems[existingItemIndex] = updatedItem;
+          this.cartItemsSubject.next(updatedItems);
+      } else {
+          const newItem: CartItem = {
+              ...adjustedItem,
+              originalPrice: adjustedItem.price
+          };
+          this.cartItemsSubject.next([...currentItems, newItem]);
+      }
+
+      this.saveCartToStorage(this.cartItemsSubject.value);
+      this.updateStickerPrices();
   }
-
 
   updateItemQuantity(imageId: string, optionSubtitle: string, quantity: number): void {
     const currentItems = this.cartItemsSubject.value;
@@ -188,8 +202,9 @@ private updateStickerPrices(): void {
 
     if (itemIndex !== -1) {
       const updatedItem = {
-        ...currentItems[itemIndex],
-        quantity: quantity
+          ...currentItems[itemIndex],
+          quantity: quantity, // UI-facing
+          internalQuantity: (currentItems[itemIndex].internalQuantity ?? quantity) / (currentItems[itemIndex].quantity ?? 1) * quantity
       };
       const updatedItems = [...currentItems];
       updatedItems[itemIndex] = updatedItem;
@@ -261,6 +276,32 @@ private updateStickerPrices(): void {
       })
     );
   }
+
+//   private recalcShipping(): void {
+//       const items = this.cartItemsSubject.value;
+//
+//       if (items.length === 0) {
+//           // Empty cart → free shipping
+//           this.shippingSubject.next(0);
+//           return;
+//       }
+//
+//       const hasPrint = items.some(item => !this.isSticker(item));
+//
+//       if (hasPrint) {
+//           // Cart contains at least one print → dynamic shipping based on total weight
+//           const totalWeight = items.reduce(
+//               (sum, item) => sum + item.weight * (item.internalQuantity ?? item.quantity),
+//               0
+//           );
+//           const dynamicRate = this.calculateDynamicShipping(totalWeight);
+//           this.shippingSubject.next(dynamicRate);
+//       } else {
+//           // Stickers-only → flat rate
+//           this.shippingSubject.next(2.5);
+//       }
+//   }
+
 
   clearCart(): void {
     this.cartItemsSubject.next([]); // Reset the cart items

@@ -23,6 +23,15 @@
         <p class="cart-item-subtitle">{{ item.optionSubtitle }} -
           <span *ngIf="item.price === 0">FREE</span>
           <span *ngIf="item.price !== 0">{{ item.price | currency }}</span>
+          <!-- prints -->
+<!--          <span *ngIf="!item.optionSubtitle.toLowerCase().includes('sticker')">-->
+<!--            {{ item.price | currency }} × {{ item.quantity }}-->
+<!--          </span>-->
+
+<!--          &lt;!&ndash; stickers &ndash;&gt;-->
+<!--          <span *ngIf="item.optionSubtitle.toLowerCase().includes('sticker')">-->
+<!--            {{ item.price | currency }}-->
+<!--          </span>-->
         </p>
         <div class="quantity-editor">
           <span class="quantity-decrement" (click)="decrementQuantity(item)">-</span>
