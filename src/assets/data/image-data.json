@@ -378,7 +378,7 @@
           "subtitle": "Inshore Slam Stickers",
           "price": 15.00,
           "imageUrl": "/assets/images/SlamSticker-1000w.png",
-          "weight": 1,
+          "weight": 0.1,
           "productId": "J5"
         },
         {
@@ -386,8 +386,25 @@
           "subtitle": "Inshore Slam Stickers",
           "price": 15.00,
           "imageUrl": "/assets/images/SlamStickers-Length-1000w.jpg",
-          "weight": 1,
+          "weight": 0.1,
           "productId": "J5"
+        }
+      ]
+    },
+    {
+      "id": "d2dsticker",
+      "title": "ANTI AI STICKER",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "currency": "USD",
+      "thumbnail": "/assets/images/d2dSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Anti AI Sticker",
+          "price": 6.00,
+          "imageUrl": "/assets/images/d2dSticker-1000w.png",
+          "weight": 0.1,
+          "productId": "J6"
         }
       ]
     }
