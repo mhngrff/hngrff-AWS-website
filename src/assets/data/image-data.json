@@ -355,14 +355,6 @@
           "imageUrl": "/assets/images/SailfishSticker-1000w.png",
           "weight": 0.1,
           "productId": "J4"
-        },
-        {
-          "type": "print",
-          "subtitle": "Sailfish Sticker",
-          "price": 6.00,
-          "imageUrl": "",
-          "weight": 0.1,
-          "productId": "J4"
         }
       ]
     },
