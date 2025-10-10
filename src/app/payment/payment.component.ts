@@ -633,8 +633,8 @@ console.timeEnd("Create Order");
         // Stickers-only: flat rate, cancel any in-progress calculation
         this.isShippingCalculationInProgress = false;
         this.isShippingCostCalculated = true;
-        this.shippingCost = 5;
-        this.previousShippingCost = 5;
+        this.shippingCost = 2.50;
+        this.previousShippingCost = 2.50;
         this.updateTotal();
         this.cd.detectChanges();
         return;
@@ -758,10 +758,10 @@ private recalcShipping(): void {
       this.shippingSub.unsubscribe();
       this.shippingSub = null;
     }
-    this.shippingCost = 5.00;
+    this.shippingCost = 2.50;
     this.isShippingCalculationInProgress = false;
     this.isShippingCostCalculated = true;
-    this.previousShippingCost = 5.00;
+    this.previousShippingCost = 2.50;
     this.updateTotal();
     this.cd.detectChanges();
   }

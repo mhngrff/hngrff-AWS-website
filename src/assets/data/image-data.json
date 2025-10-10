@@ -276,7 +276,7 @@
         {
           "type": "print",
           "subtitle": "Redfish Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/RedfishSticker-1000w.png",
           "weight": 0.1,
           "productId": "J1"
@@ -284,7 +284,7 @@
         {
           "type": "print",
           "subtitle": "Redfish Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/RedfishSticker-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J1"
@@ -301,7 +301,7 @@
         {
           "type": "print",
           "subtitle": "Trout Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/TroutSticker-1000w.png",
           "weight": 0.1,
           "productId": "J2"
@@ -309,7 +309,7 @@
         {
           "type": "print",
           "subtitle": "Trout Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/TroutSticker-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J2"
@@ -326,7 +326,7 @@
         {
           "type": "print",
           "subtitle": "Flounder Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/FlounderSticker-1000w.png",
           "weight": 0.1,
           "productId": "J3"
@@ -334,7 +334,7 @@
         {
           "type": "print",
           "subtitle": "Flounder Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/FlounderSticker-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J3"
@@ -351,7 +351,7 @@
         {
           "type": "print",
           "subtitle": "Sailfish Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/SailfishSticker-1000w.png",
           "weight": 0.1,
           "productId": "J4"
@@ -368,7 +368,7 @@
         {
           "type": "print",
           "subtitle": "Inshore Slam Stickers",
-          "price": 15.00,
+          "price": 12.00,
           "imageUrl": "/assets/images/SlamSticker-1000w.png",
           "weight": 0.1,
           "productId": "J5"
@@ -376,7 +376,7 @@
         {
           "type": "print",
           "subtitle": "Inshore Slam Stickers",
-          "price": 15.00,
+          "price": 12.00,
           "imageUrl": "/assets/images/SlamStickers-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J5"
@@ -393,7 +393,7 @@
         {
           "type": "print",
           "subtitle": "Anti AI Sticker",
-          "price": 6.00,
+          "price": 5.00,
           "imageUrl": "/assets/images/d2dSticker-1000w.png",
           "weight": 0.1,
           "productId": "J6"
