@@ -19,7 +19,7 @@
         {
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
-          "price": 350.00,
+          "price": 320.00,
           "imageUrl": "/assets/images/fish-slam-framed5.jpg",
           "weight": 10,
           "productId": "D2"
@@ -27,7 +27,7 @@
         {
           "type": "three_frames",
           "subtitle": "SLAM - PRINTS IN 3 FRAMES",
-          "price": 600.00,
+          "price": 520.00,
           "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg",
           "weight": 12,
           "productId": "D3"
@@ -53,7 +53,7 @@
         {
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
-          "price": 250.00,
+          "price": 220.00,
           "imageUrl": "/assets/images/redfish-framed5.jpg",
           "weight": 8,
           "productId": "A2"
@@ -79,7 +79,7 @@
         {
           "type": "framed",
           "subtitle": "TROUT - FRAMED PRINT",
-          "price": 250.00,
+          "price": 220.00,
           "imageUrl": "/assets/images/trout-framed5.jpg",
           "weight": 8,
           "productId": "B2"
@@ -105,7 +105,7 @@
         {
           "type": "framed",
           "subtitle": "FLOUNDER - FRAMED PRINT",
-          "price": 250.00,
+          "price": 220.00,
           "imageUrl": "/assets/images/flounder-framed5.jpg",
           "weight": 8,
           "productId": "C2"
@@ -123,7 +123,7 @@
         {
           "type": "print",
           "subtitle": "MIRAGE - PRINT",
-          "price": 80.00,
+          "price": 60.00,
           "imageUrl": "/assets/images/mirage-1400h.jpg",
           "weight": 1,
           "productId": "E1"
@@ -131,7 +131,7 @@
         {
           "type": "framed",
           "subtitle": "MIRAGE - FRAMED",
-          "price": 350.00,
+          "price": 300.00,
           "imageUrl": "/assets/images/rowboat_framed_600w.jpg",
           "weight": 8,
           "productId": "E2"
@@ -165,7 +165,7 @@
         {
           "type": "framed",
           "subtitle": "SHELLS - FRAMED",
-          "price": 350.00,
+          "price": 300.00,
           "imageUrl": "/assets/images/shells-labeled-1200w.jpg",
           "weight": 8,
           "productId": "F2"
@@ -183,7 +183,7 @@
         {
           "type": "print",
           "subtitle": "Lighthouse Print 9 x 12",
-          "price": 50.00,
+          "price": 40.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
           "productId": "G1"
@@ -191,7 +191,7 @@
         {
           "type": "print",
           "subtitle": "Lighthouse Print 12 x 16 ",
-          "price": 80.00,
+          "price": 60.00,
           "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
           "productId": "G2"
@@ -199,7 +199,7 @@
         {
           "type": "framed",
           "subtitle": "Framed 12 x 16 print",
-          "price": 350.00,
+          "price": 300.00,
           "imageUrl": "/assets/images/lighthouse-script-700w.jpg",
           "weight": 8,
           "productId": "G3"
@@ -217,7 +217,7 @@
         {
           "type": "print",
           "subtitle": "Baptism Print 9 x 12",
-          "price": 50.00,
+          "price": 40.00,
           "imageUrl": "/assets/images/baptism-1000w.jpg",
           "weight": 1,
           "productId": "H1"
@@ -225,7 +225,7 @@
         {
           "type": "print",
           "subtitle": "Baptism Print 12 x 16 ",
-          "price": 80.00,
+          "price": 60.00,
           "imageUrl": "/assets/images/baptism-framed-700w.jpg",
           "weight": 1,
           "productId": "H2"
@@ -233,7 +233,7 @@
         {
           "type": "print",
           "subtitle": "Framed Print 12 x 16",
-          "price": 350.00,
+          "price": 300.00,
           "imageUrl": "",
           "weight": 8,
           "productId": "H3"
@@ -251,7 +251,7 @@
         {
           "type": "print",
           "subtitle": "Sailfish Print 16 x 10.5",
-          "price": 80.00,
+          "price": 60.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
           "productId": "I1"
@@ -259,7 +259,7 @@
         {
           "type": "print",
           "subtitle": "Sailfish Print 24 x 16 ",
-          "price": 110.00,
+          "price": 80.00,
           "imageUrl": "/assets/images/sailfishFramed.jpg",
           "weight": 1,
           "productId": "I2"
