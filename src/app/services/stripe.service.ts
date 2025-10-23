@@ -206,22 +206,46 @@ export class StripeService {
   }
 
   // Method to create a Payment Intent
-  async createPaymentIntent(amount: number): Promise<string | null> {
-    try {
-      console.log("Creating payment intent for amount:", amount);
-      const response = await this.http.post<{ clientSecret: string }>(
-//         'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent-test',
-            'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent',
-        { amount: amount }
-      ).toPromise();
+//   async createPaymentIntent(amount: number): Promise<string | null> {
+//     try {
+//       console.log("Creating payment intent for amount:", amount);
+//       const response = await this.http.post<{ clientSecret: string }>(
+// //         'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent-test',
+//             'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent',
+//         { amount: amount }
+//       ).toPromise();
+//
+//       console.log("Received payment intent response:", response);
+//       return response?.clientSecret || null;
+//     } catch (error) {
+//         console.error('Error creating payment intent:', error);
+//         return null;
+//     }
+//   }
 
-      console.log("Received payment intent response:", response);
-      return response?.clientSecret || null;
-    } catch (error) {
-        console.error('Error creating payment intent:', error);
-        return null;
-    }
+async createPaymentIntent(amount: number): Promise<string | null> {
+  try {
+    console.log("Creating payment intent for amount:", amount);
+
+    // Determine the endpoint dynamically
+//     const endpoint = window.location.hostname === 'localhost'
+//       ? 'http://localhost:3000/create-payment-intent' // local test server
+//       : 'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent'; // prod
+    const endpoint = 'https://ix8f5ywobj.execute-api.us-east-1.amazonaws.com/create-payment-intent';
+
+    const response = await this.http.post<{ clientSecret: string }>(
+      endpoint,
+      { amount: amount }
+    ).toPromise();
+
+    console.log("Received payment intent response:", response);
+    return response?.clientSecret || null;
+
+  } catch (error) {
+    console.error('Error creating payment intent:', error);
+    return null;
   }
+}
 
   // Method to confirm the Card Payment
 

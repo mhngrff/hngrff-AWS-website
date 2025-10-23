@@ -140,9 +140,33 @@
 
 <div class="tertiary-images-container">
 
-  <h2>LATEST WORK</h2>
+  <h2>LATEST WORK</h2><br/>
 
-<div class="tertiary-images-section" id="tertiaryPrints">
+  <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:15:16">
+    <a (click)="goToDetails(image.id)">
+      <img
+        class="image"
+        [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+        [alt]="image.title + ' drawing'" loading="lazy">
+    </a>
+  </div>
+
+  <h3 class="mirage-title">PALMETTO</h3>
+  <div class="line"></div>
+
+  <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:16:17">
+    <a (click)="goToDetails(image.id)">
+      <img
+        class="image"
+        [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+        [alt]="image.title + ' drawing'" loading="lazy">
+    </a>
+  </div>
+
+  <h3 class="mirage-title">BLUEGILL</h3>
+  <div class="line"></div>
+
+  <div class="tertiary-images-section" id="tertiaryPrints">
 
   <div class="shell-image-wrapper" *ngFor="let image of images | slice:8:9">
     <a (click)="goToDetails(image.id)">

@@ -399,6 +399,58 @@
           "productId": "J6"
         }
       ]
+    },
+    {
+      "id": "palmetto",
+      "title": "PALMETTO",
+      "description": "Palmetto",
+      "currency": "USD",
+      "zoomImage": "/assets/images/palmetto-2500w.jpg",
+      "thumbnail": "/assets/images/Palmetto-200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Palmetto 9 x 12",
+          "price": 40.00,
+          "imageUrl": "/assets/images/Palmetto-1000w.jpg",
+          "weight": 0.1,
+          "productId": "K1"
+        },
+        {
+          "type": "print",
+          "subtitle": "Palmetto 12 x 16",
+          "price": 60.00,
+          "imageUrl": "/assets/images/Palmetto-1000w.jpg",
+          "weight": 0.1,
+          "productId": "K2"
+        }
+      ]
+    },
+    {
+      "id": "bluegill",
+      "title": "BLUEGILL",
+      "description": "Bluegill",
+      "currency": "USD",
+      "zoomImage": "/assets/images/Bluegill-2500w.jpg",
+      "thumbnail": "/assets/images/Bluegill-400w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "Bluegill print 8 x 10",
+          "price": 30.00,
+          "imageUrl": "/assets/images/Bluegill-1000w.jpg",
+          "weight": 0.1,
+          "productId": "L1"
+        },
+        {
+          "type": "print",
+          "subtitle": "Framed bluegill print",
+          "price": 150.00,
+          "imageUrl": "/assets/images/Bluegill-1000w.jpg",
+          "weight": 0.1,
+          "productId": "L2"
+        }
+      ]
     }
   ]
 }
