@@ -139,6 +139,7 @@
 
 
 <div class="tertiary-images-container">
+  <div class="tertiary-images-section" id="tertiaryPrints">
 
   <h2>LATEST WORK</h2><br/>
 
@@ -165,8 +166,6 @@
 
   <h3 class="mirage-title">BLUEGILL</h3>
   <div class="line"></div>
-
-  <div class="tertiary-images-section" id="tertiaryPrints">
 
   <div class="shell-image-wrapper" *ngFor="let image of images | slice:8:9">
     <a (click)="goToDetails(image.id)">
