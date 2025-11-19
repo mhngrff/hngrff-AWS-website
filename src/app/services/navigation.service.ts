@@ -30,8 +30,8 @@ export class NavigationService {
     this.router.navigate(['/about']);
   }
 
-  goToStickers(): void {
-    this.router.navigate(['/stickers']);
+  goToOriginals(): void {
+    this.router.navigate(['/originals']);
   }
 
   goToPayment(): void {

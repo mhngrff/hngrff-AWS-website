@@ -20,6 +20,7 @@ import { CartItem } from '../models/cart-item.interface';
 })
 
 export class DetailsComponent implements OnInit, AfterViewInit {
+  cartItems$!: Observable<CartItem[]>; //ADDED 11/19/2025 for ORIGINAL functionality
   image$: Observable<Image | undefined> = of(undefined);
   imageMetadata$: Observable<Partial<Image> | undefined> = of(undefined);
   mainImageUrl: string | null = null;
@@ -40,7 +41,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   quantity: number = 1;
   imageId: string = ''; // Store image ID locally
   thumbnailUrl: string | null = null;
-//   weight: number = 0;
+
 
   private debounceTimer: any;
 
@@ -56,6 +57,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('imageId');
+    this.cartItems$ = this.cartService.getCartItems(); //ADDED 11/19/2025 for ORIGINAL functionality
     if (id) {
       // Fetch the metadata first (title, description, price)
       this.imageMetadata$ = this.imageService.getImageMetadataById(id!);
@@ -71,7 +73,6 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.totalImages = image.options.length;
           this.thumbnailUrl = image.thumbnail || null;
           this.updateArrowStates();
-//           console.log("this.zoomImageUrl = ", this.zoomImageUrl);
         } else {
           console.error(`Image with id ${id} not found`);
         }
@@ -85,7 +86,6 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.selectedPrice = metadata.options[0].price;
           this.selectedWeight = metadata.options[0].weight;
           this.selectedProductId = metadata.options[0].productId;
-//           console.log('Default selected option:', this.selectedOption);
         }
       });
     }
@@ -298,4 +298,41 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   goToContact(){
     this.navigationService.goToContact();
     }
+
+  isOriginal(): boolean {
+     if (!this.selectedOption) return false;
+    return this.selectedOption?.endsWith('ORIGINAL');
+    }
+
+  isOriginalSold(): boolean {
+    // Do nothing if no image or no options loaded yet
+    if (!this.latestImage?.options) return false;
+
+    // Find the actual Option object that matches selectedOption
+    const activeOption = this.latestImage.options.find(
+      (opt) => opt.subtitle === this.selectedOption
+    );
+    return activeOption?.sold === true;
+    }
+
+  isOriginalInCart(cartItems: CartItem[] | null): boolean {
+      if (!cartItems) return false;
+
+      return cartItems.some(
+        item =>
+          item.imageId === this.imageId &&   // current detail page's image
+          item.optionSubtitle === this.selectedOption // ensures it’s THIS original
+      );
+  }
+
+  disableAddToCart(cartItems: CartItem[] | null): boolean {
+    if(!this.isOriginal()) { return false }
+    if (this.isOriginalSold()) return true;       // sold = highest priority
+    return this.isOriginalInCart(cartItems);      // normal condition
+  }
+
+  disableBuyNow(): boolean {
+    return this.isOriginalSold();                 // sold = disable
+  }
+
 }

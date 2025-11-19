@@ -10,4 +10,5 @@ export interface Option {
   imageUrl: string;
   weight: number;
   productId: string;
+  sold?: boolean; //ADDED 11/19/2025 for ORIGINALS functionality
 }

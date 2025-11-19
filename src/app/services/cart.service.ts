@@ -155,16 +155,6 @@ export class CartService {
 
         let subtotal = 0;
 
-//         if (!hasPrint) {
-//           // No prints: every line contributes its full price.
-//           cart.forEach(item => {
-//             // Use internalQuantity (UI count) when present, otherwise fall back to quantity
-//             const lineQty = (item.internalQuantity ?? item.quantity ?? 1);
-//             // For bundles originalPrice already represents the bundle price (e.g. $15)
-//             subtotal += (item.originalPrice ?? item.price) * lineQty;
-//           });
-//           return subtotal;
-//         }
         if (!hasPrint) {
           cart.forEach(item => {
             if (!this.isSticker(item)) {
@@ -315,7 +305,6 @@ export class CartService {
 
 
   getCartItems(): Observable<CartItem[]> {
-//     return this.cartItems$;
     return this.cartItemsSubject.asObservable();
   }
 

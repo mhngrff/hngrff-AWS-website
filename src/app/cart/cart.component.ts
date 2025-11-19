@@ -120,4 +120,9 @@ export class CartComponent implements OnInit {
     this.cartService.closeCart();
     }
 
+  isOriginal(item: CartItem): boolean {
+    return item.optionSubtitle?.toUpperCase().includes('ORIGINAL');
+  }
+
+
 }

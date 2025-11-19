@@ -42,18 +42,21 @@
     <div class="details-content">
       <h2>{{ metadata.title }}</h2>
       <div class="price">
-        <h3>{{ selectedPrice | currency: metadata.currency }}</h3>
+        <h3 *ngIf="!isOriginalSold(); else soldLabel">
+          {{ selectedPrice | currency: metadata.currency }}
+        </h3>
+        <ng-template #soldLabel>
+          <h3>SOLD</h3>
+        </ng-template>
       </div>
 
       <p>{{ metadata.description }}</p>
 
-            <div *ngIf="!isStickerItem()">
+            <div *ngIf="!isStickerItem() && !isOriginal()">
       <label>Framing options </label>
             </div>
       <div class = "input-section">
-        <div class="dropdown-increment-row">
-<!--          <div *ngIf="!isStickerItem()">-->
-        <!-- Dropdown to select version (unframed, framed, etc.) -->
+        <div *ngIf="!isOriginal()" class="dropdown-increment-row">
             <div class="option-selector" *ngIf="!isStickerItem() && metadata.options && metadata.options.length > 0">
               <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
                 <option *ngFor="let option of metadata.options" [value]="option.subtitle">
@@ -68,12 +71,21 @@
         </div>
       </div>
 
-      <a (click)="addToCart()">
-        <button class="add-to-cart-button">ADD TO CART</button>
+        <a (click)="addToCart()">
+        <button
+          class="add-to-cart-button"
+          [disabled]="disableAddToCart(cartItems$ | async)">
+        {{
+           isOriginal() && isOriginalInCart(cartItems$ | async) ? 'ADDED TO CART' : 'ADD TO CART'
+          }}
+        </button>
       </a>
 
       <a (click)="buyNow()">
-        <button class="buy-now-button">BUY NOW</button>
+        <button
+          class="buy-now-button"
+          [disabled]="disableBuyNow()">
+          BUY NOW</button>
       </a>
     </div>
       <div class="slam-information" *ngIf="metadata.title == 'INSHORE SLAM'">

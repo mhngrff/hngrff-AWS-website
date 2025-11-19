@@ -451,6 +451,120 @@
           "productId": "L2"
         }
       ]
+    },
+    {
+      "id": "mirageOriginal",
+      "title": "THE MIRAGE - ORIGINAL",
+      "description": "?W x ?H framed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/mirage-2000h.jpg",
+      "thumbnail": "/assets/images/mirage-thumbnail.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "MIRAGE - ORIGINAL",
+          "price": 2500.00,
+          "imageUrl": "/assets/images/mirage-1400h.jpg",
+          "weight": 1,
+          "productId": "M1",
+          "sold": true
+        }
+      ]
+    },
+    {
+      "id": "shellsOriginal",
+      "title": "SHELLS OF FOLLY - ORIGINAL",
+      "description": "?W x ?H framed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/shells-2000w.jpg",
+      "thumbnail": "/assets/images/shells-default-1200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "SHELLS - ORIGINAL",
+          "price": 1500.00,
+          "imageUrl": "/assets/images/shells-default-1200w.jpg",
+          "weight": 1,
+          "productId": "M2",
+          "sold": false
+        }
+      ]
+    },
+    {
+      "id": "lighthouseOriginal",
+      "title": "MORRIS ISLAND LIGHTHOUSE - ORIGINAL",
+      "description": "?W X ?H framed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/lighthouse-1100w.jpg",
+      "thumbnail": "/assets/images/lighthouse-600w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "MORRIS ISLAND LIGHTHOUSE - ORIGINAL",
+          "price": 1500.00,
+          "imageUrl": "/assets/images/lighthouse-600w.jpg",
+          "weight": 1,
+          "productId": "M3",
+          "sold": false
+        }
+      ]
+    },
+    {
+      "id": "baptismOriginal",
+      "title": "BAPTISM - ORIGINAL",
+      "description": "?W x ?H framed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/baptism-5000w.jpg",
+      "thumbnail": "/assets/images/baptism-500w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "BAPTISM - ORIGINAL",
+          "price": 3500.00,
+          "imageUrl": "/assets/images/baptism-1000w.jpg",
+          "weight": 1,
+          "productId": "M4",
+          "sold": false
+        }
+      ]
+    },
+    {
+      "id": "sailfishOriginal",
+      "title": "SAILFISH - ORIGINAL",
+      "description": "?W x ?H framed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/Sailfish-2500w.jpg",
+      "thumbnail": "/assets/images/Sailfish-200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "SAILFISH - ORIGINAL",
+          "price": 2500.00,
+          "imageUrl": "/assets/images/Sailfish-1200w.jpg",
+          "weight": 1,
+          "productId": "M5",
+          "sold": false
+        }
+      ]
+    },
+    {
+      "id": "palmettoOriginal",
+      "title": "PALMETTO - ORIGINAL",
+      "description": "?W x ?H framed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/palmetto-2500w.jpg",
+      "thumbnail": "/assets/images/Palmetto-200w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "PALMETTO - ORIGINAL",
+          "price": 1500.00,
+          "imageUrl": "/assets/images/Palmetto-1000w.jpg",
+          "weight": 0.1,
+          "productId": "M6",
+          "sold": false
+        }
+      ]
     }
   ]
 }

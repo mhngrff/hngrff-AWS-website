@@ -1,0 +1,160 @@
+@media only screen and (min-width: 786px) {
+
+  .main-content{
+    width:100%;
+    text-align: center;
+    align-items: center;
+    margin-top: 7rem;
+    }
+
+  .images-section{
+    width: 30%;
+    margin-left: 35%;
+    }
+
+  .image-wrapper{
+    width: 100%;
+    margin-top: 3rem;
+  //   margin-bottom: 2rem;
+    position: relative;
+    }
+
+  .image-wrapper h3{
+    margin-top: 1rem;
+    }
+
+  h2 {
+    font-size: 1rem;
+
+    }
+
+  .image-link {
+    position: relative;
+    display: block;
+  }
+
+  .image-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .original-title, .original-price{
+    text-align: center;
+    }
+
+  /* Gradient overlay */
+  .image-wrapper.sold .image-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;                      /* ensures perfect fit */
+    background: linear-gradient(
+      to bottom,
+      transparent 10%,             /* gradient starts higher */
+      rgba(0, 0, 0, 0.9) 100%     /* darker and taller now */
+    );
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* SOLD OUT text */
+  .image-wrapper.sold .image-link::before {
+    content: "SOLD OUT";
+    position: absolute;
+    bottom: 2.5rem;               /* adjust to taste */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.12rem;
+    z-index: 6;
+    pointer-events: none;
+    text-shadow: 0px 0px 6px rgba(0,0,0,0.6); /* improves readability */
+  }
+
+}
+
+@media only screen and (max-width: 786px) {
+
+  h1{
+    font-size: 2rem;
+    }
+
+  .main-content{
+    width:100%;
+    text-align: center;
+    align-items: center;
+    margin-top: 5rem;
+    }
+
+  .images-section{
+    width: 96%;
+    margin-left: 2%;
+    }
+
+  .image-wrapper{
+    width: 100%;
+    margin-top: 2rem;
+  //   margin-bottom: 2rem;
+    position: relative;
+    }
+
+  .image-wrapper h3{
+    margin-top: 1rem;
+    }
+
+  h2 {
+    font-size: 1rem;
+    }
+
+  .image-link {
+    position: relative;
+    display: block;
+  }
+
+  .image-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .original-title, .original-price{
+    text-align: center;
+    }
+
+  /* Gradient overlay */
+  .image-wrapper.sold .image-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;                      /* ensures perfect fit */
+    background: linear-gradient(
+      to bottom,
+      transparent 10%,             /* gradient starts higher */
+      rgba(0, 0, 0, 0.9) 100%     /* darker and taller now */
+    );
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* SOLD OUT text */
+  .image-wrapper.sold .image-link::before {
+    content: "SOLD OUT";
+    position: absolute;
+    bottom: 2.5rem;               /* adjust to taste */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.12rem;
+    z-index: 6;
+    pointer-events: none;
+    text-shadow: 0px 0px 6px rgba(0,0,0,0.6); /* improves readability */
+  }
+
+}
+
+
