@@ -9,9 +9,7 @@
 
   <div class="primary-images-container">
 
-    <!--      <div class="individual-image-container" *ngFor="let image of images | slice:0:1">-->
     <div class="primary-image-wrapper">
-      <!--      <div class="primary-image-wrapper" *ngFor="let image of images | slice:0:1">-->
       <a *ngFor="let image of images | slice:0:1" (click)="goToDetails(image.id)">
         <img
           class="image"
@@ -21,7 +19,6 @@
           (load)="onImageLoad()">
       </a>
     </div>
-    <!--      </div>-->
   </div>
 
   <div class="primary-content-container">

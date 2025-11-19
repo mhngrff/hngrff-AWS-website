@@ -19,7 +19,8 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
 //   @ViewChild('parallax', { static: false }) parallax!: ElementRef;
 
   images: Image[] = [];
-  imageLoaded: boolean = false;
+  imageLoaded: Record<string, boolean> = {};
+
 
   constructor(
     private imageService: ImageService,
@@ -53,12 +54,15 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-
-  onImageLoad(): void{
-    this.imageLoaded = true;
+  onImageLoad(id: string): void {
+    this.imageLoaded[id] = true;
+    console.log("this.imageLoaded[id] = " + this.imageLoaded[id]);
   }
+
 
   goToDetails(imageId: string): void {
     this.navigationService.goToDetails(imageId);
   }
+
+
 }
