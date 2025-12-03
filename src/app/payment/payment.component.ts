@@ -15,6 +15,7 @@ import { ShippingService } from '../services/shipping.service';
 import { StripeService } from '../services/stripe.service';
 import { FormsModule } from '@angular/forms';
 import { OrdersService } from '../services/orders.service';
+import { OriginalsService } from '../services/originals.service'
 
 const countryNameMapping: { [key: string]: string } = {
   'USA': 'United States',
@@ -134,7 +135,8 @@ export class PaymentComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private stripeService: StripeService,
     private activatedRoute: ActivatedRoute,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private originalsService : OriginalsService
   ) {
     this.isBuyNowFlow$ = this.cartService.isBuyNowFlow$;
 
@@ -294,17 +296,17 @@ console.time("Address Validation and Shipping");
       })
 
       await validationInProgress$.toPromise(); // Wait until both processes are complete
-console.timeEnd('Address Validation and Shipping');
+      console.timeEnd('Address Validation and Shipping');
 
       // Remove the loading message after validation is complete
       this.errorMessages = this.errorMessages.filter(
         (error) => error.message !== "Validating address and calculating shipping cost. Please wait..."
       );
 
-console.time("Form Validation");
+    console.time("Form Validation");
     // Use the helper method to validate form fields
     const { hasEmptyFields, hasInvalidFields } = this.validateFormFields();
-console.timeEnd("Form Validation");
+    console.timeEnd("Form Validation");
 
     if (hasEmptyFields) {
       this.addErrorMessage('Please fill out all required fields.');
@@ -312,9 +314,7 @@ console.timeEnd("Form Validation");
       this.highlightUntouchedStripeFields(); // Highlight untouched card fields to indicate missing information
 
       const formData = this.paymentForm.value;
-//       console.log("formData = ", this.paymentForm.value);
-//       console.log("hasEmptyFields = ", hasEmptyFields);
-//       console.log("hasInvalidFields = ", hasInvalidFields);
+
     }
 
     if (this.paymentForm.get('email')?.invalid && this.paymentForm.get('email')?.touched && this.paymentForm.get('email')?.value !== '') {
@@ -343,11 +343,11 @@ console.timeEnd("Form Validation");
 
     const formData = this.paymentForm.value;
 
-console.time("Create Payment Intent");
+    console.time("Create Payment Intent");
     const amountInCents = Math.round(this.total * 100);
 
     const clientSecret = await this.stripeService.createPaymentIntent(amountInCents); // Set the amount
-console.timeEnd("Create Payment Intent");
+    console.timeEnd("Create Payment Intent");
 
     if (!clientSecret) {
       console.error("Failed to retrieve client secret from backend");
@@ -360,9 +360,7 @@ console.timeEnd("Create Payment Intent");
 
     const cardElement = this.stripeService.getCardElement();
 
-//     console.log('Card element:', cardElement);
-
-console.time("Confirm Card Payment");
+    console.time("Confirm Card Payment");
     try {
       const { paymentIntent, error } = await this.stripeService.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -374,12 +372,24 @@ console.time("Confirm Card Payment");
       if (error) {
         const stripeError = error as StripeError; // Cast error to StripeError
         console.error('Payment failed:', stripeError.message, stripeError);
-//         this.addErrorMessage(`Payment failed: ${error.message}`);
-console.timeEnd("Confirm Card Payment");
+        console.timeEnd("Confirm Card Payment");
       } else {
           console.log("Payment successful:", paymentIntent);
-console.timeEnd("Confirm Card Payment");
-console.time("Create Order");
+          console.timeEnd("Confirm Card Payment");
+
+          //NEW ORIGINALS CODE 11/21/25
+          this.cartItems.forEach(item => {
+            if (this.originalsService.isOriginal(item.optionSubtitle)){
+              console.log("original DETECTED");
+              this.originalsService.updateOriginalStatus(item.optionSubtitle, true)
+                .subscribe({
+                  next: response => console.log("Original status updated:", response),
+                  error: err => console.error("Failed to update original:", err)
+                  });
+              }
+            });
+
+          console.time("Create Order");
                 const orderDetails = {
                   orderId: `ORD-${Date.now()}`, // Generate unique order ID
                   customerName: formData.shippingName,
@@ -409,7 +419,7 @@ console.time("Create Order");
           try {
             const response = await this.ordersService.createOrder(orderDetails).toPromise();
             console.log("Order created successfully:", response);
-console.timeEnd("Create Order");
+            console.timeEnd("Create Order");
             this.navigationService.setTransactionStatus(true);
             const navigationResult = await this.navigationService.goToSuccess(response);
 
@@ -421,7 +431,7 @@ console.timeEnd("Create Order");
           } catch (orderError) {
             console.error("Failed to create or fetch order:", orderError);
             this.addErrorMessage("Your payment was successful, but we couldn't save your order details. Please contact support.");
-console.timeEnd("Create Order");
+            console.timeEnd("Create Order");
           }
       }
     } catch (e) {
@@ -657,21 +667,6 @@ console.timeEnd("Create Order");
       formValues.country,
       weightString
     ).subscribe(
-//       (shippingCost: number) => {
-          //         this.total -= this.previousShippingCost;
-          //         this.shippingCost = shippingCost;
-          //         this.previousShippingCost = shippingCost; //THIS MIGHT NOT BE A GOOD SOLUTION
-          //
-          //         this.total = Number(this.total) + Number(this.shippingCost);
-          //
-          //         console.log("calculated total from calculateShippingRate() : ", this.total);
-          //
-          //         this.isShippingCalculationInProgress = false;
-          //         this.isShippingCostCalculated = true;
-          //
-          //         // Trigger change detection to ensure UI reflects the updated cost
-          //         this.cd.detectChanges();
-          //       }
             (shippingCost: number) => {
               this.shippingCost = shippingCost; // Set the shipping cost
               this.updateTotal(); // Recalculate total = subtotal + shipping
@@ -687,85 +682,62 @@ console.timeEnd("Create Order");
         console.error('Error calculating shipping rate:', error);
       }
     );
-//     console.log("Shipping rate calculation attempted. ");
   }
 
-// private recalcShipping(): void {
-//   if (!this.cartItems || this.cartItems.length === 0) {
-//     this.shippingCost = 0;
-//     this.updateTotal();
-//     return;
-//   }
-//
-//   // any item that is NOT a sticker counts as a "print"
-//   const hasPrint = this.cartItems.some(item =>
-//     !item.optionSubtitle.toLowerCase().includes('sticker')
-//   );
-//
-//   if (hasPrint) {
-//     // fall back to existing API-driven method
-//     this.calculateShippingRate();
-//   } else {
-//     // stickers only → flat $2.50
-//     this.shippingCost = 2.5;
-//     this.updateTotal();
-//   }
-// }
-
-private recalcShipping(): void {
-  if (!this.cartItems || this.cartItems.length === 0) {
-    // Empty cart -> no shipping
-    // Cancel any in-progress shipping call
-    if (this.shippingSub) {
-      this.shippingSub.unsubscribe();
-      this.shippingSub = null;
-    }
-    this.shippingCost = 0;
-    this.isShippingCalculationInProgress = false;
-    this.isShippingCostCalculated = false;
-    this.updateTotal();
-    this.cd.detectChanges();
-    return;
-  }
-
-  // If any item is NOT a sticker → prints present => dynamic shipping
-  const hasPrint = this.cartItems.some(item =>
-    !item.optionSubtitle.toLowerCase().includes('sticker')
-  );
-
-  if (hasPrint) {
-    // If we previously set a flat $2.5 because of stickers-only, clear that and recalc
-    // Cancel any prior shipping call and call calculateShippingRate which will start a new one
-    if (this.shippingSub) {
-      this.shippingSub.unsubscribe();
-      this.shippingSub = null;
-    }
-    // Only call calculateShippingRate() if we have an address; otherwise keep prior state
-    const formValues = this.paymentForm.value;
-    if (this.isAddressValid(formValues)) {
-      this.calculateShippingRate();
-    } else {
-      // No valid address yet: leave shippingCost as-is (or set to null if you prefer)
-      // For immediate UI feedback we can set to null to prompt user:
-      // this.shippingCost = null;
+  private recalcShipping(): void {
+    if (!this.cartItems || this.cartItems.length === 0) {
+      // Empty cart -> no shipping
+      // Cancel any in-progress shipping call
+      if (this.shippingSub) {
+        this.shippingSub.unsubscribe();
+        this.shippingSub = null;
+      }
+      this.shippingCost = 0;
       this.isShippingCalculationInProgress = false;
       this.isShippingCostCalculated = false;
+      this.updateTotal();
+      this.cd.detectChanges();
+      return;
+    }
+
+    // If any item is NOT a sticker → prints present => dynamic shipping
+    const hasPrint = this.cartItems.some(item =>
+      !item.optionSubtitle.toLowerCase().includes('sticker')
+    );
+
+    if (hasPrint) {
+      // If we previously set a flat $2.5 because of stickers-only, clear that and recalc
+      // Cancel any prior shipping call and call calculateShippingRate which will start a new one
+      if (this.shippingSub) {
+        this.shippingSub.unsubscribe();
+        this.shippingSub = null;
+      }
+      // Only call calculateShippingRate() if we have an address; otherwise keep prior state
+      const formValues = this.paymentForm.value;
+      if (this.isAddressValid(formValues)) {
+        this.calculateShippingRate();
+      } else {
+        // No valid address yet: leave shippingCost as-is (or set to null if you prefer)
+        // For immediate UI feedback we can set to null to prompt user:
+        // this.shippingCost = null;
+        this.isShippingCalculationInProgress = false;
+        this.isShippingCostCalculated = false;
+        this.cd.detectChanges();
+      }
+    } else {
+      // Stickers-only -> flat $2.50. Cancel any in-flight dynamic call.
+      if (this.shippingSub) {
+        this.shippingSub.unsubscribe();
+        this.shippingSub = null;
+      }
+      this.shippingCost = 2.50;
+      this.isShippingCalculationInProgress = false;
+      this.isShippingCostCalculated = true;
+      this.previousShippingCost = 2.50;
+      this.updateTotal();
       this.cd.detectChanges();
     }
-  } else {
-    // Stickers-only -> flat $2.50. Cancel any in-flight dynamic call.
-    if (this.shippingSub) {
-      this.shippingSub.unsubscribe();
-      this.shippingSub = null;
-    }
-    this.shippingCost = 2.50;
-    this.isShippingCalculationInProgress = false;
-    this.isShippingCostCalculated = true;
-    this.previousShippingCost = 2.50;
-    this.updateTotal();
-    this.cd.detectChanges();
   }
-}
 
   validateAddress(formValues: any) {
     console.log('Validating address...');
@@ -808,7 +780,6 @@ private recalcShipping(): void {
         this.isAddressValidationInProgress = false;
       }
     );
-//     console.log("Address validation attempted. ");
   }
 
   markMissingFields() {
@@ -822,7 +793,6 @@ private recalcShipping(): void {
       if (control) {
         // Highlight empty fields
         if (control.value === '' || control.value === null) {
-//           console.log(`Field "${field}" is empty. Highlighting as missing.`);
           control.markAsTouched();
 
           // Add the red border by adding the class 'error-highlight'
@@ -858,7 +828,6 @@ private recalcShipping(): void {
       // Get the input element by field id
       const element = document.getElementById(field) as HTMLInputElement;
       if (element && control.valid) {
-//         console.log(`Removing error highlight from field: ${field}`);
         element.classList.remove('error-highlight');
       }
     }
@@ -874,12 +843,9 @@ private recalcShipping(): void {
   }
 
   updateStripeFieldHighlight() {
-//     console.log('updateStripeFieldHighlight called, isStripeInvalid:', this.isStripeInvalid);
     const stripeContainer = document.querySelector('.card-information') as HTMLElement;
     if (this.isStripeInvalid) {
-//       console.log('Adding error highlight.');
     } else {
-//       console.log('Removing error highlight.');
       stripeContainer.classList.remove('error-highlight');
     }
   }

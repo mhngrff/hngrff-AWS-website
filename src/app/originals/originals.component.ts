@@ -6,6 +6,7 @@ import { NavigationService } from '../services/navigation.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { OriginalsService } from '../services/originals.service';
 
 @Component({
   selector: 'app-originals',
@@ -26,13 +27,15 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
     private imageService: ImageService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private originalsService: OriginalsService
   ) {}
 
   ngOnInit(): void {
-    this.imageService.getImages().subscribe(data => {
-      this.images = data;
+      this.originalsService.getMergedOriginals().subscribe(merged => {
+      this.images = merged;
     });
+
 
     this.route.queryParams.subscribe(params => {
       const scrollTo = params['scrollTo']; // Get the 'scrollTo' value from query params
@@ -59,10 +62,8 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
     console.log("this.imageLoaded[id] = " + this.imageLoaded[id]);
   }
 
-
   goToDetails(imageId: string): void {
     this.navigationService.goToDetails(imageId);
   }
-
 
 }

@@ -10,6 +10,7 @@ import { NavigationService } from '../services/navigation.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 import { CartService } from '../services/cart.service';
 import { CartItem } from '../models/cart-item.interface';
+import { OriginalsService } from '../services/originals.service'
 
 
 @Component({
@@ -52,7 +53,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private imageService: ImageService,
     private navigationService: NavigationService,
-    private cartService: CartService
+    private cartService: CartService,
+    private originalsService: OriginalsService
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,27 @@ export class DetailsComponent implements OnInit, AfterViewInit {
           this.totalImages = image.options.length;
           this.thumbnailUrl = image.thumbnail || null;
           this.updateArrowStates();
+
+
+          // --- NEW: Merge dynamic sold status for originals ---
+          if (image.options?.some(opt => opt.subtitle?.includes('ORIGINAL'))) {
+            this.originalsService.getMergedOriginals().subscribe((mergedImages: Image[]) => {
+              const mergedImage = mergedImages.find(img => img.id === image.id);
+              if (mergedImage?.options && image.options) {
+                const mergedOptions = mergedImage.options; // local constant for TS
+                image.options.forEach(opt => {
+                  if (opt.subtitle) {
+                    const match = mergedOptions.find(o => o.subtitle === opt.subtitle);
+                    if (match) {
+                      opt.sold = match.sold; // Inject the DB value
+                    }
+                  }
+                });
+                this.latestImage = image; // Trigger template update
+              }
+            });
+          }
+
         } else {
           console.error(`Image with id ${id} not found`);
         }
@@ -301,17 +324,19 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   isOriginal(): boolean {
      if (!this.selectedOption) return false;
-    return this.selectedOption?.endsWith('ORIGINAL');
+     return this.originalsService.isOriginal(this.selectedOption);
     }
 
   isOriginalSold(): boolean {
     // Do nothing if no image or no options loaded yet
     if (!this.latestImage?.options) return false;
 
+
     // Find the actual Option object that matches selectedOption
     const activeOption = this.latestImage.options.find(
       (opt) => opt.subtitle === this.selectedOption
     );
+//     console.log("activeOption?.sold = " + activeOption?.sold);
     return activeOption?.sold === true;
     }
 
