@@ -19,7 +19,7 @@
         {
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
-          "price": 320.00,
+          "price": 350.00,
           "imageUrl": "/assets/images/fish-slam-framed5.jpg",
           "weight": 10,
           "productId": "D2"
@@ -27,7 +27,7 @@
         {
           "type": "three_frames",
           "subtitle": "SLAM - PRINTS IN 3 FRAMES",
-          "price": 520.00,
+          "price": 550.00,
           "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg",
           "weight": 12,
           "productId": "D3"
@@ -175,14 +175,14 @@
     {
       "id": "lighthouse",
       "title": "MORRIS ISLAND LIGHTHOUSE",
-      "description": "Individually proofed and signed.",
+      "description": "Individually proofed and signed prints",
       "currency": "USD",
       "zoomImage": "/assets/images/lighthouse-1100w.jpg",
       "thumbnail": "/assets/images/lighthouse-600w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "Lighthouse Print 9 x 12",
+          "subtitle": "LIGHTHOUSE 9 x 12",
           "price": 40.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
@@ -190,7 +190,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Lighthouse Print 12 x 16 ",
+          "subtitle": "LIGHTHOUSE 12 x 16 ",
           "price": 60.00,
           "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
@@ -198,7 +198,7 @@
         },
         {
           "type": "framed",
-          "subtitle": "Framed 12 x 16 print",
+          "subtitle": "LIGHTHOUSE 12 x 16 FRAMED",
           "price": 300.00,
           "imageUrl": "/assets/images/lighthouse-script-700w.jpg",
           "weight": 8,
@@ -209,14 +209,14 @@
     {
       "id": "baptism",
       "title": "BAPTISM",
-      "description": "Individually proofed and signed.",
+      "description": "Individually proofed and signed prints",
       "currency": "USD",
       "zoomImage": "/assets/images/baptism-5000w.jpg",
       "thumbnail": "/assets/images/baptism-500w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "Baptism Print 9 x 12",
+          "subtitle": "BAPTISM 9 x 12",
           "price": 40.00,
           "imageUrl": "/assets/images/baptism-1000w.jpg",
           "weight": 1,
@@ -224,7 +224,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Baptism Print 12 x 16 ",
+          "subtitle": "BAPTISM 12 x 16 ",
           "price": 60.00,
           "imageUrl": "/assets/images/baptism-framed-700w.jpg",
           "weight": 1,
@@ -232,7 +232,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Framed Print 12 x 16",
+          "subtitle": "BAPTISM 12 x 16 FRAMED",
           "price": 300.00,
           "imageUrl": "",
           "weight": 8,
@@ -243,14 +243,14 @@
     {
       "id": "sailfish",
       "title": "SAILFISH",
-      "description": "The ocean's fastest fish. Individually proofed and signed",
+      "description": "The ocean's fastest fish - individually proofed and signed prints",
       "currency": "USD",
       "zoomImage": "/assets/images/Sailfish-2500w.jpg",
       "thumbnail": "/assets/images/Sailfish-200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "Sailfish Print 16 x 10.5",
+          "subtitle": "SAILFISH 16 x 10.5",
           "price": 60.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
@@ -258,7 +258,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Sailfish Print 24 x 16 ",
+          "subtitle": "SAILFISH 24 x 16 ",
           "price": 80.00,
           "imageUrl": "/assets/images/sailfishFramed.jpg",
           "weight": 1,
@@ -275,7 +275,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Redfish Sticker",
+          "subtitle": "REDFISH STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/RedfishSticker-1000w.png",
           "weight": 0.1,
@@ -283,7 +283,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Redfish Sticker",
+          "subtitle": "REDFISH STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/RedfishSticker-Length-1000w.jpg",
           "weight": 0.1,
@@ -300,7 +300,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Trout Sticker",
+          "subtitle": "TROUT STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/TroutSticker-1000w.png",
           "weight": 0.1,
@@ -308,7 +308,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Trout Sticker",
+          "subtitle": "TROUT STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/TroutSticker-Length-1000w.jpg",
           "weight": 0.1,
@@ -325,7 +325,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Flounder Sticker",
+          "subtitle": "FLOUNDER STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/FlounderSticker-1000w.png",
           "weight": 0.1,
@@ -333,7 +333,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Flounder Sticker",
+          "subtitle": "FLOUNDER STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/FlounderSticker-Length-1000w.jpg",
           "weight": 0.1,
@@ -350,7 +350,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Sailfish Sticker",
+          "subtitle": "SAILFISH STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/SailfishSticker-1000w.png",
           "weight": 0.1,
@@ -367,7 +367,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Inshore Slam Stickers",
+          "subtitle": "INSHORE SLAM STICKERS",
           "price": 12.00,
           "imageUrl": "/assets/images/SlamSticker-1000w.png",
           "weight": 0.1,
@@ -375,7 +375,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Inshore Slam Stickers",
+          "subtitle": "INSHORE SLAM STICKERS",
           "price": 12.00,
           "imageUrl": "/assets/images/SlamStickers-Length-1000w.jpg",
           "weight": 0.1,
@@ -392,7 +392,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Anti AI Sticker",
+          "subtitle": "D2D STICKER",
           "price": 5.00,
           "imageUrl": "/assets/images/d2dSticker-1000w.png",
           "weight": 0.1,
@@ -403,14 +403,14 @@
     {
       "id": "palmetto",
       "title": "PALMETTO",
-      "description": "Palmetto",
+      "description": "Individually proofed and signed prints.",
       "currency": "USD",
       "zoomImage": "/assets/images/palmetto-2500w.jpg",
       "thumbnail": "/assets/images/Palmetto-200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "Palmetto 9 x 12",
+          "subtitle": "PALMETTO 9 x 12",
           "price": 40.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
@@ -418,8 +418,16 @@
         },
         {
           "type": "print",
-          "subtitle": "Palmetto 12 x 16",
+          "subtitle": "PALMETTO 12 x 16",
           "price": 60.00,
+          "imageUrl": "/assets/images/palmetto-framed.jpg",
+          "weight": 0.1,
+          "productId": "K2"
+        },
+        {
+          "type": "print",
+          "subtitle": "PALMETTO 12 x 16 FRAMED",
+          "price": 300.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
           "productId": "K2"
@@ -436,7 +444,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "Bluegill print 8 x 10",
+          "subtitle": "BLUEGILL 8 x 10",
           "price": 30.00,
           "imageUrl": "/assets/images/Bluegill-1000w.jpg",
           "weight": 0.1,
@@ -444,7 +452,7 @@
         },
         {
           "type": "print",
-          "subtitle": "Framed bluegill print",
+          "subtitle": "BLUEGILL 8 X 10 FRAMED",
           "price": 150.00,
           "imageUrl": "/assets/images/Bluegill-1000w.jpg",
           "weight": 0.1,
@@ -455,64 +463,61 @@
     {
       "id": "mirageOriginal",
       "title": "THE MIRAGE - ORIGINAL",
-      "description": "?W x ?H framed",
+      "description": "18W x 21H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/mirage-2000h.jpg",
       "thumbnail": "/assets/images/mirage-thumbnail.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "MIRAGE - ORIGINAL",
+          "subtitle": "THE MIRAGE - ORIGINAL",
           "price": 2500.00,
           "imageUrl": "/assets/images/mirage-1400h.jpg",
           "weight": 1,
-          "productId": "M1",
-          "sold": true
+          "productId": "M1"
         }
       ]
     },
     {
       "id": "shellsOriginal",
       "title": "SHELLS OF FOLLY - ORIGINAL",
-      "description": "?W x ?H framed",
+      "description": "28W x 14H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/shells-2000w.jpg",
       "thumbnail": "/assets/images/shells-default-1200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "SHELLS - ORIGINAL",
+          "subtitle": "SHELLS OF FOLLY - ORIGINAL",
           "price": 1500.00,
           "imageUrl": "/assets/images/shells-default-1200w.jpg",
           "weight": 1,
-          "productId": "M2",
-          "sold": true
+          "productId": "M2"
         }
       ]
     },
     {
       "id": "lighthouseOriginal",
       "title": "MORRIS ISLAND LIGHTHOUSE - ORIGINAL",
-      "description": "?W X ?H framed",
+      "description": "18W X 22H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/lighthouse-1100w.jpg",
       "thumbnail": "/assets/images/lighthouse-600w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "MORRIS ISLAND LIGHTHOUSE - ORIGINAL",
+          "subtitle": "LIGHTHOUSE - ORIGINAL",
           "price": 1500.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
-          "productId": "M3",
-          "sold": true
+          "productId": "M3"
         }
       ]
     },
     {
       "id": "baptismOriginal",
       "title": "BAPTISM - ORIGINAL",
-      "description": "?W x ?H framed",
+      "description": "19W x 23H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/baptism-5000w.jpg",
       "thumbnail": "/assets/images/baptism-500w.jpg",
@@ -523,15 +528,14 @@
           "price": 3500.00,
           "imageUrl": "/assets/images/baptism-1000w.jpg",
           "weight": 1,
-          "productId": "M4",
-          "sold": true
+          "productId": "M4"
         }
       ]
     },
     {
       "id": "sailfishOriginal",
       "title": "SAILFISH - ORIGINAL",
-      "description": "?W x ?H framed",
+      "description": "27W x 21H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/Sailfish-2500w.jpg",
       "thumbnail": "/assets/images/Sailfish-200w.jpg",
@@ -542,15 +546,14 @@
           "price": 2500.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
-          "productId": "M5",
-          "sold": true
+          "productId": "M5"
         }
       ]
     },
     {
       "id": "palmettoOriginal",
       "title": "PALMETTO - ORIGINAL",
-      "description": "?W x ?H framed",
+      "description": "14W x 18H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/palmetto-2500w.jpg",
       "thumbnail": "/assets/images/Palmetto-200w.jpg",
@@ -561,8 +564,7 @@
           "price": 1500.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
-          "productId": "M6",
-          "sold": true
+          "productId": "M6"
         }
       ]
     }
