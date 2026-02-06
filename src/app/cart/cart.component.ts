@@ -109,7 +109,7 @@ export class CartComponent implements OnInit {
 
   continueShopping(): void {
 //     this.cartService.closeCart();
-    if (this.router.url.startsWith('/details') || this.router.url === '/') {
+    if (this.router.url.startsWith('/details') || this.router.url === '/' || this.router.url.startsWith('/originals') ) {
       this.cartService.closeCart();
       } else {
         this.navigationService.goToHome();

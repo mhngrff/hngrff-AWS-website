@@ -21,6 +21,7 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
 
   images: Image[] = [];
   imageLoaded: Record<string, boolean> = {};
+  isFetchInProgress = false;
 
 
   constructor(
@@ -32,6 +33,8 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+      this.isFetchInProgress = true;
+      console.log("isFetchInProgress = " + this.isFetchInProgress);
       this.originalsService.getMergedOriginals().subscribe(merged => {
       this.images = merged;
     });
@@ -55,9 +58,11 @@ export class OriginalsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+//     this.isFetchInProgress = false;
   }
 
   onImageLoad(id: string): void {
+    this.isFetchInProgress = false;
     this.imageLoaded[id] = true;
     console.log("this.imageLoaded[id] = " + this.imageLoaded[id]);
   }

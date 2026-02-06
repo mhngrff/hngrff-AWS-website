@@ -43,6 +43,8 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   imageId: string = ''; // Store image ID locally
   thumbnailUrl: string | null = null;
 
+  originalStatusResolved = false;
+
 
   private debounceTimer: any;
 
@@ -92,6 +94,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
                   }
                 });
                 this.latestImage = image; // Trigger template update
+                this.originalStatusResolved = true;
               }
             });
           }
@@ -327,18 +330,21 @@ export class DetailsComponent implements OnInit, AfterViewInit {
      return this.originalsService.isOriginal(this.selectedOption);
     }
 
+
   isOriginalSold(): boolean {
-    // Do nothing if no image or no options loaded yet
-    if (!this.latestImage?.options) return false;
+    // Non-originals bypass this check and never have buttons disabled
+    if (!this.isOriginal()) return false;
 
+    // Original but status not yet resolved → assume sold
+    if (!this.originalStatusResolved) return true;
 
-    // Find the actual Option object that matches selectedOption
-    const activeOption = this.latestImage.options.find(
+    // Now we can safely check real status
+    const activeOption = this.latestImage?.options?.find(
       (opt) => opt.subtitle === this.selectedOption
     );
-//     console.log("activeOption?.sold = " + activeOption?.sold);
+
     return activeOption?.sold === true;
-    }
+  }
 
   isOriginalInCart(cartItems: CartItem[] | null): boolean {
       if (!cartItems) return false;

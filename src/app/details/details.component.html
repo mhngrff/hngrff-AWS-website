@@ -46,7 +46,7 @@
           {{ selectedPrice | currency: metadata.currency }}
         </h3>
         <ng-template #soldLabel>
-          <h3>TEMPORARILY UNAVAILABLE</h3>
+          <h3>SOLD OUT</h3>
         </ng-template>
       </div>
 
@@ -90,37 +90,31 @@
     </div>
       <div class="slam-information" *ngIf="metadata.title == 'INSHORE SLAM'">
         <p>
-          Inspired by the INSHORE SLAM, an anglers achievement of catching 3 inshore species in a single day. From top to bottom: Redfish, speckled trout, flounder<br/><br/>
-          For a detailed view of each work, try shopping <a (click)="goToIndividualPrints()"> individual prints</a> and selecting the expand icon. <br/><br/>
         <strong> PRINTS: </strong><br/>
          - Original medium: White and Black ink on toned gray paper<br/>
          - 3 prints, each 6<sup>1</sup>&frasl;<sub>2</sub>" x 12" <br/>
          - Printed with archival inks on photo matte paper<br/><br/>
         <strong>  SINGLE FRAME: </strong><br/>
-         - Total dimensions: 15<sup>1</sup>&frasl;<sub>2</sub>" x 24" <br/>
+         - 15 <sup>1</sup>&frasl;<sub>2</sub>" x 24" <br/>
          - Rustic black finish on real wood<br/>
-         - Polished glass<br/>
+         - Museum glass<br/>
          - Finished back<br/><br/>
         <strong>  INDIVIDUAL FRAMES: </strong><br/>
-         - 3 rustic black frames<br/>
-         - 10" x 15" each<br/>
-         - 1" white mats <br/>
-         - Polished glass<br/>
-         - Finished back<br/>
+          - Currently unavailable. Please email me if you'd like to purchase these in individual frames.
         </p>
       </div>
 
       <div class="singles-information" *ngIf="metadata.title == 'REDFISH' || metadata.title == 'TROUT' || metadata.title == 'FLOUNDER'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - Original medium: white and black ink on toned gray paper<br/>
-            - Size: 6<sup>1</sup>&frasl;<sub>2</sub>"" x 12" <br/>
+            - Originally drawn with white and black ink on toned gray paper<br/>
+            - 6 <sup>1</sup>&frasl;<sub>2</sub>" x 12" <br/>
             - Printed with archival inks on photo matte paper<br/><br/>
         <strong>  FRAMES: </strong><br/>
             - Dimensions: 10" x 15"<br/>
             - Rustic black finish on real wood<br/>
             - 1" white mat<br/>
-            - Polished glass<br/>
+            - Museum glass<br/>
             - Finished back<br/>
         </p>
       </div>
@@ -129,12 +123,12 @@
         <p>
           <strong> PRINTS: </strong><br/>
             - Original medium: White and black ink, white and black charcoal on toned gray paper<br/>
-            - Size: 13<sup>1</sup>&frasl;<sub>2</sub>"x17" <br/>
+            - 13 <sup>1</sup>&frasl;<sub>2</sub>" x 17" <br/>
             - Printed with archival inks on photo matte paper<br/><br/>
         <strong>  FRAMES: </strong><br/>
             - Real wood black frame, 18<sup>1</sup>&frasl;<sub>2</sub>" x 21"<br/>
             - 2" white mat<br/>
-            - Polished glass<br/>
+            - Museum glass<br/>
             - Finished back<br/>
         </p>
       </div>
@@ -142,14 +136,14 @@
       <div class="singles-information" *ngIf="metadata.title == 'SHELLS OF FOLLY'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - Size: 9" x 20" <br/>
+            - 9" x 20" <br/>
             - Original medium: White and black ink toned gray paper<br/>
             - Printed with archival inks on photo matte paper<br/><br/>
           <strong>  FRAMES: </strong><br/>
             - 12" x 24"<br/>
             - Rustic black finish on real wood<br/>
             - 1" white mat<br/>
-            - Polished glass<br/>
+            - Museum glass<br/>
             - Finished back<br/>
         </p>
       </div>
@@ -157,7 +151,7 @@
       <div class="singles-information" *ngIf="metadata.title == 'PALMETTO'">
         <p>
           <strong> PRINTS: </strong><br/>
-          - Size: 9" x 12" or 12" x 16" <br/>
+          - 9" x 12" or 12" x 16" <br/>
           - Original medium: Black and white charcoal on toned gray paper<br/>
           - Printed with archival inks on photo matte paper<br/><br/>
           <strong>  FRAMES: </strong><br/>
@@ -172,7 +166,7 @@
       <div class="singles-information" *ngIf="metadata.title == 'MORRIS ISLAND LIGHTHOUSE'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - Size: 9" x 12" OR 12" x 16" <br/>
+            - 9" x 12" OR 12" x 16" <br/>
             - Original medium: black ink, charcoal on toned gray paper<br/>
             - Printed with archival inks on photo matte paper<br/><br/>
 
@@ -180,7 +174,7 @@
             - 18" x 22"<br/>
             - Semi gloss black finish on real wood<br/>
             - 2" white mat<br/>
-            - Polished glass<br/>
+            - Museum glass<br/>
             - Finished back<br/>
         </p>
       </div>
@@ -188,14 +182,14 @@
       <div class="singles-information" *ngIf="metadata.title == 'BAPTISM'">
         <p>
           <strong> PRINTS: </strong><br/>
-           - Size: 9" x 12" OR 12" x 16" <br/>
+           - 9" x 12" OR 12" x 16" <br/>
            - Original medium: black & white ink, charcoal on toned gray paper<br/>
            - Printed with archival inks on photo matte paper<br/><br/>
 
           <strong>  FRAMES: </strong><br/>
-           - Total dimensions 16 <sup>3</sup>&frasl;<sub>4</sub>" x 21" <br/>
+           - 17" x 21" <br/>
            - Semi gloss black finish on real wood <br/>
-           - Polished glass <br/>
+           - Museum glass <br/>
            - finished back
         </p>
       </div>
@@ -203,17 +197,12 @@
       <div class="singles-information" *ngIf="metadata.title == 'SAILFISH'">
         <p>
           <strong> PRINTS: </strong><br/>
-          - Size: 16" x 10<sup>1</sup>&frasl;<sub>2</sub>" OR 24" x 16" <br/>
+          - 16" x 10 <sup>1</sup>&frasl;<sub>2</sub>" OR 24" x 16" <br/>
           - Original medium: black & white ink on toned gray paper<br/>
           - Printed with archival inks on photo matte paper<br/><br/>
 
           <strong>  FRAMES: </strong><br/>
-              Frames are currently unavailable. <br/>
-              I am still working out the best framing option for this piece. If you are interested in buying one, <a (click)="goToContact()"><strong><u>email me</u></strong></a> and we can discuss.
-<!--          - Total dimensions ? <sup>?</sup>&frasl;<sub>?</sub>" x ?" <br/>-->
-<!--          - Rustic black finish on real wood <br/>-->
-<!--          - Polished glass <br/>-->
-<!--          - finished back-->
+              Currently unavailable. <br/>
         </p>
       </div>
 

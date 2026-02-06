@@ -25,12 +25,7 @@
           "productId": "D2"
         },
         {
-          "type": "three_frames",
-          "subtitle": "SLAM - PRINTS IN 3 FRAMES",
-          "price": 550.00,
-          "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg",
-          "weight": 12,
-          "productId": "D3"
+          "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg"
         }
       ]
     },
@@ -115,7 +110,7 @@
     {
       "id": "rowboat",
       "title": "THE MIRAGE",
-      "description": "Individually proofed and signed. 13.5 x 17 in. ",
+      "description": "Individually proofed and signed",
       "currency": "USD",
       "zoomImage": "/assets/images/mirage-2000h.jpg",
       "thumbnail": "/assets/images/mirage-thumbnail.jpg",
@@ -260,7 +255,7 @@
           "type": "print",
           "subtitle": "SAILFISH 24 x 16 ",
           "price": 80.00,
-          "imageUrl": "/assets/images/sailfishFramed.jpg",
+          "imageUrl": "/assets/images/Sailfish-original-framed-1200w.jpg",
           "weight": 1,
           "productId": "I2"
         }
@@ -462,8 +457,8 @@
     },
     {
       "id": "mirageOriginal",
-      "title": "THE MIRAGE - ORIGINAL",
-      "description": "18W x 21H framed",
+      "title": "THE MIRAGE ",
+      "description": "18\"W x 21\"H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/mirage-2000h.jpg",
       "thumbnail": "/assets/images/mirage-thumbnail.jpg",
@@ -480,26 +475,29 @@
     },
     {
       "id": "shellsOriginal",
-      "title": "SHELLS OF FOLLY - ORIGINAL",
-      "description": "28W x 14H framed",
+      "title": "SHELLS OF FOLLY ",
+      "description": "28\"W x 14H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/shells-2000w.jpg",
       "thumbnail": "/assets/images/shells-default-1200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "SHELLS OF FOLLY - ORIGINAL",
-          "price": 1500.00,
+          "subtitle": "SHELLS - ORIGINAL",
+          "price": 1000.00,
           "imageUrl": "/assets/images/shells-default-1200w.jpg",
           "weight": 1,
           "productId": "M2"
+        },
+        {
+          "imageUrl": "assets/images/Shells-original-framed-1200w.jpg"
         }
       ]
     },
     {
       "id": "lighthouseOriginal",
-      "title": "MORRIS ISLAND LIGHTHOUSE - ORIGINAL",
-      "description": "18W X 22H framed",
+      "title": "MORRIS ISLAND LIGHTHOUSE ",
+      "description": "19\"W X 23\"H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/lighthouse-1100w.jpg",
       "thumbnail": "/assets/images/lighthouse-600w.jpg",
@@ -507,17 +505,20 @@
         {
           "type": "print",
           "subtitle": "LIGHTHOUSE - ORIGINAL",
-          "price": 1500.00,
+          "price": 1000.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
           "productId": "M3"
+        },
+        {
+          "imageUrl": "/assets/images/Lighthouse-original-framed-900w.jpg"
         }
       ]
     },
     {
       "id": "baptismOriginal",
-      "title": "BAPTISM - ORIGINAL",
-      "description": "19W x 23H framed",
+      "title": "BAPTISM ",
+      "description": "19\"W x 23\"H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/baptism-5000w.jpg",
       "thumbnail": "/assets/images/baptism-500w.jpg",
@@ -525,7 +526,7 @@
         {
           "type": "print",
           "subtitle": "BAPTISM - ORIGINAL",
-          "price": 3500.00,
+          "price": 2500.00,
           "imageUrl": "/assets/images/baptism-1000w.jpg",
           "weight": 1,
           "productId": "M4"
@@ -534,8 +535,8 @@
     },
     {
       "id": "sailfishOriginal",
-      "title": "SAILFISH - ORIGINAL",
-      "description": "27W x 21H framed",
+      "title": "SAILFISH ",
+      "description": "27\"W x 21\"H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/Sailfish-2500w.jpg",
       "thumbnail": "/assets/images/Sailfish-200w.jpg",
@@ -543,17 +544,20 @@
         {
           "type": "print",
           "subtitle": "SAILFISH - ORIGINAL",
-          "price": 2500.00,
+          "price": 1000.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
           "productId": "M5"
+        },
+        {
+          "imageUrl": "/assets/images/Sailfish-original-framed-1200w.jpg"
         }
       ]
     },
     {
       "id": "palmettoOriginal",
-      "title": "PALMETTO - ORIGINAL",
-      "description": "14W x 18H framed",
+      "title": "PALMETTO ",
+      "description": "14\"W x 18\"H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/palmetto-2500w.jpg",
       "thumbnail": "/assets/images/Palmetto-200w.jpg",
@@ -561,10 +565,13 @@
         {
           "type": "print",
           "subtitle": "PALMETTO - ORIGINAL",
-          "price": 1500.00,
+          "price": 800.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
           "productId": "M6"
+        },
+        {
+          "imageUrl": "/assets/images/Palmetto-original-framed-900w.jpg"
         }
       ]
     }

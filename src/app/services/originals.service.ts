@@ -48,7 +48,6 @@ export class OriginalsService {
               }
             return img;
             });
-//           console.log("MERGED ORIGINALS DATA:", merged);
             return merged;
           })
         )

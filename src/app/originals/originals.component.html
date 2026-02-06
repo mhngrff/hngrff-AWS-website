@@ -2,15 +2,21 @@
 <!--    <div class="parallax" #parallax></div>-->
 <!--    FOOTER BEHAVIOR, TODO-->
 <div class="main-content">
-  <h1>ORIGINALS - COMING SOON</h1>
-<!--  <p> This page is under construction. The online purchasing of my ORIGINALS will be available soon. Thank you for your patience! </p>-->
 
+  <div class="overlay" *ngIf="isFetchInProgress">
+    <h3>CHECKING AVAILABILITY</h3>
+    <div class="mh-logo"></div>
+  </div>
+
+  <div *ngIf="!isFetchInProgress">
+    <h1>ORIGINALS</h1>
+  </div>
   <div class="images-section">
 
     <ng-container *ngFor="let image of images | slice:17:18">
       <div class="image-wrapper" [ngClass]="{'sold': image.options?.[0]?.sold}">
-<!--        <a class="image-link" (click)="goToDetails(image.id)">-->
-        <a class="image-link">
+        <a class="image-link" (click)="goToDetails(image.id)">
+<!--        <a class="image-link">-->
 
           <div class="image-load-wrapper" [style.--ratio]="'1132/1400'">
 
@@ -27,15 +33,16 @@
 
         <h3 class="original-title">{{ image.title }}</h3>
         <h2 class="original-price">{{ image.description }}</h2>
-        <h2 class="original-price">{{ image.options?.[0]?.price | currency:'USD' }}</h2>
+        <h2 class="original-price">${{ image.options?.[0]?.price }}</h2>
+
       </div>
     </ng-container>
 
     <!-- Slice 18:19 -->
     <ng-container *ngFor="let image of images | slice:18:19">
       <div class="image-wrapper" [ngClass]="{'sold': image.options?.[0]?.sold}">
-<!--        <a class="image-link" (click)="goToDetails(image.id)">-->
-        <a class="image-link">
+        <a class="image-link" (click)="goToDetails(image.id)">
+<!--        <a class="image-link">-->
           <div class="image-load-wrapper" [style.--ratio]="'2000/719'">
 
             <div class="placeholder" [class.loaded]="imageLoaded[image.id]"></div>
@@ -51,15 +58,16 @@
         </a>
         <h3 class="original-title">{{ image.title }}</h3>
         <h2 class="original-price">{{ image.description }}</h2>
-        <h2 class="original-price">{{ image.options?.[0]?.price | currency:'USD' }}</h2>
+        <h2 class="original-price">${{ image.options?.[0]?.price }}</h2>
+
       </div>
     </ng-container>
 
     <!-- Slice 19:20 -->
     <ng-container *ngFor="let image of images | slice:19:20">
       <div class="image-wrapper" [ngClass]="{'sold': image.options?.[0]?.sold}">
-<!--        <a class="image-link" (click)="goToDetails(image.id)">-->
-        <a class="image-link">
+        <a class="image-link" (click)="goToDetails(image.id)">
+<!--        <a class="image-link">-->
           <div class="image-load-wrapper" [style.--ratio]="'1100/1436'">
 
             <div class="placeholder" [class.loaded]="imageLoaded[image.id]"></div>
@@ -75,14 +83,15 @@
         </a>
         <h3 class="original-title">{{ image.title }}</h3>
         <h2 class="original-price">{{ image.description }}</h2>
-        <h2 class="original-price">{{ image.options?.[0]?.price | currency:'USD' }}</h2>
+        <h2 class="original-price">${{ image.options?.[0]?.price }}</h2>
+
       </div>
     </ng-container>
 
     <ng-container *ngFor="let image of images | slice:20:21">
       <div class="image-wrapper" [ngClass]="{'sold': image.options?.[0]?.sold}">
-<!--        <a class="image-link" (click)="goToDetails(image.id)">-->
-        <a class="image-link">
+        <a class="image-link" (click)="goToDetails(image.id)">
+<!--        <a class="image-link">-->
           <div class="image-load-wrapper" [style.--ratio]="'1000/1331'">
 
             <div class="placeholder" [class.loaded]="imageLoaded[image.id]"></div>
@@ -98,15 +107,16 @@
         </a>
         <h3 class="original-title">{{ image.title }}</h3>
         <h2 class="original-price">{{ image.description }}</h2>
-        <h2 class="original-price">{{ image.options?.[0]?.price | currency:'USD' }}</h2>
+        <h2 class="original-price">${{ image.options?.[0]?.price }}</h2>
+
       </div>
     </ng-container>
 
     <!-- Slice 18:19 -->
     <ng-container *ngFor="let image of images | slice:21:22">
       <div class="image-wrapper" [ngClass]="{'sold': image.options?.[0]?.sold}">
-<!--        <a class="image-link" (click)="goToDetails(image.id)">-->
-        <a class="image-link">
+        <a class="image-link" (click)="goToDetails(image.id)">
+<!--        <a class="image-link">-->
           <div class="image-load-wrapper" [style.--ratio]="'6/4'">
 
             <div class="placeholder" [class.loaded]="imageLoaded[image.id]"></div>
@@ -122,15 +132,16 @@
         </a>
         <h3 class="original-title">{{ image.title }}</h3>
         <h2 class="original-price">{{ image.description }}</h2>
-        <h2 class="original-price">{{ image.options?.[0]?.price | currency:'USD' }}</h2>
+        <h2 class="original-price">${{ image.options?.[0]?.price }}</h2>
+
       </div>
     </ng-container>
 
     <!-- Slice 19:20 -->
     <ng-container *ngFor="let image of images | slice:22:23">
       <div class="image-wrapper" [ngClass]="{'sold': image.options?.[0]?.sold}">
-<!--        <a class="image-link" (click)="goToDetails(image.id)">-->
-        <a class="image-link">
+        <a class="image-link" (click)="goToDetails(image.id)">
+<!--        <a class="image-link">-->
           <div class="image-load-wrapper" [style.--ratio]="'1000/1327'">
 
             <div class="placeholder" [class.loaded]="imageLoaded[image.id]"></div>
@@ -146,7 +157,8 @@
         </a>
         <h3 class="original-title">{{ image.title }}</h3>
         <h2 class="original-price">{{ image.description }}</h2>
-        <h2 class="original-price">{{ image.options?.[0]?.price | currency:'USD' }}</h2>
+        <h2 class="original-price">${{ image.options?.[0]?.price }}</h2>
+
       </div>
     </ng-container>
 
