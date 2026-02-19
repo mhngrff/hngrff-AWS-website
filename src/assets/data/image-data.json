@@ -177,7 +177,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "LIGHTHOUSE 9 x 12",
+          "subtitle": "LIGHTHOUSE 9 x 12\"",
           "price": 40.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
@@ -185,7 +185,7 @@
         },
         {
           "type": "print",
-          "subtitle": "LIGHTHOUSE 12 x 16 ",
+          "subtitle": "LIGHTHOUSE 12 x 16\" ",
           "price": 60.00,
           "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
@@ -193,7 +193,7 @@
         },
         {
           "type": "framed",
-          "subtitle": "LIGHTHOUSE 12 x 16 FRAMED",
+          "subtitle": "LIGHTHOUSE 12 x 16\" FRAMED",
           "price": 300.00,
           "imageUrl": "/assets/images/lighthouse-script-700w.jpg",
           "weight": 8,
@@ -211,7 +211,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "BAPTISM 9 x 12",
+          "subtitle": "BAPTISM 9 x 12\"",
           "price": 40.00,
           "imageUrl": "/assets/images/baptism-1000w.jpg",
           "weight": 1,
@@ -219,7 +219,7 @@
         },
         {
           "type": "print",
-          "subtitle": "BAPTISM 12 x 16 ",
+          "subtitle": "BAPTISM 12 x 16\" ",
           "price": 60.00,
           "imageUrl": "/assets/images/baptism-framed-700w.jpg",
           "weight": 1,
@@ -227,7 +227,7 @@
         },
         {
           "type": "print",
-          "subtitle": "BAPTISM 12 x 16 FRAMED",
+          "subtitle": "BAPTISM 12 x 16\" FRAMED",
           "price": 300.00,
           "imageUrl": "",
           "weight": 8,
@@ -245,7 +245,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "SAILFISH 16 x 10.5",
+          "subtitle": "SAILFISH 16 x 11\"",
           "price": 60.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
@@ -253,7 +253,7 @@
         },
         {
           "type": "print",
-          "subtitle": "SAILFISH 24 x 16 ",
+          "subtitle": "SAILFISH 24 x 16\" ",
           "price": 80.00,
           "imageUrl": "/assets/images/Sailfish-original-framed-1200w.jpg",
           "weight": 1,
@@ -405,7 +405,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "PALMETTO 9 x 12",
+          "subtitle": "PALMETTO 9 x 12\"",
           "price": 40.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
@@ -413,7 +413,7 @@
         },
         {
           "type": "print",
-          "subtitle": "PALMETTO 12 x 16",
+          "subtitle": "PALMETTO 12 x 16\"",
           "price": 60.00,
           "imageUrl": "/assets/images/palmetto-framed.jpg",
           "weight": 0.1,
@@ -421,7 +421,7 @@
         },
         {
           "type": "print",
-          "subtitle": "PALMETTO 12 x 16 FRAMED",
+          "subtitle": "PALMETTO 12 x 16\" FRAMED",
           "price": 300.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
@@ -439,7 +439,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "BLUEGILL 8 x 10",
+          "subtitle": "BLUEGILL 8 x 10\"",
           "price": 30.00,
           "imageUrl": "/assets/images/Bluegill-1000w.jpg",
           "weight": 0.1,
@@ -447,7 +447,7 @@
         },
         {
           "type": "print",
-          "subtitle": "BLUEGILL 8 X 10 FRAMED",
+          "subtitle": "BLUEGILL 8 X 10\" FRAMED",
           "price": 150.00,
           "imageUrl": "/assets/images/Bluegill-1000w.jpg",
           "weight": 0.1,
@@ -572,6 +572,41 @@
         },
         {
           "imageUrl": "/assets/images/Palmetto-original-framed-900w.jpg"
+        }
+      ]
+    },
+    {
+      "id": "sheepsheadsticker",
+      "title": "SHEEPSHEAD STICKER",
+      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "currency": "USD",
+      "thumbnail": "/assets/images/SheepsheadSticker-1000w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "SHEEPSHEAD STICKER",
+          "price": 5.00,
+          "imageUrl": "/assets/images/SheepsheadSticker-1000w.png",
+          "weight": 0.1,
+          "productId": "J7"
+        }
+      ]
+    },
+    {
+      "id": "sheepshead",
+      "title": "SHEEPSHEAD",
+      "description": "Available MARCH 2026",
+      "currency": "USD",
+      "zoomImage": "/assets/images/sheepshead-2000w.jpg",
+      "thumbnail": "/assets/images/sheepshead-400w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "SHEEPSHEAD 12 x 18\"",
+          "price": 50,
+          "imageUrl": "/assets/images/sheepshead-900w.jpg",
+          "weight": 0.1,
+          "productId": "N1"
         }
       ]
     }

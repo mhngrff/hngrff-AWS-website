@@ -109,6 +109,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
       this.imageMetadata$.subscribe((metadata) => {
         if (metadata?.options && metadata.options.length > 0) {
           this.selectedOption = metadata.options[0].subtitle;
+          console.log("this.selectedOption = " + this.selectedOption)
           this.selectedPrice = metadata.options[0].price;
           this.selectedWeight = metadata.options[0].weight;
           this.selectedProductId = metadata.options[0].productId;
@@ -357,12 +358,14 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   }
 
   disableAddToCart(cartItems: CartItem[] | null): boolean {
+    if(this.selectedOption == "SHEEPSHEAD 12 x 18\"") { return true};
     if(!this.isOriginal()) { return false }
     if (this.isOriginalSold()) return true;       // sold = highest priority
     return this.isOriginalInCart(cartItems);      // normal condition
   }
 
   disableBuyNow(): boolean {
+    if(this.selectedOption == "SHEEPSHEAD 12 x 18\"") { return true};
     return this.isOriginalSold();                 // sold = disable
   }
 
