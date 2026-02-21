@@ -150,6 +150,18 @@
 
       <h2>LATEST WORK</h2><br/>
 
+      <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:25:26">
+        <a (click)="goToDetails(image.id)">
+          <img
+            class="image"
+            [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+            [alt]="image.title + ' drawing'" loading="lazy">
+        </a>
+      </div>
+
+      <h3 class="mirage-title">THE ECLIPSE</h3>
+      <div class="line"></div>
+
       <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:24:25">
         <a (click)="goToDetails(image.id)">
           <img
@@ -276,7 +288,7 @@
       </div>
 
       <div class="copyright">
-        <p>&copy; 2025 hngrff</p>
+        <p>&copy; 2026 hngrff</p>
       </div>
     </div>
   </footer>

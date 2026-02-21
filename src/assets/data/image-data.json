@@ -476,7 +476,7 @@
     {
       "id": "shellsOriginal",
       "title": "SHELLS OF FOLLY ",
-      "description": "28\"W x 14H framed",
+      "description": "28\"W x 14\"H framed",
       "currency": "USD",
       "zoomImage": "/assets/images/shells-2000w.jpg",
       "thumbnail": "/assets/images/shells-default-1200w.jpg",
@@ -607,6 +607,24 @@
           "imageUrl": "/assets/images/sheepshead-900w.jpg",
           "weight": 0.1,
           "productId": "N1"
+        }
+      ]
+    },
+    {
+      "id": "eclipse",
+      "title": "THE ECLIPSE",
+      "description": "Available MARCH 2026",
+      "currency": "USD",
+      "zoomImage": "/assets/images/Eclipse-1800w.jpg",
+      "thumbnail": "/assets/images/eclipse-300w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "THE ECLIPSE 16 X 20\"",
+          "price": 80,
+          "imageUrl": "/assets/images/eclipse-700w.jpg",
+          "weight": 0.1,
+          "productId": "O1"
         }
       ]
     }

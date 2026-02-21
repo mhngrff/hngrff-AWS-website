@@ -359,6 +359,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   disableAddToCart(cartItems: CartItem[] | null): boolean {
     if(this.selectedOption == "SHEEPSHEAD 12 x 18\"") { return true};
+    if(this.selectedOption == "THE ECLIPSE 16 X 20\"") { return true};
     if(!this.isOriginal()) { return false }
     if (this.isOriginalSold()) return true;       // sold = highest priority
     return this.isOriginalInCart(cartItems);      // normal condition
@@ -366,6 +367,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
 
   disableBuyNow(): boolean {
     if(this.selectedOption == "SHEEPSHEAD 12 x 18\"") { return true};
+    if(this.selectedOption == "THE ECLIPSE 16 X 20\"") { return true};
     return this.isOriginalSold();                 // sold = disable
   }
 
