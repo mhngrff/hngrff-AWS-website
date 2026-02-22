@@ -139,6 +139,54 @@
 //        z-index: 20;
      }
 
+     .discount-row {
+       display: flex;
+       justify-content: space-between;
+       margin-top: 0.5rem;
+       margin-bottom: 2rem;
+       height: 2.5rem;
+
+       }
+
+     .discount-row input {
+        padding: 10px;
+        border: 1px solid #aab7c4;
+        border-radius: 3px;
+        width: 80%;
+        font-size: 16px;
+        color: black;
+        -webkit-font-smoothing: antialiased;
+        box-sizing: border-box
+       }
+
+        .discount-row input::placeholder{
+          -webkit-font-smoothing: antialiased;
+          color: #aab7c4;
+          }
+
+     .discount-row button {
+       width: 15%;
+       background-color: #007bff;
+       color: white;
+       border: none;
+       border-radius: 4px;
+       cursor: pointer;
+       font-size: 18px;
+       }
+
+     .discount-row button:not(:disabled):hover{
+       background-color: #0056b3;
+       }
+
+      .discount-row button:disabled {
+        color: #ccc;            /* lighter text */
+        border-color: #444;
+        cursor: not-allowed;
+        box-shadow: none;       /* remove hover shadow */
+        opacity: 0.7
+      }
+
+
      .shipping-cost-row {
        display: flex;
        justify-content: space-between; /* Align the total to the right */
@@ -710,6 +758,53 @@
    //   margin-top: 1vh;
      margin-top: 0.5rem;
    }
+
+   .discount-row {
+     width: 80vw;
+     margin-left: 10vw;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      height: 2rem;
+      }
+
+    .discount-row input {
+      padding: 10px;
+       border: 1px solid #aab7c4;
+       border-radius: 3px;
+       width: 65%;
+       font-size: 16px;
+       color: black;
+       -webkit-font-smoothing: antialiased;
+       box-sizing: border-box
+      }
+
+     .discount-row input::placeholder{
+       -webkit-font-smoothing: antialiased;
+       color: #aab7c4;
+       }
+
+    .discount-row button {
+      -webkit-font-smoothing: antialiased;
+      width: 30%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      }
+    .discount-row button:not(:disabled):hover{
+      background-color: #0056b3;
+      }
+    .discount-row button:disabled {
+      color: #ccc;            /* lighter text */
+       border-color: #444;
+       cursor: not-allowed;
+       box-shadow: none;       /* remove hover shadow */
+       opacity: 0.7
+     }
 
    .subtotal-row p {
      font-family: 'Roboto', sans-serif;

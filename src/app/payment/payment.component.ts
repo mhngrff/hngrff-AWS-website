@@ -76,6 +76,11 @@ const stateAbbreviationMapping: { [key: string]: string } = {
   "DISTRICT OF COLUMBIA": "DC"
 };
 
+  interface AppliedDiscount {
+    code: string;
+    amount: number;
+  }
+
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -122,6 +127,7 @@ export class PaymentComponent implements OnInit {
 
     isModalOpen: boolean = false;
 
+  appliedDiscount: AppliedDiscount | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -253,12 +259,18 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-//   updateTotal() {
-//     this.total = this.subtotal + (this.shippingCost ?? 0);
+
+//   updateTotal(): void {
+//     this.total = Number(this.subtotal) + Number(this.shippingCost ?? 0);
 //   }
 
   updateTotal(): void {
-    this.total = Number(this.subtotal) + Number(this.shippingCost ?? 0);
+    let baseTotal = Number(this.subtotal) + Number(this.shippingCost ?? 0);
+    if (this.appliedDiscount) {
+      baseTotal -= this.appliedDiscount.amount;
+      if (baseTotal < 0) baseTotal = 0; // don't allow negative total
+    }
+    this.total = baseTotal;
   }
 
 
@@ -898,6 +910,44 @@ console.time("Address Validation and Shipping");
       this.isModalOpen = false;
       console.log("this.isModalOpen= ", this.isModalOpen);
 //       document.body.classList.remove('modal-open');
+    }
+
+    applyDiscount(code: string) {
+      const validCode = 'RAFFLE44';
+      const discountAmount = 20; // $20 off
+      const minimumCartTotal = 40; // Only apply if subtotal meets or exceeds this
+
+      // Clear any previous discount and errors
+      this.appliedDiscount = null;
+      this.errorMessages = this.errorMessages.filter(
+        e => e.message !== 'Invalid discount code' &&
+             e.message !== `This code can only be applied to carts of $${minimumCartTotal} or more.`
+      );
+
+      const errors: string[] = [];
+
+      // Check if code is valid
+      const isValidCode = code === validCode;
+      if (!isValidCode) {
+        errors.push('Invalid discount code');
+      }
+
+      // Check if subtotal meets minimum
+      const isSubtotalHighEnough = this.subtotal >= minimumCartTotal;
+      if (!isSubtotalHighEnough) {
+        errors.push(`This code can only be applied to carts of $${minimumCartTotal} or more.`);
+      }
+
+      // Apply discount only if both conditions are satisfied
+      if (isValidCode && isSubtotalHighEnough) {
+        this.appliedDiscount = { code: validCode, amount: discountAmount };
+        this.updateTotal();
+      }
+
+      // Add collected errors
+      errors.forEach(msg => {
+        this.errorMessages.push({ id: Date.now(), message: msg });
+      });
     }
 
     ngOnDestroy(): void {
