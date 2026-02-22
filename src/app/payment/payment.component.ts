@@ -723,6 +723,20 @@ console.time("Address Validation and Shipping");
       weightString
     ).subscribe(
             (shippingCost: number) => {
+
+              // 🔍 Detect framed items
+              const hasFramedItem = this.cartItems.some(item =>
+                /frame/i.test(item.optionSubtitle)
+              );
+            console.log("hasFramedItem = " + hasFramedItem);
+
+
+              // If NO framed items, cut shipping in half
+              if (!this.cartItems.some(item => /frame/i.test(item.optionSubtitle))) {
+                shippingCost = shippingCost * 0.5;
+                shippingCost = Number(shippingCost.toFixed(2));
+              }
+
               this.shippingCost = shippingCost; // Set the shipping cost
               this.updateTotal(); // Recalculate total = subtotal + shipping
               this.previousShippingCost = shippingCost; // Store previous for reference if needed
@@ -956,7 +970,7 @@ console.time("Address Validation and Shipping");
     }
 
     applyDiscount(code: string) {
-      const validCode = 'RAFFLE44';
+      const validCode = 'EXAMPLE CODE';
       const discountAmount = 20; // $20 off
       const minimumCartTotal = 40; // Only apply if subtotal meets or exceeds this
 
