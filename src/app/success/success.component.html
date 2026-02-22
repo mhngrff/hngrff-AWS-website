@@ -6,10 +6,10 @@
     <div class="success-alignment-container">
 
       <div class="success-message">
-        <h1>Order Successful </h1>
+        <h1>Success</h1>
         <p>
           Thank you for your purchase, {{ orderDetails.customerName }}. <br /><br />
-          A stripe invoice and a copy of your order summary has been sent to <strong>{{ orderDetails.customerEmail }}</strong>. <br /><br /> Check your inbox, or take a screenshot for your records.
+          A copy of your order summary has been sent to <strong>{{ orderDetails.customerEmail }}</strong>. <br /><br />
         </p>
       </div>
 
@@ -35,6 +35,14 @@
         <div class="success-subtotal-row">
           <p>Subtotal</p>
           <p>{{ orderDetails.subtotal | currency }}</p>
+        </div>
+
+        <div
+          *ngIf="orderDetails.discount"
+          class="success-discount-row"
+        >
+          <p>Discount ({{ orderDetails.discount.code }})</p>
+          <p>-{{ orderDetails.discount.amount | currency }}</p>
         </div>
 
         <div class="success-shipping-cost-row">

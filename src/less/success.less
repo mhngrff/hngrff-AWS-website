@@ -1,3 +1,5 @@
+/* MOBILE */
+
 .success-container{
 //   margin-left: 10vw;
   margin-top: 10vh;
@@ -94,7 +96,18 @@ h1, h3, p {
   margin-top: 0.5rem;
 }
 
-.success-subtotal-row p {
+.success-discount-row {
+    width: 80vw;
+    margin-left: 10vw;
+    display: flex;
+    justify-content: space-between; /* Align the total to the right */
+    align-items: center;
+    flex: 1;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+.success-subtotal-row p, .success-discount-row p {
   font-family: 'Roboto', sans-serif;
   font-size: 4vw;
   color: white;
@@ -229,7 +242,7 @@ h1, h3, p {
     font-size: 20px;
     }
 
-  .success-subtotal-row p, .success-shipping-cost-row p {
+  .success-subtotal-row p, .success-shipping-cost-row p, .success-discount-row p {
     font-size: 25px;
   }
 
@@ -243,6 +256,7 @@ h1, h3, p {
   }
 
   .success-subtotal-row,
+  .success-discount-row,
   .success-shipping-cost-row,
   .success-grand-total-row,
   .shipping-information {

@@ -16,6 +16,7 @@ import { StripeService } from '../services/stripe.service';
 import { FormsModule } from '@angular/forms';
 import { OrdersService } from '../services/orders.service';
 import { OriginalsService } from '../services/originals.service'
+import { OrderDetails } from '../models/order-details.interface';
 
 const countryNameMapping: { [key: string]: string } = {
   'USA': 'United States',
@@ -402,30 +403,72 @@ console.time("Address Validation and Shipping");
             });
 
           console.time("Create Order");
-                const orderDetails = {
-                  orderId: `ORD-${Date.now()}`, // Generate unique order ID
-                  customerName: formData.shippingName,
-                  customerEmail: formData.email,
-                  products: this.cartItems.map(item => ({
-                    productId: item.productId,
-                    productName: item.optionSubtitle,
-                    quantity: item.quantity,
-                    unitPrice: item.price,
-                    thumbnailUrl: item.thumbnailUrl,
-                  })),
-                  subtotal: this.subtotal,
-                  total: this.total,
-                  shippingCost: this.shippingCost,
-                  shippingAddress: {
-                    street: formData.addressLine1,
-                    addressLine2: formData.addressLine2 || null,
-                    city: formData.city,
-                    state: formData.state,
-                    zip: formData.zip,
-                    country: formData.country,
-                  },
-                  orderDate: new Date().toISOString(),
-                };
+//                 const orderDetails = {
+//                   orderId: `ORD-${Date.now()}`, // Generate unique order ID
+//                   customerName: formData.shippingName,
+//                   customerEmail: formData.email,
+//                   products: this.cartItems.map(item => ({
+//                     productId: item.productId,
+//                     productName: item.optionSubtitle,
+//                     quantity: item.quantity,
+//                     unitPrice: item.price,
+//                     thumbnailUrl: item.thumbnailUrl,
+//                   })),
+//                   subtotal: this.subtotal,
+//                   total: this.total,
+//                   shippingCost: this.shippingCost,
+//                   shippingAddress: {
+//                     street: formData.addressLine1,
+//                     addressLine2: formData.addressLine2 || null,
+//                     city: formData.city,
+//                     state: formData.state,
+//                     zip: formData.zip,
+//                     country: formData.country,
+//                   },
+//                   discount: this.appliedDiscount
+//                     ? {
+//                         code: this.appliedDiscount.code,
+//                         amount: this.appliedDiscount.amount
+//                       }
+//                     : null,
+//                   orderDate: new Date().toISOString(),
+//                 };
+            const orderDetails: OrderDetails = {
+              orderId: `ORD-${Date.now()}`, // Generate unique order ID
+
+              customerName: formData.shippingName,
+              customerEmail: formData.email,
+
+              products: this.cartItems.map(item => ({
+                productId: item.productId,
+                productName: item.optionSubtitle,
+                quantity: item.quantity,
+                unitPrice: item.price,
+                thumbnailUrl: item.thumbnailUrl,
+              })),
+
+              subtotal: this.subtotal,
+              shippingCost: this.shippingCost,
+              total: this.total,
+
+              discount: this.appliedDiscount
+                ? {
+                    code: this.appliedDiscount.code,
+                    amount: this.appliedDiscount.amount,
+                  }
+                : null,
+
+              shippingAddress: {
+                street: formData.addressLine1,
+                addressLine2: formData.addressLine2 || null,
+                city: formData.city,
+                state: formData.state,
+                zip: formData.zip,
+                country: formData.country,
+              },
+
+              orderDate: new Date().toISOString(),
+            };
 
 
           try {

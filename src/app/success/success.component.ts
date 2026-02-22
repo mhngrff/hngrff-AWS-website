@@ -4,33 +4,34 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { OrdersService } from '../services/orders.service';
 import { jsPDF } from 'jspdf';
+import { OrderDetails } from '../models/order-details.interface';
 
-interface Product {
-  productId: string;
-  productName: string;
-  quantity: number;
-  unitPrice: number;
-  thumbnailUrl: string;
-}
-
-interface OrderDetails {
-  orderId: string;
-  customerName: string;
-  customerEmail: string;
-  products: Product[];
-  subtotal: number;
-  total: number;
-  shippingCost: number;
-  shippingAddress: {
-    street: string;
-    addressLine2?: string;
-    city: string;
-    state: string;
-    zip: string;
-    country: string;
-  };
-  orderDate: string;
-}
+// interface Product {
+//   productId: string;
+//   productName: string;
+//   quantity: number;
+//   unitPrice: number;
+//   thumbnailUrl: string;
+// }
+//
+// interface OrderDetails {
+//   orderId: string;
+//   customerName: string;
+//   customerEmail: string;
+//   products: Product[];
+//   subtotal: number;
+//   total: number;
+//   shippingCost: number;
+//   shippingAddress: {
+//     street: string;
+//     addressLine2?: string;
+//     city: string;
+//     state: string;
+//     zip: string;
+//     country: string;
+//   };
+//   orderDate: string;
+// }
 
 @Component({
   selector: 'app-success',
@@ -48,23 +49,46 @@ export class SuccessComponent implements OnInit {
   private spinnerInterval: any;
 
 
-  orderDetails: OrderDetails = {
-    orderId: '',
-    customerName: '',
-    customerEmail: '',
-    products: [],
-    subtotal: 0,
-    total: 0,
-    shippingCost: 0,
-    shippingAddress: {
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
-      country: '',
-    },
-    orderDate: '',
-  };
+//   orderDetails: OrderDetails = {
+//     orderId: '',
+//     customerName: '',
+//     customerEmail: '',
+//     products: [],
+//     subtotal: 0,
+//     total: 0,
+//     shippingCost: 0,
+//     shippingAddress: {
+//       street: '',
+//       city: '',
+//       state: '',
+//       zip: '',
+//       country: '',
+//     },
+//     orderDate: '',
+//   };
+
+orderDetails: OrderDetails = {
+  orderId: '',
+  customerName: '',
+  customerEmail: '',
+  products: [],
+  subtotal: 0,
+  shippingCost: 0,
+  total: 0,
+
+  discount: null, // 👈 NEW, required by interface
+
+  shippingAddress: {
+    street: '',
+    addressLine2: null,
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+  },
+
+  orderDate: '',
+};
 
 
 
