@@ -34,6 +34,10 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   isDefaultView = true;
   latestImage: Image | null = null; // 10/4/2025 STICKER UPDATE
 
+  // 3/5/2026 DECOUPLING VIEWPORT IMAGES AND SELECTABLE OPTIONS
+  displayImages: string[] = [];
+  displayOptions: Option[] = [];
+
   selectedOption: string | null = null; // New variable for selected option
   selectedPrice: number | null = null; // New variable for selected price
   selectedWeight: number | null = null;
@@ -59,80 +63,89 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     private originalsService: OriginalsService
   ) {}
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('imageId');
-    this.cartItems$ = this.cartService.getCartItems(); //ADDED 11/19/2025 for ORIGINAL functionality
-    if (id) {
-      // Fetch the metadata first (title, description, price)
-      this.imageMetadata$ = this.imageService.getImageMetadataById(id!);
+    ngOnInit(): void {
 
-      setTimeout(() => {
-      // Fetch the full image data separately
-      this.image$ = this.imageService.getImageById(id!);
+      const id = this.route.snapshot.paramMap.get('imageId');
+      this.cartItems$ = this.cartService.getCartItems();
+
+      if (!id) return;
+      this.imageId = id;
+      this.imageMetadata$ = this.imageService.getImageMetadataById(id);
+      this.image$ = this.imageService.getImageById(id);
+
       this.image$.subscribe((image: Image | undefined) => {
+
         if (image && image.options && image.options.length > 0) {
+
           this.latestImage = image;
+          this.displayOptions = image.options.filter(opt => opt.subtitle);
+          this.displayImages = image.options
+            .filter(opt => opt.imageUrl)
+            .map(opt => opt.imageUrl as string);
+
           this.zoomImageUrl = image.zoomImage || null;
           this.mainImageUrl = image.options[0].imageUrl;
-          this.totalImages = image.options.length;
+          this.totalImages = this.displayImages.length;
           this.thumbnailUrl = image.thumbnail || null;
+
           this.updateArrowStates();
 
-
-          // --- NEW: Merge dynamic sold status for originals ---
+          // Merge dynamic sold status
           if (image.options?.some(opt => opt.subtitle?.includes('ORIGINAL'))) {
+
             this.originalsService.getMergedOriginals().subscribe((mergedImages: Image[]) => {
+
               const mergedImage = mergedImages.find(img => img.id === image.id);
               if (mergedImage?.options && image.options) {
-                const mergedOptions = mergedImage.options; // local constant for TS
+                const mergedOptions = mergedImage.options;
+
                 image.options.forEach(opt => {
                   if (opt.subtitle) {
                     const match = mergedOptions.find(o => o.subtitle === opt.subtitle);
                     if (match) {
-                      opt.sold = match.sold; // Inject the DB value
+                      opt.sold = match.sold;
                     }
                   }
                 });
-                this.latestImage = image; // Trigger template update
+                this.latestImage = image;
                 this.originalStatusResolved = true;
               }
             });
           }
-
         } else {
           console.error(`Image with id ${id} not found`);
         }
       });
-    }, 0); //This is probably used to test metadata vs image loading functionality
 
-      // Set default option and price
+      // Default option selection
       this.imageMetadata$.subscribe((metadata) => {
-        if (metadata?.options && metadata.options.length > 0) {
-          this.selectedOption = metadata.options[0].subtitle;
-          console.log("this.selectedOption = " + this.selectedOption)
-          this.selectedPrice = metadata.options[0].price;
-          this.selectedWeight = metadata.options[0].weight;
-          this.selectedProductId = metadata.options[0].productId;
+        if (metadata?.options) {
+          const validOptions = metadata.options.filter(opt => opt.subtitle);
+          if (validOptions.length > 0) {
+            this.selectedOption = validOptions[0].subtitle;
+            this.selectedPrice = validOptions[0].price;
+            this.selectedWeight = validOptions[0].weight;
+            this.selectedProductId = validOptions[0].productId;
+
+          }
         }
       });
     }
-  }
 
   isStickerItem(): boolean {
     const optionSubtitle = this.latestImage?.options?.[0]?.subtitle;
     return optionSubtitle ? optionSubtitle.toLowerCase().includes('sticker') : false;
   }
 
-
-  // New method for handling dropdown option change
   onOptionChange(): void {
-    this.imageMetadata$.subscribe(metadata => {
-      if (metadata?.options) {
-        const selected = metadata.options.find(option => option.subtitle === this.selectedOption);
-        this.selectedPrice = selected ? selected.price : null;
-        this.selectedWeight = selected ? selected.weight : null;
-      }
-    });
+      if (!this.latestImage?.options) return;
+      const selected = this.latestImage.options.find(
+        option => option.subtitle === this.selectedOption
+      );
+
+      this.selectedPrice = selected ? selected.price : null;
+      this.selectedWeight = selected ? selected.weight : null;
+      this.selectedProductId = selected ? selected.productId : null;
   }
 
   ngAfterViewInit(): void {
@@ -358,16 +371,12 @@ export class DetailsComponent implements OnInit, AfterViewInit {
   }
 
   disableAddToCart(cartItems: CartItem[] | null): boolean {
-    if(this.selectedOption == "SHEEPSHEAD 12 x 18\"") { return true};
-    if(this.selectedOption == "THE ECLIPSE 16 X 20\"") { return true};
     if(!this.isOriginal()) { return false }
     if (this.isOriginalSold()) return true;       // sold = highest priority
     return this.isOriginalInCart(cartItems);      // normal condition
   }
 
   disableBuyNow(): boolean {
-    if(this.selectedOption == "SHEEPSHEAD 12 x 18\"") { return true};
-    if(this.selectedOption == "THE ECLIPSE 16 X 20\"") { return true};
     return this.isOriginalSold();                 // sold = disable
   }
 

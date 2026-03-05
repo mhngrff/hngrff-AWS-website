@@ -112,24 +112,31 @@
       "title": "THE MIRAGE",
       "description": "Individually proofed and signed",
       "currency": "USD",
-      "zoomImage": "/assets/images/mirage-2000h.jpg",
-      "thumbnail": "/assets/images/mirage-thumbnail.jpg",
+      "zoomImage": "/assets/images/New-Mirage-2000w.jpg",
+      "thumbnail": "/assets/images/New-Mirage-400w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "MIRAGE - 9 x 12\"",
-          "price": 40.00,
-          "imageUrl": "/assets/images/mirage-1400h.jpg",
-          "weight": 1,
+          "subtitle": "MIRAGE - 16 x 20\" PRINT",
+          "price": 80.00,
+          "imageUrl": "/assets/images/New-Mirage-800w.jpg",
+          "weight": 0.1,
           "productId": "E1"
         },
         {
           "type": "framed",
-          "subtitle": "MIRAGE - 16 x 20\"",
-          "price": 80.00,
-          "imageUrl": "/assets/images/rowboat_framed_600w.jpg",
-          "weight": 8,
+          "subtitle": "MIRAGE - 16 x 20\" FRAMED",
+          "price": 150.00,
+          "imageUrl": "/assets/images/New-Mirage-Framed-900w.jpg",
+          "weight": 5,
           "productId": "E2"
+        },
+        {
+          "type": "print",
+          "subtitle": "MIRAGE - 9 x 12\" MATTED PRINT",
+          "price": 50.00,
+          "weight": 0.1,
+          "productId": "E1"
         }
       ]
     },
@@ -154,14 +161,14 @@
     {
       "id": "lighthouse",
       "title": "MORRIS ISLAND LIGHTHOUSE",
-      "description": "Individually proofed and signed prints",
+      "description": "Individually proofed and signed",
       "currency": "USD",
       "zoomImage": "/assets/images/lighthouse-1100w.jpg",
       "thumbnail": "/assets/images/lighthouse-600w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "LIGHTHOUSE 9 x 12\"",
+          "subtitle": "LIGHTHOUSE 9 x 12\" PRINT",
           "price": 40.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
@@ -169,7 +176,7 @@
         },
         {
           "type": "print",
-          "subtitle": "LIGHTHOUSE 12 x 16\" ",
+          "subtitle": "LIGHTHOUSE 12 x 16\" PRINT",
           "price": 60.00,
           "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
@@ -187,7 +194,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "BAPTISM 9 x 12\"",
+          "subtitle": "BAPTISM 9 x 12\" PRINT",
           "price": 40.00,
           "imageUrl": "/assets/images/baptism-1000w.jpg",
           "weight": 1,
@@ -195,9 +202,16 @@
         },
         {
           "type": "print",
-          "subtitle": "BAPTISM 12 x 16\" ",
+          "subtitle": "BAPTISM 12 x 16\" PRINT",
           "price": 60.00,
           "imageUrl": "/assets/images/baptism-framed-700w.jpg",
+          "weight": 1,
+          "productId": "H2"
+        },
+        {
+          "type": "print",
+          "subtitle": "BAPTISM 18 x 24\" PRINT",
+          "price": 80.00,
           "weight": 1,
           "productId": "H2"
         }
@@ -213,7 +227,7 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "SAILFISH 16 x 11\"",
+          "subtitle": "SAILFISH 16 x 11\" PRINT",
           "price": 60.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
@@ -221,7 +235,7 @@
         },
         {
           "type": "print",
-          "subtitle": "SAILFISH 24 x 16\" ",
+          "subtitle": "SAILFISH 24 x 16\" PRINT",
           "price": 80.00,
           "imageUrl": "/assets/images/Sailfish-original-framed-1200w.jpg",
           "weight": 1,
@@ -232,7 +246,7 @@
     {
       "id": "redfishsticker",
       "title": "REDFISH STICKER",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/RedfishSticker-1000w.png",
       "options": [
@@ -257,7 +271,7 @@
     {
       "id": "troutsticker",
       "title": "TROUT STICKER",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/TroutSticker-1000w.png",
       "options": [
@@ -282,7 +296,7 @@
     {
       "id": "floundersticker",
       "title": "FLOUNDER STICKER",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/FlounderSticker-1000w.png",
       "options": [
@@ -307,7 +321,7 @@
     {
       "id": "sailfishsticker",
       "title": "SAILFISH STICKER",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/SailfishSticker-1000w.png",
       "options": [
@@ -324,7 +338,7 @@
     {
       "id": "slamsticker",
       "title": "INSHORE SLAM STICKERS",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/SlamSticker-1000w.png",
       "options": [
@@ -349,7 +363,7 @@
     {
       "id": "d2dsticker",
       "title": "ANTI AI STICKER",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/d2dSticker-1000w.png",
       "options": [
@@ -366,14 +380,14 @@
     {
       "id": "palmetto",
       "title": "PALMETTO",
-      "description": "Individually proofed and signed prints.",
+      "description": "Individually proofed and signed",
       "currency": "USD",
       "zoomImage": "/assets/images/palmetto-2500w.jpg",
       "thumbnail": "/assets/images/Palmetto-200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "PALMETTO 9 x 12\"",
+          "subtitle": "PALMETTO 9 x 12\" PRINT",
           "price": 40.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
@@ -381,7 +395,7 @@
         },
         {
           "type": "print",
-          "subtitle": "PALMETTO 12 x 16\"",
+          "subtitle": "PALMETTO 12 x 16\" PRINT",
           "price": 60.00,
           "imageUrl": "/assets/images/palmetto-framed.jpg",
           "weight": 0.1,
@@ -391,7 +405,6 @@
           "type": "print",
           "subtitle": "PALMETTO 12 x 16\" FRAMED",
           "price": 300.00,
-          "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
           "productId": "K2"
         }
@@ -428,14 +441,14 @@
       "title": "THE MIRAGE ",
       "description": "18\"W x 21\"H framed",
       "currency": "USD",
-      "zoomImage": "/assets/images/mirage-2000h.jpg",
-      "thumbnail": "/assets/images/mirage-thumbnail.jpg",
+      "zoomImage": "/assets/images/New-Mirage-2000w.jpg",
+      "thumbnail": "/assets/images/New-Mirage-400w.jpg",
       "options": [
         {
           "type": "print",
           "subtitle": "THE MIRAGE - ORIGINAL",
           "price": 2500.00,
-          "imageUrl": "/assets/images/mirage-1400h.jpg",
+          "imageUrl": "/assets/images/New-Mirage-800w.jpg",
           "weight": 1,
           "productId": "M1"
         }
@@ -546,7 +559,7 @@
     {
       "id": "sheepsheadsticker",
       "title": "SHEEPSHEAD STICKER",
-      "description": "ALL STICKERS FREE WITH ANY PRINT PURCHASE *",
+      "description": "Up to 3 stickers free with any print purchase",
       "currency": "USD",
       "thumbnail": "/assets/images/SheepsheadSticker-1000w.png",
       "options": [
@@ -562,37 +575,94 @@
     },
     {
       "id": "sheepshead",
-      "title": "SHEEPSHEAD - PREVIEW ONLY",
-      "description": "Available MARCH 2026",
+      "title": "SHEEPSHEAD",
+      "description": "",
       "currency": "USD",
       "zoomImage": "/assets/images/sheepshead-2000w.jpg",
       "thumbnail": "/assets/images/sheepshead-400w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "SHEEPSHEAD 12 x 18\"",
-          "price": 50,
+          "subtitle": "SHEEPSHEAD 12 x 18\" PRINT",
+          "price": 60,
           "imageUrl": "/assets/images/sheepshead-900w.jpg",
           "weight": 0.1,
           "productId": "N1"
+        },
+        {
+          "imageUrl": "/assets/images/Sheepshead-Framed-1200w.jpg"
         }
       ]
     },
     {
       "id": "eclipse",
-      "title": "THE ECLIPSE - PREVIEW ONLY",
-      "description": "Available MARCH 2026",
+      "title": "THE ECLIPSE",
+      "description": "Individually proofed and signed",
       "currency": "USD",
       "zoomImage": "/assets/images/Eclipse-1800w.jpg",
       "thumbnail": "/assets/images/eclipse-300w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "THE ECLIPSE 16 X 20\"",
+          "subtitle": "THE ECLIPSE 16 X 20\" PRINT",
           "price": 80,
           "imageUrl": "/assets/images/eclipse-700w.jpg",
           "weight": 0.1,
           "productId": "O1"
+        },
+        {
+          "type": "print",
+          "subtitle": "THE ECLIPSE 16 X 20\" FRAMED",
+          "price": 150,
+          "imageUrl": "/assets/images/Large-Eclipse-Framed-800w.jpg",
+          "weight": 1,
+          "productId": "O1"
+        },
+        {
+          "type": "print",
+          "subtitle": "THE ECLIPSE 8 X 10\" PRINT",
+          "price": 40,
+          "imageUrl": "/assets/images/Small-Eclipse-Framed-900w.jpg",
+          "weight": 0.1,
+          "productId": "O1"
+        }
+      ]
+    },
+    {
+      "id": "tarponsticker",
+      "title": "TARPON STICKER",
+      "description": "Up to 3 stickers free with any print purchase",
+      "currency": "USD",
+      "thumbnail": "/assets/images/Tarpon-Sticker.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "TARPON STICKER",
+          "price": 5.00,
+          "imageUrl": "/assets/images/Tarpon-Sticker.png",
+          "weight": 0.1,
+          "productId": "P1"
+        }
+      ]
+    },
+    {
+      "id": "tarpon",
+      "title": "TARPON",
+      "description": "Individually proofed and signed",
+      "currency": "USD",
+      "zoomImage": "/assets/images/Tarpon-2500w.jpg",
+      "thumbnail": "/assets/images/Tarpon-500w.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "TARPON 24 x 12\" PRINT",
+          "price": 80,
+          "imageUrl": "/assets/images/Tarpon-1100w.jpg",
+          "weight": 0.1,
+          "productId": "Q1"
+        },
+        {
+          "imageUrl": "/assets/images/Tarpon-Framed-1400w.jpg"
         }
       ]
     }

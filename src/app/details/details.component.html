@@ -5,7 +5,8 @@
   <div class="viewport">
     <div #scrollableContainer class="scrollable-container" (scroll)="onScroll()">
       <!-- ITERATE OVER ALL OPTIONS (INCLUDING MAIN IMAGE) -->
-      <div class="image-slide" *ngFor="let option of (image$ | async)?.options; let i = index">
+<!--      <div class="image-slide" *ngFor="let option of (image$ | async)?.options; let i = index">-->
+      <div class="image-slide" *ngFor="let img of displayImages; let i = index">
         <!-- Expand Icon for the First Image Only -->
         <div *ngIf="i === 0" class="expand-icon" [ngClass]="{'visible': isDefaultView && zoomImageUrl}" (click)="openZoomView()">
           <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px">
@@ -13,7 +14,9 @@
           </svg>
         </div>
 
-        <img [src]="option.imageUrl" [alt]="metadata.title + ' - ' + option.subtitle" class="details-image" (load)="onImageLoad($event)">
+<!--        <img [src]="option.imageUrl" [alt]="metadata.title + ' - ' + option.subtitle" class="details-image" (load)="onImageLoad($event)">-->
+        <img [src]="img" [alt]="metadata.title + ' image ' + (i + 1)" class="details-image" (load)="onImageLoad($event)">
+
       </div>
     </div>
   </div>
@@ -59,7 +62,8 @@
         <div *ngIf="!isOriginal()" class="dropdown-increment-row">
             <div class="option-selector" *ngIf="!isStickerItem() && metadata.options && metadata.options.length > 0">
               <select id="options-dropdown" [(ngModel)]="selectedOption" (change)="onOptionChange()">
-                <option *ngFor="let option of metadata.options" [value]="option.subtitle">
+<!--                <option *ngFor="let option of metadata.options" [value]="option.subtitle">-->
+                <option *ngFor="let option of displayOptions" [value]="option.subtitle">
                   {{ option.subtitle }}
                 </option>
               </select>
@@ -91,14 +95,14 @@
       <div class="slam-information" *ngIf="metadata.title == 'INSHORE SLAM'">
         <p>
         <strong> PRINTS: </strong><br/>
-         - Original medium: White and Black ink on toned gray paper<br/>
          - 3 prints, each 6<sup>1</sup>&frasl;<sub>2</sub>" x 12" <br/>
          - Printed with archival inks on photo matte paper<br/><br/>
-        <strong>  SINGLE FRAME: </strong><br/>
-         - 15 <sup>1</sup>&frasl;<sub>2</sub>" x 24" <br/>
+        <strong>  CUSTOM HANDMADE FRAMES: </strong><br/>
+         - 16" x 24" total dimensions<br/>
+          - 3 window mat<br/>
          - Rustic black finish on real wood<br/>
          - Museum glass<br/>
-         - Finished back<br/><br/>
+          - Finished back<br/><br/>
         <strong>  INDIVIDUAL FRAMES: </strong><br/>
           Currently unavailable
         </p>
@@ -107,11 +111,10 @@
       <div class="singles-information" *ngIf="metadata.title == 'REDFISH' || metadata.title == 'TROUT' || metadata.title == 'FLOUNDER'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - Originally drawn with white and black ink on toned gray paper<br/>
             - 6 <sup>1</sup>&frasl;<sub>2</sub>" x 12" <br/>
             - Printed with archival inks on photo matte paper<br/><br/>
-        <strong>  FRAMES: </strong><br/>
-            - Dimensions: 10" x 15"<br/>
+        <strong>  CUSTOM HANDMADE FRAMES: </strong><br/>
+            - 10" x 15" total dimensions<br/>
             - Rustic black finish on real wood<br/>
             - 1" white mat<br/>
             - Museum glass<br/>
@@ -122,24 +125,19 @@
       <div class="singles-information" *ngIf="metadata.title == 'THE MIRAGE'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - Original medium: White and black ink, white and black charcoal on toned gray paper<br/>
-<!--            - 13 <sup>1</sup>&frasl;<sub>2</sub>" x 17" <br/>-->
-            - 9" x 12" OR 16" x 20" <br/>
+            - 9 x 12" matted, OR 16 x 20" <br/>
             - Printed with archival inks on photo matte paper<br/><br/>
         <strong>  FRAMES: </strong><br/>
-<!--            - Real wood black frame, 18<sup>1</sup>&frasl;<sub>2</sub>" x 21"<br/>-->
-<!--            - 2" white mat<br/>-->
-<!--            - Museum glass<br/>-->
-<!--            - Finished back<br/>-->
-          Currently unavailable
+            - 18 x 22" total dimensions<br/>
+            - Smooth black finish on wood<br/>
+            - Polished plexiglass
         </p>
       </div>
 
       <div class="singles-information" *ngIf="metadata.title == 'SHELLS OF FOLLY'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - 9" x 20" <br/>
-            - Original medium: White and black ink toned gray paper<br/>
+            - 9 x 20" <br/>
             - Printed with archival inks on photo matte paper<br/><br/>
           <strong>  FRAMES: </strong><br/>
 <!--            - 12" x 24"<br/>-->
@@ -154,11 +152,10 @@
       <div class="singles-information" *ngIf="metadata.title == 'PALMETTO'">
         <p>
           <strong> PRINTS: </strong><br/>
-          - 9" x 12" or 12" x 16" <br/>
-          - Original medium: Black and white charcoal on toned gray paper<br/>
+          - 9 x 12" OR 12 x 16" <br/>
           - Printed with archival inks on photo matte paper<br/><br/>
-          <strong>  FRAMES: </strong><br/>
-          - 16" x 20"<br/>
+          <strong>  CUSTOM HANDMADE FRAMES: </strong><br/>
+          - 16 x 20" total dimensions <br/>
           - Textured dark finish on real wood<br/>
           - 1.5" dark mat<br/>
           - Museum glass<br/>
@@ -169,16 +166,10 @@
       <div class="singles-information" *ngIf="metadata.title == 'MORRIS ISLAND LIGHTHOUSE'">
         <p>
           <strong> PRINTS: </strong><br/>
-            - 9" x 12" OR 12" x 16" <br/>
-            - Original medium: black ink, charcoal on toned gray paper<br/>
+            - 9 x 12" OR 12 x 16" <br/>
             - Printed with archival inks on photo matte paper<br/><br/>
 
            <strong>  FRAMES: </strong><br/>
-<!--            - 18" x 22"<br/>-->
-<!--            - Semi gloss black finish on real wood<br/>-->
-<!--            - 2" white mat<br/>-->
-<!--            - Museum glass<br/>-->
-<!--            - Finished back<br/>-->
           Currently unavailable
         </p>
       </div>
@@ -186,15 +177,10 @@
       <div class="singles-information" *ngIf="metadata.title == 'BAPTISM'">
         <p>
           <strong> PRINTS: </strong><br/>
-           - 9" x 12" OR 12" x 16" <br/>
-           - Original medium: black & white ink, charcoal on toned gray paper<br/>
+           - Available in 3 sizes <br/>
            - Printed with archival inks on photo matte paper<br/><br/>
 
           <strong>  FRAMES: </strong><br/>
-<!--           - 17" x 21" <br/>-->
-<!--           - Semi gloss black finish on real wood <br/>-->
-<!--           - Museum glass <br/>-->
-<!--           - finished back-->
           Currently unavailable
         </p>
       </div>
@@ -202,8 +188,7 @@
       <div class="singles-information" *ngIf="metadata.title == 'SAILFISH'">
         <p>
           <strong> PRINTS: </strong><br/>
-          - 16" x 10 <sup>1</sup>&frasl;<sub>2</sub>" OR 24" x 16" <br/>
-          - Original medium: black & white ink on toned gray paper<br/>
+          - 16 x 11" OR 24" x 16" <br/>
           - Printed with archival inks on photo matte paper<br/><br/>
 
           <strong>  FRAMES: </strong><br/>
@@ -211,28 +196,110 @@
         </p>
       </div>
 
-      <div class="singles-information" *ngIf="metadata.title == 'REDFISH STICKER' || metadata.title == 'TROUT STICKER' || metadata.title == 'FLOUNDER STICKER' || metadata.title == 'SAILFISH STICKER' || metadata.title == 'INSHORE SLAM STICKERS' || metadata.title == 'SHEEPSHEAD STICKER'">
+      <div class="singles-information" *ngIf="metadata.title == 'REDFISH STICKER' || metadata.title == 'TROUT STICKER' || metadata.title == 'FLOUNDER STICKER' || metadata.title == 'SAILFISH STICKER' || metadata.title == 'INSHORE SLAM STICKERS' || metadata.title == 'SHEEPSHEAD STICKER' || metadata.title == 'TARPON STICKER'">
         <p>
           <br/>
           - 5" long <br/>
           - Glossy Vinyl Finish <br/>
-          - Incredible resolution + high fidelity to the original artworks <br/><br/>
-           * <em>Up to 3 stickers</em> <br/>
+          - UV and Dishwasher safe <br/><br/>
         </p>
       </div>
 
       <div class="singles-information" *ngIf="metadata.title == 'ANTI AI STICKER'">
         <p>
           <br/>
-          "I want AI to do my laundry and dishes so that I can do art and writing, not for AI to do my art and writing so that I can do my laundry and dishes."<br/>
-           <em>Joanna Maciejewska</em> <br/><br/>
-
-          - This design was originally hand-carved into a linoleum block, inspired by ANTI AI art messaging<br/><br/>
-          - 4.5" tall, 3" wide <br/>
+          - 3" x 4.5" <br/>
           - Glossy Vinyl Finish <br/>
-          - Incredible resolution + high fidelity to the original carving <br/><br/>
-          * <em>Up to 3 stickers</em> <br/>
+          - UV and dishwasher safe <br/><br/>
         </p>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'THE ECLIPSE'">
+        <p>
+          <br/>
+          <strong>PRINTS:</strong><br/>
+          - 8 x 10" OR 16 x 20"<br/>
+          - Printed with archival inks on photo matte paper <br/><br/>
+          <strong>FRAMES:</strong><br/>
+          - 18 x 22" total dimensions<br/>
+          - Smooth black finish on wood<br/>
+          - Polished plexiglass
+        </p>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'TARPON'">
+        <p>
+          <br/>
+          <strong>PRINTS:</strong><br/>
+          - 24 x 12"<br/>
+          - Printed with archival inks on photo matte paper <br/><br/>
+          <strong>FRAMES:</strong><br/>
+          Currently unavailable<br/>
+        </p>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'SHEEPSHEAD'">
+        <p>
+          <br/>
+          <strong>PRINTS:</strong><br/>
+          - 18 x 12"<br/>
+          - Printed with archival inks on photo matte paper <br/><br/>
+          <strong>FRAMES:</strong><br/>
+          Currently unavailable<br/>
+        </p>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'THE MIRAGE '">
+        <p>
+          <br/>
+            Completed in February 2025. <br/>
+          Made with B&W ink and charcoal on Strathmore toned gray paper.<br/><br>
+          "Pray then for safe passage, that I might see here once more."<br/>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'SHELLS OF FOLLY '">
+        <p>
+          <br/>
+          Frame included. <br/>
+          Completed in April 2025.<br/>
+          Made with B&W ink on Strathmore toned gray paper.<br/><br>
+          The shells referenced for this piece were all found on Folly Beach, SC.<br/>
+          Pictured are 3 different types of whelks.
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'MORRIS ISLAND LIGHTHOUSE '">
+        <p>
+          <br/>
+          Frame included. <br/>
+          Completed in May 2025.<br/>
+          Made with B&W ink on Strathmore toned gray paper.<br/>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'BAPTISM '">
+        <p>
+          <br/>
+          Frame included. <br/>
+          Completed in July 2025.<br/>
+          Made with B&W ink, charcoal on Strathmore toned gray paper.<br/><br/>
+          One of the most technically challenging pieces I have ever attempted.<br/><br/>
+          Inspired by hope and the chance for redemption.<br/>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'SAILFISH '">
+        <p>
+          <br/>
+          Frame included. <br/>
+          Completed in September 2025.<br/>
+          Made with B&W ink on Strathmore toned gray paper.<br/>
+      </div>
+
+      <div class="singles-information" *ngIf="metadata.title == 'PALMETTO '">
+        <p>
+          <br/>
+          Frame included. <br/>
+          Completed in October 2025.<br/>
+          Made with B&W charcoal on Strathmore toned gray paper.<br/><br/>
+          Inspired by the South Carolina state flag and beautiful lowcountry.
       </div>
 
   </div>

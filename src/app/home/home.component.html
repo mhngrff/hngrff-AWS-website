@@ -61,6 +61,17 @@
 
     <div class="tertiary-images-section">
 
+      <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:26:27">
+        <a (click)="goToDetails(image.id)">
+          <img
+            class="image"
+            [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+            [alt]="image.title + ' drawing'" loading="lazy">
+        </a>
+      </div>
+
+      <h3 class="sticker-title">NEW - TARPON</h3>
+
       <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:23:24">
         <a (click)="goToDetails(image.id)">
           <img
@@ -159,7 +170,19 @@
         </a>
       </div>
 
-      <h3 class="mirage-title">THE ECLIPSE - PREVIEW ONLY</h3>
+      <h3 class="mirage-title">THE ECLIPSE</h3>
+      <div class="line"></div>
+
+      <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:27:28">
+        <a (click)="goToDetails(image.id)">
+          <img
+            class="image"
+            [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
+            [alt]="image.title + ' drawing'" loading="lazy">
+        </a>
+      </div>
+
+      <h3 class="mirage-title">TARPON</h3>
       <div class="line"></div>
 
       <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:24:25">
@@ -171,7 +194,7 @@
         </a>
       </div>
 
-      <h3 class="mirage-title">SHEEPSHEAD - PREVIEW ONLY</h3>
+      <h3 class="mirage-title">SHEEPSHEAD</h3>
       <div class="line"></div>
 
       <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:15:16">
@@ -186,17 +209,17 @@
       <h3 class="mirage-title">PALMETTO</h3>
       <div class="line"></div>
 
-      <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:16:17">
-        <a (click)="goToDetails(image.id)">
-          <img
-            class="image"
-            [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"
-            [alt]="image.title + ' drawing'" loading="lazy">
-        </a>
-      </div>
+<!--      <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:16:17">-->
+<!--        <a (click)="goToDetails(image.id)">-->
+<!--          <img-->
+<!--            class="image"-->
+<!--            [src]="image.options && image.options.length ? image.options[0].imageUrl : ''"-->
+<!--            [alt]="image.title + ' drawing'" loading="lazy">-->
+<!--        </a>-->
+<!--      </div>-->
 
-      <h3 class="mirage-title">BLUEGILL</h3>
-      <div class="line"></div>
+<!--      <h3 class="mirage-title">BLUEGILL</h3>-->
+<!--      <div class="line"></div>-->
 
       <div class="tertiary-image-wrapper" *ngFor="let image of images | slice:8:9">
         <a (click)="goToDetails(image.id)">
