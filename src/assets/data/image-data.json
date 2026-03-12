@@ -153,7 +153,7 @@
           "subtitle": "SHELLS - 9 x 20\"",
           "price": 60.00,
           "imageUrl": "/assets/images/shells-default-1200w.jpg",
-          "weight": 1,
+          "weight": 0.1,
           "productId": "F1"
         }
       ]
