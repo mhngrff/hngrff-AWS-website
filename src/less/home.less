@@ -16,6 +16,48 @@
     z-index: 3;
   }
 
+
+      .secondary-image-wrapper.sold {
+        cursor: default;              /* removes pointer */
+        pointer-events: none;         /* completely disables clicking */
+        transform: none;              /* prevents any wrapper scaling */
+      }
+
+      .secondary-image-wrapper.sold .image {
+        transition: none;             /* disables animation */
+        transform: none;              /* prevents scale effects */
+      }
+
+     .secondary-image-wrapper.sold::before {
+    content: "SOLD OUT";
+    position: absolute;
+    bottom: 1rem;               /* adjust to taste */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.12rem;
+    z-index: 6;
+    pointer-events: none;
+    text-shadow: 0px 0px 6px rgba(0,0,0,0.6); /* improves readability */
+     }
+
+    .secondary-image-wrapper.sold::after {
+      cursor: disabled;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 10%,
+        rgba(0, 0, 0, 0.9) 100%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
 /* DESKTOP */
 @media only screen and (min-width: 786px) {
     html, body{
@@ -176,6 +218,7 @@
       width: 100%;
       padding: 0;
       transition: transform 0.25s ease;
+      display:block;
     }
 
     p {
@@ -204,6 +247,7 @@
       cursor: pointer;
       }
 
+
     .primary-image-wrapper:hover, .secondary-image-wrapper:hover, .tertiary-image-wrapper:hover, .shell-image-wrapper:hover {
       transform: scale(1.03);
       }
@@ -230,6 +274,7 @@
           .footer-content .copyright p {
             color: gray;
             }
+
 
 }
 
