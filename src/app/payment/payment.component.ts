@@ -970,7 +970,7 @@ console.time("Address Validation and Shipping");
     }
 
     applyDiscount(code: string) {
-      const validCode = 'RAFFLE44';
+      const validCode = 'CITY26';
       const discountAmount = 20; // $20 off
       const minimumCartTotal = 40; // Only apply if subtotal meets or exceeds this
 

@@ -3,7 +3,7 @@
     {
       "id": "slam",
       "title": "INSHORE SLAM",
-      "description": "3 prints, individually proofed, numbered, and signed. Each print is 1 of 100. ",
+      "description": "ONLY 4 SETS LEFT - Numbered and signed",
       "currency": "USD",
       "zoomImage": "",
       "thumbnail": "/assets/images/fishslam-1-200w.jpg",
@@ -11,7 +11,7 @@
         {
           "type": "print",
           "subtitle": "SLAM - JUST THE PRINTS",
-          "price": 120.00,
+          "price": 150.00,
           "imageUrl": "/assets/images/fishslam-2-600w.png",
           "weight": 1,
           "productId": "D1"
@@ -19,7 +19,7 @@
         {
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
-          "price": 320.00,
+          "price": 350.00,
           "imageUrl": "/assets/images/fish-slam-framed5.jpg",
           "weight": 10,
           "productId": "D2"
@@ -253,7 +253,7 @@
         {
           "type": "print",
           "subtitle": "REDFISH STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/RedfishSticker-1000w.png",
           "weight": 0.1,
           "productId": "J1"
@@ -261,7 +261,7 @@
         {
           "type": "print",
           "subtitle": "REDFISH STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/RedfishSticker-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J1"
@@ -278,7 +278,7 @@
         {
           "type": "print",
           "subtitle": "TROUT STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/TroutSticker-1000w.png",
           "weight": 0.1,
           "productId": "J2"
@@ -286,7 +286,7 @@
         {
           "type": "print",
           "subtitle": "TROUT STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/TroutSticker-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J2"
@@ -303,7 +303,7 @@
         {
           "type": "print",
           "subtitle": "FLOUNDER STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/FlounderSticker-1000w.png",
           "weight": 0.1,
           "productId": "J3"
@@ -311,7 +311,7 @@
         {
           "type": "print",
           "subtitle": "FLOUNDER STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/FlounderSticker-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J3"
@@ -328,7 +328,7 @@
         {
           "type": "print",
           "subtitle": "SAILFISH STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/SailfishSticker-1000w.png",
           "weight": 0.1,
           "productId": "J4"
@@ -345,7 +345,7 @@
         {
           "type": "print",
           "subtitle": "INSHORE SLAM STICKERS",
-          "price": 12.00,
+          "price": 15.00,
           "imageUrl": "/assets/images/SlamSticker-1000w.png",
           "weight": 0.1,
           "productId": "J5"
@@ -353,7 +353,7 @@
         {
           "type": "print",
           "subtitle": "INSHORE SLAM STICKERS",
-          "price": 12.00,
+          "price": 15.00,
           "imageUrl": "/assets/images/SlamStickers-Length-1000w.jpg",
           "weight": 0.1,
           "productId": "J5"
@@ -370,7 +370,7 @@
         {
           "type": "print",
           "subtitle": "D2D STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/d2dSticker-1000w.png",
           "weight": 0.1,
           "productId": "J6"
@@ -404,7 +404,7 @@
         {
           "type": "print",
           "subtitle": "PALMETTO 12 x 16\" FRAMED",
-          "price": 300.00,
+          "price": 260.00,
           "weight": 0.1,
           "productId": "K2"
         }
@@ -566,7 +566,7 @@
         {
           "type": "print",
           "subtitle": "SHEEPSHEAD STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/SheepsheadSticker-1000w.png",
           "weight": 0.1,
           "productId": "J7"
@@ -638,7 +638,7 @@
         {
           "type": "print",
           "subtitle": "TARPON STICKER",
-          "price": 5.00,
+          "price": 6.00,
           "imageUrl": "/assets/images/Tarpon-Sticker.png",
           "weight": 0.1,
           "productId": "P1"
