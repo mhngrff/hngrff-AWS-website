@@ -3,18 +3,14 @@
     {
       "id": "slam",
       "title": "INSHORE SLAM",
-      "description": "ONLY 4 SETS LEFT - Numbered and signed",
+      "description": "ONLY 2 FRAMES LEFT - Numbered and signed",
       "currency": "USD",
       "zoomImage": "",
       "thumbnail": "/assets/images/fishslam-1-200w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "SLAM - JUST THE PRINTS",
-          "price": 150.00,
-          "imageUrl": "/assets/images/fishslam-2-600w.png",
-          "weight": 1,
-          "productId": "D1"
+          "imageUrl": "/assets/images/fishslam-2-600w.png"
         },
         {
           "type": "one_frame",
@@ -23,9 +19,6 @@
           "imageUrl": "/assets/images/fish-slam-framed5.jpg",
           "weight": 10,
           "productId": "D2"
-        },
-        {
-          "imageUrl": "/assets/images/fish-slam-individual-framed2.jpg"
         }
       ]
     },
