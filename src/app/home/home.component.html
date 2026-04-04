@@ -52,7 +52,7 @@
           </a>
         </div>
 
-        <div class="secondary-image-wrapper" *ngFor="let image of images | slice:2:3">
+        <div class="secondary-image-wrapper two" *ngFor="let image of images | slice:2:3">
           <a (click)="goToDetails(image.id)">
             <img
               class="image"
@@ -61,7 +61,7 @@
           </a>
         </div>
 
-        <div class="secondary-image-wrapper" *ngFor="let image of images | slice:3:4">
+        <div class="secondary-image-wrapper one" *ngFor="let image of images | slice:3:4">
           <a (click)="goToDetails(image.id)">
             <img
               class="image"

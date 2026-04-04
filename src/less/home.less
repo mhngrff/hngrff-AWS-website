@@ -44,6 +44,38 @@
     text-shadow: 0px 0px 6px rgba(0,0,0,0.6); /* improves readability */
      }
 
+        .secondary-image-wrapper.one::before {
+       content: "1 REMAINING";
+       position: absolute;
+       bottom: 1rem;               /* adjust to taste */
+       left: 50%;
+       transform: translateX(-50%);
+       color: white;
+       font-family: 'Roboto', sans-serif;
+       font-weight: 400;
+       font-size: 1.5rem;
+       letter-spacing: 0.12rem;
+       z-index: 6;
+       pointer-events: none;
+       text-shadow: 0px 0px 6px rgba(0,0,0,0.6); /* improves readability */
+        }
+
+              .secondary-image-wrapper.two::before {
+             content: "2 REMAINING";
+             position: absolute;
+             bottom: 1rem;               /* adjust to taste */
+             left: 50%;
+             transform: translateX(-50%);
+             color: white;
+             font-family: 'Roboto', sans-serif;
+             font-weight: 400;
+             font-size: 1.5rem;
+             letter-spacing: 0.12rem;
+             z-index: 6;
+             pointer-events: none;
+             text-shadow: 0px 0px 6px rgba(0,0,0,0.6); /* improves readability */
+              }
+
     .secondary-image-wrapper.sold::after {
       cursor: disabled;
       content: "";
