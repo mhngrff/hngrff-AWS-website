@@ -3,7 +3,7 @@
     {
       "id": "slam",
       "title": "INSHORE SLAM",
-      "description": "ONLY 2 FRAMES LEFT - Numbered and signed",
+      "description": "ONLY 1 FRAME LEFT - Numbered and signed",
       "currency": "USD",
       "zoomImage": "",
       "thumbnail": "/assets/images/fishslam-1-200w.jpg",
@@ -15,9 +15,9 @@
         {
           "type": "one_frame",
           "subtitle": "SLAM - PRINTS IN 1 FRAME",
-          "price": 350.00,
+          "price": 400.00,
           "imageUrl": "/assets/images/fish-slam-framed5.jpg",
-          "weight": 10,
+          "weight": 15,
           "productId": "D2"
         }
       ]
