@@ -2,23 +2,47 @@
   "images": [
     {
       "id": "slam",
-      "title": "INSHORE SLAM",
-      "description": "ONLY 1 FRAME LEFT - Numbered and signed",
+      "title": "INSHORE SLAM SECOND EDITION",
+      "description": "Individually proofed, numbered, and signed. Limited to 200.",
       "currency": "USD",
       "zoomImage": "",
-      "thumbnail": "/assets/images/fishslam-1-200w.jpg",
+      "thumbnail": "/assets/images/SLAMV2-600w.png",
       "options": [
         {
           "type": "print",
-          "imageUrl": "/assets/images/fishslam-2-600w.png"
+          "subtitle": "ALL 3 PRINTS",
+          "price": 180,
+          "imageUrl": "/assets/images/SLAMV2-600w.png",
+          "weight": 0.1,
+          "productId": "D1"
         },
         {
-          "type": "one_frame",
-          "subtitle": "SLAM - PRINTS IN 1 FRAME",
-          "price": 400.00,
-          "imageUrl": "/assets/images/fish-slam-framed5.jpg",
-          "weight": 15,
-          "productId": "D2"
+          "imageUrl": "/assets/images/SlamV2-Framed-800w.jpg"
+        },
+        {
+          "type": "print",
+          "subtitle": "Redfish 11x17\" PRINT",
+          "price": 70,
+          "imageUrl": "/assets/images/RedfishV2-1000w.jpg",
+          "weight": 0.1,
+          "productId": "A1",
+          "thumbnail": "/assets/images/RedfishV2-400w.jpg"
+        },
+        {
+          "type": "print",
+          "subtitle": "Trout 11x17\" PRINT",
+          "price": 70,
+          "imageUrl": "/assets/images/TroutV2-1000w.jpg",
+          "weight": 0.1,
+          "productId": "B1"
+        },
+        {
+          "type": "print",
+          "subtitle": "Flounder 11x17\" PRINT",
+          "price": 70,
+          "imageUrl": "/assets/images/FlounderV2-1000w.jpg",
+          "weight": 0.1,
+          "productId": "C1"
         }
       ]
     },
@@ -27,21 +51,21 @@
       "title": "REDFISH",
       "description": "Individually proofed, numbered, and signed. 1 of 100. ",
       "currency": "USD",
-      "zoomImage": "/assets/images/redfish-1-1200w.jpg",
-      "thumbnail": "/assets/images/redfish-1-200w.jpg",
+      "zoomImage": "/assets/images/RedfishV2-2200w.jpg",
+      "thumbnail": "/assets/images/RedfishV2-400w.jpg",
       "options": [
         {
           "type": "print",
           "subtitle": "REDFISH - JUST THE PRINT",
-          "price": 50.00,
-          "imageUrl": "/assets/images/redfish-1-600w.jpg",
-          "weight": 1,
+          "price": 70.00,
+          "imageUrl": "/assets/images/RedfishV2-1000w.jpg",
+          "weight": 0.1,
           "productId": "A1"
         },
         {
           "type": "framed",
           "subtitle": "REDFISH - FRAMED PRINT",
-          "price": 200.00,
+          "price": 170.00,
           "imageUrl": "/assets/images/redfish-framed5.jpg",
           "weight": 8,
           "productId": "A2"
@@ -658,6 +682,9 @@
           "imageUrl": "/assets/images/Tarpon-Framed-1400w.jpg"
         }
       ]
+    },
+    {
+
     }
   ]
 }

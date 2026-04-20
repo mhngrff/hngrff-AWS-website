@@ -37,14 +37,14 @@
     <p> {{ subtotal | currency }}</p>
   </div>
 
-    <div class="discount-row">
-      <input #discountInput
-        type="text"
-        class="discount-input"
-        placeholder="Discount code"
-      />
-      <button (click)="applyDiscount(discountInput.value)" [disabled]="!!appliedDiscount">Apply</button>
-    </div>
+<!--    <div class="discount-row">-->
+<!--      <input #discountInput-->
+<!--        type="text"-->
+<!--        class="discount-input"-->
+<!--        placeholder="Discount code"-->
+<!--      />-->
+<!--      <button (click)="applyDiscount(discountInput.value)" [disabled]="!!appliedDiscount">Apply</button>-->
+<!--    </div>-->
 
     <div *ngIf="appliedDiscount" class="subtotal-row discount-applied-row">
       <p>Discount ({{ appliedDiscount.code }})</p>
