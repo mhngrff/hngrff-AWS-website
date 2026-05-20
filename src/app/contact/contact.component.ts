@@ -8,10 +8,15 @@ import { Component } from '@angular/core';
   styleUrl: './contact.component.css'
 })
 export class ContactComponent {
+  isPrintsVisible = false;
   isShippingVisible = false;
   isTrackingVisible = false;
   isCommissionVisible = false;
   isOriginalVisible = false;
+
+  togglePrints(): void {
+    this.isPrintsVisible = !this.isPrintsVisible;
+  }
 
   toggleShipping(): void {
     this.isShippingVisible = !this.isShippingVisible;

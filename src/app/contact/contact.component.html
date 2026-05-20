@@ -28,6 +28,25 @@
 
       <h3>FAQ</h3>
 
+      <div class="header-arrow" (click)="togglePrints()">
+        <h4>How are the prints made?</h4>
+        <svg
+          class="arrow"
+          [class.rotate]="isPrintsVisible"
+          viewBox="0 0 24 24"
+          fill="white"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 7L15 12L10 17" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="prints-text" [class.hidden]="!isPrintsVisible">
+        <!--        <p><strong>When will my order ship?</strong><br /><br /></p>-->
+        <p>I sell premier quality Giclee prints. Original artwork is first photographed or scanned, then printed with archival inks on photo matte paper. <br/><br/> </p>
+      </div>
+
+      <div class="line"></div>
+
       <div class="header-arrow" (click)="toggleShipping()">
         <h4>When will my order arrive?</h4>
         <svg
@@ -81,12 +100,7 @@
       </div>
 
       <div class="commission-text" [class.hidden]="!isCommissionVisible">
-        <p>Yes. Please email me at matt.hanagriff&#64;gmal.com (linked above) to start the commission process. Total price depends on these factors: <br/><br/>
-          - Size <br/>
-          - Subject <br/>
-          - Budget <br/>
-          - Timeline <br/><br/>
-          Cost typically ranges from $500 - $2000. You can expect between 1 - 2 months for completion and delivery.
+        <p>Not at this time. If you are interested in commissioning a piece and have a budget of $1000 or more, please email me.
         </p>
       </div>
 
@@ -105,7 +119,7 @@
       </div>
 
       <div class="original-text" [class.hidden]="!isOriginalVisible">
-        <p>Yes. Please check out the originals page or email me at matt.hanagriff&#64;gmal.com (linked above) to purchase any of my available work.
+        <p>Yes. Email me at matt.hanagriff&#64;gmal.com (linked above) to purchase any of my available work.
         </p>
       </div>
 
