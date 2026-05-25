@@ -135,7 +135,7 @@
         {
           "type": "print",
           "subtitle": "MIRAGE - 16 x 20\" PRINT",
-          "price": 80.00,
+          "price": 85.00,
           "imageUrl": "/assets/images/New-Mirage-800w.jpg",
           "weight": 0.1,
           "productId": "E1"
@@ -143,7 +143,7 @@
         {
           "type": "framed",
           "subtitle": "MIRAGE - 16 x 20\" FRAMED",
-          "price": 150.00,
+          "price": 155.00,
           "imageUrl": "/assets/images/New-Mirage-Framed-900w.jpg",
           "weight": 5,
           "productId": "E2"
@@ -151,7 +151,7 @@
         {
           "type": "print",
           "subtitle": "MIRAGE - 9 x 12\" MATTED PRINT",
-          "price": 50.00,
+          "price": 55.00,
           "weight": 0.1,
           "productId": "E1"
         }
@@ -168,7 +168,7 @@
         {
           "type": "print",
           "subtitle": "SHELLS - 9 x 20\"",
-          "price": 60.00,
+          "price": 65.00,
           "imageUrl": "/assets/images/shells-default-1200w.jpg",
           "weight": 0.1,
           "productId": "F1"
@@ -186,7 +186,7 @@
         {
           "type": "print",
           "subtitle": "LIGHTHOUSE 9 x 12\" PRINT",
-          "price": 40.00,
+          "price": 45.00,
           "imageUrl": "/assets/images/lighthouse-600w.jpg",
           "weight": 1,
           "productId": "G1"
@@ -194,7 +194,7 @@
         {
           "type": "print",
           "subtitle": "LIGHTHOUSE 12 x 16\" PRINT",
-          "price": 60.00,
+          "price": 65.00,
           "imageUrl": "/assets/images/lighthouse-framed-800w.jpg",
           "weight": 1,
           "productId": "G2"
@@ -211,16 +211,8 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "BAPTISM 9 x 12\" PRINT",
-          "price": 40.00,
-          "imageUrl": "/assets/images/baptism-1000w.jpg",
-          "weight": 1,
-          "productId": "H1"
-        },
-        {
-          "type": "print",
           "subtitle": "BAPTISM 12 x 16\" PRINT",
-          "price": 60.00,
+          "price": 65.00,
           "imageUrl": "/assets/images/baptism-framed-700w.jpg",
           "weight": 1,
           "productId": "H2"
@@ -228,7 +220,7 @@
         {
           "type": "print",
           "subtitle": "BAPTISM 18 x 24\" PRINT",
-          "price": 80.00,
+          "price": 85.00,
           "weight": 1,
           "productId": "H2"
         }
@@ -244,16 +236,16 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "SAILFISH 16 x 11\" PRINT",
-          "price": 60.00,
+          "subtitle": "SAILFISH 11 x 16\" PRINT",
+          "price": 65.00,
           "imageUrl": "/assets/images/Sailfish-1200w.jpg",
           "weight": 1,
           "productId": "I1"
         },
         {
           "type": "print",
-          "subtitle": "SAILFISH 24 x 16\" PRINT",
-          "price": 80.00,
+          "subtitle": "SAILFISH 18 x 24\" PRINT",
+          "price": 105.00,
           "imageUrl": "/assets/images/Sailfish-original-framed-1200w.jpg",
           "weight": 1,
           "productId": "I2"
@@ -405,7 +397,7 @@
         {
           "type": "print",
           "subtitle": "PALMETTO 9 x 12\" PRINT",
-          "price": 40.00,
+          "price": 45.00,
           "imageUrl": "/assets/images/Palmetto-1000w.jpg",
           "weight": 0.1,
           "productId": "K1"
@@ -413,7 +405,7 @@
         {
           "type": "print",
           "subtitle": "PALMETTO 12 x 16\" PRINT",
-          "price": 60.00,
+          "price": 65.00,
           "imageUrl": "/assets/images/palmetto-framed.jpg",
           "weight": 0.1,
           "productId": "K2"
@@ -601,7 +593,7 @@
         {
           "type": "print",
           "subtitle": "SHEEPSHEAD 12 x 18\" PRINT",
-          "price": 60,
+          "price": 65,
           "imageUrl": "/assets/images/sheepshead-900w.jpg",
           "weight": 0.1,
           "productId": "N1"
@@ -622,7 +614,7 @@
         {
           "type": "print",
           "subtitle": "THE ECLIPSE 16 X 20\" PRINT",
-          "price": 80,
+          "price": 85,
           "imageUrl": "/assets/images/eclipse-700w.jpg",
           "weight": 0.1,
           "productId": "O1"
@@ -630,7 +622,7 @@
         {
           "type": "print",
           "subtitle": "THE ECLIPSE 16 X 20\" FRAMED",
-          "price": 150,
+          "price": 155,
           "imageUrl": "/assets/images/Large-Eclipse-Framed-800w.jpg",
           "weight": 1,
           "productId": "O1"
@@ -638,7 +630,7 @@
         {
           "type": "print",
           "subtitle": "THE ECLIPSE 8 X 10\" PRINT",
-          "price": 40,
+          "price": 45,
           "imageUrl": "/assets/images/Small-Eclipse-Framed-900w.jpg",
           "weight": 0.1,
           "productId": "O1"
@@ -673,7 +665,7 @@
         {
           "type": "print",
           "subtitle": "TARPON 24 x 12\" PRINT",
-          "price": 80,
+          "price": 85,
           "imageUrl": "/assets/images/Tarpon-1100w.jpg",
           "weight": 0.1,
           "productId": "Q1"
