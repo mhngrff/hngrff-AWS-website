@@ -210,6 +210,9 @@
       "thumbnail": "/assets/images/baptism-500w.jpg",
       "options": [
         {
+          "imageUrl": "/assets/images/baptism-1000w.jpg"
+        },
+        {
           "type": "print",
           "subtitle": "BAPTISM 12 x 16\" PRINT",
           "price": 65.00,
