@@ -970,9 +970,10 @@ console.time("Address Validation and Shipping");
     }
 
     applyDiscount(code: string) {
-      const validCode = 'CITY26';
-      const discountAmount = 20; // $20 off
-      const minimumCartTotal = 40; // Only apply if subtotal meets or exceeds this
+      const validCode = 'ZOE';
+//       const discountAmount = 20; // $20 off
+      const discountAmount = (this.total * 0.4);
+      const minimumCartTotal = 0; // Only apply if subtotal meets or exceeds this
 
       // Clear any previous discount and errors
       this.appliedDiscount = null;

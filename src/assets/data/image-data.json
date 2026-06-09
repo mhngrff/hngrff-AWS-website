@@ -679,7 +679,38 @@
       ]
     },
     {
-
+      "id": "diver",
+      "title": "COME HOME",
+      "description": "Individually proofed and signed. Select between 2 smaller sizes or 1 limited ed. full size print.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/diver-placeholder.jpg",
+      "thumbnail": "/assets/images/diver-placeholder.jpg",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "COME HOME 9 x 12\" PRINT",
+          "price": 45,
+          "imageUrl": "/assets/images/diver-placeholder.jpg",
+          "weight": 0.1,
+          "productId": "R1"
+        },
+        {
+          "type": "print",
+          "subtitle": "COME HOME 12 x 16\" PRINT",
+          "price": 65,
+          "imageUrl": "/assets/images/diver-placeholder.jpg",
+          "weight": 0.1,
+          "productId": "R1"
+        },
+        {
+          "type": "print",
+          "subtitle": "18 x 24\" LIMITED PRINT",
+          "price": 175,
+          "imageUrl": "/assets/images/diver-placeholder.jpg",
+          "weight": 0.1,
+          "productId": "R1"
+        }
+      ]
     }
   ]
 }
