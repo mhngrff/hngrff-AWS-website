@@ -595,14 +595,19 @@
       "options": [
         {
           "type": "print",
-          "subtitle": "SHEEPSHEAD 12 x 18\" PRINT",
+          "subtitle": "SHEEPSHEAD 11 x 17\" PRINT",
           "price": 65,
           "imageUrl": "/assets/images/sheepshead-900w.jpg",
           "weight": 0.1,
           "productId": "N1"
         },
         {
-          "imageUrl": "/assets/images/Sheepshead-Framed-1200w.jpg"
+          "type": "framed",
+          "subtitle": "FRAMED SHEEPSHEAD",
+          "price": 165,
+          "imageUrl": "/assets/images/Sheepshead-Framed-1200w.jpg",
+          "weight": 2,
+          "productId": "N2"
         }
       ]
     },
@@ -683,14 +688,14 @@
       "title": "COME HOME",
       "description": "Individually proofed and signed. Select between 2 smaller sizes or 1 limited ed. full size print.",
       "currency": "USD",
-      "zoomImage": "/assets/images/diver-placeholder.jpg",
-      "thumbnail": "/assets/images/diver-placeholder.jpg",
+      "zoomImage": "/assets/images/comehome-2000w.jpg",
+      "thumbnail": "/assets/images/comehome-400w.jpg",
       "options": [
         {
           "type": "print",
           "subtitle": "COME HOME 9 x 12\" PRINT",
           "price": 45,
-          "imageUrl": "/assets/images/diver-placeholder.jpg",
+          "imageUrl": "/assets/images/comehome-800w.jpg",
           "weight": 0.1,
           "productId": "R1"
         },
@@ -698,15 +703,7 @@
           "type": "print",
           "subtitle": "COME HOME 12 x 16\" PRINT",
           "price": 65,
-          "imageUrl": "/assets/images/diver-placeholder.jpg",
-          "weight": 0.1,
-          "productId": "R1"
-        },
-        {
-          "type": "print",
-          "subtitle": "18 x 24\" LIMITED PRINT",
-          "price": 175,
-          "imageUrl": "/assets/images/diver-placeholder.jpg",
+          "imageUrl": "/assets/images/comehome-800w.jpg",
           "weight": 0.1,
           "productId": "R1"
         }
