@@ -588,7 +588,7 @@
     {
       "id": "sheepshead",
       "title": "SHEEPSHEAD",
-      "description": "",
+      "description": "Individually proofed and signed. Frames available",
       "currency": "USD",
       "zoomImage": "/assets/images/sheepshead-2000w.jpg",
       "thumbnail": "/assets/images/sheepshead-400w.jpg",
@@ -686,15 +686,15 @@
     {
       "id": "diver",
       "title": "COME HOME",
-      "description": "Individually proofed and signed. Select between 2 smaller sizes or 1 limited ed. full size print.",
+      "description": "Individually proofed and signed. 2 sizes available.",
       "currency": "USD",
       "zoomImage": "/assets/images/comehome-2000w.jpg",
       "thumbnail": "/assets/images/comehome-400w.jpg",
       "options": [
         {
           "type": "print",
-          "subtitle": "COME HOME 9 x 12\" PRINT",
-          "price": 45,
+          "subtitle": "COME HOME 18 x 24\" PRINT",
+          "price": 105,
           "imageUrl": "/assets/images/comehome-800w.jpg",
           "weight": 0.1,
           "productId": "R1"
@@ -703,7 +703,7 @@
           "type": "print",
           "subtitle": "COME HOME 12 x 16\" PRINT",
           "price": 65,
-          "imageUrl": "/assets/images/comehome-800w.jpg",
+          "imageUrl": "/assets/images/comehome-framed-800w.jpg",
           "weight": 0.1,
           "productId": "R1"
         }
