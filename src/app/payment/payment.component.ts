@@ -698,8 +698,10 @@ console.time("Address Validation and Shipping");
         // Stickers-only: flat rate, cancel any in-progress calculation
         this.isShippingCalculationInProgress = false;
         this.isShippingCostCalculated = true;
-        this.shippingCost = 2.50;
-        this.previousShippingCost = 2.50;
+//         this.shippingCost = 2.50;
+        this.shippingCost = 1;
+//         this.previousShippingCost = 2.50;
+        this.previousShippingCost = 1;
         this.updateTotal();
         this.cd.detectChanges();
         return;

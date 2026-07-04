@@ -357,7 +357,7 @@
         {
           "type": "print",
           "subtitle": "INSHORE SLAM STICKERS",
-          "price": 15.00,
+          "price": 0,
           "imageUrl": "/assets/images/SlamSticker-1000w.png",
           "weight": 0.1,
           "productId": "J5"
