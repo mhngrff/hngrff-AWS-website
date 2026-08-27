@@ -687,6 +687,45 @@
           "productId": "R1"
         }
       ]
+    },
+    {
+      "id": "shellPrint",
+      "title": "KNOBBED WHELK ENGRAVING",
+      "description": "Engraved and printed by hand.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/ShellEngraving-1200w.png",
+      "thumbnail": "/assets/images/ShellEngraving-400w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "KNOBBED WHELK 8 x 10\" PRINT",
+          "price": 60,
+          "imageUrl": "/assets/images/ShellEngraving-600w.png",
+          "weight": 0.1,
+          "productId": "S1"
+        }
+      ]
+    },
+    {
+      "id": "Fishtail",
+      "title": "REDFISH TAIL BLOCK PRINT",
+      "description": "Carved and printed by hand.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/Fishtail-1200w.png",
+      "thumbnail": "/assets/images/Fishtail-400w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "FISHTAIL 8 x 10\" PRINT",
+          "price": 60,
+          "imageUrl": "/assets/images/Fishtail-800w.png",
+          "weight": 0.1,
+          "productId": "S2"
+        },
+        {
+          "imageUrl": "/assets/images/FishtailFramed-1200w.jpg"
+        }
+      ]
     }
   ]
 }
