@@ -699,7 +699,7 @@
         {
           "type": "print",
           "subtitle": "KNOBBED WHELK 8 x 10\" ORIGINAL PRINT",
-          "price": 85,
+          "price": 65,
           "imageUrl": "/assets/images/ShellEngraving-600w.png",
           "weight": 0.1,
           "productId": "S1"
@@ -717,7 +717,7 @@
         {
           "type": "print",
           "subtitle": "FISHTAIL 8 x 10\" PRINT",
-          "price": 60,
+          "price": 55,
           "imageUrl": "/assets/images/Fishtail-800w.png",
           "weight": 0.1,
           "productId": "S2"
