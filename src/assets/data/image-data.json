@@ -703,6 +703,9 @@
           "imageUrl": "/assets/images/ShellEngraving-600w.png",
           "weight": 0.1,
           "productId": "S1"
+        },
+        {
+          "imageUrl": "/assets/images/Whelk-framed-800w.jpg"
         }
       ]
     },
@@ -724,6 +727,27 @@
         },
         {
           "imageUrl": "/assets/images/FishtailFramed-1200w.jpg"
+        }
+      ]
+    },
+    {
+      "id": "ToothPrint",
+      "title": "SHARK TOOTH ENGRAVING",
+      "description": "Engraved and printed by hand.",
+      "currency": "USD",
+      "zoomImage": "/assets/images/Tooth-1200w.png",
+      "thumbnail": "/assets/images/Tooth-400w.png",
+      "options": [
+        {
+          "type": "print",
+          "subtitle": "SHARK TOOTH 8 x 10\" ORIGINAL PRINT",
+          "price": 65,
+          "imageUrl": "/assets/images/Tooth_600w.png",
+          "weight": 0.1,
+          "productId": "S3"
+        },
+        {
+          "imageUrl": "/assets/images/Tooth-framed-800w.jpg"
         }
       ]
     }
